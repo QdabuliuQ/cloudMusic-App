@@ -1,10 +1,10 @@
 <template>
-  <router-link to="/myMessage/login" tag="div">
+  <router-link class="box" to="/myMessage/login" tag="div">
     <div class="MyMessageLogin">
         <div class="userImg">
-            <img class="login" src="~assets/img/myMessage/nologin.png" alt="">
+            <img class="login" src='~assets/img/myMessage/nologin.png' alt="">
         </div>
-        <span class="text">未登录</span>
+        <span class="text">{{ userName }}</span>
         <img class="more" src="~assets/img/myMessage/gengduo.png" alt="">
     </div>
   </router-link>
@@ -13,31 +13,44 @@
 <script>
 export default {
     name:'MyMessageLogin',
+    data () {
+        return {
+            userImg: require('assets/img/myMessage/nologin.png'),
+            userName: '未登录' 
+        }
+    },
     methods: {
     }
 }
 
 </script>
 <style scoped>
+    .box{
+        padding: 8px;
+        background-color: #fff;
+        border-radius: 12px;
+    }
     .MyMessageLogin{
         width: 100%;
-        height: 50px;
-        line-height: 50px;
+        height: 45px;
+        line-height: 45px;
+        
     }
     .userImg{
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         float: left;
         margin-left: 10px;
     }
     .MyMessageLogin .login{
-        width: 50px;
-        height: 50px;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
         float: left;
     }
     .text{
-        font-size: 18px;
+        font-size: 16px;
         margin-left: 10px;
     }
     .more{

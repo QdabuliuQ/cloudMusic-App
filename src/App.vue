@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 顶部导航栏 -->
-    <music-navbar></music-navbar>
+    <music-navbar class="appnav"></music-navbar>
     <transition mode="">
       <!-- exclude 不会保存对应的组件 -->
       <keep-alive>
@@ -25,9 +25,12 @@ export default {
 
 <style>
   @import 'assets/css/base.css';
+  .appnav{
+    background-color: #fff;
+  }
   #app{
     overflow-x:hidden;
-    background-color: var(--bgc);
+    background-color: #f0efef;
   }
   .v-enter{
     opacity: 0;

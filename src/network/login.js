@@ -1,5 +1,16 @@
 import {request} from './request'
 
+// 手机号登录
+export function phoneLogin(phone,password){
+    return request({
+        url: '/login/cellphone',
+        params: {
+            phone,
+            password
+        }
+    })
+}
+
 // 发送验证码
 export function getCode(phone){
     return request({

@@ -1,11 +1,13 @@
 <template>
   <div class="MyMessage">
-      <my-message-login @toLogin="toLogin"></my-message-login>
+      <my-message-user class="user" v-if="$store.state.profile.userId !== ''"></my-message-user>
+      <my-message-login class="login" v-else @toLogin="toLogin"></my-message-login>   
   </div>
 </template>
 
 <script>
-import MyMessageLogin from './chlidrenComps/MyMessageLogin'  // 用户信息组件
+import MyMessageLogin from './chlidrenComps/MyMessageLogin'  // 用户未登录组件
+import MyMessageUser from './chlidrenComps/MyMessageUser'  // 用户已登录组件
 
 import Login from 'components/context/login/Login'  // 用于登录界面
 
@@ -29,6 +31,7 @@ export default {
     },
     components: {
         MyMessageLogin,
+        MyMessageUser,
         Login
     }
 }
