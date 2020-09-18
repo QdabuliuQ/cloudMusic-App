@@ -1,32 +1,49 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    <!-- 顶部导航栏 -->
+    <music-navbar></music-navbar>
+    <transition mode="">
+      <!-- exclude 不会保存对应的组件 -->
+      <keep-alive>
+        <!-- 在组件切换的时候添加动画 -->
+          <router-view></router-view>
+      </keep-alive>
+    </transition>
+  </div>  
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import musicNavbar from 'components/context/musicNavbar/MusicNavbar'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  name: 'App',
+  components: {
+    musicNavbar
   }
 }
+</script>
+
+<style>
+  @import 'assets/css/base.css';
+  #app{
+    overflow-x:hidden;
+    background-color: var(--bgc);
+  }
+  .v-enter{
+    opacity: 0;
+    /* 进来的时候从右 */
+    transform: translateX(100%);
+  }
+  .v-leave-to{
+    opacity: 0;
+    /* 离开的时候向左 */
+    transform: translateX(-100%);
+    position: absolute;
+  }
+
+  /* 动画执行期间 */
+  .v-enter-active,.v-leave-active{
+      /* 添加动画效果 */
+      transition: all 0.2s linear;
+  }
 </style>

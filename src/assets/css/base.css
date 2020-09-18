@@ -1,0 +1,14 @@
+:root{
+    /* 背景色 红 */
+    --red: '#da231b';
+
+    /* 背景色 灰 */
+    --bgc: '#e1e1e1';
+
+    /* 阴影 */
+    --boxshaow: '0 -2px 5px rgba(0,0,0,0.5)';
+}
+*{
+    margin: 0;
+    padding: 0;
+}
