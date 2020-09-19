@@ -54,13 +54,13 @@ export default {
       indicators: this.indicators, //是否显示滚动条
     });
     // console.log(this.muiscroll.scroll);
-    this.muiscroll.scrollTo(0,0)
+    // this.muiscroll.scrollTo(0,0)
 
     // 监听滚动
     var scroll = mui('.mui-scroll-wrapper').scroll();
     document.querySelector('.mui-scroll-wrapper').addEventListener('scroll',e => {
         // 事件传递
-        this.$emit('listenerMSC',scroll.y)
+      this.$emit('listenerMSC',scroll.y)
     })
   },
 };

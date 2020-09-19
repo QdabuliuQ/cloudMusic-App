@@ -10,10 +10,24 @@
       </navbar>
       <div class="box">
           <div class="tip"><span>没有注册过的手机号会自动注册</span></div>
-          <van-cell-group class="cell">
-            <van-field v-model="tel" type="tel" label="手机号" clearable placeholder="请输入手机号码"/>
-            <van-field v-model="password" type="password" label="密码" clearable placeholder="请输入密码"/>
-          </van-cell-group>
+          <div class="content">
+              <div class="tel">
+                  <div class="text">
+                      <span>手机号：</span>
+                  </div>
+                  <div class="input">
+                      <input v-model="tel" type="text" placeholder="请输入手机号码">
+                  </div>
+              </div>
+              <div class="pwd">
+                  <div class="text">
+                      <span>密码：</span>
+                  </div>
+                  <div class="input">
+                      <input v-model="password" type="password" placeholder="请输入密码">
+                  </div>
+              </div>
+          </div>
           <van-button 
           class="btn" 
           color="#da231b" 
@@ -27,9 +41,9 @@
 <script>
 import navbar from 'components/common/navbar/navbar'
 import Register from 'components/context/register/Register'
-import { phoneLogin } from 'network/login'  // 网络请求
+import { phoneLogin,loginState } from 'network/login'  // 网络请求
 
-import { getUserDetail } from 'network/user'  // 用户信息
+import { getUserDetail,getUserSubcount,getUserPlayList } from 'network/user'  // 用户信息
 
 export default {
     name: 'PhoneLogin',
@@ -40,6 +54,7 @@ export default {
         }
     },
     methods: {
+        
         close(){
             this.$router.go(-1)
         },
@@ -48,24 +63,41 @@ export default {
             var reg = /^1[3-8][0-9]{9}$/
             if (reg.test(this.tel)) {
                 phoneLogin(this.tel,this.password).then(res => {
-                    console.log(res);
                     if (res.data.code === 200) {
                         this.$toast.show('登录成功！',1900);
+                        this.$router.go(-2)
                         this.$store.state.profile.nickName = res.data.profile.nickname  // 用户名
                         this.$store.state.profile.avatarUrl = res.data.profile.avatarUrl  // 头像
                         this.$store.state.profile.userId = res.data.profile.userId  // id
                         this.$store.state.profile.backgroundUrl = res.data.profile.backgroundUrl  // 背景图
-                        this.$router.go(-2)
+                        
                         this.tel = '';
                         this.password = ''
                         getUserDetail(this.$store.state.profile.userId).then(res => {
                             this.$store.state.profile.level = res.data.level;
                             this.$store.state.profile.listenSongs = res.data.listenSongs;
-                            console.log(this.$store.state.profile);
+                        })
+
+                        // 获取用户歌单
+                        getUserPlayList(this.$store.state.profile.userId).then(res => {
+                            console.log(res.data.playlist);
+                            for (const item of res.data.playlist) {
+                                this.$store.state.playList.push({
+                                    coverImgUrl: item.coverImgUrl,
+                                    name: item.name,
+                                    id: item.id,
+                                    playCount: item.playCount,
+                                    trackCount: item.trackCount,
+                                    creator: item.creator.nickname
+                                })
+                            }
+                            console.log(this.$store.state.playList);
                         })
                     } else {
                         this.$toast.show('密码错误！',1900);
                     }
+                },err => {
+                    this.$toast.show('网络出错！',1900);
                 })
             } else {
                 this.$toast.show('手机号不规范',1900);
@@ -90,6 +122,44 @@ export default {
 
 </script>
 <style scoped>
+    .content{
+        padding:0 10px ;
+        height: 90px;
+        font-size: 15px;
+    }
+    .tel{
+        width: 100%;
+        height: 40px;
+        display: flex;
+        border-bottom: 1px solid #cdcdcd;
+        margin-top: 5px;
+        z-index: 10;
+    }
+    .pwd{
+        width: 100%;
+        height: 40px;
+        display: flex;
+        border-bottom: 1px solid #cdcdcd;
+        margin-top: 5px;
+        z-index: 10;
+    }
+    .text{
+        flex: 2;
+        line-height: 45px;
+        
+    }
+    .text span{
+        float: right;
+    }
+    .input{
+        flex: 7;
+        /* line-height: 45px; */
+        margin-top: 4.1px;
+    }
+    .input input{
+        height: 35px;
+        border: 0;
+    }
     .PhoneLogin{
         position: absolute;
         top: 0;

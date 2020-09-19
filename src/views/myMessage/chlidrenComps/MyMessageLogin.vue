@@ -27,7 +27,7 @@ export default {
 <style scoped>
     .box{
         padding: 8px;
-        background-color: #fff;
+        /* background-color: #fff; */
         border-radius: 12px;
     }
     .MyMessageLogin{
@@ -58,5 +58,6 @@ export default {
         width: 17px;
         height: 17px;
         margin-top: 16px;
+        margin-right: 8px;
     }
 </style>

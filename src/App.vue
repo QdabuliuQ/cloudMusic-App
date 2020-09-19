@@ -26,7 +26,13 @@ export default {
 <style>
   @import 'assets/css/base.css';
   .appnav{
+    position: fixed;
+    left: 0;
+    right: 0;
     background-color: #fff;
+    box-shadow: 0 -3px 5px rgba(0,0,0,0.7);
+    /* z-index: 99; */
+    /* margin-bottom: 2px; */
   }
   #app{
     overflow-x:hidden;

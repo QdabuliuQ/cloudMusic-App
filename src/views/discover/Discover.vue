@@ -1,6 +1,6 @@
 <template>
   <div class="Discover">
-      <discover-swiper></discover-swiper>
+      <discover-swiper style="margin-top: 54px"></discover-swiper>
   </div>
 </template>
 
@@ -14,9 +14,9 @@ export default {
         DiscoverSwiper
     },
     created () {
-        getHomepage().then(res => {
-            console.log(res);
-        })
+        // getHomepage().then(res => {
+        //     // console.log(res);
+        // })
     }
 }
 

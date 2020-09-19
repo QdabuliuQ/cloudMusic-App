@@ -12,6 +12,9 @@
 </template>
 
 <script>
+import {getUserSubcount} from 'network/user'
+import {refreshLogin} from 'network/login'
+
 export default {
     name:'MyMessageLogin',
     data () {
@@ -19,6 +22,15 @@ export default {
         }
     },
     methods: {
+    },
+
+    created () {
+        // refreshLogin().then(res => {
+        //     console.log(res);
+        // })
+        // getUserSubcount().then(res => {
+        //     console.log(res);
+        // })
     }
 }
 

@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 引入 mui 基本css样式
+import 'assets/mui/css/mui.css'
+
 // 轮播图组件
 import { Swipe, SwipeItem } from 'vant';
 import { Field } from 'vant';

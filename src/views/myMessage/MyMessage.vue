@@ -1,45 +1,128 @@
 <template>
   <div class="MyMessage">
-      <my-message-user class="user" v-if="$store.state.profile.userId !== ''"></my-message-user>
-      <my-message-login class="login" v-else @toLogin="toLogin"></my-message-login>   
-  </div>
+        <tab-control 
+        style="margin-top: 44px; background: #fff;position: relative; z-index: 15; padding:0 15px;" 
+        ref="tab2" 
+        :title="title"
+        @tabGoods='tabGoods'
+        v-show="isFixed"></tab-control>
+        <mui-scroll
+        style="top: 44px;"
+        :scrollY="true"
+        @listenerMSC="listenerMSC"
+        ref="mscroll">
+            <div class="MyMessage2">
+                <my-message-user class="user" v-if="$store.state.profile.userId !== ''"></my-message-user>
+                <my-message-login class="login" v-else @toLogin="toLogin"></my-message-login>
+                <my-message-menu></my-message-menu>
+                <my-message-love></my-message-love>
+                <tab-control @tabGoods="tabGoods" ref="tab1" :title="title"></tab-control>
+                <my-message-list></my-message-list>
+            </div>
+        </mui-scroll>
+   
+   </div>
 </template>
 
 <script>
 import MyMessageLogin from './chlidrenComps/MyMessageLogin'  // 用户未登录组件
 import MyMessageUser from './chlidrenComps/MyMessageUser'  // 用户已登录组件
+import MyMessageMenu from './chlidrenComps/MyMessageMenu'  // 菜单栏
+import MyMessageLove from './chlidrenComps/MyMessageLove'  // 喜欢的音乐
+//import MyMessageNavbar from './chlidrenComps/MyMessageNavbar'  // 底部导航栏
+import MyMessageList from './chlidrenComps/MyMessageList'  // 歌单列表
+import tabControl from 'components/common/tabControl/TabControl'
+
+import muiScroll from 'components/common/muiScroll/MuiScroll'  // 滚动组件
+
+import {getUserPlayList} from 'network/user'
 
 import Login from 'components/context/login/Login'  // 用于登录界面
+// import func from '../../../vue-temp/vue-editor-bridge'
 
 export default {
     name: 'MyMessage',
     data () {
         return {
-            isShow: false,
+            // isShow: false,
+            isFixed: false,
+            title: ['创建歌单','收藏歌单','歌单助手']
         }
     },
     methods: {
         // 登录组件
         toLogin(){
-            this.isShow = true
+            // this.isShow = true
         },
 
         // 关闭登录
         closeLogin(){
-            this.isShow = false;
+            // this.isShow = false;
+        },
+        
+        // 监听滚动
+        listenerMSC(y){
+            if (-y >= this.offsetTopTab) {
+                this.isFixed = true           
+            } else {
+                this.isFixed = false
+            }   
+        },
+
+        tabGoods(index){
+            switch (index) {
+                case 0:
+                    this.$refs.tab1.isShow = this.$refs.tab2.isShow = 0;
+                    this.$refs.mscroll.muiscroll.scrollTo(0,-(this.$store.state.mySheetToTop-35),500)
+                    break;
+                case 1:
+                    this.$refs.tab1.isShow = this.$refs.tab2.isShow = 1;
+                    this.$refs.mscroll.muiscroll.scrollTo(0,-(this.$store.state.collectionToTop-35),500)
+                    break;
+                case 2:
+                    this.$refs.tab1.isShow = this.$refs.tab2.isShow = 2;
+                    break;
+                default:
+                    break;
+            }
+            
         }
+    },
+    mounted () { 
     },
     components: {
         MyMessageLogin,
         MyMessageUser,
+        MyMessageMenu,
+        MyMessageLove,
+        // MyMessageNavbar,
+        MyMessageList,
+        tabControl,
+        muiScroll,
         Login
+    },
+    mounted () {
+        this.offsetTopTab = this.$refs.tab1.$el.offsetTop;
+        console.log(this.offsetTopTab);
     }
 }
 
 </script>
 <style scoped>
     .MyMessage{
+        overflow: hidden;
+        /* padding: 20px 15px; */
+    }
+    .MyMessage2{
+        
         padding: 20px 15px;
+    }
+    .jnavbar{
+        margin-top: 44px;
+        background-color: #fff;
+        position: relative;
+        padding: 0 15px;
+        z-index: 15;
     }
     .v-enter{
         opacity: 0;
