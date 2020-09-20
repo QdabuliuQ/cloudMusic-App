@@ -14,13 +14,13 @@
                 <div class="icon iconbox1"><img class="img1" src="~assets/img/myMessage/menu/chenggong.png" alt=""></div>
                 <span>已购</span>
             </div>
-            <div class="box1">
+            <div class="box1" @click="myPlayed">
                 <div class="icon iconbox1"><img class="img1" src="~assets/img/myMessage/menu/bofang.png" alt=""></div>
                 <span>最近播放</span>
             </div>
         </div>
         <div class="bottom">
-            <div class="box2">
+            <div class="box2" @click="myFollow">
                 <div class="icon"><img class="img2" src="~assets/img/myMessage/menu/guanzhu.png" alt=""></div>
                 <span class="text2">我的关注</span>
             </div>
@@ -28,7 +28,7 @@
                 <div class="icon iconbox3"><img class="img3" src="~assets/img/myMessage/menu/shoucang.png" alt=""></div>
                 <span class="text3">收藏和赞</span>
             </div>
-            <div class="box2">
+            <div class="box2" @click="myRadioStation">
                 <div class="icon iconbox4"><img class="img1" src="~assets/img/myMessage/menu/diantai.png" alt=""></div>
                 <span>我的电台</span>
             </div>
@@ -43,7 +43,20 @@
 
 <script>
 export default {
-    name: 'MyMessageMenu'
+    name: 'MyMessageMenu',
+    methods: {
+        myRadioStation(){
+            this.$router.push('/myMessage/radioStation')
+        },
+
+        myFollow(){
+            this.$router.push('/myMessage/follow')
+        },
+
+        myPlayed(){
+            this.$router.push('/myMessage/played')
+        }
+    }
 }
 
 </script>

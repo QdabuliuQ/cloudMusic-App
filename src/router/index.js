@@ -9,7 +9,11 @@ const myMessage = () => import('views/myMessage/MyMessage')  // 个人页面组�
 const cloudVillage = () => import('views/cloudVillage/CloudVillage')  // 云村页面组件
 const video = () => import('views/video/Video')  // 视频页面组件
 
-//const login = () => import('components/context/login/Login')// 登录组件
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 
 const routes = [
@@ -21,7 +25,12 @@ const routes = [
 
   // 个人页面
   { path: '/myMessage', component: myMessage },
-  { path: '/myMessage/login', component: () => import('components/context/login/Login')  },
+  // 个人--电台
+  { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },
+  { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
+  { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
+  // 个人--登录
+  { path: '/myMessage/login', component: () => import('components/context/login/Login') },
   { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },
 

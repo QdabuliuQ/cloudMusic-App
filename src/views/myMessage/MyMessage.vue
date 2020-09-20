@@ -29,16 +29,14 @@ import MyMessageLogin from './chlidrenComps/MyMessageLogin'  // 用户未登录�
 import MyMessageUser from './chlidrenComps/MyMessageUser'  // 用户已登录组件
 import MyMessageMenu from './chlidrenComps/MyMessageMenu'  // 菜单栏
 import MyMessageLove from './chlidrenComps/MyMessageLove'  // 喜欢的音乐
-//import MyMessageNavbar from './chlidrenComps/MyMessageNavbar'  // 底部导航栏
 import MyMessageList from './chlidrenComps/MyMessageList'  // 歌单列表
 import tabControl from 'components/common/tabControl/TabControl'
 
 import muiScroll from 'components/common/muiScroll/MuiScroll'  // 滚动组件
 
-import {getUserPlayList} from 'network/user'
+import {getUserPlayList} from 'network/user'  // 获取用户歌单
 
 import Login from 'components/context/login/Login'  // 用于登录界面
-// import func from '../../../vue-temp/vue-editor-bridge'
 
 export default {
     name: 'MyMessage',
@@ -62,6 +60,7 @@ export default {
         
         // 监听滚动
         listenerMSC(y){
+            
             if (-y >= this.offsetTopTab) {
                 this.isFixed = true           
             } else {
@@ -69,6 +68,7 @@ export default {
             }   
         },
 
+        // 导航栏切换
         tabGoods(index){
             switch (index) {
                 case 0:
@@ -88,7 +88,10 @@ export default {
             
         }
     },
-    mounted () { 
+    mounted () {
+        this.$nextTick(() => {
+            this.offsetTopTab = this.$refs.tab1.$el.offsetTop
+        })
     },
     components: {
         MyMessageLogin,
@@ -100,10 +103,6 @@ export default {
         tabControl,
         muiScroll,
         Login
-    },
-    mounted () {
-        this.offsetTopTab = this.$refs.tab1.$el.offsetTop;
-        console.log(this.offsetTopTab);
     }
 }
 

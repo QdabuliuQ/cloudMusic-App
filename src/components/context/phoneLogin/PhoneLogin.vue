@@ -49,8 +49,8 @@ export default {
     name: 'PhoneLogin',
     data () {
         return {
-             tel: '',  // 手机号
-             password: '',  // 验证码
+             tel: '13726508433',  // 手机号
+             password: 'ZJH741.742',  // 验证码
         }
     },
     methods: {
@@ -80,7 +80,6 @@ export default {
 
                         // 获取用户歌单
                         getUserPlayList(this.$store.state.profile.userId).then(res => {
-                            console.log(res.data.playlist);
                             for (const item of res.data.playlist) {
                                 this.$store.state.playList.push({
                                     coverImgUrl: item.coverImgUrl,
@@ -91,7 +90,6 @@ export default {
                                     creator: item.creator.nickname
                                 })
                             }
-                            console.log(this.$store.state.playList);
                         })
                     } else {
                         this.$toast.show('密码错误！',1900);

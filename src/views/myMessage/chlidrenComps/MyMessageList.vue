@@ -2,7 +2,7 @@
   <div class="MyMessageList">
       <div class="box" ref="mySheet">
           <div class="top">
-              <div class="left">创建歌单({{sheetLength}})个</div>
+              <div class="left">创建歌单({{this.$store.state.profile.userId !== "" ? sheetLength : 0}})个</div>
               <div class="center">
                   <img src="~assets/img/myMessage/addApp.png" alt="">
               </div>
