@@ -43,7 +43,7 @@ import navbar from 'components/common/navbar/navbar'
 import Register from 'components/context/register/Register'
 import { phoneLogin,loginState } from 'network/login'  // 网络请求
 
-import { getUserDetail,getUserSubcount,getUserPlayList } from 'network/user'  // 用户信息
+import { getUserDetail,getUserPlayList } from 'network/user'  // 用户信息
 
 export default {
     name: 'PhoneLogin',

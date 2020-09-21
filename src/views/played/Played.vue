@@ -20,14 +20,15 @@ import menuNav from 'components/context/menuNav/MenuNav'
 import songItem from 'components/context/songItem/SongItem'  // 歌曲列表
 import muiScroll from 'components/common/muiScroll/MuiScroll'  // 滚动组件
 
-import {getPlayList} from 'network/played';  // 网络请求
+import {getPlayList,getSongDetial} from 'network/played';  // 网络请求
 
 export default {
     name: 'Played',
     data () {
         return {
             navTitle: '最近播放',
-            songList: []   // 歌曲列表
+            songList: [],   // 歌曲列表
+            songId: []  // 歌曲id
         }
     },
     components: {
@@ -39,7 +40,7 @@ export default {
     created () {
         // 获取数据
         getPlayList(this.$store.state.profile.userId,0).then(res => {
-            console.log(res.data.allData);
+            // console.log(res.data.allData);
             for (const item of res.data.allData) {
                 // 选择性保存数据
                 this.songList.push({
@@ -47,10 +48,19 @@ export default {
                 songName: item.song.name,
                 id: item.song.id,
                 singer: item.song.ar[0].name,
-                zhuanji: item.song.al.name})
+                zhuanji: item.song.al.name,
+                yuanc: item.song.alia})
             }
+            // for (const item of this.songList) {
+            //     this.songId.push(item.id)
+            // }
+            // let listId = this.songId.toString();
+            // console.log(typeof listId);
+            // getSongDetial(listId).then(res => {
+            //     console.log(res);
+            // })
         })
-    }
+    },
 }
 
 </script>

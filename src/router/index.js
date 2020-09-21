@@ -29,11 +29,13 @@ const routes = [
   { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
   { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
+  { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
   // 个人--登录
   { path: '/myMessage/login', component: () => import('components/context/login/Login') },
   { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },
 
+  { path: '/playDetail/:id', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
 
   { path: '/cloudVillage', component: cloudVillage },
   { path: '/video', component: video }

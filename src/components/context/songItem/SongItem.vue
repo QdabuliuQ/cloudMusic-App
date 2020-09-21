@@ -6,7 +6,10 @@
                   {{index + 1 }}
               </div>
               <div class="left">
-                  <div class="name">{{item.songName}}</div>
+                  <div class="name">
+                      {{item.songName}}
+                      <span v-if="item.yuanc.length !== 0" class="yuanc">({{item.yuanc[0]}})</span>
+                  </div>
                   <div class="singer">{{item.singer}} - {{' ' + item.zhuanji}}</div>
               </div>
               <div class="mv">
@@ -34,6 +37,10 @@ export default {
         width: 100%;
         height: 50px;
         border-bottom: 1px solid #e2e2e2ea;
+    }
+    .yuanc{
+        color: #868686;
+        font-size: 15px !important;
     }
     .itemBox{
         width: 100%;

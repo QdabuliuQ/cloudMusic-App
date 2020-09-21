@@ -16,12 +16,11 @@ export default {
 <style>
   #tabbar{
     display: flex;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #fff;
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 55px;
     /* background-color: rgb(231, 230, 230); */
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    /* box-shadow: 0 -2px 5px rgba(0,0,0,0.2); */
   }
 </style>

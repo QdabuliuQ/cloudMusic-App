@@ -1,6 +1,9 @@
 <template>
     <div class="songList">
-        <div class="songSheet1" v-for="(item,index) in $store.state.playList" :key="index">
+        <div class="songSheet1"
+        @click="sheetInfo(item.id)"
+        v-for="(item,index) in $store.state.playList" 
+        :key="index">
             <!-- item.creator === $store.state.profile.nickName && index !== 0 -->
             <div class="songSheet" 
             v-if="sheetList === 'my' ? item.creator === $store.state.profile.nickName && index !== 0 : item.creator !== $store.state.profile.nickName">
@@ -22,7 +25,12 @@
 <script>
 export default {
     name: 'SongSheet',
-    props: ['sheetList']  // 变量觉得显示的是收藏歌单还是创建歌单
+    props: ['sheetList'],  // 变量觉得显示的是收藏歌单还是创建歌单
+    methods: {
+        sheetInfo(id){
+            this.$router.push('/playDetail/' + id)
+        }
+    }
 }
 
 </script>

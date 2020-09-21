@@ -35,15 +35,15 @@ export default {
     .tab-control{
         display: flex;
         text-align: center;
-        height: 40px;
-        line-height: 40px;
+        height: 35px;
+        line-height: 35px;
         font-size: 15px;
     }
     .tab-control-item{
         flex: 1;
     }
     .tab-control-item span{
-        padding: 5px;
+        padding: 5px 5px 2px;
     }
     .activeColor{
         color: red;

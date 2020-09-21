@@ -24,7 +24,7 @@
                 <div class="icon"><img class="img2" src="~assets/img/myMessage/menu/guanzhu.png" alt=""></div>
                 <span class="text2">我的关注</span>
             </div>
-            <div class="box2">
+            <div class="box2" @click="myCollection">
                 <div class="icon iconbox3"><img class="img3" src="~assets/img/myMessage/menu/shoucang.png" alt=""></div>
                 <span class="text3">收藏和赞</span>
             </div>
@@ -55,6 +55,10 @@ export default {
 
         myPlayed(){
             this.$router.push('/myMessage/played')
+        },
+
+        myCollection(){
+            this.$router.push('/myMessage/collection')
         }
     }
 }

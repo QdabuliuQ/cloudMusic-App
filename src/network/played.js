@@ -10,3 +10,13 @@ export function getPlayList(uid, type=0){
         }
     })
 }
+
+// 获取歌曲详情
+export function getSongDetial(ids){
+    return request({
+        url: '/song/detail',
+        params: {
+            ids
+        }
+    })
+}
