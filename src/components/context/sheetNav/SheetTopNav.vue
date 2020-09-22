@@ -1,7 +1,7 @@
 <template>
   <div class="RadioStationNav">
       <div class="left" @click="back">
-          <img src="~assets/img/radioStation/fanhui.png" alt="">   
+          <img src="~assets/img/common/fanhui.svg" alt="">  
       </div>
       <div class="center">{{navTitle}}</div>
       <div class="right"></div>

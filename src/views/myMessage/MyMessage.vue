@@ -9,7 +9,6 @@
         <mui-scroll
         style="top: 44px;"
         :scrollY="true"
-        @listenerMSC="listenerMSC"
         ref="mscroll">
             <div class="MyMessage2">
                 <my-message-user class="user" v-if="$store.state.profile.userId !== ''"></my-message-user>
@@ -59,14 +58,14 @@ export default {
         },
         
         // 监听滚动
-        listenerMSC(y){
+        // listenerMSC(y){
             
-            if (-y >= this.offsetTopTab) {
-                this.isFixed = true           
-            } else {
-                this.isFixed = false
-            }   
-        },
+        //     if (-y >= this.offsetTopTab) {
+        //         this.isFixed = true           
+        //     } else {
+        //         this.isFixed = false
+        //     }   
+        // },
 
         // 导航栏切换
         tabGoods(index){

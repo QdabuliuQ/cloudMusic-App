@@ -38,6 +38,7 @@ export default {
     },
 
     created () {
+        this.$loading.loadingShow();
         // 获取数据
         getPlayList(this.$store.state.profile.userId,0).then(res => {
             // console.log(res.data.allData);
@@ -51,14 +52,7 @@ export default {
                 zhuanji: item.song.al.name,
                 yuanc: item.song.alia})
             }
-            // for (const item of this.songList) {
-            //     this.songId.push(item.id)
-            // }
-            // let listId = this.songId.toString();
-            // console.log(typeof listId);
-            // getSongDetial(listId).then(res => {
-            //     console.log(res);
-            // })
+            this.$loading.loadingNo();
         })
     },
 }

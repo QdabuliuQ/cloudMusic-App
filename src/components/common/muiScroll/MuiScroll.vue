@@ -42,7 +42,7 @@ export default {
   methods: {
     mscrollTo(){
         mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);
-    }  
+    },
   },
   mounted() {
     this.muiscroll = mui(".mui-scroll-wrapper").scroll({
@@ -51,6 +51,7 @@ export default {
       scrollX: this.scrollX, //是否横向滚动
       startX: 0, //初始化时滚动至x
       startY: 0, //初始化时滚动至y
+      deceleration:0.0006,
       indicators: this.indicators, //是否显示滚动条
     });
     // console.log(this.muiscroll.scroll);
@@ -61,6 +62,8 @@ export default {
     document.querySelector('.mui-scroll-wrapper').addEventListener('scroll',e => {
         // 事件传递
       this.$emit('listenerMSC',scroll.y)
+
+      // this.$emit('listenerMSC2',scroll.y)
     })
   },
 };

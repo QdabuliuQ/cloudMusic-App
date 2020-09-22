@@ -28,6 +28,9 @@ Vue.use(Loading);  // 加载动画
 import toast from 'components/common/toast'
 Vue.use(toast)  // 安装 toast 组件
 
+import loading from 'components/common/Loading'
+Vue.use(loading)
+
 
 Vue.config.productionTip = false
 

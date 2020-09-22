@@ -62,6 +62,7 @@ export default {
         login(){
             var reg = /^1[3-8][0-9]{9}$/
             if (reg.test(this.tel)) {
+                this.$loading.loadingShow();
                 phoneLogin(this.tel,this.password).then(res => {
                     if (res.data.code === 200) {
                         this.$toast.show('登录成功！',1900);
@@ -91,6 +92,7 @@ export default {
                                 })
                             }
                         })
+                        this.$loading.loadingNo();
                     } else {
                         this.$toast.show('密码错误！',1900);
                     }

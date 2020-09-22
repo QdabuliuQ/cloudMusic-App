@@ -1,70 +1,163 @@
 <template>
   <div class="SheetInfo">
-    <menu-nav class="nav" :navTitle="navTitle"></menu-nav>
-    
-    <div class="box">
-      <div class="zhezhao"></div>
-      <div class="bimg" :style="{ background: 'url('+ sheetInfoContent.coverImgUrl +')' }"></div>
-      <div class="zbox" >
-          <div class="top" v-if="isShow" >
+    <menu-nav class="nav" :isWhite="isWhite" :navTitle="navTitle"></menu-nav>
+    <div v-show="isTopNav" class="content2">
+      <sheet-nav :trackCount="trackCount"></sheet-nav>
+    </div>
+    <mui-scroll
+    id="infoScroll"
+    style="top: 44px" 
+    :scrollY="true"
+
+    ref="mscroll">
+      <div class="box">
+        <div class="zhezhao"></div>
+        <div class="bimg" :style="{ background: 'url('+ sheetInfoContent.coverImgUrl +')' }"></div>
+        <div class="zbox">
+          <div class="top" v-if="isShow">
             <div class="img">
-            <div class="bfl">▷ {{sheetInfoContent.playCount}}</div>
-            <img class :src="sheetInfoContent.coverImgUrl" alt />
+              <div class="bfl">▷ {{sheetInfoContent.playCount}}</div>
+              <img class :src="sheetInfoContent.coverImgUrl" alt />
             </div>
             <div class="name">{{sheetInfoContent.name}}</div>
             <div class="user">
-            <img class :src="sheetInfoContent.avatarUrl" alt />
-            {{sheetInfoContent.nickname}} ＞
+              <img class :src="sheetInfoContent.avatarUrl" alt />
+              {{sheetInfoContent.nickname}} ＞
             </div>
             <tabbar>
-            <tabbaritem path="/home" activeColor="red">
-                <!-- 指定 slot 放入对应的插槽中 -->
+              <tabbaritem path="/home" activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/pinglun.svg" alt />
                 <div class="item-text" slot="item-text">{{sheetInfoContent.commentCount}}</div>
-            </tabbaritem>
-            <tabbaritem path="/classify" activeColor="red">
+              </tabbaritem>
+              <tabbaritem path="/classify" activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/fenxiang.svg" alt />
                 <div class="item-text" slot="item-text">分享</div>
-            </tabbaritem>
-            <tabbaritem path="/cart" activeColor="red">
+              </tabbaritem>
+              <tabbaritem path="/cart" activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/xiazai.svg" alt />
                 <div class="item-text" slot="item-text">下载</div>
-            </tabbaritem>
-            <tabbaritem path="/profile" activeColor="red">
+              </tabbaritem>
+              <tabbaritem path="/profile" activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/duoxuan.svg" alt />
                 <div class="item-text" slot="item-text">多选</div>
-            </tabbaritem>
+              </tabbaritem>
             </tabbar>
+          </div>
         </div>
       </div>
-    </div>
+      <div ref="content" class="content">
+        <sheet-nav :trackCount="trackCount"></sheet-nav>
+      </div>
+      <div class="songItem">
+        <song-item name="sheetInfo" :songList="songList"></song-item>
+      </div>
+    </mui-scroll>
+    <!-- <bscroll
+    class="bscroll"
+    :probeType="3"
+    :listenScroll="true"
+    ref="bscroll">
+      <div class="contentBox">
+        <div class="box">
+        <div class="zhezhao"></div>
+        <div class="bimg" :style="{ background: 'url('+ sheetInfoContent.coverImgUrl +')' }"></div>
+        <div class="zbox">
+          <div class="top" v-if="isShow">
+            <div class="img">
+              <div class="bfl">▷ {{sheetInfoContent.playCount}}</div>
+              <img class :src="sheetInfoContent.coverImgUrl" alt />
+            </div>
+            <div class="name">{{sheetInfoContent.name}}</div>
+            <div class="user">
+              <img class :src="sheetInfoContent.avatarUrl" alt />
+              {{sheetInfoContent.nickname}} ＞
+            </div>
+            <tabbar>
+              <tabbaritem path="/home" activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/pinglun.svg" alt />
+                <div class="item-text" slot="item-text">{{sheetInfoContent.commentCount}}</div>
+              </tabbaritem>
+              <tabbaritem path="/classify" activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/fenxiang.svg" alt />
+                <div class="item-text" slot="item-text">分享</div>
+              </tabbaritem>
+              <tabbaritem path="/cart" activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/xiazai.svg" alt />
+                <div class="item-text" slot="item-text">下载</div>
+              </tabbaritem>
+              <tabbaritem path="/profile" activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/duoxuan.svg" alt />
+                <div class="item-text" slot="item-text">多选</div>
+              </tabbaritem>
+            </tabbar>
+          </div>
+        </div>
+      </div>
+      <div ref="content" class="content">
+        <sheet-nav :trackCount="trackCount"></sheet-nav>
+      </div>
+      <div class="songItem">
+        <song-item name="sheetInfo" :songList="songList"></song-item>
+      </div>
+      </div>
+    </bscroll> -->
   </div>
 </template>
 
 <script>
-import menuNav from "components/context/menuNav/MenuNav"; // 顶部导航栏
+import menuNav from "components/context/sheetNav/SheetTopNav"; // 顶部导航栏
 import tabbar from "components/common/tabbar/tabbar"; // 导航栏
 import tabbaritem from "components/common/tabbar/tabbaritem";
+import sheetNav from "components/context/sheetNav/SheetNav"; // 导航条
+import songItem from "components/context/songItem/SongItem"; // 歌曲列表
+import muiScroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
+import bscroll from "components/common/bscroll/Bscroll"  // 滚动组件
+// import mui from 'assets/mui/js/mui'
 
+import { toStringNum } from "common/common"; // 播放量转换
+
+import { getSongDetial } from "network/played"; // 歌曲列表
 import { getPlayDetial } from "network/sheetInfo"; // 获取歌单内容
 
 export default {
   name: "SheetInfo",
   data() {
     return {
-      navTitle: "歌单",
+      navTitle: "歌单®",
       sheetId: this.$route.params.id, // 保存路由传递的歌单id
       sheetInfoContent: {},
       isShow: false,
       size: "100% 140%",
+      songListId: [], // 歌单歌曲id
+      trackCount: 0, // 歌曲数量
+      songList: [], // 歌曲列表
+      isWhite: true,
+      isTopNav: false,  // 显示/隐藏导航栏
+      isNavToTop: 0
     };
+  },
+  methods: {
+    // listenerMSC(y){
+    //   console.log(y);
+    //   if (-y >= this.isNavToTop) {
+    //       this.isTopNav = true           
+    //   } else {
+    //       this.isTopNav = false
+    //   }  
+    // }
   },
   components: {
     menuNav,
     tabbar,
     tabbaritem,
+    sheetNav,
+    songItem,
+    muiScroll,
+    bscroll
   },
   created() {
+    this.$loading.loadingShow();
+    // 获取歌单基本信息
     getPlayDetial(this.sheetId).then((res) => {
       let path = res.data.playlist;
       this.sheetInfoContent.commentCount = path.commentCount; // 歌单评论数
@@ -72,47 +165,98 @@ export default {
       this.sheetInfoContent.name = path.name; // 歌单名称
       this.sheetInfoContent.playCount = path.playCount; // 歌单播放量
       this.sheetInfoContent.trackCount = path.trackCount; // 歌单歌曲数量
+      this.trackCount = this.sheetInfoContent.trackCount;
       this.sheetInfoContent.avatarUrl = path.creator.avatarUrl; // 用户头像
       this.sheetInfoContent.nickname = path.creator.nickname; // 用户名
       this.sheetInfoContent.userId = path.creator.userId; // 用户id
-      console.log(this.sheetInfoContent);
       this.isShow = true;
+      this.sheetInfoContent.playCount = toStringNum(
+        this.sheetInfoContent.playCount
+      );
+
+      for (const item of path.trackIds) {
+        this.songListId.push(item.id);
+      }
+
+      // 获取歌单歌曲列表
+      getSongDetial(this.songListId.toString()).then((res) => {
+        for (const item of res.data.songs) {
+          // 选择性保存数据
+          this.songList.push({
+            mv: item.mv,
+            songName: item.name,
+            id: item.id,
+            singer: item.ar[0].name,
+            zhuanji: item.al.name,
+            yuanc: item.alia,
+          });
+        }
+      });
+      this.$loading.loadingNo()
     });
   },
+
+  mounted () {
+    // 保存滚动高度
+    this.isNavToTop = this.$refs.content.offsetTop
+    console.log(this.isNavToTop);
+    // console.log(this.$refs.bscroll.scroll.refresh());
+  }
 };
 </script>
 <style scoped>
-.zhezhao{  
-    width: 100%;
-    height: 235px;
-    background-color: rgba(0, 0, 0, 0.7);
-    
-    position: fixed;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
+.bscroll{
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  position: relative;
 }
-.zbox{
-    width: 100%;
-    height: 235px;
-    padding: 0;
-    position: relative;
-    z-index: 15;
+.content2{
+  position: relative;
+  z-index: 17;
 }
-.bimg{
-   width: 100%;
-   top: 0;
-   left: 0;
-   height: 235px;
-   padding: 0;
-   position: absolute;
-   opacity: 0.3;
-   background-size: 100% 130%;
+.SheetInfo{
+  position: relative;
+  z-index: 5;
+  background-color:  rgba(0, 0, 0, 0.8);
+  height: 100vh;
+}
+.zhezhao {
+  width: 100%;
+  height: 235px;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.zbox {
+  width: 100%;
+  height: 235px;
+  padding: 0;
+  position: relative;
+  z-index: 15;
+}
+.bimg {
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 235px;
+  padding: 0;
+  position: absolute;
+  opacity: 0.3;
+  background-size: 100% 130%;
+}
+.songItem {
+  padding: 0px 16px 8px;
+  background-color: #fff;
 }
 .nav {
-  background-color: #fff;
-  position: relative;
+  /* background-color: #fff; */
+  background-color: rgba(0,0,0,0.7);
+  position: flex;
+  color: #fff;
   z-index: 20;
 }
 .imgNav {
@@ -179,10 +323,15 @@ export default {
 .user img {
   width: 30px;
   height: 30px;
-  /* margin-top: 5px;
-        margin-left: 10px; */
   border-radius: 50%;
   float: left;
   margin-right: 7px;
+}
+.content {
+  width: 100%;
+  padding: 0;
+  margin-top: -20px;
+  position: relative;
+  z-index: 18;
 }
 </style>
