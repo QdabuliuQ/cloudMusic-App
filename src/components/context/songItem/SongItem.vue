@@ -1,7 +1,7 @@
 <template>
   <div class="SongItem">
       <div class="item" v-for="(item,index) in songList" :key="index">
-          <div class="itemBox">
+          <div class="itemBox"  @click="play(item.id)">
               <div class="index">
                   {{index + 1 }}
               </div>
@@ -28,7 +28,12 @@
 
 export default {
     name: 'SongItem',
-    props: ['songList']
+    props: ['songList'],
+    methods: {
+        play(sid){
+            this.$router.push('/playSong/' + sid)
+        }
+    }
 }
 
 </script>

@@ -4,14 +4,14 @@
           <img src="~assets/img/common/fanhui.svg" alt="">  
       </div>
       <div class="center">{{navTitle}}</div>
-      <div class="right"></div>
+      <div class="right"><img v-if="rightImg" :src="rightImg" alt=""></div>
   </div>
 </template>
 
 <script>
 export default {
     name: 'RadioStationNav',
-    props: ['navTitle','isWhite'],
+    props: ['navTitle','rightImg'],
     methods: {
         back(){
             this.$router.go(-1)
@@ -45,5 +45,11 @@ export default {
     }
     .right{
         flex: 1;
+    }
+    .right img{
+        width: 23px;
+        height: 23px;
+        margin-top: 10px;
+        margin-left: 8px;
     }
 </style>

@@ -12,6 +12,7 @@ import { Field } from 'vant';
 import { CellGroup } from 'vant'
 import { Button } from 'vant'
 import { Loading } from 'vant';
+import { Slider } from 'vant';
 
 
 // 引入css样式
@@ -22,6 +23,7 @@ Vue.use(Field);  // 输入框
 Vue.use(CellGroup)  
 Vue.use(Button)  // 按钮
 Vue.use(Loading);  // 加载动画
+Vue.use(Slider);  // 滑块
 
 
 // 引入 toast 组件

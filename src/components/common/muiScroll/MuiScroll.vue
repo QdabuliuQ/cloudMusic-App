@@ -10,7 +10,9 @@
 // 使用 muiScroll 滚动组件之前必须先按照路径引入 js 文件
 import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
+
 export default {
+  
   name: "MuiScroll",
   props: {
     //   是否回弹
@@ -45,13 +47,14 @@ export default {
     },
   },
   mounted() {
+    mui.init();
     this.muiscroll = mui(".mui-scroll-wrapper").scroll({
       bounce:this.bounce, //是否回弹
       scrollY:this.scrollY, //是否竖向滚动
       scrollX: this.scrollX, //是否横向滚动
       startX: 0, //初始化时滚动至x
       startY: 0, //初始化时滚动至y
-      deceleration:0.0006,
+      deceleration:0.0008,
       indicators: this.indicators, //是否显示滚动条
     });
     // console.log(this.muiscroll.scroll);

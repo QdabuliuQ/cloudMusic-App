@@ -4,21 +4,24 @@
     <music-navbar class="appnav"></music-navbar>
     <transition mode="">
       <!-- exclude 不会保存对应的组件 -->
-      <keep-alive exclude="SheetInfo">
+      <keep-alive exclude="SheetInfo,PlaySong">
         <!-- 在组件切换的时候添加动画 -->
           <router-view></router-view>
       </keep-alive>
     </transition>
+    <play-nav></play-nav>
   </div>  
 </template>
 
 <script>
 import musicNavbar from 'components/context/musicNavbar/MusicNavbar'
+import playNav from './components/context/playNav/PlayNav'
 
 export default {
   name: 'App',
   components: {
-    musicNavbar
+    musicNavbar,
+    playNav
   }
 }
 </script>

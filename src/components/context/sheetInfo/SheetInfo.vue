@@ -8,7 +8,6 @@
     id="infoScroll"
     style="top: 44px" 
     :scrollY="true"
-
     ref="mscroll">
       <div class="box">
         <div class="zhezhao"></div>
@@ -52,55 +51,6 @@
         <song-item name="sheetInfo" :songList="songList"></song-item>
       </div>
     </mui-scroll>
-    <!-- <bscroll
-    class="bscroll"
-    :probeType="3"
-    :listenScroll="true"
-    ref="bscroll">
-      <div class="contentBox">
-        <div class="box">
-        <div class="zhezhao"></div>
-        <div class="bimg" :style="{ background: 'url('+ sheetInfoContent.coverImgUrl +')' }"></div>
-        <div class="zbox">
-          <div class="top" v-if="isShow">
-            <div class="img">
-              <div class="bfl">▷ {{sheetInfoContent.playCount}}</div>
-              <img class :src="sheetInfoContent.coverImgUrl" alt />
-            </div>
-            <div class="name">{{sheetInfoContent.name}}</div>
-            <div class="user">
-              <img class :src="sheetInfoContent.avatarUrl" alt />
-              {{sheetInfoContent.nickname}} ＞
-            </div>
-            <tabbar>
-              <tabbaritem path="/home" activeColor="red">
-                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/pinglun.svg" alt />
-                <div class="item-text" slot="item-text">{{sheetInfoContent.commentCount}}</div>
-              </tabbaritem>
-              <tabbaritem path="/classify" activeColor="red">
-                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/fenxiang.svg" alt />
-                <div class="item-text" slot="item-text">分享</div>
-              </tabbaritem>
-              <tabbaritem path="/cart" activeColor="red">
-                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/xiazai.svg" alt />
-                <div class="item-text" slot="item-text">下载</div>
-              </tabbaritem>
-              <tabbaritem path="/profile" activeColor="red">
-                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/duoxuan.svg" alt />
-                <div class="item-text" slot="item-text">多选</div>
-              </tabbaritem>
-            </tabbar>
-          </div>
-        </div>
-      </div>
-      <div ref="content" class="content">
-        <sheet-nav :trackCount="trackCount"></sheet-nav>
-      </div>
-      <div class="songItem">
-        <song-item name="sheetInfo" :songList="songList"></song-item>
-      </div>
-      </div>
-    </bscroll> -->
   </div>
 </template>
 
@@ -135,16 +85,6 @@ export default {
       isTopNav: false,  // 显示/隐藏导航栏
       isNavToTop: 0
     };
-  },
-  methods: {
-    // listenerMSC(y){
-    //   console.log(y);
-    //   if (-y >= this.isNavToTop) {
-    //       this.isTopNav = true           
-    //   } else {
-    //       this.isTopNav = false
-    //   }  
-    // }
   },
   components: {
     menuNav,
@@ -192,15 +132,16 @@ export default {
           });
         }
       });
-      this.$loading.loadingNo()
+      
     });
   },
 
   mounted () {
     // 保存滚动高度
     this.isNavToTop = this.$refs.content.offsetTop
-    console.log(this.isNavToTop);
-    // console.log(this.$refs.bscroll.scroll.refresh());
+    this.$nextTick(() => {
+      this.$loading.loadingNo()
+    })
   }
 };
 </script>

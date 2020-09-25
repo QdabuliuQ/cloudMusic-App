@@ -14,7 +14,7 @@
                 <my-message-user class="user" v-if="$store.state.profile.userId !== ''"></my-message-user>
                 <my-message-login class="login" v-else @toLogin="toLogin"></my-message-login>
                 <my-message-menu></my-message-menu>
-                <my-message-love></my-message-love>
+                <my-message-love @click.native="toLove"></my-message-love>
                 <tab-control @tabGoods="tabGoods" ref="tab1" :title="title"></tab-control>
                 <my-message-list></my-message-list>
             </div>
@@ -30,6 +30,8 @@ import MyMessageMenu from './chlidrenComps/MyMessageMenu'  // 菜单栏
 import MyMessageLove from './chlidrenComps/MyMessageLove'  // 喜欢的音乐
 import MyMessageList from './chlidrenComps/MyMessageList'  // 歌单列表
 import tabControl from 'components/common/tabControl/TabControl'
+
+import mui from 'assets/mui/js/mui'
 
 import muiScroll from 'components/common/muiScroll/MuiScroll'  // 滚动组件
 
@@ -56,16 +58,6 @@ export default {
         closeLogin(){
             // this.isShow = false;
         },
-        
-        // 监听滚动
-        // listenerMSC(y){
-            
-        //     if (-y >= this.offsetTopTab) {
-        //         this.isFixed = true           
-        //     } else {
-        //         this.isFixed = false
-        //     }   
-        // },
 
         // 导航栏切换
         tabGoods(index){
@@ -83,14 +75,19 @@ export default {
                     break;
                 default:
                     break;
-            }
-            
+            }  
+        },
+
+        toLove(){
+            this.$router.push('/playDetail/' + this.$store.state.playList[0].id)
         }
     },
     mounted () {
         this.$nextTick(() => {
             this.offsetTopTab = this.$refs.tab1.$el.offsetTop
         })
+
+        
     },
     components: {
         MyMessageLogin,

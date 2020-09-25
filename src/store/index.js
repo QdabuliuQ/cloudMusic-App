@@ -23,7 +23,7 @@ export default new Vuex.Store({
     // 收藏组件 滚动 距离
     collectionToTop: 0,
     // 导航栏到底部距离
-    navbarToTop: 0
+    navbarToTop: 0,
   },
   mutations: {
   },

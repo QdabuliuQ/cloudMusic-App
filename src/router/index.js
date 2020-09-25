@@ -36,6 +36,7 @@ const routes = [
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },
 
   { path: '/playDetail/:id', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
+  { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
 
   { path: '/cloudVillage', component: cloudVillage },
   { path: '/video', component: video }
