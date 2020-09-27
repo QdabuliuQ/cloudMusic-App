@@ -62,7 +62,6 @@ import sheetNav from "components/context/sheetNav/SheetNav"; // 导航条
 import songItem from "components/context/songItem/SongItem"; // 歌曲列表
 import muiScroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 import bscroll from "components/common/bscroll/Bscroll"  // 滚动组件
-// import mui from 'assets/mui/js/mui'
 
 import { toStringNum } from "common/common"; // 播放量转换
 
@@ -131,8 +130,7 @@ export default {
             yuanc: item.alia,
           });
         }
-      });
-      
+      });     
     });
   },
 

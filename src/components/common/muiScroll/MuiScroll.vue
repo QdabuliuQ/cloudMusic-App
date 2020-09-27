@@ -45,7 +45,7 @@ export default {
     },
   },
   created() {
-    console.log(this.$store.state.getComMore);
+    // console.log(this.$store.state.getComMore);
   },
   mounted() {
     mui.init();
@@ -72,24 +72,7 @@ export default {
         // this.$emit('listenerMSC2',scroll.y)
       });
     try {
-      mui.init({
-        pullRefresh: {
-          container: "#refreshContainer",
-          // down: {
-          //   contentdown: "下拉可以刷新",
-          //   contentover: "释放立即刷新",
-          //   contentrefresh: "正在刷新...",
-          //   contentmore: "刷新完成",
-          //   auto: false,
-          //   callback: pullfresh, //下拉刷新（回调）
-          // },
-          up: {
-            contentrefresh: "正在加载...",
-            contentnomore: "没有更多数据了",
-            callback: this.$store.state.getComMore(this.$store.state.songid, 50, this.$store.state.page), //上拉加载下一页，（回调）
-          },
-        },
-      });
+      
     } catch (error) {
       
     }

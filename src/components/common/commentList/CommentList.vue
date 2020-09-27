@@ -14,11 +14,18 @@
     <mscroll 
     class="conscroll"
     :scrollY="true">
-        <div class="content" v-if="commentList.length > 0">
-            <div class="item" v-for="(item, index) in commentList" :key="index">
+        <div class="content"
+        v-if="commentList.length > 0"
+        v-infinite-scroll="loadComment"
+        infinite-scroll-distance="100"
+        infinite-scroll-delay="500"
+        infinite-scroll-immediate="fasle">
+            <div class="item"    
+            v-for="(item, index) in commentList" 
+            :key="index">
                 <div class="topbox">
                 <div class="userImg">
-                    <img :src="item.userImg" alt="" />
+                    <img v-lazy="item.userImg" alt="" />
                 </div>
                 <div class="userName">
                     <div class="name">
@@ -55,8 +62,10 @@
 <script>
 import { getComment } from "network/played"; // 评论请求
 import mscroll from 'components/common/muiScroll/MuiScroll';
+import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 export default {
+  
   name: "CommentList",
   data() {
     return {
@@ -71,15 +80,23 @@ export default {
       mscroll
   },
   methods: {
+    // 监听上拉加载
+    loadComment(){
+      // 发送请求
+      this.getCommentList(this.$route.params.sid, 25, this.page)
+    },
+
     back() {
       this.$emit("toback");
     },
 
+    // 封转方法
     getCommentList(sid, list, page){
+        // 发送网络请求
         getComment(sid, list, page).then((res) => {
-            console.log(res);
             this.commentTitle = "评论(" + res.data.total + ")";
-            for (const item of res.data.hotComments) {
+            if (res.data.hotComments) {
+              for (const item of res.data.hotComments) {
                 this.commentList.push({
                 commentId: item.commentId, // 评论楼层id
                 content: item.content, // 评论内容
@@ -91,6 +108,7 @@ export default {
                 userId: item.user.userId, // 用户id
                 vipType: item.user.vipType, // 是否开通会员
                 });
+              }
             }
 
             for (const itemc of res.data.comments) {
@@ -112,13 +130,9 @@ export default {
   },
   created() {
     // 获取评论
-    this.getCommentList(this.$route.params.sid, 50, this.page)
-    this.$store.state.getComMore = this.getCommentList
-    this.$store.state.songid = this.$route.params.sid,
-    this.$store.state.page = this.page
+    this.getCommentList(this.$route.params.sid, 25, this.page)
   },
   mounted () {
-    
   }
 };
 </script>

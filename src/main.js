@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 引入 elementui
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 // 引入 mui 基本css样式
 import 'assets/mui/css/mui.css'
 
@@ -26,12 +31,11 @@ Vue.use(Loading);  // 加载动画
 Vue.use(Slider);  // 滑块
 Vue.use(ActionSheet);  // 动作面板
 
+// 图片懒加载
+import VueLazyLoad from 'vue-lazyload'
+// 安装 VueLazyLoad
+Vue.use(VueLazyLoad)
 
-// Vue.config.warnHandler = function (msg) {  
-//   if (!msg.includes('Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders.')) { // uniApp bug: https://ask.dcloud.net.cn/question/71966  
-//     return console.warn && console.warn(msg)  
-//   }  
-// }
 
 import moment from 'moment' 
 // 过滤器  pattern 时间格式
