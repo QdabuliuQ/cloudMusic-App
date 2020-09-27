@@ -6,7 +6,7 @@
     </div>
     <mui-scroll
     id="infoScroll"
-    style="top: 44px" 
+    style="top: 44px; bottom: 45px" 
     :scrollY="true"
     ref="mscroll">
       <div class="box">

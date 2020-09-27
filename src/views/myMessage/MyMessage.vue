@@ -7,7 +7,7 @@
         @tabGoods='tabGoods'
         v-show="isFixed"></tab-control>
         <mui-scroll
-        style="top: 44px;"
+        style="top: 44px; bottom: 45px"
         :scrollY="true"
         ref="mscroll">
             <div class="MyMessage2">

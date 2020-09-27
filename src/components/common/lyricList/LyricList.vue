@@ -34,15 +34,15 @@ export default {
     },
     watch: {
         cTime(){
+            // 判断有没有歌词
             if (this.lyricText.length !== 0) {
-                if(this.cTime >= this.songLyric[this.index] && this.cTime <= this.songLyric[this.index + 1] ){
-                    
+                // 判断歌曲时间在歌词区间
+                if(this.cTime >= this.songLyric[this.index] && this.cTime <= this.songLyric[this.index + 1] ){                    
                     if (this.index > 6) {
                         // this.yscroll += document.getElementsByClassName('active')[0].clientHeight + 17
                         // this.$refs.list.style.transform = 'translateY(' + (-this.yscroll) + 'px)'
                         this.yscroll = document.getElementsByClassName('active')[0].clientHeight + 17
                         this.$refs.list.style.transform = 'translateY(' + (-this.yscroll) * this.zindex + 'px)'
-                        console.log(this.zindex);
                         this.zindex ++ ;
                         this.$refs.list.style.transition = '0.3s linear'
                     }

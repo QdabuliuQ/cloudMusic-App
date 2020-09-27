@@ -167,6 +167,7 @@ export default {
         right: 0;
         bottom: 0;
         background-color: #fff;
+        z-index: 52;
     }
     .box{
         padding: 5px 10px;

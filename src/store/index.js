@@ -24,6 +24,23 @@ export default new Vuex.Store({
     collectionToTop: 0,
     // 导航栏到底部距离
     navbarToTop: 0,
+
+    playContent: {
+      songName: '',  // 歌曲名称
+      songImg: '',  // 歌曲封面
+      endTime: '',  // 最后播放时间
+      songurl: '',  // 歌曲url
+      singer: '',  // 演唱者
+      isPlayM: ''  // 是否播放了音乐
+    },
+
+    playSongComp: 0,  // 播放页面是否被打开
+    navMusicDom: null,
+    isend: false,  // 背部播放器是否结束
+    showComment: false,  // 显示/隐藏评论面板
+    getComMore: '',
+    songid: '',
+    page: ''
   },
   mutations: {
   },

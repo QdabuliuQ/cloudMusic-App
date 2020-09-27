@@ -7,9 +7,7 @@
               </div>
               <div class="text">
                   <span class="name">{{item.nickname}}</span>
-                  <!-- <img class="imgvip" src="" alt=""> -->
                   <img v-if="item.vipType !== 0" class="imgvip" src="~assets/img/common/vip1.svg" alt="">
-                  <!-- <span class="qm">{{item.signature}}</span> -->
                   <div class="btn" 
                   @click="isFollow(item.userId,index)"
                   :class="{isFollows : item.followBtn}">
