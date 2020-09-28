@@ -7,7 +7,7 @@
     }"
   >
     <div class="PlaySong">
-      <sheet-topnav :navTitle="navTitle" :rightImg="rightImg"></sheet-topnav>
+      <sheet-topnav @fx="fx" :navTitle="navTitle" :rightImg="rightImg"></sheet-topnav>
       <div v-show="showLogo" @click="isShowLogo" class="logo">
         <div ref="guanp" class="guanp">
           <img class="img" src="~assets/img/playSong/gp3.png" alt="" />
@@ -83,20 +83,15 @@
         @timeupdate="timeupdate"
       ></audio>
     </div>
-    <!-- 评论列表 -->
-    <!-- <mscroll     
-      style="top: 48px; bottom: 0"
-      :scrollY="true"
-      :bounce="true">
-    <van-action-sheet class="comment" v-model="show" :title="commentTitle">
-      
-        
-      
-    </van-action-sheet>
-    </mscroll> -->
+    <!-- 评论组件 -->
     <transition>
-      <comment-list @toback="toback" v-show="showComment"></comment-list>
+      <comment-list @toback="toback" v-show="showComment" :showComment="showComment"></comment-list>
     </transition>
+    <van-share-sheet
+      v-model="showShare"
+      title="立即分享给好友"
+      :options="options"
+    />
   </div>
 </template>
 
@@ -142,7 +137,19 @@ export default {
       isPlayM: 0, // 是否播放了音乐
       timeNew: 0,
       showComment: false,  // 显示隐藏评论组件
-      
+      showShare: false,  // 分享面板
+      options: [  // 分享面板
+        [
+          { name: '微信', icon: 'wechat' },
+          { name: '微博', icon: 'weibo' },
+          { name: 'QQ', icon: 'qq' },
+        ],
+        [
+          { name: '复制链接', icon: 'link' },
+          { name: '分享海报', icon: 'poster' },
+          { name: '二维码', icon: 'qrcode' },
+        ],
+      ],
     };
   },
   components: {
@@ -153,6 +160,11 @@ export default {
     commentList
   },
   methods: {
+    // 分享面板
+    fx(){
+      this.showShare = true;
+    },
+
     toback(){
       this.showComment = false
     },
@@ -503,4 +515,5 @@ export default {
     /* 添加动画效果 */
     transition: all 0.2s linear;
 }
+
 </style>

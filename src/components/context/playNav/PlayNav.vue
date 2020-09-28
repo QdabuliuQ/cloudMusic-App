@@ -130,6 +130,7 @@ export default {
         font-size: 14px;
     }
     .top{
+        width: 220px;
         margin-top: 5px;
         font-size: 15px;
         overflow: hidden;
@@ -137,6 +138,7 @@ export default {
         white-space: nowrap;
     }
     .bottom{
+        width: 220px;
         font-size: 13px;
         color: #a0a0a0;
         overflow: hidden;
@@ -145,6 +147,7 @@ export default {
     }
     .item{     
         height: 17px;
+        
     }
     .play{
         flex: 1;

@@ -15,7 +15,7 @@
               <div class="mv">
                   <img v-if="item.mv !== 0" src="~assets/img/common/mv.svg" alt="">
               </div>
-              <div class="more">
+              <div class="more" @click.stop="moreMenu">
                   <img src="~assets/img/common/sandian.svg" alt="">
               </div>
           </div>
@@ -32,6 +32,10 @@ export default {
     methods: {
         play(sid){
             this.$router.push('/playSong/' + sid)
+        },
+
+        moreMenu(){
+            console.log(22);
         }
     }
 }

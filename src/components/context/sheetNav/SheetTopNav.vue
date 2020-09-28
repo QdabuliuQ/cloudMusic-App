@@ -4,7 +4,7 @@
           <img src="~assets/img/common/fanhui.svg" alt="">  
       </div>
       <div class="center">{{navTitle}}</div>
-      <div class="right"><img v-if="rightImg" :src="rightImg" alt=""></div>
+      <div class="right" @click="fxiang"><img v-if="rightImg" :src="rightImg" alt=""></div>
   </div>
 </template>
 
@@ -15,6 +15,10 @@ export default {
     methods: {
         back(){
             this.$router.go(-1)
+        },
+
+        fxiang(){
+            this.$emit('fx')
         }
     }
 }
@@ -42,6 +46,9 @@ export default {
         line-height: 44px;
         font-size: 18px;
         text-indent: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .right{
         flex: 1;

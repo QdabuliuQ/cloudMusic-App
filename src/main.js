@@ -19,6 +19,8 @@ import { Button } from 'vant'
 import { Loading } from 'vant';
 import { Slider } from 'vant';
 import { ActionSheet } from 'vant';
+import { ShareSheet } from 'vant';
+
 
 // 引入css样式
 import 'vant/lib/index.css';
@@ -30,6 +32,7 @@ Vue.use(Button)  // 按钮
 Vue.use(Loading);  // 加载动画
 Vue.use(Slider);  // 滑块
 Vue.use(ActionSheet);  // 动作面板
+Vue.use(ShareSheet);  // 分享面板
 
 // 图片懒加载
 import VueLazyLoad from 'vue-lazyload'
