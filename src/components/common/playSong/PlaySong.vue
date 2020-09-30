@@ -310,6 +310,7 @@ export default {
       clearInterval(this.timeS);
       this.timeS = setInterval(this.setInPlay, 1000);
       if (this.value >= 100) {
+        this.$store.state.isend = true;
         this.value = 100;
         this.$refs.bnav.endImg();
         clearInterval(this.timeS); // value等于100表示播放结束
@@ -339,11 +340,17 @@ export default {
         let reg = /[\[|[0-9\:\.]|]]/gi; // 正则匹配去除 []
 
         let lyric = text.replace(reg, "");
+        
         this.lyricText = lyric.split("]"); // 将字符串转为数组
-
+        
+        // console.log(huiche.test(this.lyricText[8]));
+        console.log(this.lyricText);
+        // console.log(this.lyricText);
+        // console.log(huiche.test(this.lyricText[8]));
+        // console.log(typeof this.lyricText[8]);
         var reg2 = /\[(.+?)\]/g; // 正则匹配出时间
         let time = text.match(reg2); // match 选中匹配成功的内容
-
+        
         for (let i = 0; i < time.length; i++) {
           time[i] = time[i].slice(1, 9); // slice 截取
           time[i] =
@@ -352,6 +359,18 @@ export default {
         }
 
         this.songLyric = time;
+        let num = 0
+        // for循环遍历歌词数组
+        for (let i = 0; i < this.songLyric.length; i++) {
+          // 检查是否有 NaN 设置为 0 
+          if (isNaN(this.songLyric[i])) {
+            this.songLyric.splice(i, 1, num+=0.15)
+          }
+          if (this.songLyric[i] == this.songLyric[i + 1] || this.songLyric[i] >= this.songLyric[i + 1]) {
+            // console.log(this.songLyric[i]+ ',' + this.songLyric[i + 1]);
+            this.songLyric.splice(i + 1, 1, this.songLyric[i + 1] + 0.5)
+          }
+        }
       }
     });
 
@@ -393,7 +412,12 @@ export default {
     this.$store.state.playContent.songName = this.navTitle; // 歌名
     this.$store.state.playContent.songurl = this.songUrl; // url
     this.$store.state.playContent.singer = this.singer; // 歌手
-    this.$store.state.playContent.endTime = this.audioDom.currentTime; // 最后歌曲播放时间
+    if (this.audioDom.currentTime !== this.audioDom.duration) {
+      this.$store.state.playContent.endTime = this.audioDom.currentTime;
+    } else {
+      this.$store.state.playContent.endTime = 0;
+    }
+     // 最后歌曲播放时间
     this.$store.state.playContent.isPlayM = this.isPlayM; // 是否播放了音乐
     this.audioDom.pause();
   },

@@ -74,15 +74,22 @@ export default {
     },
     watch: {
         isPlayM(){
+            this.$store.state.navMusicDom = document.getElementById('navMusic')  
             this.isAudio = true  
             if (this.isPlayM > 0) {
-                this.navMusic = document.getElementById('navMusic')
-                this.$store.state.navMusicDom = document.getElementById('navMusic')                   
-                this.navMusic.src = this.$store.state.playContent.songurl                     
-                this.navMusic.currentTime = this.$store.state.playContent.endTime
-                this.navMusic.play()
-                    
-                this.isPlay = require('assets/img/common/zanting.svg')              
+                console.log(this.$store.state.isend);
+                if (this.$store.state.isend || this.$store.state.isPlayEnd) {
+                    this.isPlay = require('assets/img/common/shipin.svg')
+                    // this.navMusic.src = this.$store.state.playContent.songurl                    
+                    // this.navMusic.currentTime = 0
+                    this.$store.state.isend = false;
+                } else {
+                    this.navMusic = document.getElementById('navMusic')                                 
+                    this.navMusic.src = this.$store.state.playContent.songurl                     
+                    this.navMusic.currentTime = this.$store.state.playContent.endTime
+                    this.navMusic.play()                       
+                    this.isPlay = require('assets/img/common/zanting.svg')   
+                }           
             }  
         },
 

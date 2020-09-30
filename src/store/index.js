@@ -40,7 +40,8 @@ export default new Vuex.Store({
     showComment: false,  // 显示/隐藏评论面板
     getComMore: '',
     songid: '',
-    page: ''
+    page: '',
+    isPlayEnd: false // 内部播放器是否播放结束
   },
   mutations: {
   },

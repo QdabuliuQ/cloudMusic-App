@@ -3,6 +3,7 @@
       <menu-nav class="navbar" :navTitle="navTitle"></menu-nav>
       <mui-scroll 
       style="top: 44px;
+      bottom: 45px;
       background-color: #fff"
       :scrollY="true">
         <div class="box">

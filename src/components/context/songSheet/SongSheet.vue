@@ -45,7 +45,7 @@ export default {
     }
     .listName{
         width: 220px;
-        margin-top: 6px;
+        margin-top: 3.5px;
         margin-left: 10px;
         font-size: 16px;
         overflow: hidden;

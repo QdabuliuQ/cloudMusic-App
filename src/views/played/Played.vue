@@ -2,7 +2,7 @@
   <div class="Played">
       <menu-nav class="navbar" :navTitle="navTitle"></menu-nav>
       <mui-scroll
-        style="top: 44px"
+        style="top: 44px; bottom: 45px"
         :scrollY="true">
       <div class="box">
         <div class="topbox">
