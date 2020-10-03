@@ -24,19 +24,19 @@
               {{sheetInfoContent.nickname}} ＞
             </div>
             <tabbar>
-              <tabbaritem path="/home" activeColor="red">
+              <tabbaritem @click.native="showInfoComment" activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/pinglun.svg" alt />
                 <div class="item-text" slot="item-text">{{sheetInfoContent.commentCount}}</div>
               </tabbaritem>
-              <tabbaritem path="/classify" activeColor="red">
+              <tabbaritem activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/fenxiang.svg" alt />
                 <div class="item-text" slot="item-text">分享</div>
               </tabbaritem>
-              <tabbaritem path="/cart" activeColor="red">
+              <tabbaritem activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/xiazai.svg" alt />
                 <div class="item-text" slot="item-text">下载</div>
               </tabbaritem>
-              <tabbaritem path="/profile" activeColor="red">
+              <tabbaritem activeColor="red">
                 <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/duoxuan.svg" alt />
                 <div class="item-text" slot="item-text">多选</div>
               </tabbaritem>
@@ -51,6 +51,9 @@
         <song-item name="sheetInfo" :songList="songList"></song-item>
       </div>
     </mui-scroll>
+    <transition>
+      <info-comment @toback="toback" v-show="isShowinfoc"></info-comment>
+    </transition>
   </div>
 </template>
 
@@ -62,11 +65,12 @@ import sheetNav from "components/context/sheetNav/SheetNav"; // 导航条
 import songItem from "components/context/songItem/SongItem"; // 歌曲列表
 import muiScroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 import bscroll from "components/common/bscroll/Bscroll"  // 滚动组件
+import infoComment from './childrenComps/SheetInfoComment'  // 歌单评论组件
 
 import { toStringNum } from "common/common"; // 播放量转换
 
 import { getSongDetial } from "network/played"; // 歌曲列表
-import { getPlayDetial } from "network/sheetInfo"; // 获取歌单内容
+import { getPlayDetial, getSheetComment } from "network/sheetInfo"; // 获取歌单内容 歌单评论
 
 export default {
   name: "SheetInfo",
@@ -82,8 +86,22 @@ export default {
       songList: [], // 歌曲列表
       isWhite: true,
       isTopNav: false,  // 显示/隐藏导航栏
-      isNavToTop: 0
+      isNavToTop: 0,
+      isShowinfoc: false  // 显示/隐藏评论组件
     };
+  },
+  methods: {
+    // 显示评论
+    showInfoComment(){
+      this.isShowinfoc = true;
+      this.$store.state.isShowNav = false
+    },
+
+    // 隐藏评论
+    toback(){
+      this.isShowinfoc = false;
+      this.$store.state.isShowNav = true
+    }
   },
   components: {
     menuNav,
@@ -92,7 +110,8 @@ export default {
     sheetNav,
     songItem,
     muiScroll,
-    bscroll
+    bscroll,
+    infoComment
   },
   created() {
     this.$loading.loadingShow();
@@ -119,6 +138,7 @@ export default {
 
       // 获取歌单歌曲列表
       getSongDetial(this.songListId.toString()).then((res) => {
+        // console.log(res);
         for (const item of res.data.songs) {
           // 选择性保存数据
           this.songList.push({
@@ -132,6 +152,11 @@ export default {
         }
       });     
     });
+
+    // 歌单评论
+    // getSheetComment(this.sheetId).then(res => {
+    //   console.log(res);
+    // })
   },
 
   mounted () {
@@ -272,5 +297,22 @@ export default {
   margin-top: -20px;
   position: relative;
   z-index: 18;
+}
+.v-enter{
+  opacity: 0;
+  /* 进来的时候从右 */
+  transform: translateX(100%);
+}
+.v-leave-to{
+  opacity: 0;
+  /* 离开的时候向左 */
+  transform: translateX(-100%);
+  position: absolute;
+}
+
+/* 动画执行期间 */
+.v-enter-active,.v-leave-active{
+    /* 添加动画效果 */
+    transition: all 0.2s linear;
 }
 </style>

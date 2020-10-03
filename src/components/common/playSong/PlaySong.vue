@@ -8,27 +8,30 @@
   >
     <div class="PlaySong">
       <sheet-topnav @fx="fx" :navTitle="navTitle" :rightImg="rightImg"></sheet-topnav>
-      <div v-show="showLogo" @click="isShowLogo" class="logo">
-        <div ref="guanp" class="guanp">
-          <img class="img" src="~assets/img/playSong/gp3.png" alt="" />
-          <div class="songImg">
-            <!-- 歌曲封面 -->
-            <img :src="bgimg" alt="" />
+      <transition name="logo" mode="out-in">
+        <div v-show="showLogo" @click="isShowLogo" class="logo">
+          <div ref="guanp" class="guanp">
+            <img class="img" src="~assets/img/playSong/gp3.png" alt="" />
+            <div class="songImg">
+              
+              <img :src="bgimg" alt="" />
+            </div>
           </div>
         </div>
-      </div>
-      <!-- 歌词列表 -->
-      <lyric-list
-        @click.native="isShowLyric"
-        v-show="showLyric"
-        :lyricText="lyricText"
-        :songLyric="songLyric"
-        :value="value"
-        :songTime="songTime"
-        :cTime="cTime"
-        :indexLyric="indexLyric"
-        class="lyric"
-      ></lyric-list>
+      </transition>
+      <transition name="lyric" mode="out-in">
+        <lyric-list
+          @click.native="isShowLyric"
+          v-show="showLyric"
+          :lyricText="lyricText"
+          :songLyric="songLyric"
+          :value="value"
+          :songTime="songTime"
+          :cTime="cTime"
+          :indexLyric="indexLyric"
+          class="lyric"
+        ></lyric-list>
+      </transition>
       <div class="nav">
         <div class="PlaySongNav">
           <div class="navitem">
@@ -338,16 +341,8 @@ export default {
       if (res.data.lrc !== undefined) {
         let text = res.data.lrc.lyric;
         let reg = /[\[|[0-9\:\.]|]]/gi; // 正则匹配去除 []
-
-        let lyric = text.replace(reg, "");
-        
+        let lyric = text.replace(reg, "");        
         this.lyricText = lyric.split("]"); // 将字符串转为数组
-        
-        // console.log(huiche.test(this.lyricText[8]));
-        console.log(this.lyricText);
-        // console.log(this.lyricText);
-        // console.log(huiche.test(this.lyricText[8]));
-        // console.log(typeof this.lyricText[8]);
         var reg2 = /\[(.+?)\]/g; // 正则匹配出时间
         let time = text.match(reg2); // match 选中匹配成功的内容
         
@@ -373,8 +368,6 @@ export default {
         }
       }
     });
-
-    
   },
   mounted() {
     this.$store.state.playSongComp = 1; // 播放页面是否被打开
@@ -389,8 +382,12 @@ export default {
           if (res.data.data[0].url !== null) {
             let url = res.data.data[0].url; // 歌曲url
             playdom.src = url; // 设置url
-            playdom.currentTime = this.$store.state.navMusicDom.currentTime;
-            this.rotate();
+            if (this.$store.state.playContent.songId == this.$route.params.sid) {
+              playdom.currentTime = this.$store.state.navMusicDom.currentTime;  // 设置播放时间
+            } else {
+              playdom.currentTime = 0.01
+            }
+            this.rotate();  // 封面旋转
             // 延时调用
             setTimeout(() => {
               this.timeNew = 100 / playdom.duration; // 计算比例
@@ -412,6 +409,7 @@ export default {
     this.$store.state.playContent.songName = this.navTitle; // 歌名
     this.$store.state.playContent.songurl = this.songUrl; // url
     this.$store.state.playContent.singer = this.singer; // 歌手
+    this.$store.state.playContent.songId = this.id; // 歌曲id
     if (this.audioDom.currentTime !== this.audioDom.duration) {
       this.$store.state.playContent.endTime = this.audioDom.currentTime;
     } else {
@@ -463,9 +461,9 @@ export default {
 .guanp {
   width: 340px;
   height: 340px;
-  margin: auto;
+  margin: 0 auto;
   position: relative;
-  top: 55px;
+  top: 13%;
 }
 .logo .img {
   width: 340px;
@@ -536,8 +534,44 @@ export default {
 
 /* 动画执行期间 */
 .v-enter-active,.v-leave-active{
+  position: absolute;
+  /* z-index: 10; */
     /* 添加动画效果 */
-    transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  
+}
+.logo-enter{
+  opacity: 1;
+  position: absolute;
+  z-index: -10;
+  transform: translateX(-350px);
+}
+.logo-leave-to{
+  opacity: 1;
+  position: absolute;
+  z-index: -10;
+  transform: translateX(-350px);
 }
 
+.logo-enter-active,.logo-leave-active{
+  transition: 0.8s all ease-in-out;
+}
+
+.lyric-enter{
+  position: absolute;
+  z-index: -10;
+  opacity: 1;
+  transform: translateX(350px);
+}
+.lyric-leave-to{
+  position: absolute;
+  top: 42.5px;
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(700px);
+}
+
+.lyric-enter-active,.lyric-leave-active{
+  transition: 0.8s all ease-in-out;
+}
 </style>

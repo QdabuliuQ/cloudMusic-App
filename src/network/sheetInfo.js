@@ -10,3 +10,14 @@ export function getPlayDetial(id){
         }
     })
 }
+
+// 获取歌单评论
+export function getSheetComment(id,limit=25){
+    return request({
+        url: '/comment/playlist',
+        params:{
+            id,
+            limit
+        }
+    })
+}

@@ -37,6 +37,7 @@ const routes = [
 
   { path: '/playDetail/:id', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
+  { path: '/mvplay/:mid', component: () => import('components/context/mvPlay/MvPlay') },  // mv播放
 
   { path: '/cloudVillage', component: cloudVillage },
   { path: '/video', component: video }

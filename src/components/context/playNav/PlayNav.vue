@@ -1,11 +1,5 @@
 <template>
-  <div class="bottomPlay">
-      <!-- <audio 
-      v-if="isAudio"
-      ref="navAudio"
-      id="navMusic"
-      :src="musicUrl"
-      ></audio> -->
+  <div class="bottomPlay" v-show="isShowNav">
       <audio 
       ref="navAudio"
       id="navMusic"
@@ -42,10 +36,15 @@ export default {
             musicUrl: require('assets/audio/ceshi.mp3'),
             navMusic: null,  // audio DOM元素
             isAudio: false,
-            navPlay: false  // 控制外部播放器 播放/暂停
+            navPlay: false,  // 控制外部播放器 播放/暂停
         }
     },
     computed: {
+        // 监听显示/隐藏播放导航栏
+        isShowNav(){
+            return this.$store.state.isShowNav
+        },
+
         isPlayM(){
             return this.$store.state.playContent.isPlayM  // 监听内部音乐是否播放
         },
@@ -77,7 +76,6 @@ export default {
             this.$store.state.navMusicDom = document.getElementById('navMusic')  
             this.isAudio = true  
             if (this.isPlayM > 0) {
-                console.log(this.$store.state.isend);
                 if (this.$store.state.isend || this.$store.state.isPlayEnd) {
                     this.isPlay = require('assets/img/common/shipin.svg')
                     // this.navMusic.src = this.$store.state.playContent.songurl                    
@@ -116,7 +114,7 @@ export default {
         background-color: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         position: fixed;
-        z-index: 50;
+        z-index: 48;
         bottom: 0;
         display: flex;
     }

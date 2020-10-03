@@ -42,69 +42,40 @@ export default {
     },
     watch: {
         cTime(){
-            // 判断有没有歌词
-            
-            if (this.lyricText.length !== 0) {
-                
+            // 判断有没有歌词         
+            if (this.lyricText.length !== 0) {              
                 // 判断歌曲时间在歌词区间
                 if(this.cTime >= this.songLyric[this.index] && this.cTime <= this.songLyric[this.index + 1] ){
-                    // // 从第六行开始滚动  
-                    // if (this.index >= 6) {
-                    //     // // 通过 yscroll 保存滚动距离
-                    //     this.yscroll += document.getElementsByClassName('item')[this.index - 5].clientHeight + 17
-                        
-                    //     this.$refs.list.style.transform = 'translateY(' + (-this.yscroll) + 'px)'
-                    //     this.zindex ++ ;
-                    //     this.$refs.list.style.transition = '0.3s linear'
-                    // }
-                    var huiche = /^\n/;
-                    
+                    var huiche = /^\n/;  // 正则匹配回车符
                         // 从第六行开始滚动  
                     if (this.index >= 6) {
                         if (huiche.test(this.lyricText[this.index])) {
-                            console.log('空格');
-                            // // 通过 yscroll 保存滚动距离
-                            
                         } else {
-                            // console.log(this.index);
-                            this.yscroll += document.getElementsByClassName('item')[this.index - 5].clientHeight + 17
-                            
+                            this.yscroll += document.getElementsByClassName('item')[this.index].clientHeight + 17
                             this.$refs.list.style.transform = 'translateY(' + (-this.yscroll) + 'px)'
                             this.zindex ++ ;
                             this.$refs.list.style.transition = '0.3s linear'
                         }
-                    }
-                    
-                    this.index++
-                    this.activeIndex++
+                    }                   
+                    this.index++  // 索引++
+                    this.activeIndex++  // 歌词索引++
                 } 
             }
         },
 
+        // 监听歌词进度条是否被拖动
         indexLyric(){
             // for 循环遍历歌词数组  songLyric歌词时间数组
             for (let i = 0; i < this.songLyric.length; i++) {
                 // 判断滚动到哪个歌词区间
-                if (this.songLyric[i] >= this.cTime && this.cTime < this.songLyric[i+1]) {
-                    console.log(i);
+                if (this.songLyric[i] >= this.cTime && this.cTime <= this.songLyric[i+1]) {
                     // 从歌词第六行开始滚动
                     if (i >= 6) {
-                        // this.itemSumH = (document.getElementsByClassName('item')[i].clientHeight + 17)
-                        this.itemSumH = 38
-                        this.$refs.list.style.transform = 'translateY(' + (-this.itemSumH) * (i) + 'px)'
+                        // console.log(i - this.index + '+++');
+                        this.itemSumH = (document.getElementsByClassName('item')[i].clientHeight + 17)
+                        this.yscroll += this.itemSumH * (i - this.index)
+                        this.$refs.list.style.transform = 'translateY(' + (-this.yscroll) + 'px)'
                     }
-                    // for (let j = 0; j < document.getElementsByClassName('item').length; j++) {
-                    //     if (j <= i) {
-                    //         this.itemSumH += document.getElementsByClassName('item')[j].clientHeight + 17
-                    //     }
-                    //     if (j == i) {
-                    //         this.zindex = j - 6;
-                    //         this.$refs.list.style.transform = 'translateY(' + (-this.itemSumH) + 'px)'
-                    //         console.log(this.itemSumH);
-                    //         break;     
-                    //     }                
-                    // }
-                    // this.$refs.list.style.transform = 'translateY(' + (-this.yscroll) * this.zindex + 'px)'
                     this.activeIndex = i;
                     this.index = i;
                     

@@ -41,7 +41,8 @@ export default new Vuex.Store({
     getComMore: '',
     songid: '',
     page: '',
-    isPlayEnd: false // 内部播放器是否播放结束
+    isPlayEnd: false, // 内部播放器是否播放结束
+    isShowNav: true  // 显示隐藏底部播放导航栏
   },
   mutations: {
   },

@@ -13,7 +13,7 @@
                   <div class="singer">{{item.singer}} - {{' ' + item.zhuanji}}</div>
               </div>
               <div class="mv">
-                  <img v-if="item.mv !== 0" src="~assets/img/common/mv.svg" alt="">
+                  <img v-if="item.mv !== 0" @click.stop="playMv(item.mv)" src="~assets/img/common/mv.svg" alt="">
               </div>
               <div class="more" @click.stop="moreMenu">
                   <img src="~assets/img/common/sandian.svg" alt="">
@@ -30,12 +30,17 @@ export default {
     name: 'SongItem',
     props: ['songList'],
     methods: {
+        // 跳转到播放界面
         play(sid){
             this.$router.push('/playSong/' + sid)
         },
 
         moreMenu(){
             console.log(22);
+        },
+
+        playMv(mid){
+            this.$router.push('/mvplay/' + mid)
         }
     }
 }
