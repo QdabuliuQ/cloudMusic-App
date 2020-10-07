@@ -26,3 +26,9 @@ export function getUserPlayList(uid){
         }
     })
 }
+
+export function getSongs(){
+    return request({
+        url: '/recommend/songs'
+    })
+}

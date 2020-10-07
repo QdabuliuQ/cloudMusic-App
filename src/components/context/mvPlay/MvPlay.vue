@@ -1,7 +1,9 @@
 <template>
   <div class="MvPlay" v-if="hackReset">
     <div class="mvbox" @click="showSlider">
-      <video class="mv" :src="mvUrl"></video>
+      <!-- x5-video-player-type启动h5播放器 -->
+      <!-- x5-video-orientation设置landscape横屏播放 -->
+      <video class="mv" :src="mvUrl" style="object-fit:fill" x5-video-player-type="h5" x5-video-orientation="landscape"></video>
       <div v-show="showPlay" @click="playPause" class="isPlay">
         <img :src="Play" alt="">
       </div>
@@ -16,7 +18,7 @@
       <!-- 时间按钮 -->
       <div class="bottomShadowBox" v-show="showJd">       
         <div class="nowTime">{{min > 9 ? min : "0" + min }}:{{second > 9 ? second : "0" + second }} / {{mvDetail.duration | mvTime}}</div>  
-        <div class="quanp"><img src="~assets/img/mvPlay/quanping.svg" alt=""></div>
+        <div class="quanp" ><img @click.stop='viewMv' src="~assets/img/mvPlay/quanping.svg" alt=""></div>
       </div>
       <!-- 进度条 -->
       <van-slider @change="onChange" class="jindu" v-model="value" active-color="#ee0a24">
@@ -191,21 +193,38 @@ export default {
       min: 0,
       timer: null,  // 定时器
       hackReset: true,  // 强制刷新组件
+      // showComment: false
     };
+  },
+  // 监听路由变化
+  beforeRouteUpdate(to,from,next){
+    if(to.fullPath!=from.fullPath){
+      this.mvDetail = {};  // 清空mv数据
+      this.simiMv = [];  // 清空相关视频
+      this.commentList = [];  // 清空评论内容
+      this.CommentLength = 0  // 重置评论数量
+      this.showDetail = false;
+      next()
+      this.MvDetail();  // 获取mv信息
+      this.getMvUrl();  // 获取mvurl
+      this.getCommentList();  // 获取mv评论 
+    }
   },
   components: {
     mscroll  
   },
   methods: {
     // 更多mv路由跳转
-    moreMv(id){
-      this.hackReset = false;
-      this.$nextTick(() => {
-        this.$router.go(0)
-        this.$router.replace('/mvplay/' + id)
-        this.getCommentList(this.$route.params.mid, 25, this.offset);
-        this.hackReset = true;
-      })
+    moreMv(id){    
+      this.$router.push('/mvplay/' + id) 
+    },
+
+    viewMv(){
+      this.mvDom = document.getElementsByClassName('mv')[0];
+      this.mvDom.style = 'width: 100%';
+      this.mvDom.style = 'height: 110%';
+      // this.mvDom.style = 'transform: translateY('+ -90 +'deg);'
+      this.mvDom.webkitRequestFullScreen()
     },
 
     // 显示/隐藏按钮
@@ -278,14 +297,14 @@ export default {
         // 发送请求
         this.$loading.loadingShow();
         setTimeout(() => {
-            this.getCommentList(this.mid, 25, this.offset)
+            this.getCommentList(this.$route.params.mid, 25, this.offset)
             this.$loading.loadingNo()
         },1000)
     },
 
-    MvDetail(mid) {
+    MvDetail() {
       // 获取mv数据
-      getMvDetail(mid).then((res) => {
+      getMvDetail(this.$route.params.mid).then((res) => {
         let path = res.data.data;
         this.comCount = path.commentCount
         this.mvDetail.artistId = path.artistId; // 歌手id
@@ -299,14 +318,14 @@ export default {
         this.mvDetail.subCount = path.subCount; // mv收藏数量
         this.mvDetail.videoGroup = path.videoGroup; // mv标签
         // mv详细数据
-        getMvInfo(mid).then((res) => {
+        getMvInfo(this.$route.params.mid).then((res) => {
           this.mvDetail.liked = res.data.likedCount;  // 点赞数
-          this.showDetail = true;
           this.$loading.loadingNo()
+          this.showDetail = true;
         });
       });
       // 相关视频
-      getSimiMv(mid).then((res) => {
+      getSimiMv(this.$route.params.mid).then((res) => {
         for (const item of res.data.mvs) {
           this.simiMv.push({
             artistName: item.artistName, // 创作者
@@ -319,15 +338,21 @@ export default {
         }
       });
     },
+    getMvUrl(){
+      getMv(this.$route.params.mid).then(res => {
+        this.mvUrl = res.data.data.url;
+      })
+    },
     // 封转方法
-    getCommentList(id, list, offset) {
+    getCommentList() {
       // 发送网络请求
-      getMvComment(id, list, offset).then((res) => {
+      getMvComment(this.$route.params.mid, 25, this.offset).then((res) => {
         // 判断有没有热评数组
         if (res.data.hotComments) {
           this.hotLength = res.data.hotComments.length; // 保存热评数量
         }
         this.CommentLength += this.hotLength + res.data.comments.length // 获取数量
+        console.log(this.CommentLength +'---'+ res.data.total);
         // 判断评论数量
         if (this.CommentLength - 1 <= res.data.total) {
           if (res.data.hotComments) {
@@ -360,7 +385,6 @@ export default {
             });
           }
           this.offset++; // 页数增加
-          // console.log(this.page);
         } else {
           this.$toast.show("没有更多评论了:(", 1900);
         }
@@ -369,13 +393,16 @@ export default {
   },
   created() {
     this.$loading.loadingShow();
-    this.MvDetail(this.mid);
-    getMv(this.mid).then(res => {
-      this.mvUrl = res.data.data.url;
-    })
-    this.getCommentList(this.mid, 25, this.offset);
+    this.MvDetail();  // 获取mv信息
+    this.getMvUrl();  // 获取mvurl
+    this.getCommentList();  // 获取mv评论
   },
   mounted () {
+    this.$loading.loadingShow();
+    setTimeout(() => {
+      this.$loading.loadingNo()
+      this.showDetail = true;
+    },1300)
   },
 };
 </script>
@@ -385,6 +412,7 @@ export default {
   z-index: 60;
   top: 40%;
   left: 43%;
+  
 }
 .mv{
   position: absolute;
@@ -457,6 +485,7 @@ export default {
 .title{
   flex: 7;
   width: 250px;
+  font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -558,17 +587,17 @@ export default {
   font-size: 15px;
 }
 .mvItem {
-  width: 100%;
+  /* width: 100%; */
   height: 75px;
   display: flex;
   margin-top: 12px;
 }
 .cover {
-  width: 140px;
+  /* width: 140px; */
   height: 100%;
   border-radius: 6px;
   overflow: hidden;
-  flex: 2;
+  flex: 3;
   position: relative;
   /* border: 1px solid #cdcdcd; */
 }
@@ -580,7 +609,7 @@ export default {
   color: #fff;
 }
 .text {
-  flex: 3;
+  flex: 5;
 }
 .cover img {
   width: 100%;

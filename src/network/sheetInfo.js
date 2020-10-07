@@ -21,3 +21,14 @@ export function getSheetComment(id,limit=25){
         }
     })
 }
+
+// 收藏/不收藏歌单
+export function collectionSheet(t, id){
+    return request({
+        url: '/playlist/subscribe',
+        params: {
+            t,
+            id
+        }
+    })
+}

@@ -15,9 +15,12 @@ export function getBanner(type){
 }
 
 // 首页信息
-export function getHomepage(){
+export function getHomepage(refresh){
     return request({
-        url: '/homepage/block/page ',
+        url: '/homepage/block/page',
+        params: {
+            refresh
+        }
     })
 }
 

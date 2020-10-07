@@ -2,7 +2,7 @@
   <div class="SheetInfo">
     <menu-nav class="nav" :isWhite="isWhite" :navTitle="navTitle"></menu-nav>
     <div v-show="isTopNav" class="content2">
-      <sheet-nav :trackCount="trackCount"></sheet-nav>
+      <sheet-nav :trackCount="trackCount" :createId='createId'></sheet-nav>
     </div>
     <mui-scroll
     id="infoScroll"
@@ -87,7 +87,9 @@ export default {
       isWhite: true,
       isTopNav: false,  // 显示/隐藏导航栏
       isNavToTop: 0,
-      isShowinfoc: false  // 显示/隐藏评论组件
+      isShowinfoc: false,  // 显示/隐藏评论组件
+      showCollection: false,
+      createId: ''
     };
   },
   methods: {
@@ -114,6 +116,7 @@ export default {
     infoComment
   },
   created() {
+    this.$store.state.sheetId = this.$route.params.id  // 保存目前歌单id
     this.$loading.loadingShow();
     // 获取歌单基本信息
     getPlayDetial(this.sheetId).then((res) => {
@@ -127,11 +130,13 @@ export default {
       this.sheetInfoContent.avatarUrl = path.creator.avatarUrl; // 用户头像
       this.sheetInfoContent.nickname = path.creator.nickname; // 用户名
       this.sheetInfoContent.userId = path.creator.userId; // 用户id
+      this.$store.state.createId = path.creator.userId;
       this.isShow = true;
       this.sheetInfoContent.playCount = toStringNum(
         this.sheetInfoContent.playCount
       );
-
+      // this.showCollection = this.$store.state.profile.userId !== this.sheetInfoContent.userId;
+      // console.log(this.showCollection);
       for (const item of path.trackIds) {
         this.songListId.push(item.id);
       }

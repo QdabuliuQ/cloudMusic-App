@@ -42,7 +42,9 @@ export default new Vuex.Store({
     songid: '',
     page: '',
     isPlayEnd: false, // 内部播放器是否播放结束
-    isShowNav: true  // 显示隐藏底部播放导航栏
+    isShowNav: true,  // 显示隐藏底部播放导航栏
+    createId: '',  // 目前所在的歌单创建者id
+    sheetId: ''  // 目前所在的歌单id
   },
   mutations: {
   },

@@ -26,14 +26,15 @@ const routes = [
   // 个人页面
   { path: '/myMessage', component: myMessage },
   // 个人--电台
-  { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },
+  { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },  // 个人--电台
+  { path: '/myMessage/radioStation/stationHomeP', component: () => import('views/radioStation/childrenComps/StationHomeP') },  // 电台首页
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
   { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
   { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
   // 个人--登录
-  { path: '/myMessage/login', component: () => import('components/context/login/Login') },
-  { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },
-  { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },
+  { path: '/myMessage/login', component: () => import('components/context/login/Login') },  // 登录
+  { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },  // 手机登录
+  { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },  // 邮箱登录
 
   { path: '/playDetail/:id', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面

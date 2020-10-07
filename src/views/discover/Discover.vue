@@ -14,9 +14,9 @@ export default {
         DiscoverSwiper
     },
     created () {
-        // getHomepage().then(res => {
-        //     // console.log(res);
-        // })
+        getHomepage().then(res => {
+            console.log(res);
+        })
     }
 }
 
