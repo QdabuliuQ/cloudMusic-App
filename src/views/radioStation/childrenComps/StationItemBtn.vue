@@ -1,7 +1,7 @@
 <template>
   <div class="StationItemBtn">
       <div class="item">
-          <div class="itemImg"><img class="img2" src="~assets/img/radioStation/HomeP/fl.svg" alt=""></div>
+          <div class="itemImg" @click="classify"><img class="img2" src="~assets/img/radioStation/HomeP/fl.svg" alt=""></div>
           <div>电台分类</div>
       </div>
       <div class="item">
@@ -21,7 +21,12 @@
 
 <script>
 export default {
-    name: 'StationItemBtn'
+    name: 'StationItemBtn',
+    methods: {
+        classify(){
+            this.$emit('toClassify')
+        }
+    }
 }
 
 </script>

@@ -28,6 +28,7 @@ const routes = [
   // 个人--电台
   { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },  // 个人--电台
   { path: '/myMessage/radioStation/stationHomeP', component: () => import('views/radioStation/childrenComps/StationHomeP') },  // 电台首页
+  { path: '/myMessage/radioStation/stationHomeP/stationClassify', component: () => import('views/radioStation/childrenComps/StationClassify') },  // 电台分类
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
   { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
   { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
