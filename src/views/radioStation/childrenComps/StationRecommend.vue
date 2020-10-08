@@ -1,6 +1,6 @@
 <template>
   <div class="StationRecommend">
-    <div class="head">
+    <div class="head" @click="toClassifyView">
         <h2>{{classifyName}}</h2>
         <img src="~assets/img/radioStation/HomeP/you.svg" alt="">
     </div>
@@ -26,6 +26,11 @@ export default {
     },
     components: {
         perferedItem
+    },
+    methods: {
+        toClassifyView(){
+            this.$router.push('/classifyInfo/'+this.classifyId)
+        }
     },
     created () {
         // 获取分类电台部分数据

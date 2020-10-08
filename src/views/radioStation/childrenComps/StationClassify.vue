@@ -12,6 +12,7 @@
               :key="index"
               :itemImg='item.picUrl'
               :itemName='item.name'
+              :itemId='item.id'
               :itemIndex='index'></classify-item>
           </div>
       </div>
@@ -23,6 +24,7 @@
               :key="index"
               :itemImg='item.picUrl'
               :itemName='item.name'
+              :itemId='item.id'
               :itemIndex='index'></classify-item>
           </div>
       </div>
@@ -36,7 +38,7 @@ import MenuNav from "components/context/menuNav/MenuNav"; // 导航栏组件
 import ClassifyItem from './ClassifyItem'  // 分类组件
 import mscroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 
-import {getCateList} from 'network/radioStation'
+import {getCateList, getCategory} from 'network/radioStation'
 
 export default {
     name: 'StationClassify',
@@ -49,7 +51,6 @@ export default {
     },
     created () {
         getCateList().then(res => {
-            console.log(res);
             for (let i = 0; i < 6; i++) {
                 this.cateListHot.push({
                     id: res.data.categories[i].id,

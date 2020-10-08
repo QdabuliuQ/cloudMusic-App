@@ -10,7 +10,8 @@
 <script>
 export default {
     name: 'ClassifyItem',
-    props: ['itemImg','itemName','itemIndex'],
+    // itemImg 分类图标  // itemName 分类名称  // itemIndex 分类索引  // itemId 分类id
+    props: ['itemImg','itemName','itemIndex','itemId'],
     data () {
         return {
             isClick: false      
@@ -18,7 +19,7 @@ export default {
     },
     methods: {
         toClassifyView(){
-            // this.isClick = true
+            this.$router.push('/classifyInfo/'+this.itemId)
         }
     }
 }

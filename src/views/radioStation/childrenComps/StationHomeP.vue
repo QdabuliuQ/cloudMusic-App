@@ -29,7 +29,7 @@
         <div class="topList">
           <div class="head">
             <h2>精品推荐</h2>
-            <div class="more">全部精品</div>
+            <div class="more" @click="paygift">全部精品</div>
           </div>
           <perfered-item
             :recommendAudio="TopList"
@@ -72,6 +72,7 @@ export default {
       recommendAudio: [], // 推荐电台数据
       TopList: [], // 付费精品数据
       recommendTem: [],  // 分类推荐数据
+      paygiftIndex: 0,
     };
   },
   components: {
@@ -85,6 +86,11 @@ export default {
     // 事件传播/路由跳转
     toClassify(){
       this.$router.push('/myMessage/radioStation/stationHomeP/stationClassify')
+    },
+
+    // 付费精选
+    paygift(){
+      this.$router.push('/classifyInfo/'+this.paygiftIndex)
     }
   },
   created() {
@@ -125,17 +131,12 @@ export default {
 
     // 分类id 名称
     getCateList().then((res) => {
-      console.log(res);
       for (const item of res.data.categories) {
           this.recommendTem.push({
               id: item.id,
               name: item.name
           })
       }
-    });
-
-    getRecommend("3").then((res) => {
-      console.log(res);
     });
   },
 };

@@ -4,7 +4,7 @@
     <music-navbar class="appnav"></music-navbar>
     <transition mode="">
       <!-- exclude 不会保存对应的组件 -->
-      <keep-alive exclude="SheetInfo,PlaySong,MvPlay">
+      <keep-alive exclude="SheetInfo,PlaySong,MvPlay,ClassifyInfo,StationDetail">
         <!-- 在组件切换的时候添加动画 -->
           <router-view></router-view>
       </keep-alive>

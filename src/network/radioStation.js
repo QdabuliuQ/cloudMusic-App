@@ -74,3 +74,44 @@ export function getRecommend(type){
         }
     })
 }
+
+// 推荐类型
+export function getCategory(){
+    return request({
+        url: '/dj/category/recommend'
+    })
+}
+
+
+// 电台类别热门
+export function getRecommendHot(cateId, limit, offset,){
+    return request({
+        url: '/dj/radio/hot',
+        params: {
+            cateId,
+            limit,
+            offset,      
+        }
+    })
+}
+
+// 付费推荐
+export function getPaygift(limit,offset){
+    return request({
+        url: '/dj/paygift',
+        params: {
+            limit,
+            offset
+        }
+    })
+}
+
+// 电台详情
+export function getAudioDetail(rid){
+    return request({
+        url: '/dj/detail',
+        params: {
+            rid
+        }
+    })
+}

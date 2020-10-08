@@ -1,6 +1,6 @@
 <template>
   <div class="itemList">
-    <div class="StationItem" v-for="(item,index) in recommendAudio" :key="index">       
+    <div class="StationItem" @click="audioDetail(item.id)" v-for="(item,index) in recommendAudio" :key="index">       
         <div class="cover">
             <div class="tag" v-if="showTag">付费精品</div>
             <img v-lazy="item.picUrl" alt="">
@@ -19,15 +19,20 @@ export default {
     // recommendAudio 电台信息数组
     // showTag 是否是付费电台
     // showCreator 显示创作者
-    props: ['recommendAudio','showTag','showCreator']
+    props: ['recommendAudio','showTag','showCreator'],
+    methods: {
+        audioDetail(rid){
+            this.$router.push('/stationDetail/'+rid)
+        }
+    }
 }
 
 </script>
 <style scoped>
     .StationItem{
-        width: 110px;
+        width: 31.5%;
         height: 147px;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         position: relative;
     }
     .cover{
