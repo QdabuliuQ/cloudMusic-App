@@ -1,6 +1,6 @@
 <template>
   <div class="StationClassify">
-      <menu-nav :navTitle='navTitle'></menu-nav>
+      <menu-nav :navTitle='navTitle' :showBlackImg='true'></menu-nav>
       <mscroll
       style="top: 44px; bottom: 45px"
       :scrollY='true'>

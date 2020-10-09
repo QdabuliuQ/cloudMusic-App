@@ -1,7 +1,7 @@
 <template>
   <div class="RadioStationNav">
       <div class="left" @click="back">
-          <img v-if="showWriteImg ? !showWriteImg : showWriteImg" src="~assets/img/radioStation/fanhui.png" alt="">
+          <img v-if="showBlackImg" src="~assets/img/radioStation/fanhui.png" alt="">
           <img v-if="showWriteImg" src="~assets/img/radioStation/fanhui2.png" alt="">   
       </div>
       <div class="center">{{navTitle}}</div>
@@ -12,7 +12,20 @@
 <script>
 export default {
     name: 'RadioStationNav',
-    props: ['navTitle','isWhite','showWriteImg'],
+    props: {
+        showBlackImg:{
+            type: Boolean,
+            default: true
+        },
+        showWriteImg:{
+            type: Boolean,
+            default: false
+        },
+        navTitle:{
+            type: String,
+            default: ''
+        }
+    },
     methods: {
         back(){
             this.$router.go(-1)
