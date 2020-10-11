@@ -8,7 +8,13 @@
       :showBlackImg="false"
     ></menu-nav>
     <mscroll style="bottom: 45px" :scrollY="true">
-      <div class="bbox">
+      <div
+        class="bbox"
+        v-infinite-scroll="loadAudio"
+        infinite-scroll-distance="100"
+        infinite-scroll-delay="500"
+        infinite-scroll-immediate="fasle"
+      >
         <div class="top">
           <div ref="content" class="content">
             <div class="peopleText">
@@ -23,7 +29,12 @@
                 </div>
               </div>
             </div>
-            <tab-Nav ref="tabNav" @tabToggle='tabToggle' :itemList="itemList" class="tabnav"></tab-Nav>
+            <tab-Nav
+              ref="tabNav"
+              @tabToggle="tabToggle"
+              :itemList="itemList"
+              class="tabnav"
+            ></tab-Nav>
           </div>
           <img
             class="backImg"
@@ -33,8 +44,11 @@
           />
         </div>
         <div class="bottom">
-          <detail-message v-show="showMessage" :detail="detail"></detail-message>
-          <detail-program v-show="showProgram"></detail-program>
+          <detail-message
+            v-show="showMessage"
+            :detail="detail"
+          ></detail-message>
+          <detail-program :loadIndex='loadIndex' v-show="showProgram"></detail-program>
           <detail-resemble v-show="showResemble"></detail-resemble>
         </div>
       </div>
@@ -46,8 +60,8 @@
 import menuNav from "components/context/menuNav/MenuNav"; // 导航栏组件
 import TabNav from "components/context/tabNav/TabNav"; // 导航组件
 import DetailMessage from "./DetailMessage"; // 用户详情
-import DetailProgram from './DetailProgram';  // 用户节目
-import DetailResemble from './DetailResemble';  // 用户相似
+import DetailProgram from "./DetailProgram"; // 用户节目
+import DetailResemble from "./DetailResemble"; // 用户相似
 import mscroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 import { getAudioDetail } from "network/radioStation";
 
@@ -61,20 +75,36 @@ export default {
       tabNavtoTop: 0,
       backG: 0,
       scrolly: 0,
-      showMessage: false,  // 详情界面
-      showProgram: true,  // 节目界面
-      showResemble: false,  // 相似界面
+      showMessage: false, // 详情界面
+      showProgram: true, // 节目界面
+      showResemble: false, // 相似界面
+      loadIndex: 0,  // 监听下拉加载
+      
     };
   },
+  // 监听路由变化
+  beforeRouteUpdate(to, from, next) {
+    if (to.fullPath != from.fullPath) {
+      this.detail = {}; // 清空mv数据
+      next();
+      this.getDetail();
+    }
+  },
   methods: {
+    // 下拉加载
+    loadAudio(){
+      if (this.showProgram) {
+        this.loadIndex ++;
+      }
+    },
+
     // 导航栏切换
-    tabToggle(index){
-      console.log(index);
+    tabToggle(index) {
       switch (index) {
         case 0:
           this.showMessage = true;
           this.showProgram = false;
-          this.showResemble = false
+          this.showResemble = false;
           break;
         case 1:
           this.showProgram = true;
@@ -94,7 +124,6 @@ export default {
     // 获取电台详情
     getDetail() {
       getAudioDetail(this.$route.params.rid).then((res) => {
-        console.log(res);
         let path = res.data.djRadio;
         this.detail.name = path.name; // 用户名称
         this.detail.picUrl = path.picUrl; // 用户头像
@@ -112,6 +141,8 @@ export default {
         this.$set(this.detail, this.detail.picUrl, path.picUrl);
       });
     },
+
+    
   },
   components: {
     menuNav,
@@ -124,8 +155,9 @@ export default {
   created() {
     this.getDetail();
   },
-  mounted () {
-  }
+  mounted() {
+    
+  },
 };
 </script>
 <style scoped>
@@ -142,7 +174,8 @@ export default {
 }
 .top .backImg {
   position: absolute;
-  top: -20px;
+  /* top: -20px; */
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -151,7 +184,7 @@ export default {
   position: relative;
   height: 100%;
   z-index: 30;
-  background-color: rgba(0, 0, 0, 0.329);
+  background-color: rgba(0, 0, 0, 0.729);
 }
 .tabnav {
   position: absolute;
@@ -174,7 +207,7 @@ export default {
   flex: 3;
 }
 .peopleName {
-  width: 100%;
+  width: 250px;
   height: 18px;
   line-height: 18px;
   color: #fff;
@@ -215,7 +248,7 @@ export default {
   top: 0;
   z-index: 31;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.629);
+  background-color: rgba(0, 0, 0, 0.829);
   border: 0 !important;
 }
 .bottom {

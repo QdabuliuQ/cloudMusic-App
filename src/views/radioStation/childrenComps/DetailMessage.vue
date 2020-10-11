@@ -1,5 +1,5 @@
 <template>
-  <div class="DetailMessage">
+  <div class="DetailMessage" v-if="detail">
       <div class="creater">
         <span>主播</span>
         <div class="creatorName">

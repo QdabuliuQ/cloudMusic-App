@@ -3,136 +3,161 @@
     <div class="mvbox" @click="showSlider">
       <!-- x5-video-player-type启动h5播放器 -->
       <!-- x5-video-orientation设置landscape横屏播放 -->
-      <video class="mv" :src="mvUrl" style="object-fit:fill" x5-video-player-type="h5" x5-video-orientation="landscape"></video>
+      <video
+        class="mv"
+        :src="mvUrl"
+        style="object-fit: fill"
+        x5-video-player-type="h5"
+        x5-video-orientation="landscape"
+      ></video>
       <div v-show="showPlay" @click="playPause" class="isPlay">
-        <img :src="Play" alt="">
+        <img :src="Play" alt="" />
       </div>
       <div class="topShadowBox" v-show="showJd">
         <div class="back" @click="back">
-          <img src="~assets/img/common/fanhui.svg" alt="">
+          <img src="~assets/img/common/fanhui.svg" alt="" />
         </div>
         <div class="title">
-          {{mvDetail.name}}
+          {{ mvDetail.name }}
         </div>
       </div>
       <!-- 时间按钮 -->
-      <div class="bottomShadowBox" v-show="showJd">       
-        <div class="nowTime">{{min > 9 ? min : "0" + min }}:{{second > 9 ? second : "0" + second }} / {{mvDetail.duration | mvTime}}</div>  
-        <div class="quanp" ><img @click.stop='viewMv' src="~assets/img/mvPlay/quanping.svg" alt=""></div>
+      <div class="bottomShadowBox" v-show="showJd">
+        <div class="nowTime">
+          {{ min > 9 ? min : "0" + min }}:{{
+            second > 9 ? second : "0" + second
+          }}
+          / {{ mvDetail.duration | mvTime }}
+        </div>
+        <div class="quanp">
+          <img
+            @click.stop="viewMv"
+            src="~assets/img/mvPlay/quanping.svg"
+            alt=""
+          />
+        </div>
       </div>
       <!-- 进度条 -->
-      <van-slider @change="onChange" class="jindu" v-model="value" active-color="#ee0a24">
+      <van-slider
+        @change="onChange"
+        class="jindu"
+        v-model="value"
+        active-color="#ee0a24"
+      >
         <template #button>
           <div v-show="showBtn" class="custom-button"></div>
         </template>
       </van-slider>
     </div>
-    <mscroll
-    class="conscroll"
-    :scrollY="true">
-    <div class="content2" v-show="showDetail">
-      <!-- mv标题 -->
-      <div class="mvName">
-        {{ mvDetail.name }}
-      </div>
-      <!-- 播放量 -->
-      <div class="playCount">{{ mvDetail.playCount }}</div>
-      <div class="videoGroup">
-        <!-- 标签 -->
-        <div
-          class="item"
-          v-for="(item, index) in mvDetail.videoGroup"
-          :key="index"
-        >
-          {{ item.name }}
+    <mscroll class="conscroll" :scrollY="true">
+      <div class="content2" v-show="showDetail">
+        <!-- mv标题 -->
+        <div class="mvName">
+          {{ mvDetail.name }}
         </div>
-      </div>
-      <!-- 发布时间 -->
-      <div class="pushTime">
-        {{ mvDetail.publishTime }}
-      </div>
-      <div class="tabbar">
-        <div class="tabItem">
-          <img class="img3" src="~assets/img/mvPlay/zan.svg" alt="" />
-          <div class="count2 a4">{{ mvDetail.liked }}</div>
-        </div>
-        <div class="tabItem">
-          <img class="img2" src="~assets/img/mvPlay/shouc.svg" alt="" />
-          <div class="count2 a1">{{ mvDetail.subCount }}</div>
-        </div>
-        <div class="tabItem">
-          <img class="img1" src="~assets/img/mvPlay/pinglun.svg" alt="" />
-          <div class="count2 a2">{{ mvDetail.commentCount }}</div>
-        </div>
-        <div class="tabItem" @click="fxiang">
-          <img class="img1" src="~assets/img/mvPlay/fenxiang.svg" alt="" />
-          <div class="count2 a3">{{ mvDetail.shareCount }}</div>
-        </div>
-      </div>
-    </div>
-    <!-- 相关视频 -->
-    <div class="videoContent">
-      <h1>相关视频</h1>
-      <div class="mvItem" @click="moreMv(item.id)" v-for="(item, index) in simiMv" :key="index">
-        <div class="cover">
-          <div class="num">▷ {{ item.playCount }}</div>
-          <img :src="item.cover" alt="" />
-        </div>
-        <div class="text">
-          <div class="name">
+        <!-- 播放量 -->
+        <div class="playCount">{{ mvDetail.playCount }}</div>
+        <div class="videoGroup">
+          <!-- 标签 -->
+          <div
+            class="item"
+            v-for="(item, index) in mvDetail.videoGroup"
+            :key="index"
+          >
             {{ item.name }}
           </div>
-          <div class="time">
-            {{ item.duration | mvTime }} by {{ item.artistName }}
+        </div>
+        <!-- 发布时间 -->
+        <div class="pushTime">
+          {{ mvDetail.publishTime }}
+        </div>
+        <div class="tabbar">
+          <div class="tabItem">
+            <img class="img3" src="~assets/img/mvPlay/zan.svg" alt="" />
+            <div class="count2 a4">{{ mvDetail.liked }}</div>
+          </div>
+          <div class="tabItem">
+            <img class="img2" src="~assets/img/mvPlay/shouc.svg" alt="" />
+            <div class="count2 a1">{{ mvDetail.subCount }}</div>
+          </div>
+          <div class="tabItem">
+            <img class="img1" src="~assets/img/mvPlay/pinglun.svg" alt="" />
+            <div class="count2 a2">{{ mvDetail.commentCount }}</div>
+          </div>
+          <div class="tabItem" @click="fxiang">
+            <img class="img1" src="~assets/img/mvPlay/fenxiang.svg" alt="" />
+            <div class="count2 a3">{{ mvDetail.shareCount }}</div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- 评论组件 -->
-    <div class="mvComment">
-      <h1>精彩评论</h1>
-      <div
-        class="content"
-        v-if="commentList.length > 0"
-        v-infinite-scroll="loadComment"
-        infinite-scroll-distance="100"
-        infinite-scroll-delay="500"
-        infinite-scroll-immediate="fasle"
-      >
-        <div class="itemC" v-for="(item, index) in commentList" :key="index">
-          <div class="topbox">
-            <div class="userImg">
-              <img v-lazy="item.userImg" alt="" />
-            </div>
-            <div class="userName">
-              <div class="name2">
-                {{ item.userName }}
-                <img
-                  v-if="item.vipType !== 0"
-                  src="~assets/img/common/vip1.svg"
-                  alt=""
-                />
-              </div>
-              <div class="addtime">
-                {{ item.time | getTime }}
-              </div>
-            </div>
-            <div class="liked">
-              <div class="count">
-                {{ item.likedCount }}
-                <img :src="likedImg" alt="" />
-              </div>
-            </div>
+      <!-- 相关视频 -->
+      <div class="videoContent">
+        <h1>相关视频</h1>
+        <div
+          class="mvItem"
+          @click="moreMv(item.id)"
+          v-for="(item, index) in simiMv"
+          :key="index"
+        >
+          <div class="cover">
+            <div class="num">▷ {{ item.playCount }}</div>
+            <img :src="item.cover" alt="" />
           </div>
-          <div class="bottombox">
-            <div class="left"></div>
-            <div class="right">
-              {{ item.content }}
+          <div class="text">
+            <div class="name">
+              {{ item.name }}
+            </div>
+            <div class="time">
+              {{ item.duration | mvTime }} by {{ item.artistName }}
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <!-- 评论组件 -->
+      <div class="mvComment">
+        <h1>精彩评论</h1>
+        <div
+          class="content"
+          v-if="commentList.length > 0"
+          v-infinite-scroll="loadComment"
+          infinite-scroll-distance="100"
+          infinite-scroll-delay="500"
+          infinite-scroll-immediate="fasle"
+        >
+          <div class="itemC" v-for="(item, index) in commentList" :key="index">
+            <div class="topbox">
+              <div class="userImg">
+                <img v-lazy="item.userImg" alt="" />
+              </div>
+              <div class="userName">
+                <div class="name2">
+                  {{ item.userName }}
+                  <img
+                    v-if="item.vipType !== 0"
+                    src="~assets/img/common/vip1.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="addtime">
+                  {{ item.time | getTime }}
+                </div>
+              </div>
+              <div class="liked">
+                <div class="count">
+                  {{ item.likedCount }}
+                  <img :src="likedImg" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="bottombox">
+              <div class="left"></div>
+              <div class="right">
+                {{ item.content }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </mscroll>
     <!-- 分享面板 -->
     <van-share-sheet
@@ -153,7 +178,7 @@ import {
 } from "network/mvPlay"; // 网络请求
 import { getUserDetail } from "network/user"; // 网络请求
 import { toStringNum } from "common/common"; // 播放量转化
-import mscroll from 'components/common/muiScroll/MuiScroll';
+import mscroll from "components/common/muiScroll/MuiScroll";
 
 export default {
   name: "MvPlay",
@@ -167,86 +192,87 @@ export default {
       offset: 0, // 评论页数
       CommentLength: 0, // 目前评论数量
       hotLength: 0, // 热评数量
-      likedImg: require("assets/img/commentList/zan.svg"),  
-      options: [  // 分享面板
+      likedImg: require("assets/img/commentList/zan.svg"),
+      options: [
+        // 分享面板
         [
-          { name: '微信', icon: 'wechat' },
-          { name: '微博', icon: 'weibo' },
-          { name: 'QQ', icon: 'qq' },
+          { name: "微信", icon: "wechat" },
+          { name: "微博", icon: "weibo" },
+          { name: "QQ", icon: "qq" },
         ],
         [
-          { name: '复制链接', icon: 'link' },
-          { name: '分享海报', icon: 'poster' },
-          { name: '二维码', icon: 'qrcode' },
+          { name: "复制链接", icon: "link" },
+          { name: "分享海报", icon: "poster" },
+          { name: "二维码", icon: "qrcode" },
         ],
       ],
-      showShare: false,  // 显示分享面板
-      value: 0,  // 进度条
-      showBtn: false,  // 移动滑块按钮
-      mvUrl: '',  // url地址
-      showJd: false,  // 显示时间
-      showPlay: false,  // 显示/隐藏暂停播放按钮
-      Play: require('assets/img/mvPlay/bofang.svg'),
-      playIndex: 0,  // 判断是否播放
-      now: '00:00',  // 实时播放时间
+      showShare: false, // 显示分享面板
+      value: 0, // 进度条
+      showBtn: false, // 移动滑块按钮
+      mvUrl: "", // url地址
+      showJd: false, // 显示时间
+      showPlay: false, // 显示/隐藏暂停播放按钮
+      Play: require("assets/img/mvPlay/bofang.svg"),
+      playIndex: 0, // 判断是否播放
+      now: "00:00", // 实时播放时间
       second: 0,
       min: 0,
-      timer: null,  // 定时器
-      hackReset: true,  // 强制刷新组件
-      // showComment: false
+      timer: null, // 定时器
+      hackReset: true, // 强制刷新组件
+      commentLength: 1, // 判断评论是否加载完成
     };
   },
   // 监听路由变化
-  beforeRouteUpdate(to,from,next){
-    if(to.fullPath!=from.fullPath){
-      this.mvDetail = {};  // 清空mv数据
-      this.simiMv = [];  // 清空相关视频
-      this.commentList = [];  // 清空评论内容
-      this.CommentLength = 0  // 重置评论数量
+  beforeRouteUpdate(to, from, next) {
+    if (to.fullPath != from.fullPath) {
+      this.mvDetail = {}; // 清空mv数据
+      this.simiMv = []; // 清空相关视频
+      this.commentList = []; // 清空评论内容
+      this.CommentLength = 0; // 重置评论数量
       this.showDetail = false;
-      next()
-      this.MvDetail();  // 获取mv信息
-      this.getMvUrl();  // 获取mvurl
-      this.getCommentList();  // 获取mv评论 
+      next();
+      this.MvDetail(); // 获取mv信息
+      this.getMvUrl(); // 获取mvurl
+      this.getCommentList(); // 获取mv评论
     }
   },
   components: {
-    mscroll  
+    mscroll,
   },
   methods: {
     // 更多mv路由跳转
-    moreMv(id){    
-      this.$router.push('/mvplay/' + id) 
+    moreMv(id) {
+      this.$router.push("/mvplay/" + id);
     },
 
-    viewMv(){
-      this.mvDom = document.getElementsByClassName('mv')[0];
-      this.mvDom.style = 'width: 100%';
-      this.mvDom.style = 'height: 110%';
+    viewMv() {
+      this.mvDom = document.getElementsByClassName("mv")[0];
+      this.mvDom.style = "width: 100%";
+      this.mvDom.style = "height: 110%";
       // this.mvDom.style = 'transform: translateY('+ -90 +'deg);'
-      this.mvDom.webkitRequestFullScreen()
+      this.mvDom.webkitRequestFullScreen();
     },
 
     // 显示/隐藏按钮
-    showSlider(){
-      this.showBtn = true
-      this.showJd = true
-      this.showPlay = true
+    showSlider() {
+      this.showBtn = true;
+      this.showJd = true;
+      this.showPlay = true;
       setTimeout(() => {
-        this.showBtn = false
-        this.showJd = false
-        this.showPlay = false
-      },5000)
+        this.showBtn = false;
+        this.showJd = false;
+        this.showPlay = false;
+      }, 5000);
     },
-    
+
     // 暂停/播放
-    playPause(){
-      this.mvDom = document.getElementsByClassName('mv')[0];
+    playPause() {
+      this.mvDom = document.getElementsByClassName("mv")[0];
       if (this.playIndex === 0) {
         this.mvDom.play();
-        this.timer = setInterval(this.getNowTime, 1000)
-        this.Play = require('assets/img/mvPlay/zanting.svg')
-        this.playIndex = 1
+        this.timer = setInterval(this.getNowTime, 1000);
+        this.Play = require("assets/img/mvPlay/zanting.svg");
+        this.playIndex = 1;
         if (this.value >= 100) {
           this.value = 0;
           this.min = 0;
@@ -254,59 +280,59 @@ export default {
         }
       } else {
         this.mvDom.pause();
-        clearInterval(this.timer)
-        this.Play = require('assets/img/mvPlay/bofang.svg')
-        this.playIndex = 0
+        clearInterval(this.timer);
+        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.playIndex = 0;
       }
     },
 
     // 时间跳转
-    onChange(value){
-      this.mvDom.currentTime = value / ( 100 / (this.mvDetail.duration / 1000))
-      this.min = Math.floor(this.mvDom.currentTime / 60)
-      this.second = (this.mvDom.currentTime % 60).toFixed(0)
+    onChange(value) {
+      this.mvDom.currentTime = value / (100 / (this.mvDetail.duration / 1000));
+      this.min = Math.floor(this.mvDom.currentTime / 60);
+      this.second = (this.mvDom.currentTime % 60).toFixed(0);
     },
 
     // 实时更新时间
-    getNowTime(){
-      this.value += 100 / (this.mvDetail.duration / 1000)
-      this.second ++;
+    getNowTime() {
+      this.value += 100 / (this.mvDetail.duration / 1000);
+      this.second++;
       if (this.second > 59) {
-        this.min ++;
+        this.min++;
         this.second = 0;
       }
       if (this.value >= 100) {
-        this.playIndex = 0
-        this.Play = require('assets/img/mvPlay/bofang.svg')
-        clearInterval(this.timer)
+        this.playIndex = 0;
+        this.Play = require("assets/img/mvPlay/bofang.svg");
+        clearInterval(this.timer);
       }
     },
 
     // 退出
-    back(){
-      this.$router.go(-1)
+    back() {
+      this.$router.go(-1);
     },
 
     // 打开分享面板
-    fxiang(){
-        this.showShare = true       
+    fxiang() {
+      this.showShare = true;
     },
 
     // 监听滚动到底部
     loadComment() {
-        // 发送请求
-        this.$loading.loadingShow();
-        setTimeout(() => {
-            this.getCommentList(this.$route.params.mid, 25, this.offset)
-            this.$loading.loadingNo()
-        },1000)
+      // 发送请求
+      this.$loading.loadingShow();
+      setTimeout(() => {
+        this.getCommentList(this.$route.params.mid, 25, this.offset);
+        this.$loading.loadingNo();
+      }, 1000);
     },
 
     MvDetail() {
       // 获取mv数据
       getMvDetail(this.$route.params.mid).then((res) => {
         let path = res.data.data;
-        this.comCount = path.commentCount
+        this.comCount = path.commentCount;
         this.mvDetail.artistId = path.artistId; // 歌手id
         this.mvDetail.artistName = path.artistName; // 歌手名称
         this.mvDetail.commentCount = path.commentCount; // mv评论数量
@@ -319,8 +345,8 @@ export default {
         this.mvDetail.videoGroup = path.videoGroup; // mv标签
         // mv详细数据
         getMvInfo(this.$route.params.mid).then((res) => {
-          this.mvDetail.liked = res.data.likedCount;  // 点赞数
-          this.$loading.loadingNo()
+          this.mvDetail.liked = res.data.likedCount; // 点赞数
+          this.$loading.loadingNo();
           this.showDetail = true;
         });
       });
@@ -338,105 +364,103 @@ export default {
         }
       });
     },
-    getMvUrl(){
-      getMv(this.$route.params.mid).then(res => {
+    // 获取mv播放url
+    getMvUrl() {
+      getMv(this.$route.params.mid).then((res) => {
         this.mvUrl = res.data.data.url;
-      })
+      });
     },
     // 封转方法
     getCommentList() {
       // 发送网络请求
-      getMvComment(this.$route.params.mid, 25, this.offset).then((res) => {
-        // 判断有没有热评数组
-        if (res.data.hotComments) {
-          this.hotLength = res.data.hotComments.length; // 保存热评数量
-        }
-        this.CommentLength += this.hotLength + res.data.comments.length // 获取数量
-        console.log(this.CommentLength +'---'+ res.data.total);
-        // 判断评论数量
-        if (this.CommentLength - 1 <= res.data.total) {
-          if (res.data.hotComments) {
-            for (const item of res.data.hotComments) {
+      if (this.commentLength > 0) {
+        getMvComment(this.$route.params.mid, 30, this.offset * 30).then(
+          (res) => {
+            console.log(res);
+            // 判断评论数量
+            this.commentLength = res.data.comments.length;
+            if (res.data.hotComments) {
+              for (const item of res.data.hotComments) {
+                this.commentList.push({
+                  commentId: item.commentId, // 评论楼层id
+                  content: item.content, // 评论内容
+                  likedCount: item.likedCount, // 喜欢数量
+                  time: item.time, // 发布时间戳
+                  userImg: item.user.avatarUrl, // 用户头像
+                  authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
+                  userName: item.user.nickname, // 用户昵称
+                  userId: item.user.userId, // 用户id
+                  vipType: item.user.vipType, // 是否开通会员
+                });
+              }
+            }
+
+            for (const itemc of res.data.comments) {
               this.commentList.push({
-                commentId: item.commentId, // 评论楼层id
-                content: item.content, // 评论内容
-                likedCount: item.likedCount, // 喜欢数量
-                time: item.time, // 发布时间戳
-                userImg: item.user.avatarUrl, // 用户头像
-                authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
-                userName: item.user.nickname, // 用户昵称
-                userId: item.user.userId, // 用户id
-                vipType: item.user.vipType, // 是否开通会员
+                commentId: itemc.commentId, // 评论楼层id
+                content: itemc.content, // 评论内容
+                likedCount: itemc.likedCount, // 喜欢数量
+                time: itemc.time, // 发布时间戳
+                userImg: itemc.user.avatarUrl, // 用户头像
+                authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
+                userName: itemc.user.nickname, // 用户昵称
+                userId: itemc.user.userId, // 用户id
+                vipType: itemc.user.vipType, // 是否开通会员
               });
             }
+            this.offset++; // 页数增加
           }
-
-          for (const itemc of res.data.comments) {
-            this.commentList.push({
-              commentId: itemc.commentId, // 评论楼层id
-              content: itemc.content, // 评论内容
-              likedCount: itemc.likedCount, // 喜欢数量
-              time: itemc.time, // 发布时间戳
-              userImg: itemc.user.avatarUrl, // 用户头像
-              authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
-              userName: itemc.user.nickname, // 用户昵称
-              userId: itemc.user.userId, // 用户id
-              vipType: itemc.user.vipType, // 是否开通会员
-            });
-          }
-          this.offset++; // 页数增加
-        } else {
-          this.$toast.show("没有更多评论了:(", 1900);
-        }
-      });
+        )
+      } else {
+        this.$toast.show("没有更多评论了:(", 1900);
+      }
     },
   },
   created() {
     this.$loading.loadingShow();
-    this.MvDetail();  // 获取mv信息
-    this.getMvUrl();  // 获取mvurl
-    this.getCommentList();  // 获取mv评论
+    this.MvDetail(); // 获取mv信息
+    this.getMvUrl(); // 获取mvurl
+    this.getCommentList(); // 获取mv评论
   },
-  mounted () {
+  mounted() {
     this.$loading.loadingShow();
     setTimeout(() => {
-      this.$loading.loadingNo()
+      this.$loading.loadingNo();
       this.showDetail = true;
-    },1300)
+    }, 1300);
   },
 };
 </script>
 <style scoped>
-.isPlay{
+.isPlay {
   position: relative;
   z-index: 60;
   top: 40%;
   left: 43%;
-  
 }
-.mv{
+.mv {
   position: absolute;
   /* top: -100px; */
   height: 190px;
   width: 100%;
 }
-.quanp{
+.quanp {
   float: right;
 }
-.quanp img{
+.quanp img {
   width: 20px;
   height: 20px;
   margin-top: 3px;
   margin-right: 10px;
 }
-.nowTime{
+.nowTime {
   color: #fff;
   font-size: 14px;
   margin-top: 5px;
   margin-left: 10px;
   float: left;
 }
-.jindu{
+.jindu {
   position: absolute;
   bottom: 0;
 }
@@ -447,9 +471,9 @@ export default {
   background-color: #ee0a24;
   border-radius: 100px;
 }
-.content2{
-    padding: 10px 16px 0;
-    border-bottom: 6px solid #ececec;
+.content2 {
+  padding: 10px 16px 0;
+  border-bottom: 6px solid #ececec;
 }
 .MvPlay {
   width: 100%;
@@ -465,7 +489,7 @@ export default {
   height: 190px;
   position: relative;
 }
-.topShadowBox{
+.topShadowBox {
   position: absolute;
   top: 0;
   width: 100%;
@@ -473,16 +497,16 @@ export default {
   background: linear-gradient(rgb(61, 61, 61), transparent);
   display: flex;
 }
-.back{
+.back {
   flex: 1;
   text-align: center;
 }
-.back img{
+.back img {
   width: 20px;
   height: 20px;
   margin-top: 5px;
 }
-.title{
+.title {
   flex: 7;
   width: 250px;
   font-size: 15px;
@@ -492,7 +516,7 @@ export default {
   line-height: 30px;
   color: #fff;
 }
-.bottomShadowBox{
+.bottomShadowBox {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -700,7 +724,7 @@ export default {
 }
 .conscroll {
   top: 190px;
-  
+
   background-color: #fff;
   height: calc(100vh - 190px);
 }

@@ -50,7 +50,7 @@ Vue.filter('getTime',function(date,pattern="YYYY年MM月DD日"){
 })
 // 时间转换
 Vue.filter('mvTime',function(time){
-  return (time / 1000 / 60 <= 9 ? '0' + Math.floor(time / 1000 / 60) :  Math.floor(time / 1000 / 60)) + ':' + (time / 1000 % 60 < 9 ? '0' + time / 1000 % 60 : time / 1000 % 60)
+  return (time / 1000 / 60 <= 9 ? '0' + Math.floor(time / 1000 / 60) :  Math.floor(time / 1000 / 60)) + ':' + (time / 1000 % 60 <= 9 ? '0' + time / 1000 % 60 : time / 1000 % 60)
 })
 
 

@@ -11,12 +11,22 @@ export function getPlayList(uid, type=0){
     })
 }
 
+// 获取用户歌单
+// export function getUserSongList(){
+//     return request({
+//         url: '/playlist/detail'
+//     })
+// }
+
+
 // 获取歌曲详情
-export function getSongDetial(ids){
+export function getSongDetial(ids,limit,offset){
     return request({
         url: '/song/detail',
         params: {
-            ids
+            ids,
+            limit,
+            offset
         }
     })
 }

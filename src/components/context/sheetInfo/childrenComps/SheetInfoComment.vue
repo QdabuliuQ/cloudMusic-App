@@ -53,6 +53,9 @@
           </div>
         </div>
       </div>
+      <div class="noComment" v-else>
+        <div class="text">没有更多评论了:(</div>
+      </div>
     </mscroll>
     <van-share-sheet
       v-model="showShare"
@@ -89,8 +92,7 @@ export default {
           { name: "二维码", icon: "qrcode" },
         ],
       ],
-      CommentLength: 0, // 目前评论数量
-      hotLength: 0, // 热评数量
+      commentLength: 1,  // 判断是否加载评论
     };
   },
   components: {
@@ -113,7 +115,7 @@ export default {
       if (this.$store.state.isShowNav === false) {
         this.$loading.loadingShow();
         setTimeout(() => {
-            this.getCommentList(this.$route.params.id, 25, this.offset);
+            this.getCommentList(this.$route.params.id, 100, this.offset * 100);
             this.$loading.loadingNo();
         }, 1000);
       }
@@ -124,17 +126,14 @@ export default {
     },
 
     // 封转方法
-    getCommentList(id, limit, offset) {
+    getCommentList(sid, list, offset) {
       // 发送网络请求
-      getSheetComment(id, limit, offset).then((res) => {
-        // 判断有没有热评数组
-        if (res.data.hotComments) {
-          this.hotLength = res.data.hotComments.length; // 保存热评数量
-        }
-        this.CommentLength = this.hotLength + limit * (offset + 1); // 获取数量
-        this.commentTitle = "评论(" + res.data.total + ")";
-        // 判断评论数量
-        if (this.CommentLength < res.data.total) {
+      if (this.commentLength > 0) {
+        getSheetComment(sid, list, offset).then((res) => {
+          console.log(res);
+          this.commentTitle = "评论(" + res.data.total + ")";
+          // 判断评论数量
+          this.commentLength = res.data.comments.length;
           if (res.data.hotComments) {
             for (const item of res.data.hotComments) {
               this.commentList.push({
@@ -164,16 +163,16 @@ export default {
               vipType: itemc.user.vipType, // 是否开通会员
             });
           }
-          this.offset++; // 页数增加
-        } else {
-        //   this.$toast.show("没有更多了:(", 1900);
-        }
-      });
+          this.offset ++; // 页数增加
+        });
+      } else {
+         this.$toast.show('没有更多评论了:(',1900)
+      }
     },
   },
   created() {
     // 获取评论
-    this.getCommentList(this.$route.params.id, 25, this.offset);
+    this.getCommentList(this.$route.params.id, 100, this.offset * 100);
   },
 };
 </script>
@@ -296,5 +295,19 @@ export default {
   top: 45px;
   background-color: #fff;
   height: calc(100vh - 40px);
+}
+.noComment{
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  color: #8b8b8b;
+}
+.text{
+  position: relative;
+  font-size: 21px;
+  font-weight: 550;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

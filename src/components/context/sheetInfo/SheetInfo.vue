@@ -69,7 +69,7 @@ import infoComment from './childrenComps/SheetInfoComment'  // 歌单评论组�
 
 import { toStringNum } from "common/common"; // 播放量转换
 
-import { getSongDetial } from "network/played"; // 歌曲列表
+import { getSongDetial, getUserSongList } from "network/played"; // 歌曲列表
 import { getPlayDetial, getSheetComment } from "network/sheetInfo"; // 获取歌单内容 歌单评论
 
 export default {
@@ -135,15 +135,13 @@ export default {
       this.sheetInfoContent.playCount = toStringNum(
         this.sheetInfoContent.playCount
       );
-      // this.showCollection = this.$store.state.profile.userId !== this.sheetInfoContent.userId;
-      // console.log(this.showCollection);
       for (const item of path.trackIds) {
         this.songListId.push(item.id);
       }
 
       // 获取歌单歌曲列表
       getSongDetial(this.songListId.toString()).then((res) => {
-        // console.log(res);
+        console.log(res);
         for (const item of res.data.songs) {
           // 选择性保存数据
           this.songList.push({
@@ -157,11 +155,6 @@ export default {
         }
       });     
     });
-
-    // 歌单评论
-    // getSheetComment(this.sheetId).then(res => {
-    //   console.log(res);
-    // })
   },
 
   mounted () {

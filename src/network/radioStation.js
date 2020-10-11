@@ -115,3 +115,36 @@ export function getAudioDetail(rid){
         }
     })
 }
+
+// 获取电台节目详情
+export function getDjProgram(rid,limit,offset,asc){
+    return request({
+        url:'/dj/program',
+        params: {
+            rid,
+            limit,
+            offset,
+            asc
+        }
+    })
+}
+
+export function getProgramDetail(id){
+    return request({
+        url: '/dj/program/detail',
+        params:{
+            id
+        }
+    })
+}
+
+// 获取热门电台推荐
+export function getDjHot(limit, offset){
+    return request({
+        url: '/dj/hot',
+        params: {
+            limit,
+            offset
+        }
+    })
+}
