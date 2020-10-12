@@ -75,10 +75,7 @@ export default {
 <style scoped>
     .MyMessageList{
         width: 100%;
-        /* height: 100px; */
-        
-        margin-top: 5px;
-        
+        margin-top: 5px;      
     }
     .box{
         padding: 8px 13px;
@@ -100,10 +97,10 @@ export default {
         color: #9b9b9b;
     }
     .left{
-        flex: 3;
+        flex: 4;
     }
     .center{
-        flex: 7;
+        flex: 5;
     }
     .center img{
         float: right;
@@ -126,23 +123,24 @@ export default {
         height: 45px;
         display: flex;
         position: relative;
-        top: 5px;
-        
+        top: 5px;  
     }
     .img{
         flex: 1.5;
         background-color: #dbdbdb;
         border-radius: 8px;
+        text-align: center;
+        font-size: 13.5px;
     }
     .img img{
         width: 25px;
         height: 25px;
         margin-top: 10px;
-        margin-left: 12px;
     }
     .text{
         flex: 8;
         line-height: 45px;
         margin-left: 10px;
+        font-size: 14px;
     }
 </style>

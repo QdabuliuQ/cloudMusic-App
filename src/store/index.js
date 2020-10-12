@@ -44,7 +44,8 @@ export default new Vuex.Store({
     isPlayEnd: false, // 内部播放器是否播放结束
     isShowNav: true,  // 显示隐藏底部播放导航栏
     createId: '',  // 目前所在的歌单创建者id
-    sheetId: ''  // 目前所在的歌单id
+    sheetId: '',  // 目前所在的歌单id
+    hotOffset: 0,  // 获取热门电台推荐 分页参数
   },
   mutations: {
   },

@@ -84,22 +84,25 @@ export default {
   }
   .right{
     flex: 2;
+    /* width: 1.896138rem; */
     display: flex;
     align-items: center;
   }
   .box{
-    width: 230px;
+    width: 6.125166rem;
     margin-left: 10px;
   }
   .name{
-    width: 95%;
+    width: 5.805593rem;
+    margin-right: 0;
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .signature{
-    width: 95%;
+    width: 5.805593rem;
+    margin-right: 0;
     font-size: 12px;
     color: #9e9e9e;
     overflow: hidden;
@@ -111,7 +114,7 @@ export default {
   }
   .box2{
     width: 100%;
-    height: auto;
+    height: 100%;
     text-align: center;
   }
   .box2 span{

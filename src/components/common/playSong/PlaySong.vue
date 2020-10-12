@@ -12,8 +12,7 @@
         <div v-show="showLogo" @click="isShowLogo" class="logo">
           <div ref="guanp" class="guanp">
             <img class="img" src="~assets/img/playSong/gp3.png" alt="" />
-            <div class="songImg">
-              
+            <div class="songImg">   
               <img :src="bgimg" alt="" />
             </div>
           </div>
@@ -535,10 +534,8 @@ export default {
 /* 动画执行期间 */
 .v-enter-active,.v-leave-active{
   position: absolute;
-  /* z-index: 10; */
     /* 添加动画效果 */
   transition: all 0.2s linear;
-  
 }
 .logo-enter{
   opacity: 1;

@@ -42,7 +42,7 @@ export default {
             }           
         },
 
-        // 正在播放图片
+        // 播放状态下
         playingImg(){
             this.playImg = require('assets/img/playSong/zanting.svg')
         },

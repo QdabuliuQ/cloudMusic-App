@@ -31,6 +31,7 @@ const routes = [
   { path: '/myMessage/radioStation/stationHomeP/stationClassify', component: () => import('views/radioStation/childrenComps/StationClassify') },  // 电台分类
   { path: '/classifyInfo/:type', component: () => import('views/radioStation/childrenComps/ClassifyInfo') },  // 电台分类详情
   { path: '/stationDetail/:rid', component: () => import('views/radioStation/childrenComps/StationDetail') },  // 电台详情
+  { path: '/audioPlay/:id', component: () => import('views/radioStation/childrenComps/audioPlay') },  // 电台音乐播放
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
   { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
   { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏

@@ -150,7 +150,7 @@ export default {
 }
 .my-swipe {
   width: 94%;
-  height: 140px;
+  height: 3.728362rem;
   border-radius: 8px;
   overflow: hidden;
   margin: 10px auto;

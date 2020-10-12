@@ -119,7 +119,7 @@ export default {
         display: flex;
     }
     .cd{
-        flex: 1;
+        width: 1.038615rem;
     }
     .cd img{
         position: relative;
@@ -131,7 +131,7 @@ export default {
         border-radius: 50%;
     }
     .text{
-        flex: 5;
+        width: 6.396538rem;
         font-size: 14px;
     }
     .top{
@@ -155,7 +155,7 @@ export default {
         
     }
     .play{
-        flex: 1;
+        width: 1.283622rem;
     }
     .play img{
         width: 31px;
@@ -164,7 +164,7 @@ export default {
         margin-left: 8px;
     }
     .list{
-        flex: 1;
+        width: 1.283622rem;
     }
     .list img{
         width: 28px;

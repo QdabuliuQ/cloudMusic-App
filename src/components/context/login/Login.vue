@@ -49,10 +49,6 @@ export default {
 <style scoped>
     .Login{
         background-color: #bd3126;
-        /* position: absolute; */
-        /* overflow-y: hidden; */
-        /* width: 100%;
-        height: 100%; */
         position: absolute;
         overflow:hidden;
         top: 0;
@@ -62,48 +58,52 @@ export default {
         z-index: 51;
     }
     .close img{
-        width: 20px;
-        height: 20px;
-        margin-top: 15px;
-        margin-left: 15px;
+        width: .532623rem;
+        height: .532623rem;
+        margin-top: .399467rem;
+        margin-left: .399467rem;
     }
     .logo{
-        width: 64px;
-        height: 64px;
+        width: 1.704394rem;
+        height: 1.704394rem;
         background-color: #fff;
-        margin: 135px auto;
+        margin: 3.595206rem auto;
         border-radius: 20px;
     }
+    .logo img{
+        width: 100%;
+        height: 100%;
+    }
     .phoneLogin{
-        width: 70%;
-        height: 40px;
+        width: 6.994407rem;
+        height: 1.065246rem;
         background-color: #fff;
-        margin: 100px auto 20px;
-        border-radius: 40px;
+        margin: 2.663116rem auto .532623rem;
+        border-radius: 1.065246rem;
         text-align: center;
-        line-height: 40px;
-        font-size: 17px;
+        line-height: 1.065246rem;
+        font-size: 16px;
         color: #da231b;
     }
     .emailLogin{
         width: 70%;
         height: 40px;
         background-color: #fff;
-        margin: 20px auto;
+        margin: .532623rem auto;
         border-radius: 40px;
         text-align: center;
         line-height: 40px;
-        font-size: 17px; 
+        font-size: 16px; 
         color: #da231b;
     }
     .tiyan{
         width: 70%;
         height: 40px;
-        margin: 20px auto;
+        margin: .532623rem auto;
         border-radius: 40px;
         text-align: center;
         line-height: 40px;
-        font-size: 17px;
+        font-size: 16px;
         color: #fff;
         box-sizing: border-box;
         border: 1px solid #fff;

@@ -148,3 +148,25 @@ export function getDjHot(limit, offset){
         }
     })
 }
+
+// 获取电台节目详情
+export function getDetail(id){
+    return request({
+        url: '/dj/program/detail',
+        params: {
+            id
+        }
+    })
+}
+
+// 获取电台节目评论
+export function getCommentAudio(id,limit,offset){
+    return request({
+        url: '/comment/dj',
+        params: {
+            id,
+            limit,
+            offset
+        }
+    })
+}

@@ -31,13 +31,13 @@ export default {
 <style scoped>
     .StationItem{
         width: 31.5%;
-        height: 147px;
+        height: 3.91478rem;
         margin-bottom: 8px;
         position: relative;
     }
     .cover{
         width: 100%;
-        height: 110px;
+        height: 2.929427rem;
         border-radius: 7px;
         overflow: hidden;
         position: relative;

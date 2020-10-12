@@ -5,7 +5,9 @@
           <img v-if="showWriteImg" src="~assets/img/radioStation/fanhui2.png" alt="">   
       </div>
       <div class="center">{{navTitle}}</div>
-      <div class="right"></div>
+      <div class="right" @click="toSub">
+          <img v-if="rightImg" src="~assets/img/playSong/fenxiang.svg" alt="">
+      </div>
   </div>
 </template>
 
@@ -24,11 +26,19 @@ export default {
         navTitle:{
             type: String,
             default: ''
+        },
+        rightImg:{
+            type: Boolean,
+            default: false
         }
     },
     methods: {
         back(){
             this.$router.go(-1)
+        },
+
+        toSub(){
+            this.$emit('openSub')
         }
     }
 }
@@ -39,7 +49,6 @@ export default {
         width: 100%;
         height: 44px;
         display: flex;
-        /* box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.6) !important; */
         border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
     }
     .left{
@@ -52,12 +61,22 @@ export default {
         margin-top: 10.5px;
     }
     .center{
+        width: 7.456724rem;
         flex: 7;
         line-height: 44px;
         font-size: 18px;
         text-indent: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .right{
         flex: 1;
+        text-align: center;
+    }
+    .right img{
+        width: 24px;
+        height: 24px;
+        margin-top: 10px;
     }
 </style>

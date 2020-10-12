@@ -34,7 +34,6 @@ export default {
         width: 100%;
         height: 45px;
         line-height: 45px;
-        
     }
     .userImg{
         width: 45px;
@@ -52,6 +51,9 @@ export default {
     .text{
         font-size: 16px;
         margin-left: 10px;
+        line-height: 45px;
+        position: relative;
+        top: -6px;
     }
     .more{
         float: right;

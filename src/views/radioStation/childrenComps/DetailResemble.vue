@@ -28,13 +28,12 @@ export default {
     name: 'DetailResemble',
     data () {
         return {
-            hotOffset: 0,  // 热门分类分页参数
             audioList: [],  // 热门电台
         }
     },
     methods: {
         getDj(){
-            getDjHot(15, this.hotOffset * 15).then(res => {
+            getDjHot(15, this.$store.state.hotOffset * 15).then(res => {
                 for (const item of res.data.djRadios) {
                     this.audioList.push({
                         id: item.id,
@@ -46,7 +45,7 @@ export default {
                         programCount: item.programCount,
                     })
                 }
-                this.hotOffset ++;
+                this.$store.state.hotOffset ++;
             })
         },
 
@@ -76,12 +75,12 @@ export default {
     }
     .item{
         width: 100%;
-        height: 80px;
+        height: 2.130493rem;
         display: flex;
         margin-bottom: 8px;
     }
     .left{
-        flex: 1.9;
+        flex: 2;
     }
     .center{
         flex: 5;
@@ -100,7 +99,7 @@ export default {
         overflow: hidden;
     }
     .title{
-        width: 180px;
+        width: 4.793609rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -108,7 +107,7 @@ export default {
         margin-left: 8px;
     }
     .text{
-        width: 180px;
+        width: 4.793609rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -117,7 +116,7 @@ export default {
         margin-left: 8px;
     }
     .count{
-        width: 200px;
+        width: 5.326232rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -138,7 +137,7 @@ export default {
     .btn img{
         margin-top: 3px;
         position: relative;
-        left: 9px;
+        left: .186418rem;
         float: left;
     }
 </style>

@@ -82,6 +82,7 @@ export default {
     }
     .index{
         flex: 0.52;
+        font-size: 15px;
         text-align: center;
         margin-right: 10px;
         line-height: 40px;

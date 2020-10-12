@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "amfe-flexible": "^2.2.1",
     "axios": "^0.20.0",
     "better-scroll": "^2.0.4",
     "core-js": "^3.6.5",

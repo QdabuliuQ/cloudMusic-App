@@ -25,7 +25,7 @@
           @toLogin="toLogin"
         ></my-message-login>
         <my-message-menu></my-message-menu>
-        <my-message-love @click.native="toLove"></my-message-love>
+        <my-message-love class="loveBox" @click.native="toLove"></my-message-love>
         <tab-control
           @tabGoods="tabGoods"
           ref="tab1"
@@ -126,11 +126,19 @@ export default {
 <style scoped>
 .MyMessage {
   overflow: hidden;
-  /* padding: 20px 15px; */
+  /* height: 100vh; */
+  height: 100%;
 }
 .MyMessage2 {
+  /* float: left; */
+  /* height: auto; */
+  height: 100%;
   padding: 20px 15px;
 }
+/* .loveBox{
+  height: 22%;
+  width: 100%;
+} */
 .jnavbar {
   margin-top: 44px;
   background-color: #fff;

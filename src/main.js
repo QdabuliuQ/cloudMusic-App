@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 // Vue.forceUpdate()
 
+import 'amfe-flexible/index.js'
+
 // 引入 elementui
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

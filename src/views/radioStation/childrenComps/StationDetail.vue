@@ -7,7 +7,7 @@
       :showWriteImg="true"
       :showBlackImg="false"
     ></menu-nav>
-    <mscroll style="bottom: 45px" :scrollY="true">
+    <mscroll style="bottom: 0px" :scrollY="true">
       <div
         class="bbox"
         v-infinite-scroll="loadAudio"
@@ -153,11 +153,12 @@ export default {
     mscroll,
   },
   created() {
+    this.$store.state.isShowNav = false;  // 隐藏底部播放栏
     this.getDetail();
   },
-  mounted() {
-    
-  },
+  destroyed() {
+    this.$store.state.isShowNav = true;
+  }
 };
 </script>
 <style scoped>

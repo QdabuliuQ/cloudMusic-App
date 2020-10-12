@@ -8,7 +8,7 @@
       </span>
     </div>
     <div class="content" key="refresh">
-      <div class="item" v-for="(item, index) in programList" :key="index">
+      <div class="item" @click="playAudio(item.id)" v-for="(item, index) in programList" :key="index">
         <div class="box1">{{ item.programNum }}</div>
         <div class="box2">
           <div class="title">{{ item.name }}</div>
@@ -50,6 +50,12 @@ export default {
     };
   },
   methods: {
+    // 路由跳转
+    playAudio(id){
+      this.$router.push('/audioPlay/' + id);
+    },
+
+    // 排序
     sortList() {
       if (this.bool) {
         this.topImg = require("assets/img/radioStation/Detail/xia.svg");
@@ -163,7 +169,7 @@ export default {
   margin-top: 10px;
 }
 .title {
-  width: 280px;
+  width: 7.456724rem;
   height: 20px;
   font-size: 14px;
   overflow: hidden;

@@ -4,7 +4,7 @@
           <div @click="back" class="left" slot="left">
               <img src="~assets/img/myMessage/fanhui.png" alt="">
           </div>
-          <div slot="center">
+          <div class="title" slot="center">
               手机号登陆
           </div>
       </navbar>
@@ -127,6 +127,9 @@ export default {
         height: 90px;
         font-size: 15px;
     }
+    .title{
+        font-size: .426099rem;
+    }
     .tel{
         width: 100%;
         height: 40px;
@@ -183,6 +186,7 @@ export default {
     .btn{
         margin-top: 10px;
         border-radius: 44px;
+        font-size: .426099rem;
     }
     .tip{
         font-size: 13px;

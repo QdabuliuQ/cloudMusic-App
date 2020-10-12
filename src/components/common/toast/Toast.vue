@@ -44,6 +44,7 @@ export default {
         z-index: 201;
         background-color: rgba(0,0,0,0.6);
         animation: toastA 2s linear;
+        font-size: 15px;
     }
     @keyframes toastA{
         0%{
