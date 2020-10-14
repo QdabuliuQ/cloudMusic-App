@@ -54,6 +54,7 @@ export default {
             this.$router.replace('/stationDetail/' + id)
             this.audioList = []
             this.getDj();
+            this.$emit('refresh')
         }
     },
     beforeRouteUpdate(to, from, next) {

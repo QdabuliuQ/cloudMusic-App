@@ -205,6 +205,7 @@ export default {
       this.audioDom.play();
       clearInterval(this.timer); // 清除定时器 防止多个定时器多开
       this.timer = setInterval(this.playAudio, 1000); // 更新时间
+      this.isPlay = 1;
     },
 
     // 播放按钮
@@ -212,6 +213,7 @@ export default {
       if (this.isPlay === 0) {
         this.audioDom.play(); // 播放
         this.isPlay = 1;
+        this.$refs.bnav.playingImg()
         this.timer = setInterval(this.playAudio, 1000); // 更新时间
         // 重新播放
         if (this.value >= 100) {
@@ -224,9 +226,10 @@ export default {
           this.timer = setInterval(this.playAudio, 1000); // 更新时间
         }
       } else {
+        clearInterval(this.timer); // 清除定时器
+        this.$refs.bnav.endImg()
         this.audioDom.pause(); // 暂停
         this.isPlay = 0;
-        clearInterval(this.timer); // 清除定时器
       }
     },
 
@@ -383,7 +386,7 @@ export default {
 .content {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 .bbox {
   width: 100%;
@@ -456,7 +459,7 @@ export default {
   width: 100%;
 }
 .name {
-  width: 100%;
+  width: 5.05992rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

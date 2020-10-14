@@ -16,7 +16,7 @@
           </a>
         </van-swipe-item>
       </van-swipe>
-      <item-btn class="itemBtn" @toClassify="toClassify"></item-btn>
+      <item-btn class="itemBtn" @toRanking='toRanking' @toClassify="toClassify"></item-btn>
       <div class="content">
         <div class="recommend">
           <h2>电台推荐</h2>
@@ -86,6 +86,10 @@ export default {
     // 事件传播/路由跳转
     toClassify(){
       this.$router.push('/myMessage/radioStation/stationHomeP/stationClassify')
+    },
+
+    toRanking(){
+      this.$router.push('/myMessage/radioStation/stationHomeP/stationRanking')
     },
 
     // 付费精选

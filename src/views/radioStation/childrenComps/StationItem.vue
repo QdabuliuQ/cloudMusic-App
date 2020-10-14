@@ -24,6 +24,9 @@ export default {
         audioDetail(rid){
             this.$router.push('/stationDetail/'+rid)
         }
+    },
+    created () {
+        
     }
 }
 

@@ -7,7 +7,7 @@
       :showWriteImg="true"
       :showBlackImg="false"
     ></menu-nav>
-    <mscroll style="bottom: 0px" :scrollY="true">
+    <mscroll ref="msc" style="bottom: 0px" :scrollY="true">
       <div
         class="bbox"
         v-infinite-scroll="loadAudio"
@@ -49,7 +49,7 @@
             :detail="detail"
           ></detail-message>
           <detail-program :loadIndex='loadIndex' v-show="showProgram"></detail-program>
-          <detail-resemble v-show="showResemble"></detail-resemble>
+          <detail-resemble @refresh='refresh' v-show="showResemble"></detail-resemble>
         </div>
       </div>
     </mscroll>
@@ -79,7 +79,6 @@ export default {
       showProgram: true, // 节目界面
       showResemble: false, // 相似界面
       loadIndex: 0,  // 监听下拉加载
-      
     };
   },
   // 监听路由变化
@@ -91,6 +90,13 @@ export default {
     }
   },
   methods: {
+    // 滚动到顶部
+    refresh(){
+      this.$refs.msc.mscrollTo();
+      this.$refs.tabNav.tabIndex = 1
+      this.$refs.tabNav.tabItem(1)
+    },
+
     // 下拉加载
     loadAudio(){
       if (this.showProgram) {
@@ -154,10 +160,17 @@ export default {
   },
   created() {
     this.$store.state.isShowNav = false;  // 隐藏底部播放栏
+    if (this.$store.state.navMusicDom) {
+      this.$store.state.navMusicDom.pause();
+    }
     this.getDetail();
   },
   destroyed() {
     this.$store.state.isShowNav = true;
+    if (this.$store.state.navMusicDom) {
+      this.$store.state.navMusicDom.play();
+    }
+    
   }
 };
 </script>

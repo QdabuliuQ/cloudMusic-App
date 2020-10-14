@@ -78,8 +78,6 @@ export default {
             if (this.isPlayM > 0) {
                 if (this.$store.state.isend || this.$store.state.isPlayEnd) {
                     this.isPlay = require('assets/img/common/shipin.svg')
-                    // this.navMusic.src = this.$store.state.playContent.songurl                    
-                    // this.navMusic.currentTime = 0
                     this.$store.state.isend = false;
                 } else {
                     this.navMusic = document.getElementById('navMusic')                                 
@@ -137,6 +135,7 @@ export default {
     .top{
         width: 220px;
         margin-top: 5px;
+        margin-left: .266312rem;
         font-size: 15px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -145,6 +144,7 @@ export default {
     .bottom{
         width: 220px;
         font-size: 13px;
+        margin-left: .266312rem;
         color: #a0a0a0;
         overflow: hidden;
         text-overflow: ellipsis;

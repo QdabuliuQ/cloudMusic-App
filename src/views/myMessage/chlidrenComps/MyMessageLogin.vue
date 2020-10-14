@@ -41,6 +41,7 @@ export default {
         border-radius: 50%;
         float: left;
         margin-left: 10px;
+        line-height: 45px;
     }
     .MyMessageLogin .login{
         width: 100%;
@@ -52,8 +53,6 @@ export default {
         font-size: 16px;
         margin-left: 10px;
         line-height: 45px;
-        position: relative;
-        top: -6px;
     }
     .more{
         float: right;

@@ -30,6 +30,7 @@ export default {
             this.tabIndex = index
             let span = document.getElementsByClassName('spItem')[index];
             let bottomBor = document.getElementsByClassName('bottomBor')[0];
+            bottomBor.style.width = span.offsetWidth + 'px';
             Move(bottomBor, 'left', span.offsetLeft, 35)
         }
     }
@@ -58,7 +59,7 @@ export default {
         padding: 5px 10px 10px;
     }
     .active{
-        color: #da231b;
+        color: #e93d34;
     }
     .bottomBor{
         width: 48px;

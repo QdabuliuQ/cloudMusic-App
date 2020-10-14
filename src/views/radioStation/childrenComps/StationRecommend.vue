@@ -40,7 +40,8 @@ export default {
                     picUrl: res.data.djRadios[i].picUrl,
                     name: res.data.djRadios[i].name,
                     desc: res.data.djRadios[i].desc,
-                    rcmdtext: res.data.djRadios[i].rcmdtext
+                    rcmdtext: res.data.djRadios[i].rcmdtext,
+                    id: res.data.djRadios[i].id
                 })
             }
         })

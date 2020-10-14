@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     mscrollTo() {
-      mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 100);
+      mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 300);
     },
   },
   created() {

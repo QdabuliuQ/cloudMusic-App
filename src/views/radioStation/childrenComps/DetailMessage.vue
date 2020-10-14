@@ -173,6 +173,7 @@ export default {
   }
   .img{
     flex: 1;
+    margin-right: 5px;
   }
   .img img{
     width: 30px;
@@ -187,16 +188,19 @@ export default {
     border-bottom: 1px solid #e0e0e0;
   }
   .userName{
+    width: 100%;
     font-size: 13px;
     margin-top: 6px;
     color: #9e9e9e;
   }
   .contentText{
+    width: 8.255659rem;
     margin-top: 10px;
     font-size: 14px;
   }
   .programName{
-    width: 100%;
+    /* width: 100%; */
+    width: 8.255659rem;
     font-size: 12px;
     color:#9e9e9e;
     margin-top: 10px;

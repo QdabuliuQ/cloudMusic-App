@@ -1,14 +1,14 @@
 <template>
   <div class="StationItemBtn">
-      <div class="item">
-          <div class="itemImg" @click="classify"><img class="img2" src="~assets/img/radioStation/HomeP/fl.svg" alt=""></div>
+      <div class="item" @click="classify">
+          <div class="itemImg"><img class="img2" src="~assets/img/radioStation/HomeP/fl.svg" alt=""></div>
           <div>电台分类</div>
       </div>
-      <div class="item">
+      <div class="item" @click="ranking">
           <div class="itemImg"><img class="img1" src="~assets/img/radioStation/HomeP/ph.svg" alt=""></div>
           <div>电台排行</div>
       </div>
-      <div class="item">
+      <div class="item" @click="buyAudio">
           <div class="itemImg"><img class="img1" src="~assets/img/radioStation/HomeP/jp.svg" alt=""></div>
           <div>付费精品</div>
       </div>
@@ -25,6 +25,14 @@ export default {
     methods: {
         classify(){
             this.$emit('toClassify')
+        },
+
+        ranking(){
+            this.$emit('toRanking')
+        },
+
+        buyAudio(){
+            this.$router.push('/classifyInfo/'+ 0)
         }
     }
 }

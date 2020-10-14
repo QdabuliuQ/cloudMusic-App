@@ -170,3 +170,66 @@ export function getCommentAudio(id,limit,offset){
         }
     })
 }
+
+// 24小时节目榜
+export function getProgramTopList(limit){
+    return request({
+        url: '/dj/program/toplist/hours',
+        params: {
+            limit
+        }
+    })
+}
+
+// 节目榜
+export function getProgramList(limit,offset){
+    return request({
+        url: '/dj/program/toplist',
+        params: {
+            limit,
+            offset
+        }
+    })
+}
+
+// 24小时主播榜
+export function getHours(limit){
+    return request({
+        url: '/dj/toplist/hours',
+        params: {
+            limit
+        }
+    })
+}
+
+// 新人榜
+export function getNewcomer(limit){
+    return request({
+        url: '/dj/toplist/newcomer',
+        params: {
+            limit
+        }
+    })
+}
+
+// 最热主播榜
+export function getPopular(limit){
+    return request({
+        url: '/dj/toplist/popular',
+        params: {
+            limit
+        }
+    })
+}
+
+// 电台榜
+export function getTopPorList(type, limit, offset){
+    return request({
+        url: '/dj/toplist',
+        params: {
+            type,
+            limit,
+            offset,            
+        }
+    })
+}

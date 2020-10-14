@@ -1,6 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(location) {
+
+  return originalPush.call(this, location).catch(err => err)
+
+}
+
 Vue.use(VueRouter)
 
 // 组件懒加载
@@ -10,10 +19,15 @@ const cloudVillage = () => import('views/cloudVillage/CloudVillage')  // 云村�
 const video = () => import('views/video/Video')  // 视频页面组件
 
 
-const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+// const originalPush = VueRouter.prototype.push
+// VueRouter.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
+
+// const originalPush = VueRouter.prototype.push
+//    VueRouter.prototype.push = function push(location) {
+//    return originalPush.call(this, location).catch(err => err)
+// }
 
 
 const routes = [
@@ -29,6 +43,7 @@ const routes = [
   { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },  // 个人--电台
   { path: '/myMessage/radioStation/stationHomeP', component: () => import('views/radioStation/childrenComps/StationHomeP') },  // 电台首页
   { path: '/myMessage/radioStation/stationHomeP/stationClassify', component: () => import('views/radioStation/childrenComps/StationClassify') },  // 电台分类
+  { path: '/myMessage/radioStation/stationHomeP/stationRanking', component: () => import('views/radioStation/childrenComps/rankingList') },  // 电台排位
   { path: '/classifyInfo/:type', component: () => import('views/radioStation/childrenComps/ClassifyInfo') },  // 电台分类详情
   { path: '/stationDetail/:rid', component: () => import('views/radioStation/childrenComps/StationDetail') },  // 电台详情
   { path: '/audioPlay/:id', component: () => import('views/radioStation/childrenComps/audioPlay') },  // 电台音乐播放
