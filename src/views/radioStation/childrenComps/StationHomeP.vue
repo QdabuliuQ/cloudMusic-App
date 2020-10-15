@@ -1,6 +1,6 @@
 <template>
   <div class="StationHomeP">
-    <menu-nav :navTitle="navTitle"></menu-nav>
+    <menu-nav class="nav" :navTitle="navTitle"></menu-nav>
     <mscroll style="top: 44px; bottom: 45px" :scrollY="true">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item
@@ -151,6 +151,11 @@ export default {
   position: relative;
   background-color: #fff;
   height: 100vh;
+}
+.nav{
+  position: relative;
+  z-index: 21;
+  background-color: #fff;
 }
 .my-swipe {
   width: 94%;

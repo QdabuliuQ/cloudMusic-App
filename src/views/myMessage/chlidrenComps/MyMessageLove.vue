@@ -97,11 +97,15 @@ export default {
 .listName {
   /* margin-top: 8px;*/
   margin-left: 0.266312rem;
-  font-size: 14px;
+  font-size: .372836rem;
+  height: 17px;
+  line-height: 17px;
 }
 .count {
   margin-left: 0.266312rem;
-  font-size: 12px;
+  font-size: .319574rem;
+  height: 17px;
+  line-height: 17px;
   color: #aaaaaa;
 }
 .center {

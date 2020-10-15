@@ -1,6 +1,6 @@
 <template>
   <div class="followList">
-      <div class="item" v-for="(item,index) in followList" :key="index">
+      <div class="item" @click="information(item.userId)" v-for="(item,index) in followList" :key="index">
           <div class="itembox">
               <div class="img">
                   <img :src="item.avatarUrl" alt="">
@@ -47,6 +47,10 @@ export default {
                 this.followList[index].btntext = '关注'
                 this.followList[index].followBtn = true       
             }           
+        },
+
+        information(id){
+            this.$router.push('/Information/' + id)
         }
     }
 }

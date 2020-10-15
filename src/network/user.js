@@ -32,3 +32,13 @@ export function getSongs(){
         url: '/recommend/songs'
     })
 }
+
+// 获取用户绑定信息
+export function getBinding(uid){
+    return request({
+        url: '/user/binding',
+        params: {
+            uid
+        }
+    })
+}

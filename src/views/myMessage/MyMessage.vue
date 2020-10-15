@@ -1,39 +1,27 @@
 <template>
   <div class="MyMessage">
+    <div class="MyMessage2">
+      <my-message-user
+        class="user"
+        v-if="$store.state.profile.userId !== ''"
+        @click.native="information"
+      ></my-message-user>
+      <my-message-login
+        class="login"
+        v-else
+        @toLogin="toLogin"
+      ></my-message-login>
+      <my-message-menu></my-message-menu>
+      <my-message-love class="loveBox" @click.native="toLove"></my-message-love>
+    </div>
     <tab-control
-      style="
-        margin-top: 44px;
-        background: #fff;
-        position: relative;
-        z-index: 15;
-        padding: 0 15px;
-      "
-      ref="tab2"
+      id="tabCon"
+      ref="tab"
       :title="title"
-      @tabGoods="tabGoods"
-      v-show="isFixed"
     ></tab-control>
-    <mui-scroll style="top: 44px; bottom: 45px" :scrollY="true" ref="mscroll">
-      <div class="MyMessage2">
-        <my-message-user
-          class="user"
-          v-if="$store.state.profile.userId !== ''"
-        ></my-message-user>
-        <my-message-login
-          class="login"
-          v-else
-          @toLogin="toLogin"
-        ></my-message-login>
-        <my-message-menu></my-message-menu>
-        <my-message-love class="loveBox" @click.native="toLove"></my-message-love>
-        <tab-control
-          @tabGoods="tabGoods"
-          ref="tab1"
-          :title="title"
-        ></tab-control>
-        <my-message-list></my-message-list>
-      </div>
-    </mui-scroll>
+    <div class="MyMessage3">
+      <my-message-list ref="songSheet"></my-message-list>
+    </div>
   </div>
 </template>
 
@@ -63,6 +51,10 @@ export default {
     };
   },
   methods: {
+    information(){
+      this.$router.push('/Information/' + this.$store.state.profile.userId)
+    },
+
     // 登录组件
     toLogin() {
       // this.isShow = true
@@ -73,33 +65,6 @@ export default {
       // this.isShow = false;
     },
 
-    // 导航栏切换
-    tabGoods(index) {
-      switch (index) {
-        case 0:
-          this.$refs.tab1.isShow = this.$refs.tab2.isShow = 0;
-          this.$refs.mscroll.muiscroll.scrollTo(
-            0,
-            -(this.$store.state.mySheetToTop - 35),
-            500
-          );
-          break;
-        case 1:
-          this.$refs.tab1.isShow = this.$refs.tab2.isShow = 1;
-          this.$refs.mscroll.muiscroll.scrollTo(
-            0,
-            -(this.$store.state.collectionToTop - 35),
-            500
-          );
-          break;
-        case 2:
-          this.$refs.tab1.isShow = this.$refs.tab2.isShow = 2;
-          break;
-        default:
-          break;
-      }
-    },
-
     toLove() {
       this.$router.push("/playDetail/" + this.$store.state.playList[0].id);
     },
@@ -107,7 +72,18 @@ export default {
   created() {},
   mounted() {
     this.$nextTick(() => {
-      this.offsetTopTab = this.$refs.tab1.$el.offsetTop;
+      let totop = this.$refs.tab.$el.offsetTop;
+      document.addEventListener("scroll", () => {
+        if (pageYOffset >= totop) {
+          this.$refs.tab.$el.style =
+            "position: fixed; left: 0; right: 0; top: 44px; background-color: #fff; z-index: 10;";
+          this.$refs.songSheet.$el.style = 'margin-top: '+ this.$refs.tab.$el.clientHeight +'px'
+        } else if (pageYOffset < totop) {
+          this.$refs.tab.$el.style =
+            "position: static; backgroundColor: transparent";
+          this.$refs.songSheet.$el.style = 'margin-top: 0px'
+        }
+      });
     });
   },
   components: {
@@ -115,7 +91,6 @@ export default {
     MyMessageUser,
     MyMessageMenu,
     MyMessageLove,
-    // MyMessageNavbar,
     MyMessageList,
     tabControl,
     muiScroll,
@@ -124,21 +99,16 @@ export default {
 };
 </script>
 <style scoped>
-.MyMessage {
-  overflow: hidden;
-  /* height: 100vh; */
-  height: 100%;
-}
 .MyMessage2 {
-  /* float: left; */
-  /* height: auto; */
+  margin-top: 1.171771rem;
   height: 100%;
-  padding: 20px 15px;
+  padding: 20px 15px 0;
 }
-/* .loveBox{
-  height: 22%;
-  width: 100%;
-} */
+.MyMessage3{
+  height: 100%;
+  padding: 0 15px 20px;
+  margin-bottom: 1.198402rem;
+}
 .jnavbar {
   margin-top: 44px;
   background-color: #fff;

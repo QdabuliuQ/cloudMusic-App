@@ -37,12 +37,24 @@ export default {
   data() {
     return {
       muiscroll: null,
+      linScroll: null,
     };
   },
   methods: {
     mscrollTo() {
       mui(".mui-scroll-wrapper").scroll().scrollTo(0, 0, 300);
     },
+
+    linterScroll(){
+      document
+      .querySelector(".mui-scroll-wrapper")
+      .addEventListener("scroll", (e) => {
+        // 事件传递
+        // this.$emit("listenerMSC", this.linScroll.y);
+        return this.linScroll.y
+        // this.$emit('listenerMSC2',scroll.y)
+      })
+    }
   },
   created() {
     // console.log(this.$store.state.getComMore);
@@ -62,22 +74,16 @@ export default {
     // this.muiscroll.scrollTo(0,0)
 
     // 监听滚动
+    this.linScroll = mui(".mui-scroll-wrapper").scroll();
     var scroll = mui(".mui-scroll-wrapper").scroll();
     document
       .querySelector(".mui-scroll-wrapper")
       .addEventListener("scroll", (e) => {
         // 事件传递
         this.$emit("listenerMSC", scroll.y);
-
         // this.$emit('listenerMSC2',scroll.y)
-      });
-    try {
-      
-    } catch (error) {
-      
-    }
-
-  },
+      })
+  }
 };
 </script>
 <style>

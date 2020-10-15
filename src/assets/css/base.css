@@ -20,4 +20,12 @@ html{
 }
 body{
     height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+    background-color: transparent;
 }

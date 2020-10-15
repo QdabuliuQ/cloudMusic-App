@@ -130,7 +130,6 @@ export default {
       // 发送网络请求
       if (this.commentLength > 0) {
         getSheetComment(sid, list, offset).then((res) => {
-          console.log(res);
           this.commentTitle = "评论(" + res.data.total + ")";
           // 判断评论数量
           this.commentLength = res.data.comments.length;
@@ -214,6 +213,8 @@ export default {
 .center {
   flex: 7;
   line-height: 45px;
+  font-size: .479361rem;
+  /* font-size: .399467rem; */
 }
 .rightbox {
   flex: 1;
@@ -262,8 +263,8 @@ export default {
   margin-top: -4px;
 }
 .userImg img {
-  width: 40px;
-  height: 40px;
+  width: 1.065246rem;
+  height: 1.065246rem;
   border-radius: 50%;
   overflow: hidden;
 }

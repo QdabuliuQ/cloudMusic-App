@@ -203,6 +203,7 @@ export default {
 .center {
   flex: 7;
   line-height: 45px;
+  font-size: .479361rem;
 }
 .rightbox {
   flex: 1;
@@ -251,15 +252,15 @@ export default {
   margin-top: -4px;
 }
 .userImg img {
-  width: 40px;
-  height: 40px;
+  width: 1.065246rem;
+  height: 1.065246rem;
   border-radius: 50%;
   overflow: hidden;
 }
 .count {
   color: #8b8b8b;
   margin-top: 8px;
-  font-size: 14px;
+  font-size: .372836rem;
   float: right;
 }
 .count img {

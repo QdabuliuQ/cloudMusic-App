@@ -4,7 +4,7 @@
     <div v-show="isTopNav" class="content2">
       <sheet-nav :trackCount="trackCount" :createId='createId'></sheet-nav>
     </div>
-    <mui-scroll
+    <!-- <mui-scroll
     id="infoScroll"
     style="top: 44px; bottom: 45px" 
     :scrollY="true"
@@ -18,10 +18,12 @@
               <div class="bfl">▷ {{sheetInfoContent.playCount}}</div>
               <img class :src="sheetInfoContent.coverImgUrl" alt />
             </div>
-            <div class="name">{{sheetInfoContent.name}}</div>
-            <div class="user">
-              <img class :src="sheetInfoContent.avatarUrl" alt />
-              {{sheetInfoContent.nickname}} ＞
+            <div class="rightBox">
+              <div class="name">{{sheetInfoContent.name}}</div>
+              <div class="user">
+                <img class :src="sheetInfoContent.avatarUrl" alt />
+                {{sheetInfoContent.nickname}} ＞
+              </div>
             </div>
             <tabbar>
               <tabbaritem @click.native="showInfoComment" activeColor="red">
@@ -50,7 +52,50 @@
       <div class="songItem">
         <song-item name="sheetInfo" :songList="songList"></song-item>
       </div>
-    </mui-scroll>
+    </mui-scroll> -->
+    <div class="box">
+        <div class="zhezhao"></div>
+        <div class="bimg" :style="{ background: 'url('+ sheetInfoContent.coverImgUrl +')' }"></div>
+        <div class="zbox">
+          <div class="top" v-if="isShow">
+            <div class="img">
+              <div class="bfl">▷ {{sheetInfoContent.playCount}}</div>
+              <img class :src="sheetInfoContent.coverImgUrl" alt />
+            </div>
+            <div class="rightBox">
+              <div class="name">{{sheetInfoContent.name}}</div>
+              <div class="user">
+                <img class :src="sheetInfoContent.avatarUrl" alt />
+                {{sheetInfoContent.nickname}} ＞
+              </div>
+            </div>
+            <tabbar>
+              <tabbaritem @click.native="showInfoComment" activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/pinglun.svg" alt />
+                <div class="item-text" slot="item-text">{{sheetInfoContent.commentCount}}</div>
+              </tabbaritem>
+              <tabbaritem activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/fenxiang.svg" alt />
+                <div class="item-text" slot="item-text">分享</div>
+              </tabbaritem>
+              <tabbaritem activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/xiazai.svg" alt />
+                <div class="item-text" slot="item-text">下载</div>
+              </tabbaritem>
+              <tabbaritem activeColor="red">
+                <img class="imgNav" slot="item-icon" src="~assets/img/sheetList/duoxuan.svg" alt />
+                <div class="item-text" slot="item-text">多选</div>
+              </tabbaritem>
+            </tabbar>
+          </div>
+        </div>
+      </div>
+      <div ref="content" class="content">
+        <sheet-nav :trackCount="trackCount"></sheet-nav>
+      </div>
+      <div class="songItem">
+        <song-item name="sheetInfo" :songList="songList"></song-item>
+      </div>
     <transition>
       <info-comment @toback="toback" v-show="isShowinfoc"></info-comment>
     </transition>
@@ -141,7 +186,6 @@ export default {
 
       // 获取歌单歌曲列表
       getSongDetial(this.songListId.toString()).then((res) => {
-        console.log(res);
         for (const item of res.data.songs) {
           // 选择性保存数据
           this.songList.push({
@@ -159,9 +203,16 @@ export default {
 
   mounted () {
     // 保存滚动高度
-    this.isNavToTop = this.$refs.content.offsetTop
     this.$nextTick(() => {
       this.$loading.loadingNo()
+    })
+    let top = this.$refs.content.offsetTop
+    document.addEventListener('scroll', () => {
+      if (pageYOffset >= top) {
+        this.$refs.content.style = 'position: fixed; top: 64px; left: 0; right: 0;'
+      } else if (pageYOffset < top) {
+        this.$refs.content.style = 'position: state;'
+      }
     })
   }
 };
@@ -178,10 +229,11 @@ export default {
   z-index: 17;
 }
 .SheetInfo{
-  position: relative;
-  z-index: 5;
+  /* position: relative;
+  z-index: 5; */
   background-color:  rgba(0, 0, 0, 0.8);
-  height: 100vh;
+  margin-bottom: 40px;
+  /* height: 100vh; */
 }
 .zhezhao {
   width: 100%;
@@ -216,10 +268,13 @@ export default {
 }
 .nav {
   /* background-color: #fff; */
-  background-color: rgba(0,0,0,0.7);
-  position: flex;
+  background-color: rgba(0,0,0);
+  /* position: flex; */
   color: #fff;
+  position: relative;
+  position: fixed;
   z-index: 20;
+  top: 0;
 }
 .imgNav {
   margin-bottom: 1px;
@@ -228,6 +283,8 @@ export default {
   color: #fff;
 }
 .box {
+  margin-top: 40px;
+  
   padding: 20px 15px 8px;
   height: 235px;
   position: relative;
@@ -235,14 +292,16 @@ export default {
 }
 .top {
   width: 100%;
-  height: 120px;
+  height: 3.195739rem;
 }
 .img {
-  width: 120px;
-  height: 120px;
+  width: 35%;
+  height: 100%;
+  /* width: 3.195739rem;
+  height: 3.195739rem; */
   border-radius: 5px;
   overflow: hidden;
-  margin-right: 20px;
+  /* margin-right: .532623rem; */
   float: left;
   position: relative;
 }
@@ -258,29 +317,33 @@ export default {
   height: 100%;
 }
 .name {
-  width: 180px;
+  width: 4.793609rem;
   float: right;
-  margin-right: 25px;
+  /* margin-right: .665779rem; */
   position: relative;
   color: #fff;
   top: 7px;
-  font-size: 20px;
+  font-size: .532623rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .user {
-  height: 30px;
-  line-height: 30px;
-  width: 180px;
+  line-height: .798935rem;
+  width: 4.793609rem;
   float: right;
-  margin-right: 25px;
-  margin-top: 15px;
+  /* margin-right: .665779rem; */
+  margin-top: .399467rem;
   font-size: 13px;
   color: rgb(243, 243, 243);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.rightBox{
+  width: 60%;
+  height: 100%;
+  float: left;
 }
 .user img {
   width: 30px;
@@ -290,6 +353,7 @@ export default {
   margin-right: 7px;
 }
 .content {
+  background-color: #000;
   width: 100%;
   padding: 0;
   margin-top: -20px;

@@ -34,6 +34,7 @@
               @tabToggle="tabToggle"
               :itemList="itemList"
               class="tabnav"
+              :firstIndex='1'
             ></tab-Nav>
           </div>
           <img
@@ -262,7 +263,7 @@ export default {
   top: 0;
   z-index: 31;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.829);
+  background-color: rgba(0, 0, 0, 0.9);
   border: 0 !important;
 }
 .bottom {

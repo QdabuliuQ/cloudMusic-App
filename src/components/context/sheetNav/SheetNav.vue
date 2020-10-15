@@ -64,22 +64,27 @@ export default {
         position: sticky;
         top: 42.5px;
         width: 100%;
-        height: 45px;
+        height: 1.198402rem;
         background-color: #fff;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        line-height: 45px;
+        line-height: 1.198402rem;
         font-size: 15px;
     }
     .SheetNav img{
-        margin-top: 6.5px;
-        margin-left: 12px;
-        margin-right: 7px;
+        width: .852197rem;
+        height: .852197rem;
+        margin-top: .173103rem;
+        margin-left: .319574rem;
+        margin-right: .186418rem;
         float: left;
+    }
+    .SheetNav span{
+        font-size: .45273rem;
     }
     .SheetNav .a{
         color: rgb(143, 143, 143);
-        font-size: 13px;
+        font-size: .346205rem;
     }
     .collectionTrue{
         background-color: #da231b  !important;
@@ -87,22 +92,22 @@ export default {
     }
     .collection{
         width: 100px;
-        height: 32px;
-        margin-top: 6.5px;
-        margin-right: 10px;
-        line-height: 32px;
-        border-radius: 32px;
+        height: .852197rem;
+        margin-top: .173103rem;
+        margin-right: .266312rem;
+        line-height: .852197rem;
+        border-radius: .852197rem;
         float: right;
-        font-size: 14px;
+        font-size: .372836rem;
         color: #000;
         text-align: center;
         background-color: rgb(214, 214, 214);
     }
     .collection img{
-        width: 18px;
+        width: .479361rem;
         margin: 0;
         position: relative;
-        top: 7px;
-        left: 17px;
+        top: 0px;
+        left: .45273rem;
     }
 </style>

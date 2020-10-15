@@ -116,11 +116,11 @@ export default {
     }
     .bottom{
         width: 100%;
-        height: 55px;
+        height: 1.464714rem;
         margin-top: 9px;
     }
     .bottomBox{
-        height: 45px;
+        height: 1.198402rem;
         display: flex;
         position: relative;
         top: 5px;  
@@ -133,14 +133,14 @@ export default {
         font-size: 13.5px;
     }
     .img img{
-        width: 25px;
-        height: 25px;
-        margin-top: 10px;
+        width: .665779rem;
+        height: .665779rem;
+        margin-top: .266312rem;
     }
     .text{
         flex: 8;
-        line-height: 45px;
-        margin-left: 10px;
-        font-size: 14px;
+        line-height: 1.198402rem;
+        margin-left: .266312rem;
+        font-size: .372836rem;
     }
 </style>

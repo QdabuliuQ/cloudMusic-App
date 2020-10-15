@@ -35,7 +35,7 @@ export default {
 </script>
 <style scoped>
     .left{
-        flex: 1.2;
+        flex: 1.5;
         border-radius: 8px;
         overflow: hidden;
     }
@@ -44,10 +44,10 @@ export default {
         height: 100%;
     }
     .listName{
-        width: 220px;
-        margin-top: 3.5px;
-        margin-left: 10px;
-        font-size: 16px;
+        width: 5.326232rem;
+        margin-top: .093209rem;
+        margin-left: .266312rem;
+        font-size: .426099rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -58,7 +58,7 @@ export default {
        color: #aaaaaa;
     }
     .center{
-        flex: 3;
+        flex: 7.5;
     }
     .right{
         flex: 1;
@@ -69,7 +69,7 @@ export default {
     }
     .songSheet{
         width: 100%;
-        height: 45px;
+        height: 1.198402rem;
         display: flex;
         position: relative;
         top: 5px;

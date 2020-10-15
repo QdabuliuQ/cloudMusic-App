@@ -32,8 +32,8 @@ export default {
     }
     .MyMessageLogin{
         width: 100%;
-        height: 45px;
-        line-height: 45px;
+        height: 1.198402rem;
+        line-height: 1.198402rem;
     }
     .userImg{
         width: 45px;
@@ -50,9 +50,9 @@ export default {
         float: left;
     }
     .text{
-        font-size: 16px;
+        font-size: .426099rem;
         margin-left: 10px;
-        line-height: 45px;
+        line-height: 1.198402rem;
     }
     .more{
         float: right;

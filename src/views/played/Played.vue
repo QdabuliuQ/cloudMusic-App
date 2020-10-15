@@ -2,6 +2,7 @@
   <div class="Played">
       <menu-nav class="navbar" :navTitle="navTitle"></menu-nav>
       <mui-scroll
+        ref="playedSC"
         style="top: 44px; bottom: 45px"
         :scrollY="true">
       <div class="box">
@@ -31,12 +32,13 @@ export default {
             songId: []  // 歌曲id
         }
     },
+    methods: { 
+    },
     components: {
         menuNav,
         songItem,
         muiScroll
     },
-
     created () {
         this.$loading.loadingShow();
         // 获取数据
@@ -55,6 +57,11 @@ export default {
             this.$loading.loadingNo();
         })
     },
+    mounted () {
+        // this.$refs.playedSC.linterScroll()
+        // console.log(this.$refs.playedSC.linScroll)
+    },
+    
 }
 
 </script>

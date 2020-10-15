@@ -16,7 +16,7 @@
 import {Move} from 'common/tool'
 
 export default {
-    props: ['itemList'],
+    props: ['itemList','firstIndex'],
     name: 'TabNav',
     data () {
         return {
@@ -33,6 +33,14 @@ export default {
             bottomBor.style.width = span.offsetWidth + 'px';
             Move(bottomBor, 'left', span.offsetLeft, 35)
         }
+    },
+    mounted () {
+        this.$nextTick(() => {
+            this.tabIndex = this.firstIndex;
+            let span = document.getElementsByClassName('spItem')[this.firstIndex];
+            let bottomBor = document.getElementsByClassName('bottomBor')[0];
+            Move(bottomBor, 'left', span.offsetLeft, 35)
+        })
     }
 }
 
@@ -40,7 +48,7 @@ export default {
 <style scoped>
     .TabNav{
         width: 100%;
-        height: 40px;
+        height: 1.171771rem;
         background-color: #fff;
         box-sizing: border-box;
         border-bottom: 1px solid #e6e6e6;
@@ -50,10 +58,9 @@ export default {
     }
     .item{
         flex: 1;
-        line-height: 40px;
+        line-height: 1.171771rem;
         text-align: center;
-        font-size: 14px;
-        
+        font-size: .372836rem;
     }
     .item span{
         padding: 5px 10px 10px;

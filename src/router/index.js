@@ -50,7 +50,9 @@ const routes = [
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
   { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
   { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
-  // 个人--登录
+
+  { path: '/Information/:uid', component: () => import('views/information/Information') },  // 个人详情页
+
   { path: '/myMessage/login', component: () => import('components/context/login/Login') },  // 登录
   { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },  // 手机登录
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },  // 邮箱登录

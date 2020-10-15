@@ -23,7 +23,7 @@ export default {
         tabClick(index) {
             this.isShow = index;
             // 子组件传参通过 $emit 调用父组件的方法并传递参数
-            this.$emit('tabGoods',index)
+            // this.$emit('tabGoods',index)
         }
     },
     // 保存父组件传递过来的参数
@@ -35,9 +35,9 @@ export default {
     .tab-control{
         display: flex;
         text-align: center;
-        height: 35px;
-        line-height: 35px;
-        font-size: 15px;
+        height: .932091rem;
+        line-height: .932091rem;
+        font-size: .399467rem;
     }
     .tab-control-item{
         flex: 1;

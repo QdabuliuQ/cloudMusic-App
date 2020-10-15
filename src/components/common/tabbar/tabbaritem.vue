@@ -67,9 +67,9 @@ export default {
         font-size: 13px;
     }
     .tab-bar-item img{
-        width: 25px;
-        height: 25px;
-        margin-top: 3px;
+        width: .665779rem;
+        height: .665779rem;
+        margin-top: .079893rem;
         /* 去除图片下面默认的 3 px */
         vertical-align: middle;
     }

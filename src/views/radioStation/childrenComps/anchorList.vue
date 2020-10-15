@@ -58,7 +58,6 @@ export default {
     });
 
     getPopular(100).then(res => {
-        console.log(res);
         for (const item of res.data.data.list) {
             this.popularList.push({
                 coverUrl: item.avatarUrl,  // 头像
