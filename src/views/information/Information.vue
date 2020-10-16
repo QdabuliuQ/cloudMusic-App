@@ -27,9 +27,14 @@
           </div>
       </div>
       <div ref="informationNav" class="navbox">
-          <tabnav :firstIndex='0' class="tabnav" :itemList='itemList'></tabnav>
+          <tabnav @tabToggle='tabToggle' :firstIndex='0' class="tabnav" :itemList='itemList'></tabnav>
       </div>
-      <homepage class="homepage" :count='profile.listenSongs'></homepage>
+      <homepage v-if="showHome" class="homepage" :count='profile.listenSongs'></homepage>
+      <dynamic 
+      v-if="showDynamic" 
+      :userImg='profile.avatarUrl'
+      :nickName='profile.nickname'
+      ></dynamic>
   </div>
 </template>
 
@@ -37,8 +42,10 @@
 import menunav from 'components/context/menuNav/MenuNav'
 import tabnav from 'components/context/tabNav/TabNav'
 import homepage from './childrenComps/homepage'  // 主页
+import dynamic from './childrenComps/dynamic'  // 动态
+
 import { toStringNum } from "common/common";
-import {getUserDetail} from 'network/user'
+import { getUserDetail } from 'network/user'
 
 export default {
     name: 'Information',
@@ -48,7 +55,24 @@ export default {
             profile: {},  // 用户信息
             itemList: ['主页','动态'],
             pageY: 0,
+            showHome: true,  // 显示/隐藏主页
+            showDynamic: false,
         }
+    },
+    methods: {
+        tabToggle(index){
+            switch (index) {
+                case 0:
+                    this.showHome = true
+                    this.showDynamic = false
+                    break;
+                case 1:
+                    this.showDynamic = true
+                    this.showHome = false
+                default:
+                    break;
+            }
+        }  
     },
     created () {
         getUserDetail(this.$route.params.uid).then(res => {
@@ -70,33 +94,30 @@ export default {
         menunav,
         tabnav,
         homepage,
+        dynamic,
     },
     mounted () {
         this.$nextTick(() => {
             let navToTop = this.$refs.informationNav.offsetTop - 44
-            let navToTop2 = this.$refs.informationNav.offsetTop - 44
             let nav = this.$refs.informationNav
             let topnav = this.$refs.informationTonav.$el;
-            let ratio = 1 / this.$refs.informationNav.offsetTop
-            let opicity = 0
-            document.addEventListener('scroll', () => {       
+            document.addEventListener('scroll', () => {   
                 if (pageYOffset >= navToTop) {
                     nav.style = 'position: fixed; left: 0; right: 0; top: 64px; z-index: 20'
-                    topnav.style = 'background-color: rgba(0,0,0,' + opicity + ')'
-                    document.querySelector('.homepage').style = 'margin-top: 1.171771rem'
-                } else if (pageYOffset < navToTop){
-                    if (pageYOffset >= navToTop2) {
-                        navToTop2 += navToTop2
-                        opicity += 0.1
-                    } else {
-                        opicity -= 0.1
-                        // opicity += ratio >= 1 ? 1 : opicity += ratio;
+                    topnav.style = 'background-color: rgba(0,0,0,' + 1 + ')'
+                    if (this.showHome) {
+                        document.querySelector('.homepage').style = 'padding-top: 1.171771rem'
                     }
-                    console.log(opicity);
-                    // this.pageY = pageYOffset
+                    
+                    this.navTitle = this.profile.nickname;
+                } else if (pageYOffset < navToTop){
                     nav.style = 'position: static'
-                    topnav.style = 'background-color: rgba(0,0,0,' + opicity + ')'
-                    document.querySelector('.homepage').style = 'margin-top: .266312rem'
+                    topnav.style = 'background-color: rgba(0,0,0,' + 0 + ')'
+                    if (this.showHome) {
+                       document.querySelector('.homepage').style = 'padding-top: .266312rem'
+                    }
+                    
+                    this.navTitle = ''
                 }
             })
         })
@@ -108,6 +129,7 @@ export default {
     .Information{
         width: 100%;
         position: relative;
+        z-index: 20;
         background-color: #fff;
     }
     .nav{
@@ -115,6 +137,8 @@ export default {
         position: fixed;
         z-index: 21;
         border: 0;
+        transition: all 0.4s linear;
+        color: #fff;
     }
     .topbox{
         width: 100%;
@@ -218,7 +242,7 @@ export default {
         background-color: #fff;
     }
     .homepage{
-        margin-top: .266312rem;
+        padding-top: .266312rem;
     }
     .navbox{
         background-color: #000;

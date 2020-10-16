@@ -106,9 +106,9 @@ export default {
       }
     });
 
-    getUserDetail(this.uid).then(res => {
-        console.log(res);
-    })
+    // getUserDetail(this.uid).then(res => {
+    //     console.log(res);
+    // })
   },
 };
 </script>

@@ -381,6 +381,8 @@ export default {
 }
 .nav {
   color: #fff;
+  /* background-color: #fff; */
+  background-color: transparent;
   font-size: 14px !important;
 }
 .content {

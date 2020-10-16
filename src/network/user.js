@@ -42,3 +42,14 @@ export function getBinding(uid){
         }
     })
 }
+
+// 获取用户动态
+export function getUserEvent(uid,limit){
+    return request({
+        url: '/user/event',
+        params: {
+            uid,
+            limit
+        }
+    })
+}
