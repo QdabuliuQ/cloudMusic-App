@@ -54,7 +54,8 @@ export default {
         },
 
         myPlayed(){
-            this.$router.push('/myMessage/played')
+            console.log(this.$store.state.profile.userId);
+            this.$router.push('/played/' + this.$store.state.profile.userId)
         },
 
         myCollection(){

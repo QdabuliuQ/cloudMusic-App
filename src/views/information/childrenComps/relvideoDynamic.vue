@@ -1,5 +1,5 @@
 <template>
-  <div class="videoDynamic">
+  <div class="relvideoDynamic">
     <div class="left">
       <div class="useImg">
         <img :src="userImg" alt="" />
@@ -7,11 +7,11 @@
     </div>
     <div class="right">
       <div class="title">
-        <span>{{ nickName }} </span>分享视频:
+        <span>{{ nickName }} </span>发布视频:
       </div>
       <div class="time">{{ time | getTime }}</div>
       <div class="content" v-if="events.msg !== ''">{{ events.msg }}</div>
-      <div class="video" v-if="events.video.videoId !== ''">
+      <div class="video">
         <div class="logo">
           <img :src="events.video.coverUrl" alt="" />
         </div>
@@ -21,7 +21,7 @@
           </div>
           <div class="playDetail">
             <div class="detailLeft">
-              <span>{{ playCount }}</span>
+              <span>{{'▷ '+ playCount }}</span>
             </div>
             <div class="detailRight">
               <div class="rightdetail">
@@ -32,7 +32,6 @@
           </div>
         </div>
       </div>
-      <div class="novideo" v-else>该视频已删除</div>
       <events-count
         :commentLength="commentLength"
         :likedCount="likedCount"
@@ -43,9 +42,8 @@
 </template>
 
 <script>
-import { toStringNum, durationTime } from "common/common";
-import eventsCount from "./eventsCount"; // 底部动态数据
-
+import eventsCount from './eventsCount'  // 底部动态数据
+import { toStringNum,durationTime } from "common/common";
 export default {
   props: [
     "events",
@@ -56,46 +54,32 @@ export default {
     "likedCount",
     "shareCount",
   ],
-  name: "videoDynamic",
   data() {
     return {
       playCount: 0,
       timeMV: 0,
     };
   },
+  name: "relvideoDynamic",
   components: {
-    eventsCount,
+      eventsCount
   },
-  methods: {
-    toPlay(id) {
-      //   this.$router.push('/mvplay/' + id)
-    },
-  },
-  created() {
-    setTimeout(() => {
-      if (this.events.video.videoStatus !== -1) {
-      this.playCount = toStringNum(this.events.video.playTime);
-      this.timeMV =
-        (this.events.video.duration / 60 <= 9
-          ? "0" + Math.floor(this.events.video.duration / 60)
-          : Math.floor(this.events.video.duration / 60)) +
-        ":" +
-        (this.events.video.duration % 60 <= 9
-          ? "0" + Math.floor(this.events.video.duration % 60)
-          : Math.floor(this.events.video.duration % 60)
-        ).toFixed(0);
-    }
-    })
-  },
+  created () {
+    this.playCount = toStringNum(this.events.video.playTime);
+    this.timeMV = 
+    (this.events.video.duration / 60 <= 9 ? '0' + Math.floor(this.events.video.duration / 60) : Math.floor(this.events.video.duration / 60))
+     + ':' + 
+    (this.events.video.duration % 60 <= 9 ? '0'+ Math.floor(this.events.video.duration % 60) : Math.floor(this.events.video.duration % 60))
+  }
 };
 </script>
 <style scoped>
-.videoDynamic {
+.relvideoDynamic {
   width: 100%;
   display: flex;
   padding-bottom: 0.399467rem;
-  margin-top: 0.399467rem;
   border-bottom: 1px solid #e6e6e6;
+  margin-top: 0.399467rem;
 }
 .left {
   flex: 1.5;
@@ -136,17 +120,6 @@ export default {
   border-radius: 5px;
   overflow: hidden;
   position: relative;
-}
-.novideo {
-  width: 100%;
-  height: 1.065246rem;
-  margin-top: 0.213049rem;
-  line-height: 1.065246rem;
-  text-align: center;
-  border-radius: 0.213049rem;
-  background-color: #f1f0f0;
-  color: rgb(170, 170, 170);
-  font-size: 0.372836rem;
 }
 .logo {
   width: 100%;
@@ -192,14 +165,14 @@ export default {
   line-height: 0.532623rem;
   text-indent: 0.213049rem;
 }
-.rightdetail {
-  float: right;
+.rightdetail{
+    float: right;
 }
-.rightdetail img {
-  width: 0.372836rem;
-  margin-right: 0.133156rem;
+.rightdetail img{
+    width: .372836rem;
+    margin-right: .133156rem;
 }
-.rightdetail span {
-  margin-right: 0.213049rem;
+.rightdetail span{
+    margin-right: 0.213049rem;
 }
 </style>

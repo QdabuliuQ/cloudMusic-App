@@ -6,7 +6,6 @@
             <div class="imgBox">
                 <img :src="$store.state.playList[0].coverImgUrl" alt="" />
             </div>
-          
         </div>
         <div class="center">
           <div>
@@ -26,7 +25,7 @@
       <div v-else class="box">
         <div class="left1">
           <div class="imgBox">
-            <img class="aixin" src="~assets/img/myMessage/aixin.png" alt="" />
+            <img class="aixin" src="~assets/img/information/aixin.svg" alt="" />
           </div>
         </div>
         <div class="center">
@@ -81,11 +80,11 @@ export default {
   align-items: center;
 }
 .left1 {
-  flex: 1.5;
+  flex: 1.45;
   height: 1.331558rem;
   border-radius: 8px;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 026);
+  background-color: #ebcece;
   text-align: center;
   display: flex;
   align-items: center;

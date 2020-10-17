@@ -1,5 +1,5 @@
 <template>
-  <div class="videoDynamic">
+  <div class="mvDynamic">
     <div class="left">
       <div class="useImg">
         <img :src="userImg" alt="" />
@@ -7,15 +7,15 @@
     </div>
     <div class="right">
       <div class="title">
-        <span>{{ nickName }} </span>分享视频:
+        <span>{{ nickName }} </span>分享MV:
       </div>
       <div class="time">{{ time | getTime }}</div>
       <div class="content" v-if="events.msg !== ''">{{ events.msg }}</div>
-      <div class="video" v-if="events.video.videoId !== ''">
+      <div class="video" v-if="events.mv.id !== ''">
         <div class="logo">
-          <img :src="events.video.coverUrl" alt="" />
+          <img :src="events.mv.imgurl16v9" alt="" />
         </div>
-        <div class="box" @click="toPlay(events.video.videoId)">
+        <div class="box" @click="toPlay(events.mv.id)">
           <div class="play">
             <img src="~assets/img/information/events/bofang.svg" alt="" />
           </div>
@@ -45,9 +45,8 @@
 <script>
 import { toStringNum, durationTime } from "common/common";
 import eventsCount from "./eventsCount"; // 底部动态数据
-
 export default {
-  props: [
+    props: [
     "events",
     "userImg",
     "nickName",
@@ -56,41 +55,33 @@ export default {
     "likedCount",
     "shareCount",
   ],
-  name: "videoDynamic",
-  data() {
-    return {
-      playCount: 0,
-      timeMV: 0,
-    };
-  },
   components: {
-    eventsCount,
+      eventsCount,
   },
   methods: {
-    toPlay(id) {
-      //   this.$router.push('/mvplay/' + id)
-    },
+      toPlay(id){
+          this.$router.push('/mvplay/' + id)
+      }
   },
-  created() {
-    setTimeout(() => {
-      if (this.events.video.videoStatus !== -1) {
-      this.playCount = toStringNum(this.events.video.playTime);
+  name: "mvDynamic",
+  created () {
+      if (this.events.mv.status !== -1) {
+      this.playCount = toStringNum(this.events.mv.playCount);
       this.timeMV =
-        (this.events.video.duration / 60 <= 9
-          ? "0" + Math.floor(this.events.video.duration / 60)
-          : Math.floor(this.events.video.duration / 60)) +
+        (this.events.mv.duration / 1000 / 60 <= 9
+          ? "0" + Math.floor(this.events.mv.duration / 1000 / 60)
+          : Math.floor(this.events.mv.duration / 1000 / 60)) +
         ":" +
-        (this.events.video.duration % 60 <= 9
-          ? "0" + Math.floor(this.events.video.duration % 60)
-          : Math.floor(this.events.video.duration % 60)
+        (this.events.mv.duration % 60 <= 9
+          ? "0" + Math.floor(this.events.mv.duration % 60)
+          : Math.floor(this.events.mv.duration % 60)
         ).toFixed(0);
     }
-    })
-  },
-};
+  }
+}
 </script>
 <style scoped>
-.videoDynamic {
+.mvDynamic {
   width: 100%;
   display: flex;
   padding-bottom: 0.399467rem;

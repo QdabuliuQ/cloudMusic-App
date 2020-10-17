@@ -48,8 +48,9 @@ const routes = [
   { path: '/stationDetail/:rid', component: () => import('views/radioStation/childrenComps/StationDetail') },  // 电台详情
   { path: '/audioPlay/:id', component: () => import('views/radioStation/childrenComps/audioPlay') },  // 电台音乐播放
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
-  { path: '/myMessage/played', component: () => import('views/played/Played') },  // 个人--最近播放
   { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
+
+  { path: '/played/:id', component: () => import('views/played/Played') },  // 最近播放
 
   { path: '/Information/:uid', component: () => import('views/information/Information') },  // 个人详情页
 

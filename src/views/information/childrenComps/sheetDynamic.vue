@@ -10,7 +10,7 @@
           <div class="time">{{time | getTime}}</div>
           <div class="content" v-if="events.msg !== ''">{{events.msg}}</div>
           <div class="box" @click="toSheet(events.playlist.id)">
-              <div class="contentbox">
+              <div class="contentbox" v-if="events.playlist !== undefined">
                   <div class="conLeft">
                       <img :src="events.playlist.coverImgUrl" alt="">
                   </div>

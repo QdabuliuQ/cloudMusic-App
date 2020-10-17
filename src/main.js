@@ -14,8 +14,8 @@ Vue.use(ElementUI);
 // 引入 mui 基本css样式
 import 'assets/mui/css/mui.css'
 
-// 轮播图组件
-import { Swipe, SwipeItem } from 'vant';
+// 全局注册
+import { Swipe, SwipeItem } from 'vant'; // 轮播图组件
 import { Field } from 'vant';
 import { CellGroup } from 'vant'
 import { Button } from 'vant'
@@ -23,7 +23,7 @@ import { Loading } from 'vant';
 import { Slider } from 'vant';
 import { ActionSheet } from 'vant';
 import { ShareSheet } from 'vant';
-
+import { ImagePreview } from 'vant';
 
 // 引入css样式
 import 'vant/lib/index.css';
@@ -36,6 +36,7 @@ Vue.use(Loading);  // 加载动画
 Vue.use(Slider);  // 滑块
 Vue.use(ActionSheet);  // 动作面板
 Vue.use(ShareSheet);  // 分享面板
+Vue.use(ImagePreview);
 
 // 图片懒加载
 import VueLazyLoad from 'vue-lazyload'

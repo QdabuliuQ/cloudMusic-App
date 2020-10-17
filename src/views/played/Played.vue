@@ -41,9 +41,12 @@ export default {
     },
     created () {
         this.$loading.loadingShow();
+        console.log(this.$route.params.id);
+        // getPlayList(this.$route.params.id,1).then(res => {
+        //     console.log(res);
+        // })
         // 获取数据
-        getPlayList(this.$store.state.profile.userId,0).then(res => {
-            // console.log(res.data.allData);
+        getPlayList(this.$route.params.id,0).then(res => {
             for (const item of res.data.allData) {
                 // 选择性保存数据
                 this.songList.push({
@@ -58,8 +61,6 @@ export default {
         })
     },
     mounted () {
-        // this.$refs.playedSC.linterScroll()
-        // console.log(this.$refs.playedSC.linScroll)
     },
     
 }

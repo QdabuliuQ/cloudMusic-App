@@ -24,7 +24,7 @@
                                   {{item}}
                               </div>
                               <span>
-                                {{events.program.dj.extProperties.brand}} &nbsp;&nbsp;&nbsp;
+                                {{events.program.radio.name}} &nbsp;&nbsp;&nbsp;
                               </span>
                           </div>
                       </div>
@@ -41,6 +41,8 @@
 
 <script>
 import eventsCount from './eventsCount'  // 底部动态数据
+import {userNameActive} from 'common/common'
+
 export default {
     props: ['events','userImg','nickName','time','commentLength','likedCount','shareCount'],
     name: 'programDynamic',
@@ -51,7 +53,7 @@ export default {
         toPlay(id){
             this.$router.push('/audioPlay/' + id)
         }
-    }
+    },
 }
 
 </script>

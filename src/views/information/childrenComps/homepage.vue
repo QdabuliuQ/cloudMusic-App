@@ -6,6 +6,7 @@
       :showImg="phImg"
       :showDivColor="'#ee5757'"
       :songCount="'累计听歌' + count + '首'"
+      @click.native="playedList"
     ></sheet-item>
 
     <sheet-item
@@ -15,6 +16,7 @@
       :showDivColor="'#ebcece'"
       :songCount="likeSheet.trackCount + '首，'"
       :playCount="'播放' + likeSheet.playCount + '次'"
+      @click.native="userLike"
     ></sheet-item>
 
     <div class="createSheet">
@@ -31,6 +33,7 @@
         :sheetImg="item.coverImgUrl"
         :songCount="item.trackCount + '首，'"
         :playCount="'播放' + item.playCount + '次'"
+        @click.native="userSheet(item.id)"
       ></sheet-item>
     </div>
 
@@ -46,6 +49,7 @@
         :sheetImg="item.coverImgUrl"
         :songCount="item.trackCount + '首，by ' + item.nickname"
         :playCount="'，播放' + item.playCount + '次'"
+        @click.native="sheet(item.id)"
       ></sheet-item>
     </div>
   </div>
@@ -55,6 +59,7 @@
 import sheetItem from "./sheetItem";
 import { getUserPlayList, getUserDetail } from "network/user";
 import { toStringNum } from "common/common";
+import { getPlayList } from "network/played"
 
 export default {
   props: ["count"],
@@ -72,6 +77,27 @@ export default {
   },
   components: {
     sheetItem,
+  },
+  methods: {
+    // 用户最近播放
+    playedList(){
+      this.$router.push('/played/' + this.$route.params.uid)
+    },
+
+    // 用户喜欢的音乐
+    userLike(){
+      this.$router.push('/playDetail/' + this.likeSheet.id)
+    },
+
+    // 用户创建的歌单
+    userSheet(id){
+      this.$router.push('/playDetail/' + id)
+    },
+
+    // 用户收藏的歌单
+    sheet(id){
+      this.$router.push('/playDetail/' + id)
+    }
   },
   created() {
     this.uid = this.$route.params.uid;

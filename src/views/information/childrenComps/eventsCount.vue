@@ -11,7 +11,7 @@
           </div>
           <div class="right">
               <img src="~assets/img/information/events/dz.svg" alt="">
-              {{likedCount == 0 ? '赞' : commentLength}}
+              {{likedCount == 0 ? '赞' : likedCount}}
           </div>
       </div>
   </div>
