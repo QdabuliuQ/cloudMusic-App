@@ -148,6 +148,16 @@ export default {
     toback(){
       this.isShowinfoc = false;
       this.$store.state.isShowNav = true
+    },
+
+    // 监听滚动
+    linearScroll(){
+      let top = this.$refs.content.offsetTop
+      if (pageYOffset >= top) {
+        this.$refs.content.style = 'position: fixed; top: 64px; left: 0; right: 0;'
+      } else if (pageYOffset < top) {
+        this.$refs.content.style = 'position: state;'
+      }
     }
   },
   components: {
@@ -206,14 +216,12 @@ export default {
     this.$nextTick(() => {
       this.$loading.loadingNo()
     })
-    let top = this.$refs.content.offsetTop
-    document.addEventListener('scroll', () => {
-      if (pageYOffset >= top) {
-        this.$refs.content.style = 'position: fixed; top: 64px; left: 0; right: 0;'
-      } else if (pageYOffset < top) {
-        this.$refs.content.style = 'position: state;'
-      }
-    })
+    document.addEventListener('scroll', this.linearScroll)
+  },
+
+  // 销毁阶段
+  destroyed(){
+    document.removeEventListener('scroll',this.linearScroll)
   }
 };
 </script>

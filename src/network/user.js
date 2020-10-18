@@ -44,12 +44,13 @@ export function getBinding(uid){
 }
 
 // 获取用户动态
-export function getUserEvent(uid,limit){
+export function getUserEvent(uid,limit,lasttime){
     return request({
         url: '/user/event',
         params: {
             uid,
-            limit
+            limit,
+            lasttime
         }
     })
 }
