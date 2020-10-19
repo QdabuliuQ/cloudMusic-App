@@ -32,6 +32,7 @@
         </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -52,16 +53,34 @@ export default {
     "likedCount",
     "shareCount",
     "pics",
+    "threadId",
   ],
   name: "djradioDynamic",
+  data () {
+    return {
+      index: 0  
+    }
+  },
   components: {
     eventsCount,
+  },
+  created () {   
+    // console.log(this.events);
   },
   methods: {
     toPlay(id) {
       this.$router.push("/stationDetail/" + id);
     },
+
+    sComment(){
+      this.$store.state.commentId = this.threadId
+    }
   },
+  watch: {
+    // index(){
+    //   this.$EventBus.$off('threadId')
+    // }
+  }
 };
 </script>
 <style scoped>

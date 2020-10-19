@@ -29,6 +29,7 @@
           </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -48,10 +49,16 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
+    "threadId"
   ],
   name: "articleDynamic",
   components: {
       eventsCount
+  },
+  methods: {
+    sComment(){
+      this.$store.state.commentId = this.threadId
+    }
   }
 };
 </script>

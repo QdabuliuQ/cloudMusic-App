@@ -40,6 +40,7 @@
           </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -61,7 +62,8 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
-    "pics"
+    "pics",
+    "threadId"
   ],
   data () {
       return {
@@ -81,12 +83,22 @@ export default {
     showPic(){
       this.show = true
       this.$store.state.isShowNav = false;  // 隐藏底部播放栏
+    },
+
+    sComment(){
+      this.$store.state.commentId = this.threadId
+    }
+  },
+  watch: {
+    show(){
+      if (!this.show) {
+        this.$store.state.isShowNav = true;  // 隐藏底部播放栏
+      }
     }
   },
   name: "forwardDynamic",
   created () {
       this.jsonDetail = JSON.parse(this.events.event.json)
-
       for (const item of this.events.event.pics) {
         this.images.push(item.originUrl)
       }

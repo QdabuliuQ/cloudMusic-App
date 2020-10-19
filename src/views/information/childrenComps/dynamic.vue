@@ -4,6 +4,7 @@
       <!-- 歌曲分享组件 -->
       <music-dynamic
         v-if="item.type === 18"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -16,6 +17,7 @@
       <!-- 评论分享组件 -->
       <comment-dynamic
         v-if="item.type === 31"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -28,6 +30,7 @@
       <!-- 歌单分享组件 -->
       <sheet-dynamic
         v-if="item.type === 13"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -40,6 +43,7 @@
       <!-- 节目分享组件 -->
       <program-dynamic
         v-if="item.type === 17"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -52,6 +56,7 @@
       <!-- 视频分享组件 -->
       <video-dynamic
         v-if="item.type === 41"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -64,6 +69,7 @@
       <!-- 发布视频 -->
       <relvideo-dynamic
         v-if="item.type === 39"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -76,6 +82,7 @@
       <!-- 专栏文章 -->
       <article-dynamic
         v-if="item.type === 24"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -88,6 +95,7 @@
       <!-- 分享动态 -->
       <life-dynamic
         v-if="item.type === 35"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -101,6 +109,7 @@
       <!-- mv分享 -->
       <mv-dynamic
         v-if="item.type === 21"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -114,6 +123,7 @@
       <!-- 转发 -->
       <forward-dynamic
         v-if="item.type === 22"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -127,6 +137,7 @@
       <!-- 电台分享 -->
       <djradio-dynamic
         v-if="item.type === 28"
+        :threadId="item.threadId"  
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -140,6 +151,7 @@
       <!-- 专辑分享 -->
       <album-dynamic
         v-if="item.type === 19"
+        :threadId="item.threadId"
         :commentLength="item.commentLength"
         :likedCount="item.likedCount"
         :shareCount="item.shareCount"
@@ -219,11 +231,12 @@ export default {
               likedCount: item.info.likedCount, // 点赞数量
               shareCount: item.info.shareCount, // 分享数量
               pics: item.pics, // 图片数组
+              threadId: item.info.commentThread.id,  // 动态评论id
             });
           }
+          console.log(this.eventList);
           this.lastTime = res.data.lasttime; // 保存请求到的分页参数
           this.moreEvent = res.data.more; // 布尔值 决定是否有更多数据
-          console.log(this.eventList);
         });
       } else {
         this.$toast.show("没有更多动态了~", 1900);

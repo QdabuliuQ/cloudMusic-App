@@ -46,6 +46,7 @@ export default new Vuex.Store({
     createId: '',  // 目前所在的歌单创建者id
     sheetId: '',  // 目前所在的歌单id
     hotOffset: 0,  // 获取热门电台推荐 分页参数
+    commentId: 0,  // 动态评论id
   },
   mutations: {
   },

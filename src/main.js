@@ -2,9 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// Vue.forceUpdate()
 
-import 'amfe-flexible/index.js'
+Vue.prototype.$EventBus = new Vue()  // 创建事件总线  全局的事件总线
+
+import 'amfe-flexible/index.js'  // 自适应布局
 
 // 引入 elementui
 import ElementUI from 'element-ui';

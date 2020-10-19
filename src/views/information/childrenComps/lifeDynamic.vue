@@ -22,6 +22,7 @@
         </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -44,6 +45,7 @@ export default {
     "likedCount",
     "shareCount",
     "pics",
+    "threadId"
   ],
   name: "lifeDynamic",
   data() {
@@ -57,6 +59,10 @@ export default {
       this.show = true;
       this.$store.state.isShowNav = false; // 隐藏底部播放栏
     },
+
+    sComment(){
+      this.$store.state.commentId = this.threadId
+    }
   },
   watch: {
     show() {

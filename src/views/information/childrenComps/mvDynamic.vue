@@ -34,6 +34,7 @@
       </div>
       <div class="novideo" v-else>该视频已删除</div>
       <events-count
+        @sComment="sComment"
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -46,7 +47,7 @@
 import { toStringNum, durationTime } from "common/common";
 import eventsCount from "./eventsCount"; // 底部动态数据
 export default {
-    props: [
+  props: [
     "events",
     "userImg",
     "nickName",
@@ -54,18 +55,23 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
+    "threadId"
   ],
   components: {
-      eventsCount,
+    eventsCount,
   },
   methods: {
-      toPlay(id){
-          this.$router.push('/mvplay/' + id)
-      }
+    toPlay(id) {
+      this.$router.push("/mvplay/" + id);
+    },
+
+    sComment() {
+      this.$store.state.commentId = this.threadId;
+    },
   },
   name: "mvDynamic",
-  created () {
-      if (this.events.mv.status !== -1) {
+  created() {
+    if (this.events.mv.status !== -1) {
       this.playCount = toStringNum(this.events.mv.playCount);
       this.timeMV =
         (this.events.mv.duration / 1000 / 60 <= 9
@@ -77,8 +83,8 @@ export default {
           : Math.floor(this.events.mv.duration % 60)
         ).toFixed(0);
     }
-  }
-}
+  },
+};
 </script>
 <style scoped>
 .mvDynamic {

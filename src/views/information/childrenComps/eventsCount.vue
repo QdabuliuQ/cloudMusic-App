@@ -5,7 +5,7 @@
               <img src="~assets/img/information/events/fx.svg" alt="">
               {{shareCount == 0 ? '转发' : shareCount}}
           </div>
-          <div class="center">
+          <div class="center" @click="showComment">
               <img src="~assets/img/information/events/pl.svg" alt="">
               {{commentLength == 0 ? '评论' : commentLength}}
           </div>
@@ -14,13 +14,33 @@
               {{likedCount == 0 ? '赞' : likedCount}}
           </div>
       </div>
+      <commentBox ref="commentList"></commentBox>
   </div>
 </template>
 
 <script>
+import commentBox from 'components/context/commentBox/CommentBox'
+
 export default {
-    props: ['commentLength','likedCount','shareCount'],
-    name: 'eventsCount'
+    props: ['commentLength','likedCount','shareCount','threadId'],
+    name: 'eventsCount',
+    data () {
+        return {
+     
+        }
+    },
+    methods: {
+        showComment(){
+            this.$emit('sComment')
+            this.$refs.commentList.show = true
+        }
+    },
+    components: {
+        commentBox
+    },
+    created () {
+        // this.commentId = this.threadId
+    }
 }
 
 </script>

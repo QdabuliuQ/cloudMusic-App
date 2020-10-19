@@ -51,6 +51,7 @@ const routes = [
   { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
 
   { path: '/played/:id', component: () => import('views/played/Played') },  // 最近播放
+  // { path: '/comment/:tid', component: () => import('components/context/commentBox/CommentBox') },  // 评论组件
 
   { path: '/Information/:uid', component: () => import('views/information/Information') },  // 个人详情页
 

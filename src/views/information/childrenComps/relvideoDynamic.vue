@@ -33,6 +33,7 @@
         </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -53,6 +54,7 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
+    "threadId"
   ],
   data() {
     return {
@@ -63,6 +65,11 @@ export default {
   name: "relvideoDynamic",
   components: {
       eventsCount
+  },
+  methods: {
+    sComment() {
+      this.$store.state.commentId = this.threadId;
+    },
   },
   created () {
     this.playCount = toStringNum(this.events.video.playTime);

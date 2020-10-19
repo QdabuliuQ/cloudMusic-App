@@ -31,6 +31,7 @@
         </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -51,7 +52,16 @@ export default {
     "likedCount",
     "shareCount",
     "pics",
+    "threadId"
   ],
+  methods: {
+    sComment(){
+      this.$store.state.commentId = this.threadId
+    }
+  },
+  created () {
+    console.log(this.events.album.commentThreadId);
+  },
   name: "albumDynamic",
   components: {
     eventsCount,

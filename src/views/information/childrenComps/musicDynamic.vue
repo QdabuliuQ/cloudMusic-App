@@ -31,6 +31,7 @@
         </div>
       </div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -51,6 +52,7 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
+    "threadId"
   ],
   name: "musicDynamic",
   components: {
@@ -83,6 +85,10 @@ export default {
         this.name = this.events.msg
       }
     },
+
+    sComment(){
+      this.$store.state.commentId = this.threadId
+    }
   },
   created() {
     this.userName();

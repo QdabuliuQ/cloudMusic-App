@@ -134,7 +134,8 @@ export default {
       isNavToTop: 0,
       isShowinfoc: false,  // 显示/隐藏评论组件
       showCollection: false,
-      createId: ''
+      createId: '',
+      top: 0,  // 导航栏距离顶部的距离
     };
   },
   methods: {
@@ -151,11 +152,10 @@ export default {
     },
 
     // 监听滚动
-    linearScroll(){
-      let top = this.$refs.content.offsetTop
-      if (pageYOffset >= top) {
+    linearScroll(){   
+      if (pageYOffset >= this.top) {
         this.$refs.content.style = 'position: fixed; top: 64px; left: 0; right: 0;'
-      } else if (pageYOffset < top) {
+      } else if (pageYOffset < this.top) {
         this.$refs.content.style = 'position: state;'
       }
     }
@@ -214,6 +214,7 @@ export default {
   mounted () {
     // 保存滚动高度
     this.$nextTick(() => {
+      this.top = this.$refs.content.offsetTop
       this.$loading.loadingNo()
     })
     document.addEventListener('scroll', this.linearScroll)

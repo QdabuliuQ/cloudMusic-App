@@ -34,6 +34,7 @@
       </div>
       <div class="novideo" v-else>该视频已删除</div>
       <events-count
+        @sComment='sComment'
         :commentLength="commentLength"
         :likedCount="likedCount"
         :shareCount="shareCount"
@@ -55,6 +56,7 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
+    "threadId"
   ],
   name: "videoDynamic",
   data() {
@@ -69,6 +71,10 @@ export default {
   methods: {
     toPlay(id) {
       //   this.$router.push('/mvplay/' + id)
+    },
+
+    sComment() {
+      this.$store.state.commentId = this.threadId;
     },
   },
   created() {
