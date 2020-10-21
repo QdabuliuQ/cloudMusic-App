@@ -19,7 +19,7 @@
       @click.native="userLike"
     ></sheet-item>
 
-    <div class="createSheet">
+    <div class="createSheet" v-if="createSheet.length !== 0">
       <div class="title">
         <span class="sp1">创建的歌单</span
         ><span class="sp2"
@@ -37,7 +37,7 @@
       ></sheet-item>
     </div>
 
-    <div class="subSheet">
+    <div class="subSheet" v-if="subSheet.length !== 0">
       <div class="title">
         <span class="sp1">收藏的歌单</span>
         <span class="sp2">({{ subSheet.length }})</span>
@@ -52,6 +52,31 @@
         @click.native="sheet(item.id)"
       ></sheet-item>
     </div>
+
+    <div class="attestation" v-if="identify">
+      <span class="sp1">认证信息</span>
+      <div class="indentifyBox">
+        <img :src="identify.imageUrl" alt="" />
+        <div>{{ identify.imageDesc }}</div>
+      </div>
+    </div>
+
+    <div class="singerDetail" v-if="singer !== null">
+      <div v-if="singerdetail.desc != '' || singerdetail.introduction.length !== 0">
+        <span class="sp1">歌手信息</span>
+        <div class="singerDesc" v-if="singerdetail.desc">
+          简介： {{ singerdetail.desc }}
+        </div>
+        <div
+          class="singerPrize"
+          v-for="(item, index) in singerdetail.introduction"
+          :key="index"
+        >
+          <div class="prizeTitle">{{ item.ti }}：</div>
+          <div class="prizeContent">{{ item.txt }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -59,10 +84,11 @@
 import sheetItem from "./sheetItem";
 import { getUserPlayList, getUserDetail } from "network/user";
 import { toStringNum } from "common/common";
-import { getPlayList } from "network/played"
+import { getPlayList } from "network/played";
+import { getSingerDetail } from "network/singer";
 
 export default {
-  props: ["count"],
+  props: ["count", "artistId", "identify"],
   name: "homepage",
   data() {
     return {
@@ -73,6 +99,8 @@ export default {
       createSheet: [], // 创建的歌单
       subSheet: [], // 收藏的歌单
       subscribedCount: 0, // 歌单收藏总次数
+      singer: "", // 歌手id
+      singerdetail: {},
     };
   },
   components: {
@@ -80,24 +108,24 @@ export default {
   },
   methods: {
     // 用户最近播放
-    playedList(){
-      this.$router.push('/played/' + this.$route.params.uid)
+    playedList() {
+      this.$router.push("/played/" + this.$route.params.uid);
     },
 
     // 用户喜欢的音乐
-    userLike(){
-      this.$router.push('/playDetail/' + this.likeSheet.id)
+    userLike() {
+      this.$router.push("/playDetail/" + this.likeSheet.id);
     },
 
     // 用户创建的歌单
-    userSheet(id){
-      this.$router.push('/playDetail/' + id)
+    userSheet(id) {
+      this.$router.push("/playDetail/" + id);
     },
 
     // 用户收藏的歌单
-    sheet(id){
-      this.$router.push('/playDetail/' + id)
-    }
+    sheet(id) {
+      this.$router.push("/playDetail/" + id);
+    },
   },
   created() {
     this.uid = this.$route.params.uid;
@@ -131,18 +159,67 @@ export default {
         }
       }
     });
-
-    // getUserDetail(this.uid).then(res => {
-    //     console.log(res);
-    // })
+  },
+  mounted() {
+    this.$loading.loadingShow();
+    setTimeout(() => {
+      this.singer = this.artistId;
+      getSingerDetail(this.singer).then((res) => {
+        this.singerdetail.desc = res.data.briefDesc; // 歌手介绍
+        this.singerdetail.introduction = res.data.introduction; // 歌手荣誉
+        this.$set(
+          this.singerdetail,
+          this.singerdetail.desc,
+          res.data.briefDesc
+        );
+        this.$loading.loadingNo();
+      });
+    }, 500);
   },
 };
 </script>
 <style scoped>
+.indentifyBox {
+  font-size: 0.372836rem;
+  display: flex;
+  align-items: center;
+  margin-top: 0.133156rem;
+}
+.indentifyBox img {
+  width: 0.665779rem;
+  height: 0.665779rem;
+  float: left;
+  margin-right: 0.133156rem;
+}
+.attestation {
+  margin-top: 0.532623rem;
+}
+.singerPrize {
+  margin-top: 0.532623rem;
+}
+.prizeTitle {
+  font-size: 0.426099rem;
+  font-weight: 550;
+  margin-bottom: 0.133156rem;
+}
+.prizeContent {
+  font-size: 0.372836rem;
+  color: #000;
+}
+.singerDetail {
+  margin-top: 0.532623rem;
+}
+.singerDesc {
+  font-size: 0.346205rem;
+  margin-top: 0.266312rem;
+}
 .homepage {
   padding: 0 15px 15px;
   margin-bottom: 45px;
   background-color: #fff;
+  min-height: 7.856192rem;
+  position: relative;
+  /* z-index: 1; */
 }
 .createSheet {
   width: 100%;

@@ -7,7 +7,7 @@
       :rightImg="true"
       class="nav"
       :navTitle="navTitle"
-      @openSub='openSub'
+      @openSub="openSub"
     ></menunav>
     <div class="topbox" v-if="profile != null">
       <div class="userBURL">
@@ -34,32 +34,42 @@
           <div class="followeds">粉丝 {{ profile.followeds }}</div>
         </div>
         <div class="createtime">
-          从 {{ profile.createTime | getTime }} 开始来到网易云
+          <div v-if="profile.createTime == -1">
+            {{ profile.description }}
+          </div>
+          <div v-else>从 {{ profile.createTime | getTime }} 开始来到网易云</div>
         </div>
       </div>
     </div>
     <div ref="informationNav" class="navbox">
       <tabnav
         @tabToggle="tabToggle"
-        :firstIndex="0"
+        :firstIndex="firstIndex"
         class="tabnav"
         :itemList="itemList"
+        ref="inforTabnav"
       ></tabnav>
     </div>
     <homepage
+      :artistId="profile.artistId"
+      :identify="profile.identify"
       v-if="showHome"
       class="homepage"
       :count="profile.listenSongs"
     ></homepage>
     <dynamic
+      class="dynamic"
       v-if="showDynamic"
       :userImg="profile.avatarUrl"
       :nickName="profile.nickname"
     ></dynamic>
+    <songs class="songs" :artistId="profile.artistId" v-if="showSongs"></songs>
+    <album class="album" :artistId="profile.artistId" v-if="showAlbum"></album>
+    <mv class="mv" :artistId="profile.artistId" v-if="showMv"></mv>
     <van-share-sheet
-    v-model="showShare"
-    title="立即分享给好友"
-    :options="options"
+      v-model="showShare"
+      title="立即分享给好友"
+      :options="options"
     />
   </div>
 </template>
@@ -69,6 +79,9 @@ import menunav from "components/context/menuNav/MenuNav";
 import tabnav from "components/context/tabNav/TabNav";
 import homepage from "./childrenComps/homepage"; // 主页
 import dynamic from "./childrenComps/dynamic"; // 动态
+import songs from "./childrenComps/songs"; // 歌曲
+import album from "./childrenComps/album"; // 专辑
+import mv from "components/context/mv/Mv";  // MV
 
 import { toStringNum } from "common/common";
 import { getUserDetail } from "network/user";
@@ -82,109 +95,207 @@ export default {
       itemList: ["主页", "动态"],
       pageY: 0,
       showHome: true, // 显示/隐藏主页
-      showDynamic: false,
-      navToTop: 0,  // 导航栏距离顶部的距离
+      showDynamic: false, // 显示/隐藏动态
+      showSongs: false, // 显示/隐藏歌曲
+      showAlbum: false,  // 显示/隐藏专辑
+      showMv: false,  // 显示/隐藏mv
+      navToTop: 0, // 导航栏距离顶部的距离
+      firstIndex: 0, // 导航栏索引
       options: [
         [
-          { name: '微信', icon: 'wechat' },
-          { name: '微博', icon: 'weibo' },
-          { name: 'QQ', icon: 'qq' },
+          { name: "微信", icon: "wechat" },
+          { name: "微博", icon: "weibo" },
+          { name: "QQ", icon: "qq" },
         ],
         [
-          { name: '复制链接', icon: 'link' },
-          { name: '分享海报', icon: 'poster' },
-          { name: '二维码', icon: 'qrcode' },
+          { name: "复制链接", icon: "link" },
+          { name: "分享海报", icon: "poster" },
+          { name: "二维码", icon: "qrcode" },
         ],
       ],
-      showShare: false,  // 分享面板
+      showShare: false, // 分享面板
     };
   },
+  // 监听路由变化
+  beforeRouteUpdate(to, from, next) {
+    if (to.fullPath != from.fullPath) {
+      this.profile = {}; // 清空mv数据
+      this.firstIndex = 0; // 重置导航栏索引
+      this.$refs.inforTabnav.tabItem(this.firstIndex);
+      this.tabToggle(this.firstIndex); // 切换导航栏界面
+      this.showDynamic = false; // 隐藏动态
+      this.showHome = false; // 显示首页
+      this.$store.state.isShowNav = true;
+      next();
+      this.userDetail();
+    }
+  },
   methods: {
-    openSub(){
-      this.showShare = true
+    openSub() {
+      this.showShare = true;
     },
 
     // 导航栏切换
     tabToggle(index) {
-      switch (index) {
-        case 0:
-          this.showHome = true;
-          this.showDynamic = false;
-          break;
-        case 1:
-          this.showDynamic = true;
-          this.showHome = false;
-        default:
-          break;
+      if (this.itemList.length == 5) {
+        switch (index) {
+          case 0:
+            this.showHome = true;
+            this.showDynamic = false;
+            this.showSongs = false;
+            this.showAlbum = false
+            this.showMv = false;
+            break;
+          case 1:
+            this.showSongs = true;
+            this.showHome = false;
+            this.showDynamic = false;
+            this.showAlbum = false
+            this.showMv = false;
+            break;
+          case 2:
+            this.showAlbum = true;
+            this.showSongs = false;
+            this.showHome = false;
+            this.showDynamic = false;
+            this.showMv = false;
+            break;
+          case 3:
+            this.showMv = true
+            this.showAlbum = false;
+            this.showSongs = false;
+            this.showHome = false;
+            this.showDynamic = false;  
+            break;
+          case 4:
+            this.showDynamic = true;
+            this.showHome = false;
+            this.showSongs = false;
+            this.showAlbum = false
+            this.showMv = false;
+            break;
+          default:
+            break;
+        }
+      } else {
+        switch (index) {
+          case 0:
+            this.showHome = true;
+            this.showDynamic = false;
+            break;
+          case 1:
+            this.showDynamic = true;
+            this.showHome = false;
+          default:
+            break;
+        }
       }
     },
 
-    linearScroll(){
+    linearScroll() {
       let nav = this.$refs.informationNav;
       let topnav = this.$refs.informationTonav.$el;
+      let navt = this.$refs.inforTabnav.$el
       if (pageYOffset >= this.navToTop) {
-          nav.style =
-            "position: fixed; left: 0; right: 0; top: 64px; z-index: 20";
-          topnav.style = "background-color: rgba(0,0,0,1)";
-          if (this.showHome) {
-            document.querySelector(".homepage").style =
-              "padding-top: 1.171771rem";
-          }
-          this.navTitle = this.profile.nickname;
-        } else if (pageYOffset < this.navToTop) {
-          nav.style = "position: static";
-          topnav.style = "background-color: rgba(0,0,0,0)";
-          if (this.showHome) {
-            document.querySelector(".homepage").style =
-              "padding-top: .266312rem";
-          }
-          this.navTitle = "";
+        nav.style =
+          "position: fixed; left: 0; right: 0; top: 64px;";
+        navt.style = 'z-index: 20'
+        topnav.style = "background-color: rgba(0,0,0,1)";
+        this.$refs.informationNav.style =
+          "background-color: rgba(0,0,0,1); position: fixed; left: 0; right: 0; top: 64px; z-index: 1";
+        if (this.showHome) {
+          document.querySelector(".homepage").style =
+            "padding-top: 1.14514rem";
+        } else if(this.showAlbum){
+          document.querySelector(".album").style =
+          "padding-top: 1.14514rem";
+        } else if(this.showSongs){
+          document.querySelector(".songs").style =
+          "padding-top: 1.14514rem";
+        } else if(this.showMv){
+          document.querySelector(".mv").style =
+          "padding-top: 1.14514rem";
         }
-    }
+        this.navTitle = this.profile.nickname;
+      } else if (pageYOffset < this.navToTop) {
+        nav.style = "position: static; z-index: 20";
+        topnav.style = "background-color: rgba(0,0,0,0)";
+        this.$refs.informationNav.style =
+          "background-color: rgba(0,0,0,0); position: static";
+        if (this.showHome) {
+          document.querySelector(".homepage").style = "padding-top: .266312rem";
+        } else if(this.showAlbum){
+          document.querySelector(".album").style = "padding-top: .266312rem;";
+        } else if(this.showSongs){
+          document.querySelector(".songs").style = "padding-top: .266312rem;";
+        } else if(this.showMv){
+          document.querySelector(".mv").style = "padding-top: .266312rem;";
+        }
+        this.navTitle = "";
+      }
+    },
+
+    userDetail() {
+      getUserDetail(this.$route.params.uid).then((res) => {
+        this.profile.level = res.data.level; // 用户等级
+        this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲
+        this.profile.avatarUrl = res.data.profile.avatarUrl; // 用户头像
+        this.profile.nickname = res.data.profile.nickname; // 用户昵称
+        this.profile.follows = res.data.profile.follows; // 用户关注
+        this.profile.followeds = toStringNum(res.data.profile.followeds); // 用户粉丝
+        this.profile.gender = res.data.profile.gender; // 性别
+        this.profile.backgroundUrl = res.data.profile.backgroundUrl; // 背景图片
+        this.profile.createTime = res.data.profile.createTime; // 创建时间
+        this.profile.artistId = res.data.profile.artistId || null; // 歌手id
+        this.profile.vipType = res.data.profile.vipType; // 是否会员
+        this.profile.description = res.data.profile.description; // 描述
+        this.profile.identify = res.data.identify || null; // 认证信息
+        this.$set(
+          this.profile,
+          this.profile.backgroundUrl,
+          res.data.profile.backgroundUrl
+        );
+        // console.log(this.profile);
+        // 判断用户是不是歌手
+        if (this.profile.artistId !== null) {
+          this.itemList.splice(1, 0, "歌曲", "专辑", "MV");
+          this.$nextTick(() => {
+            this.$refs.inforTabnav.tabItem(0);
+          });
+        }
+      });
+    },
   },
   created() {
-    getUserDetail(this.$route.params.uid).then((res) => {
-      this.profile.level = res.data.level; // 用户等级
-      this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲
-      this.profile.avatarUrl = res.data.profile.avatarUrl; // 用户头像
-      this.profile.nickname = res.data.profile.nickname; // 用户昵称
-      this.profile.follows = res.data.profile.follows; // 用户关注
-      this.profile.followeds = toStringNum(res.data.profile.followeds); // 用户粉丝
-      this.profile.gender = res.data.profile.gender; // 性别
-      this.profile.backgroundUrl = res.data.profile.backgroundUrl; // 背景图片
-      this.profile.createTime = res.data.profile.createTime; // 创建时间
-      this.profile.artistId = res.data.profile.artistId || null; // 歌手id
-      this.profile.vipType = res.data.profile.vipType; // 是否会员
-      this.$set(
-        this.profile,
-        this.profile.backgroundUrl,
-        res.data.profile.backgroundUrl
-      );
-    });
+    this.userDetail();
   },
   components: {
     menunav,
     tabnav,
     homepage,
     dynamic,
+    songs,
+    album,
+    mv,
   },
   mounted() {
     this.$nextTick(() => {
-      this.navToTop = this.$refs.informationNav.offsetTop - 44;  // 保存导航栏距离顶部的距离
-      document.addEventListener("scroll", this.linearScroll);  // 监听事件
+      this.navToTop = this.$refs.informationNav.offsetTop - 44; // 保存导航栏距离顶部的距离
+      document.addEventListener("scroll", this.linearScroll); // 监听事件
     });
   },
   // 销毁阶段
   destroyed() {
     // 清除事件
-    document.removeEventListener("scroll", this.linearScroll)
-  }
+    document.removeEventListener("scroll", this.linearScroll);
+  },
 };
 </script>
 <style scoped>
 .Information {
   width: 100%;
   position: relative;
+  /* margin-left: 1.14514rem; */
   z-index: 20;
   background-color: #fff;
 }
@@ -200,7 +311,7 @@ export default {
   width: 100%;
   height: 7.989348rem;
   position: relative;
-  z-index: 20;
+  z-index: 1;
 }
 .userBURL {
   width: 100%;
@@ -289,16 +400,25 @@ export default {
 .tabnav {
   position: relative;
   height: 1.171771rem;
-  z-index: 21;
+  z-index: 20;
   border-top-left-radius: 0.399467rem;
   border-top-right-radius: 0.399467rem;
-  background-color: #fff;
+  background-color: #fff !important;
 }
 .homepage {
   padding-top: 0.266312rem;
 }
+.album{
+  padding-top: 0.266312rem;
+}
+.songs{
+  padding-top: 0.266312rem;
+}
+.mv{
+  padding-top: 0.266312rem;
+}
 .navbox {
-  background-color: #000;
+  transition: all 0.4s linear;
   width: 100%;
   margin-top: -20px;
 }

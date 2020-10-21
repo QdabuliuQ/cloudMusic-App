@@ -23,10 +23,10 @@
         <div class="item" v-for="(item, index) in commentList" :key="index">
           <div class="topbox">
             <div class="userImg">
-              <img v-lazy="item.userImg" alt="" />
+              <img @click="profile(item.userId)" v-lazy="item.userImg" alt="" />
             </div>
             <div class="userName">
-              <div class="name">
+              <div @click="profile(item.userId)" class="name">
                 {{ item.userName }}
                 <img
                   v-if="item.vipType !== 0"
@@ -97,6 +97,11 @@ export default {
     mscroll,
   },
   methods: {
+    // 跳转路由
+    profile(id){
+        this.$router.push('/Information/' + id)
+    },
+
     getIndex(index) {
       this.listIndex = index;
     },

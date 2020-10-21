@@ -193,6 +193,13 @@ export default {
       moreEvent: true, // 是否有更多动态数据
     };
   },
+  beforeRouteUpdate(to, from, next) {
+    if (to.fullPath != from.fullPath) {
+      this.eventList = []; // 清空mv数据
+      next();
+      this.UserEvent()
+    }
+  },
   components: {
     musicDynamic,
     commentDynamic,
@@ -234,7 +241,6 @@ export default {
               threadId: item.info.commentThread.id,  // 动态评论id
             });
           }
-          console.log(this.eventList);
           this.lastTime = res.data.lasttime; // 保存请求到的分页参数
           this.moreEvent = res.data.more; // 布尔值 决定是否有更多数据
         });
@@ -284,6 +290,7 @@ export default {
   width: 100%;
   padding: 0 15px 15px;
   margin-bottom: 1.198402rem;
+  position: relative;
 }
 .eventBox {
   padding-bottom: 0.266312rem;

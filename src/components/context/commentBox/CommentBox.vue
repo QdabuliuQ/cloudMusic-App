@@ -1,5 +1,4 @@
 <template>
-  <div class="CommentBox">
     <van-action-sheet 
     v-model="show" 
     :title="comLength"
@@ -10,12 +9,12 @@
           <div class="perCom">精彩评论</div>
           <div class="commentItem" v-for="(item, index) in comHot" :key="index">
             <div class="left">
-              <img :src="item.avatarUrl" alt="" />
+              <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
             </div>
             <div class="right">
               <div class="top">
                 <div class="uDetail">
-                  <div class="name">{{ item.nickname }}</div>
+                  <div @click="profile(item.userId)" class="name">{{ item.nickname }}</div>
                   <div class="time">{{ item.time | getTime }}</div>
                 </div>
                 <div class="like">
@@ -37,12 +36,12 @@
             :key="index"
           >
             <div class="left">
-              <img :src="item.avatarUrl" alt="" />
+              <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
             </div>
             <div class="right">
               <div class="top">
                 <div class="uDetail">
-                  <div class="name">{{ item.nickname }}</div>
+                  <div @click="profile(item.userId)" class="name">{{ item.nickname }}</div>
                   <div class="time">{{ item.time | getTime }}</div>
                 </div>
                 <div class="like">
@@ -61,7 +60,6 @@
           动态还没有评论哦~
       </div>
     </van-action-sheet>
-  </div>
 </template>
 
 <script>
@@ -78,6 +76,13 @@ export default {
       comHot: [], // 热评数组
       comList: [], // 普通评论数组
     };
+  },
+  methods: {
+    // 跳转路由
+    profile(id){
+        this.$router.push('/Information/' + id)
+        this.$store.state.toggleInformation = 1
+    }  
   },
   watch: {
     show() {
@@ -117,12 +122,14 @@ export default {
       }
     },
   },
-  methods: {
-    getCommentId() {},
-  },
 };
 </script>
 <style scoped>
+.CommentBox{
+  position: relative;
+  /* width: 100%;
+  height: 100vh; */
+}
 .commentList{
     margin-top: .266312rem;
 }

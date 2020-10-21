@@ -59,9 +59,6 @@ export default {
       this.$store.state.commentId = this.threadId
     }
   },
-  created () {
-    console.log(this.events.album.commentThreadId);
-  },
   name: "albumDynamic",
   components: {
     eventsCount,

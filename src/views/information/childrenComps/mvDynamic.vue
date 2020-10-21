@@ -55,7 +55,7 @@ export default {
     "commentLength",
     "likedCount",
     "shareCount",
-    "threadId"
+    "threadId",
   ],
   components: {
     eventsCount,
@@ -70,18 +70,20 @@ export default {
     },
   },
   name: "mvDynamic",
+  data() {
+    return {
+      timeMV: "",
+    };
+  },
   created() {
     if (this.events.mv.status !== -1) {
-      this.playCount = toStringNum(this.events.mv.playCount);
       this.timeMV =
-        (this.events.mv.duration / 1000 / 60 <= 9
-          ? "0" + Math.floor(this.events.mv.duration / 1000 / 60)
-          : Math.floor(this.events.mv.duration / 1000 / 60)) +
-        ":" +
-        (this.events.mv.duration % 60 <= 9
-          ? "0" + Math.floor(this.events.mv.duration % 60)
-          : Math.floor(this.events.mv.duration % 60)
-        ).toFixed(0);
+        this.events.mv.duration / 1000 < 60
+          ? "00:" + this.events.mv.duration / 1000
+          : this.events.mv.duration / 1000 / 60 < 9
+          ? "0" + this.events.mv.duration / 1000 / 60 < 9
+          : this.events.mv.duration / 1000 / 60 < 9;
+      this.playCount = toStringNum(this.events.mv.playCount);
     }
   },
 };

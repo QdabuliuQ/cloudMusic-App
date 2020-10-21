@@ -524,6 +524,7 @@ export default {
   background: linear-gradient(transparent, rgb(70, 70, 70));
 }
 .mvName {
+  font-size: .532623rem;
   font-weight: 550;
 }
 .playCount {

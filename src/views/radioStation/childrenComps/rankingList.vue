@@ -1,7 +1,7 @@
 <template>
   <div class="rankingList">
     <menu-nav :navTitle="navTitle"></menu-nav>
-    <tabnav ref="rankTab" @tabToggle='tabToggle' :itemList="itemList"></tabnav>
+    <tabnav :firstIndex='1' ref="rankTab" @tabToggle='tabToggle' :itemList="itemList"></tabnav>
     <mscroll style="top: 84px" :scrollY="true">
       <!-- 节目榜 -->
       <div v-show="showProgram" class="program">
@@ -209,7 +209,8 @@ export default {
     this.programList();
     this.programTopList();
   },
-  destroyed() {
+  // 离开界面后
+  deactivated() {
     this.$store.state.isShowNav = true;
   },
   mounted() {

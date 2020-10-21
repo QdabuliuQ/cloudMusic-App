@@ -15,7 +15,7 @@ export default {
     },
     created () {
         getHomepage().then(res => {
-            console.log(res);
+            // console.log(res);
         })
     }
 }

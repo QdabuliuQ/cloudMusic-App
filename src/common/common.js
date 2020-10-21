@@ -36,7 +36,7 @@ export function toStringNum(num) {
 export function durationTime(time) {
     return ((Math.floor(time / 1000) / 60) <= 9 ?
         '0' + (Math.floor(time / 1000) / 60).toFixed(0) : (Math.floor(time / 1000) / 60).toFixed(0))
-        + ':' + ((Math.floor(time / 1000) % 60).toFixed(0) <= 9 ? '0' + (Math.floor(time / 1000) % 60) : (Math.floor(time / 1000) % 60))
+        + ': ' + ((Math.floor(time / 1000) % 60).toFixed(0) <= 9 ? '0' + (Math.floor(time / 1000) % 60) : (Math.floor(time / 1000) % 60))
 }
 
 // 用户名称高亮  

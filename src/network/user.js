@@ -54,3 +54,15 @@ export function getUserEvent(uid,limit,lasttime){
         }
     })
 }
+
+// 获取用户粉丝
+export function getUserFans(uid, limit, lasttime ){
+    return request({
+        url: '/user/followeds',
+        params:{
+            uid,
+            limit,
+            lasttime
+        }
+    })
+}
