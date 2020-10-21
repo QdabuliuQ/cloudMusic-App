@@ -6,8 +6,11 @@
       bottom: 45px;
       background-color: #fff"
       :scrollY="true">
-        <div class="box">
-            <follow-item :followList="followList"></follow-item>
+        <div class="box" v-if="followList.length != 0">
+            <follow-item :uid='uid' :followList="followList"></follow-item>
+        </div>
+        <div v-else class="noFollow">
+            该用户还没有关注其他人哦~
         </div>
       </mui-scroll>  
   </div>
@@ -24,13 +27,14 @@ export default {
     name: 'Follow',
     data () {
         return {
-            navTitle: '我的关注',
-            followList: []   // 关注数据
+            navTitle: '关注',
+            followList: [],   // 关注数据
+            uid: this.$route.params.id
         }
     },
     created () {
         // 获取关注列表
-        getUserFollow(this.$store.state.profile.userId).then(res => {
+        getUserFollow(this.$route.params.id).then(res => {
             for (const item of res.data.follow) {
                 this.followList.push({
                 nickname: item.nickname, 
@@ -65,5 +69,13 @@ export default {
     }
     .box{
         padding:8px 12px;
+    }
+    .noFollow{
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        font-size: .45273rem;
+        color: rgb(133, 133, 133);
+        line-height: 85vh;
     }
 </style>

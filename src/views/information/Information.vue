@@ -30,8 +30,8 @@
           />
         </div>
         <div class="detail">
-          <div class="follows">关注 {{ profile.follows }}</div>
-          <div class="followeds">粉丝 {{ profile.followeds }}</div>
+          <div class="follows" @click="follow(profile.userId)">关注 {{ profile.follows }}</div>
+          <div class="followeds" @click="fansList(profile.userId)">粉丝 {{ profile.followeds }}</div>
         </div>
         <div class="createtime">
           <div v-if="profile.createTime == -1">
@@ -131,6 +131,17 @@ export default {
     }
   },
   methods: {
+    // 路由跳转 关注界面
+    follow(id){
+      console.log(id);
+      this.$router.push('/follow/' + id)
+    },
+    
+    // 路由跳转 粉丝界面
+    fansList(id){
+      this.$router.push('/fansList/' + id)
+    },
+
     openSub() {
       this.showShare = true;
     },
@@ -237,6 +248,8 @@ export default {
 
     userDetail() {
       getUserDetail(this.$route.params.uid).then((res) => {
+        console.log(res);
+        this.profile.userId = res.data.profile.userId
         this.profile.level = res.data.level; // 用户等级
         this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲
         this.profile.avatarUrl = res.data.profile.avatarUrl; // 用户头像

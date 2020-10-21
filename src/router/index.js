@@ -52,6 +52,7 @@ const routes = [
 
   { path: '/played/:id', component: () => import('views/played/Played') },  // 最近播放
   { path: '/fansList/:id', component: () => import('components/context/fansList/FansList') },  // 粉丝
+  { path: '/follow/:id', component: () => import('views/follow/Follow') },  // 关注
 
   { path: '/Information/:uid', component: () => import('views/information/Information') },  // 个人详情页
 

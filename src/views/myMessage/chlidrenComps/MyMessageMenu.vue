@@ -50,7 +50,7 @@ export default {
         },
 
         myFollow(){
-            this.$router.push('/myMessage/follow')
+            this.$router.push('/follow/' + this.$store.state.profile.userId)
         },
 
         myPlayed(){
