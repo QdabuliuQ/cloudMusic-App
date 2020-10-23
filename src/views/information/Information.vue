@@ -133,7 +133,6 @@ export default {
   methods: {
     // 路由跳转 关注界面
     follow(id){
-      console.log(id);
       this.$router.push('/follow/' + id)
     },
     
@@ -248,7 +247,6 @@ export default {
 
     userDetail() {
       getUserDetail(this.$route.params.uid).then((res) => {
-        console.log(res);
         this.profile.userId = res.data.profile.userId
         this.profile.level = res.data.level; // 用户等级
         this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲

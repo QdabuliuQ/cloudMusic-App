@@ -67,6 +67,7 @@
 
 <script>
 import { getSheetComment } from "network/sheetInfo"; // 评论请求
+import { getAlbumComment } from "network/album";
 import mscroll from "components/common/muiScroll/MuiScroll";
 import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
@@ -92,7 +93,8 @@ export default {
           { name: "二维码", icon: "qrcode" },
         ],
       ],
-      commentLength: 1,  // 判断是否加载评论
+      commentLength: 1, // 判断是否加载评论
+      more: true,  // 是否有更多评论
     };
   },
   components: {
@@ -100,9 +102,9 @@ export default {
   },
   methods: {
     // 跳转路由
-    profile(id){
-        this.$router.push('/Information/' + id)
-        this.$store.state.isShowNav = true;
+    profile(id) {
+      this.$router.push("/Information/" + id);
+      this.$store.state.isShowNav = true;
     },
 
     getIndex(index) {
@@ -117,12 +119,12 @@ export default {
     // 监听上拉加载
     loadComment() {
       // 发送请求
-      // 判断评论组件是否打开   
+      // 判断评论组件是否打开
       if (this.$store.state.isShowNav === false) {
         this.$loading.loadingShow();
         setTimeout(() => {
-            this.getCommentList(this.$route.params.id, 100, this.offset * 100);
-            this.$loading.loadingNo();
+          this.getCommentList(this.$route.params.id, 100, this.offset * 100);
+          this.$loading.loadingNo();
         }, 1000);
       }
     },
@@ -133,45 +135,89 @@ export default {
 
     // 封转方法
     getCommentList(sid, list, offset) {
-      // 发送网络请求
-      if (this.commentLength > 0) {
-        getSheetComment(sid, list, offset).then((res) => {
-          this.commentTitle = "评论(" + res.data.total + ")";
-          // 判断评论数量
-          this.commentLength = res.data.comments.length;
-          if (res.data.hotComments) {
-            for (const item of res.data.hotComments) {
+      if (this.$route.params.isAlbum == "false") {
+        // 发送网络请求
+        if (this.more) {
+          getSheetComment(sid, list, offset).then((res) => {
+            console.log(res);
+            this.more = res.data.more
+            this.commentTitle = "评论(" + res.data.total + ")";
+            // 判断评论数量
+            this.commentLength = res.data.comments.length;
+            if (res.data.hotComments) {
+              for (const item of res.data.hotComments) {
+                this.commentList.push({
+                  commentId: item.commentId, // 评论楼层id
+                  content: item.content, // 评论内容
+                  likedCount: item.likedCount, // 喜欢数量
+                  time: item.time, // 发布时间戳
+                  userImg: item.user.avatarUrl, // 用户头像
+                  authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
+                  userName: item.user.nickname, // 用户昵称
+                  userId: item.user.userId, // 用户id
+                  vipType: item.user.vipType, // 是否开通会员
+                });
+              }
+            }
+
+            for (const itemc of res.data.comments) {
               this.commentList.push({
-                commentId: item.commentId, // 评论楼层id
-                content: item.content, // 评论内容
-                likedCount: item.likedCount, // 喜欢数量
-                time: item.time, // 发布时间戳
-                userImg: item.user.avatarUrl, // 用户头像
-                authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
-                userName: item.user.nickname, // 用户昵称
-                userId: item.user.userId, // 用户id
-                vipType: item.user.vipType, // 是否开通会员
+                commentId: itemc.commentId, // 评论楼层id
+                content: itemc.content, // 评论内容
+                likedCount: itemc.likedCount, // 喜欢数量
+                time: itemc.time, // 发布时间戳
+                userImg: itemc.user.avatarUrl, // 用户头像
+                authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
+                userName: itemc.user.nickname, // 用户昵称
+                userId: itemc.user.userId, // 用户id
+                vipType: itemc.user.vipType, // 是否开通会员
               });
             }
-          }
+            this.offset++; // 页数增加
+          });
+        } else {
+          this.$toast.show("没有更多评论了:(", 1900);
+        }
+      } else if(this.$route.params.isAlbum == "true"){
+        if (this.more) {
+          
+          getAlbumComment(sid, list, offset).then((res) => {
+          this.more = res.data.more
+            this.commentTitle = "评论(" + res.data.total + ")";
+            // 判断评论数量
+            this.commentLength = res.data.comments.length;
+            if (res.data.hotComments) {
+              for (const item of res.data.hotComments) {
+                this.commentList.push({
+                  commentId: item.commentId, // 评论楼层id
+                  content: item.content, // 评论内容
+                  likedCount: item.likedCount, // 喜欢数量
+                  time: item.time, // 发布时间戳
+                  userImg: item.user.avatarUrl, // 用户头像
+                  authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
+                  userName: item.user.nickname, // 用户昵称
+                  userId: item.user.userId, // 用户id
+                  vipType: item.user.vipType, // 是否开通会员
+                });
+              }
+            }
 
-          for (const itemc of res.data.comments) {
-            this.commentList.push({
-              commentId: itemc.commentId, // 评论楼层id
-              content: itemc.content, // 评论内容
-              likedCount: itemc.likedCount, // 喜欢数量
-              time: itemc.time, // 发布时间戳
-              userImg: itemc.user.avatarUrl, // 用户头像
-              authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
-              userName: itemc.user.nickname, // 用户昵称
-              userId: itemc.user.userId, // 用户id
-              vipType: itemc.user.vipType, // 是否开通会员
-            });
-          }
-          this.offset ++; // 页数增加
-        });
-      } else {
-         this.$toast.show('没有更多评论了:(',1900)
+            for (const itemc of res.data.comments) {
+              this.commentList.push({
+                commentId: itemc.commentId, // 评论楼层id
+                content: itemc.content, // 评论内容
+                likedCount: itemc.likedCount, // 喜欢数量
+                time: itemc.time, // 发布时间戳
+                userImg: itemc.user.avatarUrl, // 用户头像
+                authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
+                userName: itemc.user.nickname, // 用户昵称
+                userId: itemc.user.userId, // 用户id
+                vipType: itemc.user.vipType, // 是否开通会员
+              });
+            }
+            this.offset++; // 页数增加
+          });
+        }
       }
     },
   },
@@ -219,7 +265,7 @@ export default {
 .center {
   flex: 7;
   line-height: 45px;
-  font-size: .479361rem;
+  font-size: 0.479361rem;
   /* font-size: .399467rem; */
 }
 .rightbox {
@@ -303,13 +349,13 @@ export default {
   background-color: #fff;
   height: calc(100vh - 40px);
 }
-.noComment{
+.noComment {
   width: 100%;
   height: 100vh;
   text-align: center;
   color: #8b8b8b;
 }
-.text{
+.text {
   position: relative;
   font-size: 21px;
   font-weight: 550;

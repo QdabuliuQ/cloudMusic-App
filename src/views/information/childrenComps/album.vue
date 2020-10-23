@@ -1,6 +1,6 @@
 <template>
   <div class="album">
-      <div class="albumItem" v-for="(item,index) in albumList" :key="index">
+      <div class="albumItem" @click="showAlbum(item.id)" v-for="(item,index) in albumList" :key="index">
           <div class="left">
               <img :src="item.picUrl" alt="">
               <div class="bgcImg"><img src="~assets/img/information/yuan.svg" alt=""></div>
@@ -35,10 +35,13 @@ export default {
     };
   },
   methods: {
+    showAlbum(id){
+      this.$router.push('/playDetail/' + id +'&'+ true)
+    },
+
     singerAlbum() {
       if (this.more) {
         getSingerAlbum(this.artistId, 50, this.offset).then((res) => {
-          console.log(res);
           for (const item of res.data.hotAlbums) {
               this.albumList.push({
                   name: item.name,  // 专辑名称

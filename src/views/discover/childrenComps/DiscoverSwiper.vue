@@ -36,10 +36,10 @@ export default {
 <style scoped>
     .my-swipe{
         width: 94%;
-        height: 140px;
-        border-radius: 8px;
+        height: 3.728362rem;
+        border-radius: .213049rem;
         overflow: hidden;
-        margin: 10px auto;
+        margin: .266312rem auto;
     }
     .swiperItem{
         width: 100%;
@@ -56,9 +56,9 @@ export default {
     }
     .title{
         position: absolute;
-        padding: 3px 7px 4px;
-        border-top-left-radius: 8px;
-        font-size: 13px;
+        padding: .079893rem .186418rem .106525rem;
+        border-top-left-radius: .213049rem;
+        font-size: .346205rem;
         text-align: center;
         right: 0;
         bottom: 0;

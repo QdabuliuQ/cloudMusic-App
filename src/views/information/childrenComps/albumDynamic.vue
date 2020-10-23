@@ -11,7 +11,7 @@
       </div>
       <div class="time">{{ time | getTime }}</div>
       <div class="content" v-if="events.msg !== ''">{{ events.msg }}</div>
-      <div class="musicbox" @click="toPlay(events.djRadio.id)">
+      <div class="musicbox" @click="toPlay(events.album.id)">
         <div class="musicContent">
           <div class="conLeft">
             <img :src="events.album.img80x80" alt="" />
@@ -57,12 +57,19 @@ export default {
   methods: {
     sComment(){
       this.$store.state.commentId = this.threadId
-    }
+    },
+
+    toPlay(id){
+      this.$router.push('/playDetail/' + id +'&'+ true)
+    },
   },
   name: "albumDynamic",
   components: {
     eventsCount,
   },
+  created () {
+    console.log(this.events);
+  }
 };
 </script>
 <style scoped>

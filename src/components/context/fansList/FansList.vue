@@ -24,7 +24,7 @@
           <img src="~assets/img/common/sandian.svg" alt="" />
         </div>
       </div>
-      <div class="tip">下载APP查看更多</div>
+      <div class="tip" v-if="FansArr.length >= 100">下载APP查看更多</div>
     </div>
   </div>
 </template>
@@ -48,7 +48,6 @@ export default {
   methods: {
     userFans() {
       getUserFans(this.$route.params.id, 100, this.lasttime).then((res) => {
-        console.log(res);
         for (const item of res.data.followeds) {
           this.FansArr.push({
             nickname: item.nickname, // 昵称
@@ -57,6 +56,7 @@ export default {
             vipType: item.vipType, // 用户vip
           });
         }
+        this.$loading.loadingNo()
       });
     },
 
@@ -65,6 +65,7 @@ export default {
     },
   },
   created() {
+    this.$loading.loadingShow()
     this.userFans();
   },
 };

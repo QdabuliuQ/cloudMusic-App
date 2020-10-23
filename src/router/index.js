@@ -60,7 +60,7 @@ const routes = [
   { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },  // 手机登录
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },  // 邮箱登录
 
-  { path: '/playDetail/:id', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
+  { path: '/playDetail/:id&:isAlbum', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
   { path: '/mvplay/:mid', component: () => import('components/context/mvPlay/MvPlay') },  // mv播放
 

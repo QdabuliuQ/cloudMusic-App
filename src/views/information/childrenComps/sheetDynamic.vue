@@ -60,7 +60,7 @@ export default {
   name: "sheetDynamic",
   methods: {
     toSheet(id) {
-      this.$router.push("/playDetail/" + id);
+      this.$router.push("/playDetail/" + id +'&'+ false);
     },
 
     sComment() {
