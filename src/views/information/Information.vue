@@ -266,7 +266,7 @@ export default {
           this.profile.backgroundUrl,
           res.data.profile.backgroundUrl
         );
-        // console.log(this.profile);
+
         // 判断用户是不是歌手
         if (this.profile.artistId !== null) {
           this.itemList.splice(1, 0, "歌曲", "专辑", "MV");

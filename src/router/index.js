@@ -36,12 +36,14 @@ const routes = [
     path: '/discover',
     component: discover,
   },
+  { path: '/discover/moreSheet/', component: () => import('views/discover/childrenComps/moreComps/moreSheet') },  // 歌单广场
 
   // 个人页面
   { path: '/myMessage', component: myMessage },
   // 个人--电台
   { path: '/myMessage/radioStation', component: () => import('views/radioStation/RadioStation') },  // 个人--电台
   { path: '/myMessage/radioStation/stationHomeP', component: () => import('views/radioStation/childrenComps/StationHomeP') },  // 电台首页
+  { path: '/radioStation/', component: () => import('views/radioStation/childrenComps/StationHomeP') },
   { path: '/myMessage/radioStation/stationHomeP/stationClassify', component: () => import('views/radioStation/childrenComps/StationClassify') },  // 电台分类
   { path: '/myMessage/radioStation/stationHomeP/stationRanking', component: () => import('views/radioStation/childrenComps/rankingList') },  // 电台排位
   { path: '/classifyInfo/:type', component: () => import('views/radioStation/childrenComps/ClassifyInfo') },  // 电台分类详情
@@ -60,7 +62,7 @@ const routes = [
   { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },  // 手机登录
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },  // 邮箱登录
 
-  { path: '/playDetail/:id&:isAlbum', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单内容
+  { path: '/playDetail/:id&:isAlbum', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单/专辑内容
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
   { path: '/mvplay/:mid', component: () => import('components/context/mvPlay/MvPlay') },  // mv播放
 

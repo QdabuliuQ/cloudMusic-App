@@ -1,7 +1,7 @@
 <template>
   <div class="SheetItem">
     <div class="topImg">
-      <img class="fmian" :src="sheetItem.picUrl" alt="" />
+      <img class="fmian" v-lazy="sheetItem.picUrl" alt="" />
       <div class="count" v-if="showCount">▷ {{ sheetItem.playCount }}</div>
       <div class="toPlay" v-if="showImg">
         <div class="pImg"><img src="~assets/img/discover/SAItem/play.svg" alt=""></div>
@@ -13,13 +13,15 @@
     <div class="programbox" v-else>
       <div class="proName">{{sheetItem.name}}</div>
       <div class="desc">
-        <span>{{sheetItem.desc}}</span>
+        <!-- <span>{{sheetItem.desc}}</span> -->
+        <p>{{sheetItem.desc}}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   props: {
     sheetItem: {
@@ -43,9 +45,6 @@ export default {
 };
 </script>
 <style scoped>
-.programbox{
-  height: 1.065246rem;
-}
 .proName{
   width: 100%;
   font-size: .372836rem;
@@ -69,9 +68,20 @@ export default {
 }
 .desc{
   width: 100%;
+}
+.desc p{
+  word-break: break-all;
+  line-height: .399467rem !important;
   font-size: .319574rem;
-  line-height: .399467rem;
   color: rgb(121, 119, 119);
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+ /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
+  overflow: hidden;
 }
 .SheetItem {
   width: 2.663116rem;
@@ -113,14 +123,17 @@ export default {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.335);
 }
 .pImg{
-  width: .532623rem;
-  height: .532623rem;
+  width: .45273rem;
+  height: .45273rem;
   margin: auto;
+  position: relative;
 }
 .pImg img{
-  width: .532623rem;
-  position: relative;
-  top: -.079893rem;
+  width: .45273rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* top: -.079893rem; */
 }
 .topImg .fmian {
   width: 100%;

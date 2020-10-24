@@ -1,6 +1,9 @@
 <template>
   <div class="Mv">
-    <mvitem :vedioList="mvList"></mvitem>
+    <mvitem v-if="mvList.length !== 0" :vedioList="mvList"></mvitem>
+    <div class="noMv" v-else>
+      暂时还没有MV哦
+    </div>
   </div>
 </template>
 
@@ -22,7 +25,6 @@ export default {
   },
   created() {
     getSingerMv(this.artistId).then((res) => {
-      console.log(res);
       for (const item of res.data.mvs) {
         this.mvList.push({
           id: item.id, // id
@@ -45,5 +47,13 @@ export default {
   min-height: 7.856192rem;
   position: relative;
   z-index: -1;
+}
+.noMv{
+  width: 100%;
+  min-height: 6.65779rem;
+  text-align: center;
+  line-height: 6.65779rem;
+  font-size: .505992rem;
+  color: rgb(141, 139, 139);
 }
 </style>

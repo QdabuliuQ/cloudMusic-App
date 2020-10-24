@@ -3,7 +3,7 @@
     <div class="topTitle">
       <div class="left">懂你的精选歌单</div>
       <div class="right">
-        <div class="btn">查看更多</div>
+        <div class="btn" @click="Sheet">查看更多</div>
       </div>
     </div>
     <div class="mui-content" style="">
@@ -49,6 +49,10 @@ export default {
     toSheet(id) {
       this.$router.push("/playDetail/" + id + "&" + false);
     },
+
+    Sheet(){
+      this.$router.push("/discover/moreSheet");
+    }
   },
   created() {
     getHotSheet("hot", "全部", 6, this.offset * 6).then((res) => {

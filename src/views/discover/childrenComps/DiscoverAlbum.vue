@@ -1,8 +1,10 @@
 <template>
-  <div class="DiscoverSongTop">
+  <div class="DiscoverAlbum">
     <div class="topTitle">
-      <div class="left">新歌速递</div>
-      <div class="right"></div>
+      <div class="left">新碟上架</div>
+      <div class="right">
+          <div class="btn">查看更多</div>
+      </div>
     </div>
     <el-carousel
       class="carousel"
@@ -16,49 +18,49 @@
     <!-- 第一个for循环遍历出 三大部分 -->
       <el-carousel-item class="items" v-for="(item,index) in 3" :key="index">
         <!-- 第二个for循环遍历 每一个部分中的歌曲 -->
-        <saItem v-for="(songItems, i) in songList[index]" :key="i" :itemDetail='songItems'></saItem>
+        <saItem :isAlbum='true' v-for="(albunItems, i) in albunList[index]" :key="i" :itemDetail='albunItems'></saItem>
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 
 <script>
+import { getNewAlbum } from "network/discover";
 import saItem from "./SAItem";
-import { getSongsTop } from "network/discover";
 
 export default {
-  name: "DiscoverSongTop",
+  name: "DiscoverAlbum",
   data() {
     return {
-      songList: [[], [], []], // 歌曲数组  二维数组嵌套
+      offset: 0,
+      albunList: [[],[],[]],  // 二维数组
     };
   },
   components: {
-    saItem,
+      saItem,
   },
   created() {
-    // 获取新歌
-    getSongsTop(0).then((res) => {
-      let path = res.data.data;
+    getNewAlbum(9, this.offset * 9, "ALL", "new").then((res) => {
+      let path = res.data.monthData;
       for (let i = 0; i < 9; i++) {
         if (i >= 0 && i < 3) {
-          this.songList[0].push({
+          this.albunList[0].push({
             id: path[i].id, // 歌曲id
-            picUrl: path[i].album.picUrl, // 歌曲封面
+            picUrl: path[i].picUrl, // 歌曲封面
             name: path[i].name, // 歌曲名称
             artists: path[i].artists,  // 演唱者 
           });
         } else if (i >= 3 && i < 6) {
-            this.songList[1].push({
+            this.albunList[1].push({
             id: path[i].id, // 歌曲id
-            picUrl: path[i].album.picUrl, // 歌曲封面
+            picUrl: path[i].picUrl, // 歌曲封面
             name: path[i].name, // 歌曲名称
             artists: path[i].artists,  // 演唱者
           });
         } else if (i >= 6 && i < 9) {
-            this.songList[2].push({
+            this.albunList[2].push({
             id: path[i].id, // 歌曲id
-            picUrl: path[i].album.picUrl, // 歌曲封面
+            picUrl: path[i].picUrl, // 歌曲封面
             name: path[i].name, // 歌曲名称
             artists: path[i].artists,  // 演唱者
           });
@@ -69,6 +71,20 @@ export default {
 };
 </script>
 <style scoped>
+.btn {
+  float: right;
+  width: 1.864181rem;
+  height:  .585885rem;
+  font-size: 0.319574rem;
+  border-radius: .585885rem;
+  text-align: center;
+  line-height:  .585885rem;
+  border: 1px solid #919090;
+}
+.DiscoverAlbum {
+  width: 100%;
+  margin-top: 0.266312rem;
+}
 .carousel{
   margin-top: .266312rem;
 }
@@ -80,10 +96,6 @@ export default {
   padding: .266312rem .213049rem 0;
   border-radius: .213049rem;
   box-shadow: 2px 2px 10px rgba(131, 131, 131, 0.5);
-}
-.DiscoverSongTop {
-  width: 100%;
-  margin-top: 0.266312rem;
 }
 .topTitle {
   display: flex;

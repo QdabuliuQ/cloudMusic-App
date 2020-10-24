@@ -139,7 +139,6 @@ export default {
         // 发送网络请求
         if (this.more) {
           getSheetComment(sid, list, offset).then((res) => {
-            console.log(res);
             this.more = res.data.more
             this.commentTitle = "评论(" + res.data.total + ")";
             // 判断评论数量

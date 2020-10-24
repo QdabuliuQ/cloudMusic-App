@@ -82,3 +82,41 @@ export function getNewMv(area, limit){
         }
     })
 }
+
+// 云村热评
+export function getHotComment(){
+    return request({
+        url: '/comment/hotwall/list'
+    })
+}
+
+// 新碟上架
+export function getNewAlbum(limit, offset, area, type ){
+    return request({
+        url: '/top/album',
+        params:{
+            limit, 
+            offset, 
+            area, 
+            type
+        }
+    })
+}
+
+// 热门歌手
+export function getHotSinger(limit, offset){
+    return request({
+        url: '/top/artists',
+        params: {
+            limit, 
+            offset
+        }
+    })
+}
+
+// 歌单标签列表
+export function getSheetTags(){
+    return request({
+        url: '/playlist/hot'
+    })
+}

@@ -3,7 +3,7 @@
     <div class="MvItem" @click="toPlay(item.id)" v-for="(item,index) in vedioList" :key="index">
         <div class="vedioImg">
             <div class="zhez"></div>
-            <div class="img"><img :src="item.imgurl16v9" alt=""></div>
+            <div class="img"><img v-lazy="item.imgurl16v9" alt=""></div>
             <div class="play">
                 <img src="~assets/img/information/events/bofang.svg" alt="" />
             </div>

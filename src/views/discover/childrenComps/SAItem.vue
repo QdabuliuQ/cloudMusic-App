@@ -2,6 +2,7 @@
   <div class="SAItem" @click="toPlay">
     <div class="left">
       <img :src="itemDetail.picUrl" alt="" />
+      <div v-if="isAlbum" class="bgcImg"><img src="~assets/img/information/yuan.svg" alt=""></div>
     </div>
     <div class="center">
       <div class="box">
@@ -31,11 +32,19 @@ export default {
       type: Object,
       default: {},
     },
+    isAlbum: {
+      type: Boolean,
+      default: false,
+    }
   },
   name: "SAItem",
   methods: {
     toPlay(){
-      this.$router.push('/playSong/' + this.itemDetail.id)
+      if (!this.isAlbum) {
+        this.$router.push('/playSong/' + this.itemDetail.id)
+      } else {
+        this.$router.push('/playDetail/' + this.itemDetail.id + '&' + true)
+      }
     }
   }
 };
@@ -49,6 +58,13 @@ export default {
 }
 .left {
   flex: 2;
+  position: relative;
+}
+.bgcImg{
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: .213049rem
 }
 .left img {
   width: 1.198402rem;

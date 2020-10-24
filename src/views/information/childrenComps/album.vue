@@ -2,8 +2,8 @@
   <div class="album">
       <div class="albumItem" @click="showAlbum(item.id)" v-for="(item,index) in albumList" :key="index">
           <div class="left">
-              <img :src="item.picUrl" alt="">
-              <div class="bgcImg"><img src="~assets/img/information/yuan.svg" alt=""></div>
+              <img @load='imgLoad(index)' :src="item.picUrl" alt="">
+              <div class="bgcImg" v-show="item.showImg"><img src="~assets/img/information/yuan.svg" alt=""></div>
           </div>
           <div class="right">
               <div class="content">
@@ -35,6 +35,11 @@ export default {
     };
   },
   methods: {
+    // 监听图片加载
+    imgLoad(index){
+      this.albumList[index].showImg = true
+    },
+
     showAlbum(id){
       this.$router.push('/playDetail/' + id +'&'+ true)
     },
@@ -50,6 +55,7 @@ export default {
                   publishTime: item.publishTime,  // 发布时间
                   size: item.size,  // 专辑歌曲数量
                   alias: item.alias,  // 专辑介绍
+                  showImg: false,  // 图片显示
               })
           }
         });

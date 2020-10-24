@@ -54,7 +54,6 @@ export default {
   },
   created() {
     getNewMv("", 9).then((res) => {
-      console.log(res);
       for (const item of res.data.data) {
           this.mvList.push({
               id: item.id,
@@ -79,7 +78,7 @@ export default {
   height: 100%;
 }
 .DiscoverMv {
-  margin-top: 0.532623rem;
+  margin-top: .319574rem;
 }
 .topTitle {
   display: flex;

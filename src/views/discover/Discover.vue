@@ -66,6 +66,8 @@
     <discover-songtop></discover-songtop>
     <discover-program></discover-program>
     <discover-mv></discover-mv>
+    <discover-album></discover-album>
+    <discover-hotsinger></discover-hotsinger>
   </div>
 </template>
 
@@ -75,10 +77,12 @@ import DiscoverSheet from "./childrenComps/DiscoverSheet";  // 热门歌单
 import DiscoverSongtop from "./childrenComps/DiscoverSongTop";  // 新歌速递
 import DiscoverProgram from "./childrenComps/DiscoverProgram";  // 电台节目
 import DiscoverMv from "./childrenComps/DiscoverMv";  // 最新MV
+import DiscoverAlbum from "./childrenComps/DiscoverAlbum";  // 新碟上架
+import DiscoverHotsinger from "./childrenComps/DiscoverHotSinger";  // 热门歌手
 
 import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
-import { getHomepage, getNewSong, getSongsTop } from "network/discover";
+import { getHomepage, getNewSong, getSongsTop, getHotComment } from "network/discover";
 // 引入滑动模块
 // .mui-scroll-wrapper 表示需要进行滑动的区域
 mui(".mui-scroll-wrapper").scroll({
@@ -93,6 +97,8 @@ export default {
     DiscoverSongtop,
     DiscoverProgram,
     DiscoverMv,
+    DiscoverAlbum,
+    DiscoverHotsinger,
   },
   data() {
     return {
@@ -110,6 +116,8 @@ export default {
       indicators: true, //是否显示滚动条
     });
   },
+  created () {
+  }
 };
 </script>
 <style scoped>

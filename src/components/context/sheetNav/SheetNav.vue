@@ -2,11 +2,11 @@
   <div class="SheetNav">
       <img src="~assets/img/played/bofang.svg" alt="">
       <span>播放全部<span class="a">(共{{trackCount}}首)</span></span>
-      <div 
+      <!-- <div 
       class="collection" 
       v-if="showBtn" 
       @click="isCollection"
-      :class="{collectionTrue : collClass}"><img :src="isFollowImg" alt="">{{textBtn}}</div>
+      :class="{collectionTrue : collClass}"><img :src="isFollowImg" alt="">{{textBtn}}</div> -->
   </div>
 </template>
 

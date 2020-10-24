@@ -2,7 +2,7 @@
   <div class="DiscoverProgram">
     <div class="topTitle">
       <div class="left">{{ title }}</div>
-      <div class="right"></div>
+      <div class="right"><div class="btn" @click="moreProgram">查看更多</div></div>
     </div>
     <div class="mui-content" style="">
       <div id="slider" class="mui-slider">
@@ -49,7 +49,10 @@ export default {
   methods: {
     toProgram(id){
         this.$router.push('/audioPlay/' + id)
-    }  
+    },
+    moreProgram(){
+      this.$router.push('/radioStation/')
+    }
   },
   created() {
     getProgram().then((res) => {
@@ -68,11 +71,11 @@ export default {
 </script>
 <style scoped>
 .mui-control-item {
-    height: 4.793609rem;
+  /* height: 4.207723rem; */
   padding: 0.213049rem 0.186418rem 0.399467rem !important;
 }
 #slider {
-  height: 4.101198rem;
+  height: 4.207723rem;
 }
 #sliderSegmentedControl {
   height: 100%;
@@ -93,5 +96,16 @@ export default {
 }
 .right {
   flex: 1;
+}
+.btn {
+  float: right;
+  width: 1.864181rem;
+  height: 0.585885rem;
+  font-size: 0.319574rem;
+  /* padding: .053262rem .159787rem; */
+  border-radius: 0.585885rem;
+  text-align: center;
+  line-height: 0.585885rem;
+  border: 1px solid #919090;
 }
 </style>
