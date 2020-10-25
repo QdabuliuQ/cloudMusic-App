@@ -23,7 +23,12 @@
       </div>
     </div>
     <div class="content">
-      <div class="albumItem" v-for="(item, index) in albumList" :key="index">
+      <div
+        class="albumItem"
+        @click="albumShow(item.id)"
+        v-for="(item, index) in albumList"
+        :key="index"
+      >
         <div class="topimg">
           <img class="img" v-lazy="item.picUrl" alt="" />
           <img
@@ -63,6 +68,12 @@ export default {
     scrollnav,
   },
   methods: {
+    // 路由跳转
+    albumShow(id) {
+      this.$router.push("/playDetail/" + id + "&" + true);
+    },
+
+    // 导航栏切换
     tabToggle(index) {
       switch (index) {
         case 0:
@@ -95,6 +106,7 @@ export default {
       }
     },
 
+    // 封装方法
     album(area, type) {
       this.$loading.loadingShow();
       if (this.Area !== area) {
@@ -115,10 +127,11 @@ export default {
       this.Area = area;
     },
 
+    // 下拉加载
     loadingAlbum() {
       this.$loading.loadingShow();
       this.offset = 1;
-      getAlbum(30, this.offset * 30, this.Area, 'hot').then((res) => {
+      getAlbum(30, this.offset * 30, this.Area, "hot").then((res) => {
         for (const item of res.data.monthData) {
           this.albumList.push({
             id: item.id,
@@ -128,7 +141,7 @@ export default {
           });
           this.$loading.loadingNo();
         }
-        this.offset ++;
+        this.offset++;
       });
     },
 
@@ -153,6 +166,8 @@ export default {
     },
   },
   created() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
     this.album("ALL", "hot");
   },
 
