@@ -2,7 +2,7 @@
   <div class="DiscoverSongTop">
     <div class="topTitle">
       <div class="left">新歌速递</div>
-      <div class="right"></div>
+      <div class="right"><div class="btn" @click="more">查看更多</div></div>
     </div>
     <el-carousel
       class="carousel"
@@ -35,6 +35,11 @@ export default {
   },
   components: {
     saItem,
+  },
+  methods: {
+    more(){
+      this.$router.push('/discover/moreSongs/')
+    }
   },
   created() {
     // 获取新歌
@@ -69,6 +74,16 @@ export default {
 };
 </script>
 <style scoped>
+.btn {
+  float: right;
+  width: 1.864181rem;
+  height: 0.585885rem;
+  font-size: 0.319574rem;
+  border-radius: 0.585885rem;
+  text-align: center;
+  line-height: 0.585885rem;
+  border: 1px solid #919090;
+}
 .carousel{
   margin-top: .266312rem;
 }

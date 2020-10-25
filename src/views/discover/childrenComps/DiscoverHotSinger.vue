@@ -34,7 +34,8 @@ export default {
   methods: {
     toSinger(id){
         this.$router.push('/Information/' + id)
-    }  
+    },
+
   },
   created() {
     getHotSinger(9, this.offset * 9).then((res) => {

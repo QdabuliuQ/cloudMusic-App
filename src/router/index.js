@@ -37,6 +37,7 @@ const routes = [
     component: discover,
   },
   { path: '/discover/moreSheet/', component: () => import('views/discover/childrenComps/moreComps/moreSheet') },  // 歌单广场
+  { path: '/discover/moreSongs/', component: () => import('views/discover/childrenComps/moreComps/moreSongs') },  // 更多音乐
 
   // 个人页面
   { path: '/myMessage', component: myMessage },

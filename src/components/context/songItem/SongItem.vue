@@ -1,111 +1,118 @@
 <template>
   <div class="SongItem">
-      <div class="item" v-for="(item,index) in songList" :key="index">
-          <div class="itemBox"  @click="play(item.id)">
-              <div class="index">
-                  {{index + 1 }}
-              </div>
-              <div class="left">
-                  <div class="name">
-                      {{item.songName}}
-                      <span v-if="item.yuanc.length !== 0" class="yuanc">({{item.yuanc[0]}})</span>
-                  </div>
-                  <div class="singer">{{item.singer}} - {{' ' + item.zhuanji}}</div>
-              </div>
-              <div class="mv">
-                  <img v-if="item.mv !== 0" @click.stop="playMv(item.mv)" src="~assets/img/common/mv.svg" alt="">
-              </div>
-              <div class="more" @click.stop="moreMenu">
-                  <img src="~assets/img/common/sandian.svg" alt="">
-              </div>
+    <div class="item" v-for="(item, index) in songList" :key="index">
+      <div class="itemBox" @click="play(item.id)">
+        <div class="index">
+          {{ index + 1 }}
+        </div>
+        <div class="left">
+          <div class="name">
+            {{ item.songName }}
+            <span v-if="item.yuanc.length !== 0" class="yuanc"
+              >({{ item.yuanc[0] }})</span
+            >
           </div>
+          <div class="singer">
+            <span v-for="(item, index) in item.singer" :key="index">{{item.name }} </span> -
+            {{ " " + item.zhuanji }}
+          </div>
+        </div>
+        <div class="mv">
+          <img
+            v-if="item.mv !== 0"
+            @click.stop="playMv(item.mv)"
+            src="~assets/img/common/mv.svg"
+            alt=""
+          />
+        </div>
+        <div class="more" @click.stop="moreMenu">
+          <img src="~assets/img/common/sandian.svg" alt="" />
+        </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-
-
 export default {
-    name: 'SongItem',
-    props: ['songList'],
-    methods: {
-        // 跳转到播放界面
-        play(sid){
-            this.$router.push('/playSong/' + sid)
-        },
+  name: "SongItem",
+  props: ["songList"],
+  methods: {
+    // 跳转到播放界面
+    play(sid) {
+      this.$router.push("/playSong/" + sid);
+    },
 
-        moreMenu(){
-            console.log(22);
-        },
+    moreMenu() {
+      console.log(22);
+    },
 
-        playMv(mid){
-            this.$router.push('/mvplay/' + mid)
-        }
-    }
-}
-
+    playMv(mid) {
+      this.$router.push("/mvplay/" + mid);
+    },
+  },
+};
 </script>
 <style scoped>
-    .item{
-        width: 100%;
-        height: 50px;
-        border-bottom: 1px solid #e2e2e2ea;
-    }
-    .yuanc{
-        color: #868686;
-        font-size: 15px !important;
-    }
-    .itemBox{
-        width: 100%;
-        height: 40px;
-        position: relative;
-        top: 5.5px;
-        display: flex;
-    }
-    .name{
-        width: 220px;
-        margin-top: 2px;
-        font-size: 15px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .singer{
-        width: 220px;
-        color: #868686;
-        margin-top: -3px;
-        font-size: 12px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .index{
-        flex: 0.52;
-        font-size: 15px;
-        text-align: center;
-        margin-right: 10px;
-        line-height: 40px;
-    }
-    .left{
-        flex: 5;
-    }
-    .mv{
-        flex: 0.7;
-    }
-    .mv img{
-        width: 24px;
-        height: 20px;
-        margin-top: 10px;
-        float: right;
-    }
-    .more{
-        flex: 0.7;
-    }
-    .more img{
-        width: 21px;
-        height: 21px;
-        float: right;
-        margin-top: 9px;
-    }
+.item {
+  width: 100%;
+  height: 1.331558rem;
+  border-bottom: 1px solid #e2e2e2ea;
+}
+.yuanc {
+  color: #868686;
+  font-size: .399467rem !important;
+}
+.itemBox {
+  width: 100%;
+  height: 1.065246rem;
+  position: relative;
+  top: .079893rem;
+  display: flex;
+}
+.name {
+  width: 5.858855rem;
+  /* margin-top: 2px; */
+  font-size: .399467rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.singer {
+  width: 220px;
+  color: #868686;
+  margin-top: -.079893rem;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.index {
+  flex: 0.52;
+  font-size: .399467rem;
+  text-align: center;
+  margin-right: .266312rem;
+  line-height: 1.065246rem;
+}
+.left {
+  flex: 5;
+}
+.mv {
+  flex: 0.7;
+}
+.mv img {
+  width: .639148rem;
+  height: .532623rem;
+  margin-top: .266312rem;
+  float: right;
+}
+.more {
+  flex: 0.7;
+}
+.more img {
+  width: .559254rem;
+  height: .559254rem;
+  float: right;
+  margin-top: .23968rem;
+}
 </style>
