@@ -1,7 +1,7 @@
 <template>
   <div class="moreSheet">
     <menu-nav class="nav" :navTitle="'歌单广场'"></menu-nav>
-    <div class="mui-content" style="">
+    <!-- <div class="mui-content" style="">
       <div id="slider" class="mui-slider">
         <div
           id="sliderSegmentedControl"
@@ -22,11 +22,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <scrollnav
+      class="snav"
+      @tabToggle="tabToggle"
+      :itemList="tagsList"
+      :firstIndex="0"
+    ></scrollnav>
     <div class="content">
       <sheet-item
         class="sheetitem"
-        @click.native='toClick(item.id)'
+        @click.native="toClick(item.id)"
         v-for="(item, index) in sheetDetail"
         :key="index"
         :sheetItem="item"
@@ -39,6 +45,7 @@
 <script>
 import menuNav from "components/context/menuNav/MenuNav";
 import sheetItem from "components/context/sheetItem/SheetItem";
+import scrollnav from "components/context/scrollNav/ScrollNav";
 import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 import { toStringNum } from "common/common";
@@ -54,50 +61,51 @@ export default {
   name: "moreSheet",
   data() {
     return {
-      tagsList: ["全部"],
+      tagsList: ["全部"], // 歌单分类列表
       aindex: 0,
       offset: 0,
       sheetDetail: [], // 歌单信息
-      tagItem: "全部", // 默认获取全部歌单
       more: true, // 查看是否更多数据
+      index: 0, // 切换索引
     };
   },
   components: {
     menuNav,
     sheetItem,
+    scrollnav,
   },
   methods: {
-    // 歌单详情页跳转
-    toClick(id){
-      this.$router.push('/playDetail/' + id +'&'+ false)
-    },
-
-    toggleSheet(index, item) {
-      this.aindex = index
-      if (item != this.tagItem) {
-        this.$loading.loadingShow();
-        this.sheetDetail = []; // 清空数组
-        this.tagItem = item;
-        this.offset = 0; // 清空页数
-        this.getSheet();
+    tabToggle(index) {
+      if (this.index !== index) {
+        this.sheetDetail = []; // 清空数据
+        this.getSheet(index);
       }
+      this.index = index;
     },
 
-    getSheet() {
+    // 歌单详情页跳转
+    toClick(id) {
+      this.$router.push("/playDetail/" + id + "&" + false);
+    },
+
+    // 获取歌单
+    getSheet(index) {
       if (this.more) {
-        getHotSheet("hot", this.tagItem, 30, this.offset * 30).then((res) => {
-          this.more = res.data.more;
-          for (const item of res.data.playlists) {
-            this.sheetDetail.push({
-              id: item.id, // 歌单id
-              rcmdtext: item.name, // 歌单名称
-              picUrl: item.coverImgUrl, // 封面
-              playCount: toStringNum(item.playCount), // 播放量
-            });
+        getHotSheet("hot", this.tagsList[index], 30, this.offset * 30).then(
+          (res) => {
+            this.more = res.data.more;
+            for (const item of res.data.playlists) {
+              this.sheetDetail.push({
+                id: item.id, // 歌单id
+                rcmdtext: item.name, // 歌单名称
+                picUrl: item.coverImgUrl, // 封面
+                playCount: toStringNum(item.playCount), // 播放量
+              });
+            }
+            this.$loading.loadingNo();
+            this.offset++;
           }
-          this.$loading.loadingNo();
-          this.offset++;
-        });
+        );
       } else {
         this.$toast.show("没有更多歌单啦", 1900);
       }
@@ -117,7 +125,7 @@ export default {
       if (scrollTop + clientHeight >= scrollHeight - 1) {
         this.$loading.loadingShow();
         setTimeout(() => {
-          this.getSheet();
+          this.getSheet(this.index);
           this.$loading.loadingNo();
         }, 1000);
       }
@@ -158,9 +166,18 @@ export default {
     // 绑定滚动事件
     document.addEventListener("scroll", this.linearScroll);
   },
+  deactivated () {
+    document.removeEventListener("scroll", this.linearScroll)
+  }
 };
 </script>
 <style scoped>
+.snav {
+  position: fixed;
+  top: 44px;
+  z-index: 10;
+  /* margin-top: 44px; */
+}
 .nav {
   position: fixed;
   top: 0;
@@ -190,9 +207,6 @@ export default {
   box-sizing: border-box;
   border-bottom: 2px solid red;
 }
-.mui-active {
-  color: red !important;
-}
 .active {
   color: red;
   box-sizing: border-box;
@@ -204,12 +218,12 @@ export default {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin: 2.237017rem 0 1.331558rem;
+  margin: 2.396804rem 0 1.331558rem;
   min-height: 13.315579rem;
   background-color: #fff;
 }
 .sheetitem {
   width: 30%;
-  margin-bottom: .266312rem;
+  margin-bottom: 0.266312rem;
 }
 </style>

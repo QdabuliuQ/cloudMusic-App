@@ -70,12 +70,18 @@ export default {
       this.tabIndex = this.firstIndex;
       let span = document.getElementsByClassName("spItem")[this.firstIndex];
       let bottomBor = document.getElementsByClassName("bottomBor")[0];
-      Move(bottomBor, "left", span.offsetLeft, 35);
+      Move(bottomBor, "left", span.offsetLeft, 170);
     });
   },
 };
 </script>
 <style scoped>
+.mui-active{
+  color: #000 !important;
+}
+.mui-content{
+  background-color: transparent !important;
+}
 .mui-scroll{
   height: 1.091877rem !important;
 }

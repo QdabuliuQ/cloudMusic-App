@@ -3,7 +3,7 @@
     <div class="topTitle">
       <div class="left">新碟上架</div>
       <div class="right">
-          <div class="btn">查看更多</div>
+          <div class="btn" @click="more">查看更多</div>
       </div>
     </div>
     <el-carousel
@@ -38,6 +38,11 @@ export default {
   },
   components: {
       saItem,
+  },
+  methods: {
+    more(){
+      this.$router.push('/discover/moreAlbum/')
+    }
   },
   created() {
     getNewAlbum(9, this.offset * 9, "ALL", "new").then((res) => {

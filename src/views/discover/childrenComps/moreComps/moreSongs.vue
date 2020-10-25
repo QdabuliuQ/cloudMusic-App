@@ -2,19 +2,19 @@
   <div class="moreSongs">
     <menu-nav class="nav" :navTitle="'最新音乐'"></menu-nav>
     <scroll-nav
-    class="snav"
+      class="snav"
       @tabToggle="tabToggle"
       :itemList="itemList"
       :firstIndex="0"
     ></scroll-nav>
     <div class="topBox">
       <div class="video">
-        <video 
-        style="width: 100%; height: 4.793609rem; object-fit: fill" 
-        src="~assets/video/music.mp4"
-        loop="loop" 
-        autoplay>
-        </video>
+        <video
+          style="width: 100%; height: 4.793609rem; object-fit: fill"
+          src="~assets/video/music.mp4"
+          loop="loop"
+          autoplay
+        ></video>
       </div>
       <div class="zhez"></div>
       <div class="title">
@@ -141,20 +141,20 @@ export default {
 };
 </script>
 <style scoped>
-.snav{
-    margin-top: 44px;
+.snav {
+  margin-top: 44px;
 }
-.nav{
-    position: fixed;
-    z-index: 20;
-    top: 0;
-    left: 0;
-    right: 0;
+.nav {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
 }
-.video{
-    width: 100%;
-    height: 100%;
-    position: absolute;
+.video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 .zhez {
   position: absolute;
@@ -176,7 +176,7 @@ export default {
   height: 4.793609rem;
   position: relative;
   z-index: 10;
-  top: -.079893rem;
+  top: -0.079893rem;
   background-color: #fff;
   border-bottom: 8px solid #ebebeb;
 }

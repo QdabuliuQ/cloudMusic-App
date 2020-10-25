@@ -120,3 +120,23 @@ export function getSheetTags(){
         url: '/playlist/hot'
     })
 }
+
+// 新碟上架
+// export function getAlbum(){
+//     return request({
+//         url: '/album/newest'
+//     })
+// }
+
+// 新碟上架2
+export function getAlbum(limit, offset, area, type){
+    return request({
+        url: '/top/album',
+        params: {
+            limit, 
+            offset, 
+            area, 
+            type
+        }
+    })
+}
