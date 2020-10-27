@@ -142,7 +142,11 @@ export default {
 </script>
 <style scoped>
 .snav {
-  margin-top: 44px;
+  position: fixed;
+  top: 44px;
+  left: 0;
+  right: 0;
+  z-index: 15;
 }
 .nav {
   position: fixed;
@@ -172,6 +176,7 @@ export default {
   background-color: #fff;
 }
 .topBox {
+  margin-top: 2.237017rem;
   width: 100%;
   height: 4.793609rem;
   position: relative;

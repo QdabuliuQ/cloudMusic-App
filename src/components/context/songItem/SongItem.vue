@@ -58,6 +58,8 @@ export default {
   width: 100%;
   height: 1.331558rem;
   border-bottom: 1px solid #e2e2e2ea;
+  display: flex;
+  align-items: center;
 }
 .yuanc {
   color: #868686;
@@ -65,9 +67,8 @@ export default {
 }
 .itemBox {
   width: 100%;
-  height: 1.065246rem;
+  height: 1.011984rem;
   position: relative;
-  top: .079893rem;
   display: flex;
 }
 .name {

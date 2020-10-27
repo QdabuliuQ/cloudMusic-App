@@ -136,6 +136,7 @@ export default {
   height: 100%;
 }
 .mui-control-item {
+  padding: 0 .399467rem !important;
   text-align: center;
   font-size: 0.332889rem;
   height: 1.864181rem;

@@ -30,8 +30,9 @@
         :key="index"
       >
         <div class="topimg">
-          <img class="img" v-lazy="item.picUrl" alt="" />
+          <img class="img" @load="imgload(index)" v-lazy="item.picUrl" alt="" />
           <img
+            v-show="item.showBlack"
             class="bgcImg"
             src="~assets/img/discover/moreAlbum/heiyuan.svg"
             alt=""
@@ -60,7 +61,7 @@ export default {
       name: "推荐",
       test: "Recommend",
       Area: "全部",
-      loading: false,
+      loading: false,     
     };
   },
   components: {
@@ -68,6 +69,11 @@ export default {
     scrollnav,
   },
   methods: {
+    // 图片加载事件
+    imgload(index){
+      this.albumList[index].showBlack = true
+    },
+
     // 路由跳转
     albumShow(id) {
       this.$router.push("/playDetail/" + id + "&" + true);
@@ -79,27 +85,32 @@ export default {
         case 0:
           this.album("ALL", "hot");
           this.Area = "全部";
-          this.loading = false;
+          this.name = "全部";
+          this.test = "Recommend";
           break;
         case 1:
           this.album("ZH", "hot");
           this.Area = "华语";
-          this.loading = false;
+          this.name = "华语";
+          this.test = "Mandarin Music";
           break;
         case 2:
           this.album("EA", "hot");
           this.Area = "欧美";
-          this.loading = false;
+          this.name = "欧美";
+          this.test = "Western Music";
           break;
         case 3:
           this.album("KR", "hot");
           this.Area = "韩国";
-          this.loading = false;
+          this.name = "韩国";
+          this.test = "Korean Music";
           break;
         case 4:
           this.album("JP", "hot");
           this.Area = "日本";
-          this.loading = false;
+          this.name = "日本";
+          this.test = "Japanese Music";
           break;
         default:
           break;
@@ -119,9 +130,11 @@ export default {
               name: item.name,
               picUrl: item.picUrl,
               artist: item.artist.name,
+              showBlack: false,
             });
             this.$loading.loadingNo();
           }
+          console.log(this.albumList);
         });
       }
       this.Area = area;
@@ -138,6 +151,7 @@ export default {
             name: item.name,
             picUrl: item.picUrl,
             artist: item.artist.name,
+            showBlack: false,
           });
           this.$loading.loadingNo();
         }
@@ -175,10 +189,9 @@ export default {
     // 绑定滚动事件
     document.addEventListener("scroll", this.linearScroll);
   },
-
-  deactivated() {
-    document.removeEventListener("scroll", this.linearScroll);
-  },
+  destroyed () {
+    document.removeEventListener("scroll", this.linearScroll)
+  }
 };
 </script>
 <style scoped>

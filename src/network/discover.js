@@ -1,21 +1,21 @@
-import {request} from './request'
+import { request } from './request'
 
 /**
  * 发现组件所有网络请求
  */
 
 // 轮播图请求
-export function getBanner(type){
+export function getBanner(type) {
     return request({
         url: '/banner',
-        params:{
+        params: {
             type
         }
     })
 }
 
 // 首页信息
-export function getHomepage(refresh){
+export function getHomepage(refresh) {
     return request({
         url: '/homepage/block/page',
         params: {
@@ -25,14 +25,14 @@ export function getHomepage(refresh){
 }
 
 // 获取新歌曲
-export function getNewSong(){
+export function getNewSong() {
     return request({
         url: '/recommend/songs'
     })
 }
 
 // 热门话题
-export function getTopic(limit, offset){
+export function getTopic(limit, offset) {
     return request({
         url: '/hot/topic',
         params: {
@@ -43,7 +43,7 @@ export function getTopic(limit, offset){
 }
 
 // 热门歌单
-export function getHotSheet(order, cat="全部", limit, offset){
+export function getHotSheet(order, cat = "全部", limit, offset) {
     return request({
         url: '/top/playlist',
         params: {
@@ -56,7 +56,7 @@ export function getHotSheet(order, cat="全部", limit, offset){
 }
 
 // 新歌速递
-export function getSongsTop(type){
+export function getSongsTop(type) {
     return request({
         url: '/top/song',
         params: {
@@ -66,14 +66,14 @@ export function getSongsTop(type){
 }
 
 // 推荐节目
-export function getProgram(){
+export function getProgram() {
     return request({
         url: '/program/recommend'
     })
 }
 
 // 最新MV
-export function getNewMv(area, limit){
+export function getNewMv(area, limit) {
     return request({
         url: '/mv/first',
         params: {
@@ -84,59 +84,65 @@ export function getNewMv(area, limit){
 }
 
 // 云村热评
-export function getHotComment(){
+export function getHotComment() {
     return request({
         url: '/comment/hotwall/list'
     })
 }
 
 // 新碟上架
-export function getNewAlbum(limit, offset, area, type ){
+export function getNewAlbum(limit, offset, area, type) {
     return request({
         url: '/top/album',
-        params:{
-            limit, 
-            offset, 
-            area, 
+        params: {
+            limit,
+            offset,
+            area,
             type
         }
     })
 }
 
 // 热门歌手
-export function getHotSinger(limit, offset){
+export function getHotSinger(limit, offset) {
     return request({
         url: '/top/artists',
         params: {
-            limit, 
+            limit,
             offset
         }
     })
 }
 
 // 歌单标签列表
-export function getSheetTags(){
+export function getSheetTags() {
     return request({
         url: '/playlist/hot'
     })
 }
 
 // 新碟上架
-// export function getAlbum(){
-//     return request({
-//         url: '/album/newest'
-//     })
-// }
-
-// 新碟上架2
-export function getAlbum(limit, offset, area, type){
+export function getAlbum(limit, offset, area, type) {
     return request({
         url: '/top/album',
         params: {
-            limit, 
-            offset, 
-            area, 
+            limit,
+            offset,
+            area,
             type
         }
     })
 }
+
+// 歌手分类
+export function getSinger(limit, offset, type, area) {
+    return request({
+        url: '/artist/list',
+        params: {
+            limit,
+            offset,
+            type,
+            area
+        }
+    })
+} 

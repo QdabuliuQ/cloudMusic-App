@@ -38,7 +38,8 @@ const routes = [
   },
   { path: '/discover/moreSheet/', component: () => import('views/discover/childrenComps/moreComps/moreSheet') },  // 歌单广场
   { path: '/discover/moreSongs/', component: () => import('views/discover/childrenComps/moreComps/moreSongs') },  // 更多音乐
-  { path: '/discover/moreAlbum/', component:  () => import('views/discover/childrenComps/moreComps/moreAlbum') },  // 新碟上架
+  { path: '/discover/moreAlbum/', component: () => import('views/discover/childrenComps/moreComps/moreAlbum') },  // 新碟上架
+  { path: '/discover/moreSinger/', component: () => import('views/discover/childrenComps/moreComps/moreSinger') },  // 歌手分类
 
   // 个人页面
   { path: '/myMessage', component: myMessage },
