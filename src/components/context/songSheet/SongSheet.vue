@@ -24,7 +24,7 @@
 <script>
 export default {
     name: 'SongSheet',
-    props: ['sheetList'],  // 变量觉得显示的是收藏歌单还是创建歌单
+    props: ['sheetList'],  // 显示的是收藏歌单还是创建歌单
     methods: {
         sheetInfo(id){
             this.$router.push('/playDetail/' + id +'&'+ false)  // 跳转到歌单页面

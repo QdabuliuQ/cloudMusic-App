@@ -51,7 +51,6 @@ export default {
   },
   created() {
     getHotSinger(9, this.offset * 9).then((res) => {
-      console.log(res);
       for (const item of res.data.artists) {
         this.singerList.push({
           accountId: item.accountId,

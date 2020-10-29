@@ -247,6 +247,7 @@ export default {
 
     userDetail() {
       getUserDetail(this.$route.params.uid).then((res) => {
+        console.log(this.$route.params.uid);
         this.profile.userId = res.data.profile.userId
         this.profile.level = res.data.level; // 用户等级
         this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲

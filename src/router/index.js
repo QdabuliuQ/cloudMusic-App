@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
 const originalPush = VueRouter.prototype.push
 
-VueRouter.prototype.push = function push(location) {
-
-  return originalPush.call(this, location).catch(err => err)
-
-}
-
 Vue.use(VueRouter)
+// 解决路由重复点击保存问题
+VueRouter.prototype.replace = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+const originalReplace = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalReplace.call(this, location).catch(err => err)
+}
 
 // 组件懒加载
 const discover = () => import('views/discover/Discover')  // 发现页面组件
@@ -18,29 +19,44 @@ const myMessage = () => import('views/myMessage/MyMessage')  // 个人页面组�
 const cloudVillage = () => import('views/cloudVillage/CloudVillage')  // 云村页面组件
 const video = () => import('views/video/Video')  // 视频页面组件
 
-
-// const originalPush = VueRouter.prototype.push
-// VueRouter.prototype.push = function push(location) {
-//   return originalPush.call(this, location).catch(err => err)
-// }
-
-// const originalPush = VueRouter.prototype.push
-//    VueRouter.prototype.push = function push(location) {
-//    return originalPush.call(this, location).catch(err => err)
-// }
-
-
 const routes = [
   { path: '/', redirect: '/discover' },
-  { 
+  {
     path: '/discover',
     component: discover,
   },
   { path: '/discover/moreSheet/', component: () => import('views/discover/childrenComps/moreComps/moreSheet') },  // 歌单广场
   { path: '/discover/moreSongs/', component: () => import('views/discover/childrenComps/moreComps/moreSongs') },  // 更多音乐
   { path: '/discover/moreAlbum/', component: () => import('views/discover/childrenComps/moreComps/moreAlbum') },  // 新碟上架
-  { path: '/discover/moreSinger/', component: () => import('views/discover/childrenComps/moreComps/moreSinger') },  // 歌手分类
+  { path: '/discover/moreSinger/', component: () => import('views/discover/childrenComps/moreComps/moreSinger') },  // 
+  { path: '/discover/search', component: () => import('views/search/Search') },  // 搜索组件
+  {
+    path: '/discover/search/searchDetail/:keywords',
+    component: () => import('views/search/childrenComps/SearchDetail'),
+    children: [
+      { path: '/discover/search/searchDetail/:keywords', redirect: '/discover/search/searchDetail/whole/:keywords' },
+      {
+        path: '/discover/search/searchDetail/song/:keywords', component: () => import('views/search/childrenComps/DetailSongs'), // 歌曲
+      },
+      {
+        path: '/discover/search/searchDetail/singer/:keywords', component: () => import('views/search/childrenComps/DetailSinger'), // 歌手
+      },
+      {
+        path: '/discover/search/searchDetail/user/:keywords', component: () => import('views/search/childrenComps/DetailUser'), // 用户
+      },
+      {
+        path: '/discover/search/searchDetail/album/:keywords', component: () => import('views/search/childrenComps/DetailAlbum'),  // 专辑
+      },
+      {
+        path: '/discover/search/searchDetail/sheet/:keywords', component: () => import('views/search/childrenComps/DetailSheet'),  // 歌单
+      },
+      {
+        path: '/discover/search/searchDetail/whole/:keywords', component: () => import('views/search/childrenComps/DetailWhole'),  // 综合 
+      }
+    ]
+  },
 
+  { path: '/discover/search/searchDetail/song/:keywords', component: () => import('views/search/childrenComps/DetailSongs') },  // 歌曲
   // 个人页面
   { path: '/myMessage', component: myMessage },
   // 个人--电台

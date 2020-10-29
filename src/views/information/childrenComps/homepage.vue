@@ -62,7 +62,9 @@
     </div>
 
     <div class="singerDetail" v-if="singer !== null">
-      <div v-if="singerdetail.desc != '' || singerdetail.introduction.length !== 0">
+      <div
+        v-if="singerdetail.desc != '' || singerdetail.introduction.length !== 0"
+      >
         <span class="sp1">歌手信息</span>
         <div class="singerDesc" v-if="singerdetail.desc">
           简介： {{ singerdetail.desc }}
@@ -131,31 +133,38 @@ export default {
     this.uid = this.$route.params.uid;
     // 获取歌单
     getUserPlayList(this.$route.params.uid).then((res) => {
-      this.likeSheet.id = res.data.playlist[0].id; // 歌单id
-      this.likeSheet.name = res.data.playlist[0].name; // 歌单名称
-      this.likeSheet.playCount = res.data.playlist[0].playCount; // 歌单播放次数
-      this.likeSheet.trackCount = res.data.playlist[0].trackCount; // 歌单歌曲数量
-      this.$set(this.likeSheet, this.likeSheet.name, res.data.playlist[0].name);
+      console.log(res);
+      if (res.data.playlist.length !== 0) {
+        this.likeSheet.id = res.data.playlist[0].id; // 歌单id
+        this.likeSheet.name = res.data.playlist[0].name; // 歌单名称
+        this.likeSheet.playCount = res.data.playlist[0].playCount; // 歌单播放次数
+        this.likeSheet.trackCount = res.data.playlist[0].trackCount; // 歌单歌曲数量
+        this.$set(
+          this.likeSheet,
+          this.likeSheet.name,
+          res.data.playlist[0].name
+        );
 
-      for (let i = 1; i < res.data.playlist.length; i++) {
-        if (res.data.playlist[i].creator.userId == this.uid) {
-          this.createSheet.push({
-            id: res.data.playlist[i].id, // 歌单id
-            name: res.data.playlist[i].name, // 歌单名称
-            coverImgUrl: res.data.playlist[i].coverImgUrl, // 歌单封面
-            trackCount: res.data.playlist[i].trackCount, // 歌单歌曲数量
-            playCount: toStringNum(res.data.playlist[i].playCount), // 歌单播放量
-          });
-          this.subscribedCount += res.data.playlist[i].subscribedCount; // 歌单被收藏数量
-        } else {
-          this.subSheet.push({
-            id: res.data.playlist[i].id, // 歌单id
-            name: res.data.playlist[i].name, // 歌单名称
-            coverImgUrl: res.data.playlist[i].coverImgUrl, // 歌单封面
-            trackCount: res.data.playlist[i].trackCount, // 歌单歌曲数量
-            playCount: toStringNum(res.data.playlist[i].playCount), // 歌单播放量
-            nickname: res.data.playlist[i].creator.nickname, // 创作者
-          });
+        for (let i = 1; i < res.data.playlist.length; i++) {
+          if (res.data.playlist[i].creator.userId == this.uid) {
+            this.createSheet.push({
+              id: res.data.playlist[i].id, // 歌单id
+              name: res.data.playlist[i].name, // 歌单名称
+              coverImgUrl: res.data.playlist[i].coverImgUrl, // 歌单封面
+              trackCount: res.data.playlist[i].trackCount, // 歌单歌曲数量
+              playCount: toStringNum(res.data.playlist[i].playCount), // 歌单播放量
+            });
+            this.subscribedCount += res.data.playlist[i].subscribedCount; // 歌单被收藏数量
+          } else {
+            this.subSheet.push({
+              id: res.data.playlist[i].id, // 歌单id
+              name: res.data.playlist[i].name, // 歌单名称
+              coverImgUrl: res.data.playlist[i].coverImgUrl, // 歌单封面
+              trackCount: res.data.playlist[i].trackCount, // 歌单歌曲数量
+              playCount: toStringNum(res.data.playlist[i].playCount), // 歌单播放量
+              nickname: res.data.playlist[i].creator.nickname, // 创作者
+            });
+          }
         }
       }
     });

@@ -2,7 +2,7 @@
   <div class="SongItem">
     <div class="item" v-for="(item, index) in songList" :key="index">
       <div class="itemBox" @click="play(item.id)">
-        <div class="index">
+        <div class="index" v-if="shouLeft">
           {{ index + 1 }}
         </div>
         <div class="left">
@@ -36,7 +36,17 @@
 <script>
 export default {
   name: "SongItem",
-  props: ["songList"],
+  props: {
+    songList: {
+      type: Array,
+      default: []
+    },
+
+    shouLeft: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     // 跳转到播放界面
     play(sid) {

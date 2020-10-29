@@ -12,7 +12,7 @@
             {{item}}
         </span>
       </div>
-      <div id="rightbox" slot="right">
+      <div id="rightbox" slot="right" @click="toSearch">
         <img src="~assets/img/common/sousuo.png" alt="">
       </div>
     </navbar>
@@ -29,6 +29,10 @@ export default {
         }
     },
     methods: {
+        toSearch(){
+            this.$router.push('/discover/search')
+        },
+
         // 组件切换
         itemClick(index){
             this.currentIndex = index

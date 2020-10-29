@@ -6,7 +6,7 @@
       <!-- exclude 不会保存对应的组件 -->
       <keep-alive
         exclude=
-        "SheetInfo,PlaySong,MvPlay,ClassifyInfo,StationDetail,DetailPlay,Information,Played,FansList,Follow,moreAlbum"
+        "SheetInfo,PlaySong,MvPlay,ClassifyInfo,StationDetail,DetailPlay,Information,Played,FansList,Follow,moreAlbum,SearchDetail"
       >
         <!-- 在组件切换的时候添加动画 -->
         <router-view></router-view>
