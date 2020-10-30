@@ -33,3 +33,23 @@ export function searchResult(keywords, limit, offset, type){
         }
     })
 }
+
+// 搜索建议
+export function searchSuggest(keywords, type){
+    return request({
+        url: '/search/suggest',
+        params: {
+            keywords, 
+            type
+        }
+    })
+}
+// export function searchSuggest(keywords, type){
+//     return request({
+//         url: '/search/multimatch',
+//         params: {
+//             keywords, 
+//             type
+//         }
+//     })
+// }

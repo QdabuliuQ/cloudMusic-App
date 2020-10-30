@@ -91,6 +91,7 @@ export default {
     },
   },
   created() {
+    this.$loading.loadingShow();
     searchResult(this.$route.params.keywords, 30, this.offset * 30, 10).then(
       (res) => {
         console.log(res);
@@ -107,6 +108,11 @@ export default {
       }
     );
   },
+  mounted () {
+    this.$nextTick(() => {
+      this.$loading.loadingNo();
+    })
+  },
   activated() {
     this.$nextTick(() => {
       document.addEventListener("scroll", this.linearScroll);
@@ -120,8 +126,10 @@ export default {
 <style scoped>
 .DetailAlbum {
   width: 100%;
+  min-height: 13.315579rem;
   margin-bottom: 0.133156rem;
   margin-top: 2.396804rem;
+  background-color: #fff;
 }
 .albumItem {
   width: 100%;

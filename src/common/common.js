@@ -61,3 +61,18 @@ export function userNameActive(name) {
         document.getElementsByClassName('uname')[j].style = 'color: #226ec5' 
     }
 }
+
+// 防抖动函数  ---对于多次调用函数可以使用
+export function debounce(func, delay){
+    let timer = null;
+    // ...args 表示可以接受多个实参  并保存到数组中
+    // return 返回一个函数
+    return function(...args){
+        // 清除上一次的延时调用
+        if(timer) clearTimeout(timer)
+        // 开启延时调用
+        timer = setTimeout(() => {
+            func.apply(this, args)
+        }, delay)
+    }
+}

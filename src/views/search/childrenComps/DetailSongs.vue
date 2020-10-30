@@ -69,6 +69,7 @@ export default {
     },
   },
   created() {
+    this.$loading.loadingShow();
     searchResult(this.$route.params.keywords, 40, this.offset * 40, 1).then(
       (res) => {
         for (const item of res.data.result.songs) {
@@ -85,6 +86,11 @@ export default {
       }
     );
   },
+  mounted () {
+    this.$nextTick(() => {
+      this.$loading.loadingNo();
+    })
+  },
   activated() {
     this.$nextTick(() => {
       document.addEventListener("scroll", this.linearScroll);
@@ -98,6 +104,7 @@ export default {
 <style scoped>
 .DetailSongs {
   width: 100%;
+  min-height: 13.315579rem;
 }
 .topbox {
   height: 0.665779rem;

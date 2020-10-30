@@ -4,7 +4,7 @@
     :title="comLength"
     :lock-scroll='false'
     class="commentDetail">
-      <div class="content" v-if="comHot.length !== 0 && comList.length !== 0">
+      <div class="content" v-if="comHot.length !== 0 || comList.length !== 0">
         <div class="topComment" v-if="comHot.length !== 0">
           <div class="perCom">精彩评论</div>
           <div class="commentItem" v-for="(item, index) in comHot" :key="index">
@@ -28,7 +28,7 @@
             </div>
           </div>
         </div>
-        <div class="commentList" v-if="comList.length !== 0">
+        <div class="commentList">
           <div class="perCom">最新评论</div>
           <div
             class="commentItem"

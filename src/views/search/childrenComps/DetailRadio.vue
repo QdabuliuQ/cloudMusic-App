@@ -1,21 +1,18 @@
 <template>
-  <div class="DetailSheet">
+  <div class="DetailRadio">
     <div
       class="item"
-      @click="toSheet(item.id)"
-      v-for="(item, index) in sheetList"
+      @click="toRadio(item.id)"
+      v-for="(item, index) in radioList"
       :key="index"
     >
       <div class="left">
-        <img :src="item.coverImgUrl" alt="" />
+        <img :src="item.picUrl" alt="" />
       </div>
       <div class="right">
         <div class="box">
           <div class="title">{{ item.name }}</div>
-          <div class="detail">
-            {{ item.trackCount + "首 " }}{{ "by " + item.creator + "，"
-            }}{{ "播放" + item.playCount + "次" }}
-          </div>
+          <div class="detail">{{ item.nickname }}</div>
         </div>
       </div>
     </div>
@@ -24,49 +21,46 @@
 
 <script>
 import { searchResult } from "network/search";
-import { toStringNum } from "common/common";
 export default {
-  name: "DetailSheet",
+  name: "DetailRadio",
   data() {
     return {
+      radioList: [],
       offset: 0,
-      sheetList: [],
-      hasMore: true, // 更多数据
+      hasMore: "",
+      djRadiosCount: 40,
     };
   },
   methods: {
-    toSheet(id) {
-      this.$router.push("/playDetail/" + id + "&" + false);
+    // 路由跳转
+    toRadio(id) {
+      this.$router.push("/stationDetail/" + id);
     },
 
     getSearchResult() {
-      if (this.hasMore) {
-        this.$loading.loadingShow();
-        searchResult(
-          this.$route.params.keywords,
-          30,
-          this.offset * 30,
-          1000
-        ).then((res) => {
-          this.hasMore = res.data.result.hasMore;
-          let path = res.data.result.playlists;
-          for (let i = 0; i < path.length; i++) {
-            this.sheetList.push({
-              id: path[i].id,
-              name: path[i].name,
-              coverImgUrl: path[i].coverImgUrl,
-              playCount: toStringNum(path[i].playCount),
-              trackCount: path[i].trackCount,
-              creator: path[i].creator.nickname,
+      this.$loading.loadingShow();
+      searchResult(
+        this.$route.params.keywords,
+        40,
+        this.offset * 40,
+        1009
+      ).then((res) => {
+        this.hasMore = res.data.result.djRadios || null;
+        if (this.hasMore !== null) {
+          for (const item of res.data.result.djRadios) {
+            this.radioList.push({
+              id: item.id,
+              name: item.name,
+              picUrl: item.picUrl,
+              nickname: item.dj.nickname,
             });
           }
-          this.$loading.loadingNo();
           this.offset++;
-        });
-      } else {
-        this.$toast.show('没有更多了:(',1900)
-        this.$loading.loadingNo();
-      }
+        } else {
+          this.$toast.show("没有更多了:(", 1900);
+          this.$loading.loadingNo();
+        }
+      });
     },
 
     // 监听滚动事件
@@ -88,20 +82,39 @@ export default {
     },
   },
   created() {
-    this.getSearchResult();
-  },
-  activated() {
+    this.$loading.loadingShow();
+    searchResult(this.$route.params.keywords, 40, this.offset * 40, 1009).then(
+      (res) => {
+        for (const item of res.data.result.djRadios) {
+          this.radioList.push({
+            id: item.id,
+            name: item.name,
+            picUrl: item.picUrl,
+            nickname: item.dj.nickname,
+          });
+        }
+        this.offset++;
+      }
+    );
+
+    // 绑定滚动事件
     this.$nextTick(() => {
       document.addEventListener("scroll", this.linearScroll);
     });
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.$loading.loadingNo();
+    });
+  },
   deactivated() {
+    // 删除事件
     document.removeEventListener("scroll", this.linearScroll);
   },
 };
 </script>
 <style scoped>
-.DetailSheet {
+.DetailRadio {
   width: 100%;
   min-height: 13.315579rem;
   margin-bottom: 0.133156rem;

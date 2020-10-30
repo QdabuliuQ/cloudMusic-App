@@ -1,5 +1,5 @@
 <template>
-  <div class="SearchHP">
+  <div class="SearchHP" :key="i">
     <div class="nav">
       <div class="left" @click="back">
         <img src="~assets/img/radioStation/fanhui.png" alt="" />
@@ -7,14 +7,24 @@
       <div class="right">
         <div class="sous">
           <input
+            @focus="toFocus"
+            @blur="toBlur"
             @keyup.enter="toSearch"
-            v-model="searchTest"
-            :placeholder="searchTest"
+            v-model="searchContent"
+            :placeholder="searchContent"
             type="text"
           />
         </div>
       </div>
     </div>
+    <transition>
+      <search-suggest
+        class="suggestBox"
+        v-show="showSuggest"
+        :keyword="searchContent"
+        @toRenovate='toRenovate'
+      ></search-suggest>
+    </transition>
     <scrollnav
       @tabToggle="tabToggle"
       class="snav"
@@ -33,7 +43,8 @@ import detailSong from "./DetailSongs"; // 单曲
 import detailAlbum from "./DetailAlbum"; // 专辑
 import detailSinger from "./DetailSinger"; // 歌手
 import detailSheet from "./DetailSheet"; // 歌单
-import detailUser from "./DetailUser";  // 用户
+import detailUser from "./DetailUser"; // 用户
+import SearchSuggest from "./SearchSuggest"; // 搜索建议
 
 import { getDefault } from "network/search";
 /**
@@ -52,7 +63,6 @@ export default {
   name: "SearchDetail",
   data() {
     return {
-      searchTest: "",
       itemList: [
         "综合",
         "单曲",
@@ -60,53 +70,109 @@ export default {
         "歌手",
         "专辑",
         "歌单",
-        "主播电台", 
-        "MV",       
-        "用户",          
+        "主播电台",
+        "MV",
+        "用户",
       ],
-      song: false,  // 歌曲
-      album: false,  // 专辑
-      singer: false,  // 歌手
-      sheet: false,  // 歌单
-      user: true,  // 用户
+      song: false, // 歌曲
+      album: false, // 专辑
+      singer: false, // 歌手
+      sheet: false, // 歌单
+      user: true, // 用户
       index: 0, // 判断路由
+      searchContent: '',
+      showSuggest: false, // 显示/隐藏搜索建议
+      i: 0
     };
   },
+  watch: {
+    // 监听搜索内容
+    searchContent() {
+      if (this.searchContent == "") {
+        this.showSuggest = false
+      } else if(this.index === 1){         
+        this.showSuggest = true;
+      }
+    },
+  },
   methods: {
-    back() {
-      this.$router.replace('/discover/search')
+    toRenovate(){
+      this.i ++
     },
 
+    // 退出
+    back() {
+      this.$router.replace("/discover/search");
+    },
+    // 输入获得焦点的时候
+    toFocus() {
+      console.log(2);
+      if (this.searchContent !== "") {
+        this.index = 1;
+        this.showSuggest = true;
+      } else {
+        this.index = 0;
+        this.showSuggest = false;
+      }
+    },
+    // 输入失去焦点的时候
+    toBlur() {
+      this.index = 0
+      this.showSuggest = false;
+    },
+    // 点击搜索
     toSearch() {
-      //   this.$router.push("/discover/search/searchHP");
+      this.$router.push("/discover/search/searchDetail/" + this.searchContent);
     },
 
     // 导航栏切换
     tabToggle(index) {
       switch (index) {
-        case 0:  // 综合
-          this.$router.replace('/discover/search/searchDetail/whole/' + this.$route.params.keywords)
-          break; 
-        case 1:  // 单曲
-          this.$router.replace('/discover/search/searchDetail/song/' + this.$route.params.keywords)
+        case 0: // 综合
+          this.$router.replace(
+            "/discover/search/searchDetail/whole/" + this.$route.params.keywords
+          );
           break;
-        case 2:  // 视频
+        case 1: // 单曲
+          this.$router.replace(
+            "/discover/search/searchDetail/song/" + this.$route.params.keywords
+          );
           break;
-        case 3:  // 歌手
-          this.$router.replace('/discover/search/searchDetail/singer/' + this.$route.params.keywords)
+        case 2: // 视频
+          this.$router.replace(
+            "/discover/search/searchDetail/video/" + this.$route.params.keywords
+          );
           break;
-        case 4:  // 专辑
-          this.$router.replace('/discover/search/searchDetail/album/' + this.$route.params.keywords)
+        case 3: // 歌手
+          this.$router.replace(
+            "/discover/search/searchDetail/singer/" +
+              this.$route.params.keywords
+          );
           break;
-        case 5:  // 歌单
-          this.$router.replace('/discover/search/searchDetail/sheet/' + this.$route.params.keywords)
+        case 4: // 专辑
+          this.$router.replace(
+            "/discover/search/searchDetail/album/" + this.$route.params.keywords
+          );
           break;
-        case 6:  // 主播电台
+        case 5: // 歌单
+          this.$router.replace(
+            "/discover/search/searchDetail/sheet/" + this.$route.params.keywords
+          );
           break;
-        case 7:  // MV
+        case 6: // 主播电台
+          this.$router.replace(
+            "/discover/search/searchDetail/radio/" + this.$route.params.keywords
+          );
           break;
-        case 8:  // 用户
-          this.$router.replace('/discover/search/searchDetail/user/' + this.$route.params.keywords)
+        case 7: // MV
+          this.$router.replace(
+            "/discover/search/searchDetail/mv/" + this.$route.params.keywords
+          );
+          break;
+        case 8: // 用户
+          this.$router.replace(
+            "/discover/search/searchDetail/user/" + this.$route.params.keywords
+          );
           break;
 
         default:
@@ -116,7 +182,7 @@ export default {
   },
   created() {
     getDefault().then((res) => {
-      this.searchTest = res.data.data.realkeyword;
+      this.searchContent = res.data.data.realkeyword;
     });
     // this.$router.replace('/discover/search/searchDetail/whole/' + this.$route.params.keywords)
   },
@@ -127,10 +193,33 @@ export default {
     detailSinger,
     detailSheet,
     detailUser,
+    SearchSuggest,
   },
 };
 </script>
 <style scoped>
+.suggestBox{
+  top: 1.198402rem;
+  position: absolute;
+  z-index: 21 !important;
+}
+.v-enter {
+  opacity: 0;
+  /* 进来的时候从右 */
+  transform: scale(0.1);
+}
+.v-leave-to {
+  opacity: 0;
+  /* 离开的时候向左 */
+  transform: scale(0.1);
+}
+
+/* 动画执行期间 */
+.v-enter-active,
+.v-leave-active {
+  /* 添加动画效果 */
+  transition: all 0.2s linear;
+}
 .contentbox {
   padding: 0.266312rem 0.372836rem;
   margin-bottom: 1.198402rem;

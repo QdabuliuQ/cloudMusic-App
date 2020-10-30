@@ -36,10 +36,11 @@ export default {
         position: absolute;
         top: 20%;
         left: 47%;
+        position: fixed;
         /* margin: auto; */
         /* margin: 60px auto; */
         animation: xuanz 0.5s infinite;
-        z-index: 101;
+        z-index: 2001;
     }
     @keyframes xuanz{
         0%{

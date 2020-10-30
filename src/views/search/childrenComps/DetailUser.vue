@@ -108,6 +108,9 @@ export default {
 };
 </script>
 <style scoped>
+.box{
+  margin-left: .133156rem;
+}
 .tag {
   position: absolute;
   width: 0.45273rem;
@@ -129,6 +132,7 @@ export default {
 }
 .DetailUser {
   width: 100%;
+  min-height: 13.315579rem;
   margin-bottom: 0.133156rem;
   margin-top: 2.396804rem;
 }

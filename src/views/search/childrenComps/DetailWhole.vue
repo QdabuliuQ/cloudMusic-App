@@ -66,6 +66,7 @@
       </div>
       <whole-more v-if="videosText !== undefined" :moreText="videosText"></whole-more>
     </div>
+    <!-- 相关搜索 -->
     <div class="sim_query bbox">
       <div class="title">相关搜索</div>
       <div class="simItem" v-for="(item,index) in sim_query" :key="index">
@@ -99,6 +100,7 @@
       </div>
       <whole-more v-if="artistText !== undefined" :moreText="artistText"></whole-more>
     </div>
+    <!-- 电台 -->
     <div class="djRadio bbox">
       <div class="title">电台</div>
       <div class="djItem" @click="toDjradio(item.id)" v-for="(item,index) in djRadio" :key="index">
@@ -178,7 +180,6 @@ export default {
         this.offset * 30,
         1018
       ).then((res) => {
-        console.log(res);
         this.albumText = res.data.result.album.moreText;
         for (const item of res.data.result.album.albums) {
           this.album.push({
@@ -256,7 +257,13 @@ export default {
     },
   },
   created() {
+    this.$loading.loadingShow();
     this.getSearchResult();
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.$loading.loadingNo();
+    })
   },
 };
 </script>
@@ -266,6 +273,7 @@ export default {
 }
 .DetailWhole {
   width: 100%;
+  min-height: 13.315579rem;
   margin-bottom: 0.133156rem;
   margin-top: 2.396804rem;
 }
@@ -361,7 +369,7 @@ export default {
 }
 .videoItem{
   display: flex;
-  height: 1.864181rem;
+  height: 1.997337rem;
   margin-bottom: 0.213049rem;
 }
 .vleft{
@@ -455,7 +463,7 @@ export default {
   border-radius: .798935rem;
   margin-right: .186418rem;
   margin-bottom: .133156rem;
-  background-color: rgb(223, 223, 223);
+  background-color: rgb(241, 241, 241);
 }
 .djItem{
   width: 100%;

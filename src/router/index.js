@@ -52,6 +52,15 @@ const routes = [
       },
       {
         path: '/discover/search/searchDetail/whole/:keywords', component: () => import('views/search/childrenComps/DetailWhole'),  // 综合 
+      },
+      {
+        path: '/discover/search/searchDetail/video/:keywords', component: () => import('views/search/childrenComps/DetailVideo'),  // 视频
+      },
+      { 
+        path: '/discover/search/searchDetail/radio/:keywords', component: () => import('views/search/childrenComps/DetailRadio'),  // 电台
+      },
+      { 
+        path: '/discover/search/searchDetail/mv/:keywords', component: () => import('views/search/childrenComps/DetailMv'),  // mv  
       }
     ]
   },

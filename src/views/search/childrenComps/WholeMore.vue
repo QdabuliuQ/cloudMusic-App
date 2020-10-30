@@ -1,7 +1,7 @@
 <template>
   <div class="WholeMore">
     {{ moreText }}
-    <img src="~assets/img/search/yjt.svg" alt="" />
+    <img v-show="shouImg" src="~assets/img/search/yjt.svg" alt="" />
   </div>
 </template>
 
@@ -12,6 +12,16 @@ export default {
       type: String,
       default: "",
     },
+  },
+  data () {
+    return {
+      shouImg: false,  
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.shouImg = true
+    })
   },
   name: "WholeMore",
 };
