@@ -23,11 +23,16 @@
       </div>
       <!-- 时间按钮 -->
       <div class="bottomShadowBox" v-show="showJd">
-        <div class="nowTime">
+        <div class="nowTime" v-if="$route.params.isMv == true">
           {{ min > 9 ? min : "0" + min }}:{{
             second > 9 ? second : "0" + second
           }}
           / {{ mvDetail.duration | mvTime }}
+        </div>
+        <div class="nowTime" v-else>
+           {{ min > 9 ? min : "0" + min }}:{{
+            second > 9 ? second : "0" + second
+          }} / {{mvDetail.duration}}
         </div>
         <div class="quanp">
           <img
@@ -57,19 +62,20 @@
         </div>
         <!-- 播放量 -->
         <div class="playCount">{{ mvDetail.playCount }}</div>
-        <div class="videoGroup">
-          <!-- 标签 -->
-          <div
-            class="item"
-            v-for="(item, index) in mvDetail.videoGroup"
-            :key="index"
-          >
-            {{ item.name }}
-          </div>
+        <!-- 标签 -->
+        <div
+          class="item"
+          v-for="(item, index) in mvDetail.videoGroup"
+          :key="index"
+        >
+          {{ item.name }}
         </div>
         <!-- 发布时间 -->
-        <div class="pushTime">
+        <div class="pushTime" v-if="$route.params.isMv == true">
           {{ mvDetail.publishTime }}
+        </div>
+        <div class="pushTime" v-else>
+          {{ mvDetail.publishTime | getTime('YYYY-MM-DD') }} 发布
         </div>
         <div class="tabbar">
           <div class="tabItem">
@@ -107,8 +113,11 @@
             <div class="name">
               {{ item.name }}
             </div>
-            <div class="time">
+            <div class="time" v-if="$route.params.isMv == true">
               {{ item.duration | mvTime }} by {{ item.artistName }}
+            </div>
+            <div class="time" v-else>
+              {{ item.duration }} by {{ item.artistName }}
             </div>
           </div>
         </div>
@@ -176,8 +185,10 @@ import {
   getSimiMv,
   getMvComment,
 } from "network/mvPlay"; // 网络请求
+
+import { getVideoDetail, getVideoInfo, getVideoUrl, getSimiVideo, getVideoComment } from "network/video";
 import { getUserDetail } from "network/user"; // 网络请求
-import { toStringNum } from "common/common"; // 播放量转化
+import { toStringNum, durationTime } from "common/common"; // 播放量转化
 import mscroll from "components/common/muiScroll/MuiScroll";
 
 export default {
@@ -242,7 +253,7 @@ export default {
   methods: {
     // 更多mv路由跳转
     moreMv(id) {
-      this.$router.push("/mvplay/" + id);
+      this.$router.push("/mvplay/" + id+'&'+this.$route.params.isMv);
     },
 
     viewMv() {
@@ -329,98 +340,185 @@ export default {
     },
 
     MvDetail() {
-      // 获取mv数据
-      getMvDetail(this.$route.params.mid).then((res) => {
-        let path = res.data.data;
-        this.comCount = path.commentCount;
-        this.mvDetail.artistId = path.artistId; // 歌手id
-        this.mvDetail.artistName = path.artistName; // 歌手名称
-        this.mvDetail.commentCount = path.commentCount; // mv评论数量
-        this.mvDetail.duration = path.duration; // mv时长(毫秒)
-        this.mvDetail.name = path.name; // mv标题
-        this.mvDetail.playCount = toStringNum(path.playCount) + "次观看"; // mv播放量
-        this.mvDetail.publishTime = path.publishTime + " 发布"; // mv发布时间
-        this.mvDetail.shareCount = path.shareCount; // mv分享数量
-        this.mvDetail.subCount = path.subCount; // mv收藏数量
-        this.mvDetail.videoGroup = path.videoGroup; // mv标签
-        // mv详细数据
-        getMvInfo(this.$route.params.mid).then((res) => {
-          this.mvDetail.liked = res.data.likedCount; // 点赞数
-          this.$loading.loadingNo();
-          this.showDetail = true;
-        });
-      });
-      // 相关视频
-      getSimiMv(this.$route.params.mid).then((res) => {
-        for (const item of res.data.mvs) {
-          this.simiMv.push({
-            artistName: item.artistName, // 创作者
-            cover: item.cover, // 封面
-            duration: item.duration, // mv时长
-            id: item.id, // mv id
-            name: item.name, // mv名称
-            playCount: toStringNum(item.playCount), // mv播放量
+      // 判断 mv / video
+      if (this.$route.params.isMv == 'true') {
+        // 获取mv数据
+        getMvDetail(this.$route.params.mid).then((res) => {
+          let path = res.data.data;
+          this.comCount = path.commentCount;
+          this.mvDetail.artistId = path.artistId; // 歌手id
+          this.mvDetail.artistName = path.artistName; // 歌手名称
+          this.mvDetail.commentCount = path.commentCount; // mv评论数量
+          this.mvDetail.duration = path.duration; // mv时长(毫秒)
+          this.mvDetail.name = path.name; // mv标题
+          this.mvDetail.playCount = toStringNum(path.playCount) + "次观看"; // mv播放量
+          this.mvDetail.publishTime = path.publishTime + " 发布"; // mv发布时间
+          this.mvDetail.shareCount = path.shareCount; // mv分享数量
+          this.mvDetail.subCount = path.subCount; // mv收藏数量
+          this.mvDetail.videoGroup = path.videoGroup; // mv标签
+          // mv详细数据
+          getMvInfo(this.$route.params.mid).then((res) => {
+            this.mvDetail.liked = res.data.likedCount; // 点赞数
+            this.$loading.loadingNo();
+            this.showDetail = true;
           });
-        }
-      });
+        });
+        // 相关视频
+        getSimiMv(this.$route.params.mid).then((res) => {
+          for (const item of res.data.mvs) {
+            this.simiMv.push({
+              artistName: item.artistName, // 创作者
+              cover: item.cover, // 封面
+              duration: item.duration, // mv时长
+              id: item.id, // mv id
+              name: item.name, // mv名称
+              playCount: toStringNum(item.playCount), // mv播放量
+            });
+          }
+        });
+      } else {
+        getVideoDetail(this.$route.params.mid).then((res) => {
+          let path = res.data.data;
+          this.comCount = path.commentCount;
+          this.mvDetail.artistId = path.artistId; // 歌手id
+          this.mvDetail.artistName = path.artistName; // 歌手名称
+          this.mvDetail.commentCount = path.commentCount; // mv评论数量
+          this.mvDetail.duration = durationTime(path.durationms); // mv时长(毫秒)
+          this.mvDetail.name = path.name; // mv标题
+          this.mvDetail.playCount = toStringNum(path.playTime) + "次观看"; // mv播放量
+          this.mvDetail.publishTime = path.publishTime; // mv发布时间
+          this.mvDetail.shareCount = path.shareCount; // mv分享数量
+          this.mvDetail.subCount = path.subscribeCount; // mv收藏数量
+          this.mvDetail.videoGroup = path.videoGroup; // mv标签
+          // mv详细数据
+          getVideoInfo(this.$route.params.mid).then((res) => {
+            this.mvDetail.liked = res.data.likedCount; // 点赞数
+            this.$loading.loadingNo();
+            this.showDetail = true;
+          });
+        });
+
+        getSimiVideo(this.$route.params.mid).then((res) => {
+          for (const item of res.data.data) {
+            this.simiMv.push({
+              artistName: item.creator[0].userName, // 创作者
+              cover: item.coverUrl, // 封面
+              duration: durationTime(item.durationms), // mv时长
+              id: item.vid, // mv id
+              name: item.title, // mv名称
+              playCount: toStringNum(item.playTime), // mv播放量
+            });
+          }
+        });
+      }
     },
     // 获取mv播放url
     getMvUrl() {
-      getMv(this.$route.params.mid).then((res) => {
-        this.mvUrl = res.data.data.url;
-      });
+      if (this.$route.params.isMv == 'true') {
+        getMv(this.$route.params.mid).then((res) => {
+          this.mvUrl = res.data.data.url;
+        });
+      } else {
+        getVideoUrl(this.$route.params.mid).then((res) => {
+          this.mvUrl = res.data.urls[0].url;
+        });
+      }
     },
     // 封转方法
     getCommentList() {
-      // 发送网络请求
-      if (this.commentLength > 0) {
-        getMvComment(this.$route.params.mid, 30, this.offset * 30).then(
-          (res) => {
-            console.log(res);
-            // 判断评论数量
-            this.commentLength = res.data.comments.length;
-            if (res.data.hotComments) {
-              for (const item of res.data.hotComments) {
+      if (this.$route.params.isMv == 'true') {
+        // 发送网络请求
+        if (this.commentLength > 0) {
+          getMvComment(this.$route.params.mid, 30, this.offset * 30).then(
+            (res) => {
+              // 判断评论数量
+              this.commentLength = res.data.comments.length;
+              if (res.data.hotComments) {
+                for (const item of res.data.hotComments) {
+                  this.commentList.push({
+                    commentId: item.commentId, // 评论楼层id
+                    content: item.content, // 评论内容
+                    likedCount: item.likedCount, // 喜欢数量
+                    time: item.time, // 发布时间戳
+                    userImg: item.user.avatarUrl, // 用户头像
+                    authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
+                    userName: item.user.nickname, // 用户昵称
+                    userId: item.user.userId, // 用户id
+                    vipType: item.user.vipType, // 是否开通会员
+                  });
+                }
+              }
+
+              for (const itemc of res.data.comments) {
                 this.commentList.push({
-                  commentId: item.commentId, // 评论楼层id
-                  content: item.content, // 评论内容
-                  likedCount: item.likedCount, // 喜欢数量
-                  time: item.time, // 发布时间戳
-                  userImg: item.user.avatarUrl, // 用户头像
-                  authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
-                  userName: item.user.nickname, // 用户昵称
-                  userId: item.user.userId, // 用户id
-                  vipType: item.user.vipType, // 是否开通会员
+                  commentId: itemc.commentId, // 评论楼层id
+                  content: itemc.content, // 评论内容
+                  likedCount: itemc.likedCount, // 喜欢数量
+                  time: itemc.time, // 发布时间戳
+                  userImg: itemc.user.avatarUrl, // 用户头像
+                  authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
+                  userName: itemc.user.nickname, // 用户昵称
+                  userId: itemc.user.userId, // 用户id
+                  vipType: itemc.user.vipType, // 是否开通会员
                 });
               }
+              this.offset++; // 页数增加
             }
-
-            for (const itemc of res.data.comments) {
-              this.commentList.push({
-                commentId: itemc.commentId, // 评论楼层id
-                content: itemc.content, // 评论内容
-                likedCount: itemc.likedCount, // 喜欢数量
-                time: itemc.time, // 发布时间戳
-                userImg: itemc.user.avatarUrl, // 用户头像
-                authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
-                userName: itemc.user.nickname, // 用户昵称
-                userId: itemc.user.userId, // 用户id
-                vipType: itemc.user.vipType, // 是否开通会员
-              });
-            }
-            this.offset++; // 页数增加
-          }
-        )
+          );
+        } else {
+          this.$toast.show("没有更多评论了:(", 1900);
+        }
       } else {
-        this.$toast.show("没有更多评论了:(", 1900);
+        // 发送网络请求
+        if (this.commentLength > 0) {
+          getVideoComment(this.$route.params.mid, 30, this.offset * 30).then(
+            (res) => {
+              // 判断评论数量
+              this.commentLength = res.data.comments.length;
+              if (res.data.hotComments) {
+                for (const item of res.data.hotComments) {
+                  this.commentList.push({
+                    commentId: item.commentId, // 评论楼层id
+                    content: item.content, // 评论内容
+                    likedCount: item.likedCount, // 喜欢数量
+                    time: item.time, // 发布时间戳
+                    userImg: item.user.avatarUrl, // 用户头像
+                    authStatus: item.user.authStatus, // 用户身份认证  1 表示歌手
+                    userName: item.user.nickname, // 用户昵称
+                    userId: item.user.userId, // 用户id
+                    vipType: item.user.vipType, // 是否开通会员
+                  });
+                }
+              }
+
+              for (const itemc of res.data.comments) {
+                this.commentList.push({
+                  commentId: itemc.commentId, // 评论楼层id
+                  content: itemc.content, // 评论内容
+                  likedCount: itemc.likedCount, // 喜欢数量
+                  time: itemc.time, // 发布时间戳
+                  userImg: itemc.user.avatarUrl, // 用户头像
+                  authStatus: itemc.user.authStatus, // 用户身份认证  1 表示歌手
+                  userName: itemc.user.nickname, // 用户昵称
+                  userId: itemc.user.userId, // 用户id
+                  vipType: itemc.user.vipType, // 是否开通会员
+                });
+              }
+              this.offset++; // 页数增加
+            }
+          );
+        } else {
+          this.$toast.show("没有更多评论了:(", 1900);
+        }
       }
     },
   },
   created() {
+    console.log(this.$route.params.isMv == 'true');
     this.$loading.loadingShow();
-    this.MvDetail(); // 获取mv信息
-    this.getMvUrl(); // 获取mvurl
-    this.getCommentList(); // 获取mv评论
+    this.MvDetail(); // 获取mv/视频信息
+    this.getMvUrl(); // 获取mv/视频url
+    this.getCommentList(); // 获取mv/视频评论
   },
   mounted() {
     this.$loading.loadingShow();
@@ -524,7 +622,7 @@ export default {
   background: linear-gradient(transparent, rgb(70, 70, 70));
 }
 .mvName {
-  font-size: .532623rem;
+  font-size: 0.532623rem;
   font-weight: 550;
 }
 .playCount {
@@ -538,11 +636,10 @@ export default {
 }
 .item {
   float: left;
-  height: 18px;
-  line-height: 18px;
+  height: 0.532623rem;
+  line-height: 0.559254rem;
   text-align: center;
   margin-top: 11px;
-  margin-left: 5px;
   font-size: 10px;
   padding: 0px 9px;
   border-radius: 26px;

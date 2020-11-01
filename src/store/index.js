@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    cookie: false, // 保存cookie
     // 用户基本信息
     profile: {
       nickName: '',

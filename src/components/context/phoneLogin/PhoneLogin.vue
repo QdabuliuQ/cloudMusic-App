@@ -68,6 +68,7 @@ export default {
         this.$loading.loadingShow();
         phoneLogin(this.tel, this.password).then(
           (res) => {
+            this.$store.state.cookie = res.data.cookie;
             if (res.data.code === 200) {
               this.$toast.show("登录成功！", 1900);
               this.$router.go(-2);

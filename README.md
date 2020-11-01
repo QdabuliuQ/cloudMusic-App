@@ -21,11 +21,12 @@
 * 首页基本布局/首页内容跳转
 * 歌单广场/更多音乐/更多专辑
 * 搜索（已有功能：搜索建议，热搜列表，搜索结果分类，搜索建议跳转）
+* 视频/视频分类/分类切换/视频播放
 
 ### 项目难点：
-* 1.歌曲播放界面进度条的实时更新，需要获取到歌曲的时间，计算进度条在每一秒中需要移动多少PX。
-* 2.歌曲歌词界面，歌词的实时滚动，通过API请求获取歌词数据，再通过正则表达式分别筛选出歌词和每一行歌词的时间，当歌词播放到一个时间点会进行判断，并进行歌词滚动。（目前该功能还有bug，有待解决）
-* 3.MV播放界面的推荐内容，当点击推荐内容的时候需要进行跳转，可以通过 beforeRouteUpdate 来监听路由变化
+* 1. 歌曲播放界面进度条的实时更新，需要获取到歌曲的时间，计算进度条在每一秒中需要移动多少PX。
+* 2. 歌曲歌词界面，歌词的实时滚动，通过API请求获取歌词数据，再通过正则表达式分别筛选出歌词和每一行歌词的时间，当歌词播放到一个时间点会进行判断，并进行歌词滚动。（目前该功能还有bug，有待解决）
+* 3. MV播放界面的推荐内容，当点击推荐内容的时候需要进行跳转，可以通过 beforeRouteUpdate 来监听路由变化
 ```
 beforeRouteUpdate(to, from, next) {
   if (to.fullPath != from.fullPath) {
@@ -41,7 +42,7 @@ beforeRouteUpdate(to, from, next) {
   }
 },
 ```
-* 4.搜索模块在搜索的时候需要使用到防抖函数，具体防抖函数可以学习[coderwhy老师视频教程](https://www.bilibili.com/video/BV15741177Eh?p=174)
+* 4. 搜索模块在搜索的时候需要使用到防抖函数，具体防抖函数可以学习[coderwhy老师视频教程](https://www.bilibili.com/video/BV15741177Eh?p=174)
 ```
 export function debounce(func, delay){
   let timer = null;
@@ -57,8 +58,20 @@ export function debounce(func, delay){
   }
 }
 ```
-* 5.点击搜索建议的时候，也需要重新刷新 SearchDetail 组件内容，可以通过给 SearchDetail 组件绑定 key属性，当点击搜索建议列表的某一项的时候，更新 key 属性的值刷新组件。
+* 5. 点击搜索建议的时候，也需要重新刷新 SearchDetail 组件内容，可以通过给 SearchDetail 组件绑定 key属性，当点击搜索建议列表的某一项的时候，更新 key 属性的值刷新组件。
 ```
 <div class="SearchDetail" :key="i"></div>
+```
+* 6. 在完成该项目也遇到一些从没有遇到的错误，例如：Invalid default value for prop “xxxxx“，在进行父子组件传值的时候报了这样的一个错。原因很简单，设置默认值的时候需要以函数的形式作为返回值 return 
+```
+正确写法
+List: {
+type: Array,
+default: ()=>[]
+}
+错误写法
+List: {
+type: Array,
+default:[]
 ```
 ### 还有很多功能没有实现... 努力中......

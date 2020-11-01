@@ -47,7 +47,15 @@ export default {
                     this.$router.push('/cloudVillage')
                     break;
                 case 3:
-                    this.$router.push('/video')
+                    // 判断用户是否有登录
+                    if (!this.$store.state.cookie) {
+                        this.$toast.show('您需要先登录哦~', 1900)
+                        setTimeout(() => {
+                            this.$router.push('/myMessage/login')
+                        }, 1000)
+                    } else {
+                        this.$router.push('/video')
+                    }
                     break;
                 default:
                     break;

@@ -44,6 +44,7 @@ export default {
           this.offset * 40,
           1004
         ).then((res) => {
+          
           this.more = res.data.result.mvCount;
           if (res.data.result.mvs !== null) {
             for (const item of res.data.result.mvs) {

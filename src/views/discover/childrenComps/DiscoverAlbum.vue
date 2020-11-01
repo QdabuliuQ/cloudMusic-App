@@ -16,7 +16,7 @@
       height="4.926764rem"
     >
     <!-- 第一个for循环遍历出 三大部分 -->
-      <el-carousel-item class="items" v-for="(item,index) in 3" :key="index">
+      <el-carousel-item class="items" v-for="(item,index) in albunList.length" :key="index">
         <!-- 第二个for循环遍历 每一个部分中的歌曲 -->
         <saItem :isAlbum='true' v-for="(albunItems, i) in albunList[index]" :key="i" :itemDetail='albunItems'></saItem>
       </el-carousel-item>
@@ -47,22 +47,29 @@ export default {
   created() {
     getNewAlbum(9, this.offset * 9, "ALL", "new").then((res) => {
       let path = res.data.monthData;
+      if (res.data.monthData.length <= 3) {
+        this.albunList = [[]]
+      } else if (res.data.monthData.length <= 6) {
+        this.albunList = [[],[]]
+      } else if (res.data.monthData.length <= 9) {
+        this.albunList = [[],[],[]]
+      }
       for (let i = 0; i < 9; i++) {
-        if (i >= 0 && i < 3) {
+        if (res.data.monthData.length > i && i >= 0 && i < 3) {
           this.albunList[0].push({
             id: path[i].id, // 歌曲id
             picUrl: path[i].picUrl, // 歌曲封面
             name: path[i].name, // 歌曲名称
             artists: path[i].artists,  // 演唱者 
           });
-        } else if (i >= 3 && i < 6) {
+        } else if (res.data.monthData.length > i && i >= 3 && i < 6) {
             this.albunList[1].push({
             id: path[i].id, // 歌曲id
             picUrl: path[i].picUrl, // 歌曲封面
             name: path[i].name, // 歌曲名称
             artists: path[i].artists,  // 演唱者
           });
-        } else if (i >= 6 && i < 9) {
+        } else if (res.data.monthData.length > i && i >= 6 && i < 9) {
             this.albunList[2].push({
             id: path[i].id, // 歌曲id
             picUrl: path[i].picUrl, // 歌曲封面

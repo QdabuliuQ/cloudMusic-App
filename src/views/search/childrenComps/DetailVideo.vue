@@ -83,7 +83,6 @@ export default {
     this.$loading.loadingShow();
     searchResult(this.$route.params.keywords, 40, this.offset * 40, 1014).then(
       (res) => {
-        console.log(res);
         try {
           for (const item of res.data.result.videos) {
             this.videoList.push({

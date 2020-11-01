@@ -94,7 +94,6 @@ export default {
     this.$loading.loadingShow();
     searchResult(this.$route.params.keywords, 30, this.offset * 30, 10).then(
       (res) => {
-        console.log(res);
         for (const item of res.data.result.albums) {
           this.albumList.push({
             id: item.id,

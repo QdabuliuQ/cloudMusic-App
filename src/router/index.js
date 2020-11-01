@@ -92,7 +92,7 @@ const routes = [
 
   { path: '/playDetail/:id&:isAlbum', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单/专辑内容
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
-  { path: '/mvplay/:mid', component: () => import('components/context/mvPlay/MvPlay') },  // mv播放
+  { path: '/mvplay/:mid&:isMv', component: () => import('components/context/mvPlay/MvPlay') },  // mv/视频播放
 
   { path: '/cloudVillage', component: cloudVillage },
   { path: '/video', component: video }

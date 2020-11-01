@@ -69,8 +69,8 @@ export default {
     this.$nextTick(() => {
       this.tabIndex = this.firstIndex;
       let span = document.getElementsByClassName("spItem")[this.firstIndex];
-      let bottomBor = document.getElementsByClassName("bottomBor")[0];
-      Move(bottomBor, "left", span.offsetLeft, 170);
+      let bottomBor = document.getElementsByClassName("bottomBor")[0];  
+      Move(bottomBor, "left", span.offsetLeft, 170);   
     });
   },
 };
