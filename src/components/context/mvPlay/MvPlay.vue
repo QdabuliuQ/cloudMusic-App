@@ -72,7 +72,7 @@
         </div>
         <!-- 发布时间 -->
         <div class="pushTime" v-if="$route.params.isMv == true">
-          {{ mvDetail.publishTime }}
+          {{ mvDetail.publishTime }} 发布
         </div>
         <div class="pushTime" v-else>
           {{ mvDetail.publishTime | getTime('YYYY-MM-DD') }} 发布
@@ -299,14 +299,14 @@ export default {
 
     // 时间跳转
     onChange(value) {
-      this.mvDom.currentTime = value / (100 / (this.mvDetail.duration / 1000));
+      this.mvDom.currentTime = value / (100 / (this.mvDetail.length / 1000));
       this.min = Math.floor(this.mvDom.currentTime / 60);
       this.second = (this.mvDom.currentTime % 60).toFixed(0);
     },
 
     // 实时更新时间
     getNowTime() {
-      this.value += 100 / (this.mvDetail.duration / 1000);
+      this.value += 100 / (this.mvDetail.length / 1000);
       this.second++;
       if (this.second > 59) {
         this.min++;
@@ -349,10 +349,11 @@ export default {
           this.mvDetail.artistId = path.artistId; // 歌手id
           this.mvDetail.artistName = path.artistName; // 歌手名称
           this.mvDetail.commentCount = path.commentCount; // mv评论数量
-          this.mvDetail.duration = path.duration; // mv时长(毫秒)
+          this.mvDetail.duration = durationTime(path.duration); // mv时长(毫秒)
+          this.mvDetail.length = path.duration
           this.mvDetail.name = path.name; // mv标题
           this.mvDetail.playCount = toStringNum(path.playCount) + "次观看"; // mv播放量
-          this.mvDetail.publishTime = path.publishTime + " 发布"; // mv发布时间
+          this.mvDetail.publishTime = path.publishTime; // mv发布时间
           this.mvDetail.shareCount = path.shareCount; // mv分享数量
           this.mvDetail.subCount = path.subCount; // mv收藏数量
           this.mvDetail.videoGroup = path.videoGroup; // mv标签
@@ -369,7 +370,7 @@ export default {
             this.simiMv.push({
               artistName: item.artistName, // 创作者
               cover: item.cover, // 封面
-              duration: item.duration, // mv时长
+              duration: durationTime(item.duration), // mv时长
               id: item.id, // mv id
               name: item.name, // mv名称
               playCount: toStringNum(item.playCount), // mv播放量
@@ -378,13 +379,15 @@ export default {
         });
       } else {
         getVideoDetail(this.$route.params.mid).then((res) => {
+          console.log(res);
           let path = res.data.data;
           this.comCount = path.commentCount;
           this.mvDetail.artistId = path.artistId; // 歌手id
           this.mvDetail.artistName = path.artistName; // 歌手名称
           this.mvDetail.commentCount = path.commentCount; // mv评论数量
           this.mvDetail.duration = durationTime(path.durationms); // mv时长(毫秒)
-          this.mvDetail.name = path.name; // mv标题
+          this.mvDetail.length = path.durationms
+          this.mvDetail.name = path.title; // mv标题
           this.mvDetail.playCount = toStringNum(path.playTime) + "次观看"; // mv播放量
           this.mvDetail.publishTime = path.publishTime; // mv发布时间
           this.mvDetail.shareCount = path.shareCount; // mv分享数量
@@ -622,7 +625,7 @@ export default {
   background: linear-gradient(transparent, rgb(70, 70, 70));
 }
 .mvName {
-  font-size: 0.532623rem;
+  font-size: .45273rem;
   font-weight: 550;
 }
 .playCount {

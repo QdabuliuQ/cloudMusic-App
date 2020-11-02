@@ -25,10 +25,11 @@ const routes = [
     path: '/discover',
     component: discover,
   },
+  { path: '/discover/recommendSong', component: () => import('views/discover/childrenComps/RecommendSong') },  // 日推
   { path: '/discover/moreSheet/', component: () => import('views/discover/childrenComps/moreComps/moreSheet') },  // 歌单广场
   { path: '/discover/moreSongs/', component: () => import('views/discover/childrenComps/moreComps/moreSongs') },  // 更多音乐
   { path: '/discover/moreAlbum/', component: () => import('views/discover/childrenComps/moreComps/moreAlbum') },  // 新碟上架
-  { path: '/discover/moreSinger/', component: () => import('views/discover/childrenComps/moreComps/moreSinger') },  // 
+  { path: '/discover/moreSinger/', component: () => import('views/discover/childrenComps/moreComps/moreSinger') },  // 更多歌手
   { path: '/discover/search', component: () => import('views/search/Search') },  // 搜索组件
   {
     path: '/discover/search/searchDetail/:keywords',
@@ -78,7 +79,15 @@ const routes = [
   { path: '/stationDetail/:rid', component: () => import('views/radioStation/childrenComps/StationDetail') },  // 电台详情
   { path: '/audioPlay/:id', component: () => import('views/radioStation/childrenComps/audioPlay') },  // 电台音乐播放
   { path: '/myMessage/follow', component: () => import('views/follow/Follow') },  // 个人--关注
-  { path: '/myMessage/collection', component: () => import('views/collection/Collection') },  // 个人--收藏
+  {  
+    path: '/myMessage/collection', 
+    component: () => import('views/collection/Collection'),
+    children: [
+      { path: '/mv', component: () => import('views/collection/childrenComps/CollectionMv'), },  // 收藏mv
+      { path: '/album', component: () => import('views/collection/childrenComps/CollectionAlbum'), },  // 收藏专辑
+      { path: '/singer', component: () => import('views/collection/childrenComps/CollectionSingers'), }  // 歌手
+    ]
+  },  // 个人--收藏
 
   { path: '/played/:id', component: () => import('views/played/Played') },  // 最近播放
   { path: '/fansList/:id', component: () => import('components/context/fansList/FansList') },  // 粉丝

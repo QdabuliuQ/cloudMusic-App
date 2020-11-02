@@ -39,10 +39,20 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 返回按钮默认返回路径
+    backPath: {
+      type: String,
+      default: '-1'
+    }
   },
   methods: {
     back() {
-      this.$router.go(-1);
+      if (this.backPath == '-1') {
+        this.$router.go(-1);
+      } else {
+        this.$router.push(this.backPath)
+      }
+      // this.$router.go(-1);
     },
 
     toSub() {

@@ -1,6 +1,7 @@
 <template>
   <div class="homepage">
     <sheet-item
+      v-if="showSheet"
       :title="'听歌排行'"
       :showDiv="true"
       :showImg="phImg"
@@ -10,6 +11,7 @@
     ></sheet-item>
 
     <sheet-item
+      v-if="showSheet"
       :title="likeSheet.name"
       :showDiv="true"
       :showImg="likeImg"
@@ -89,6 +91,7 @@ import { toStringNum } from "common/common";
 import { getPlayList } from "network/played";
 import { getSingerDetail } from "network/singer";
 
+
 export default {
   props: ["count", "artistId", "identify"],
   name: "homepage",
@@ -103,6 +106,7 @@ export default {
       subscribedCount: 0, // 歌单收藏总次数
       singer: "", // 歌手id
       singerdetail: {},
+      showSheet: true
     };
   },
   components: {
@@ -133,7 +137,6 @@ export default {
     this.uid = this.$route.params.uid;
     // 获取歌单
     getUserPlayList(this.$route.params.uid).then((res) => {
-      console.log(res);
       if (res.data.playlist.length !== 0) {
         this.likeSheet.id = res.data.playlist[0].id; // 歌单id
         this.likeSheet.name = res.data.playlist[0].name; // 歌单名称
@@ -166,6 +169,8 @@ export default {
             });
           }
         }
+      } else {
+        this.showSheet = false
       }
     });
   },

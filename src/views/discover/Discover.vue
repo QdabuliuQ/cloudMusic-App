@@ -9,7 +9,7 @@
           class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
         >
           <div class="mui-scroll">
-            <a class="mui-control-item">
+            <a class="mui-control-item" @click="recommandSong">
               <div class="img">
                 <img src="~assets/img/discover/rili.svg" alt="" />
               </div>
@@ -105,7 +105,19 @@ export default {
       offset: -1,
     };
   },
-  methods: {},
+  methods: {
+    // 日推
+    recommandSong(){
+      if (!this.$store.state.cookie) {
+        this.$toast.show('您需要先登录哦~', 1900)
+        setTimeout(() => {
+          this.$router.push('/myMessage/login')
+        }, 1000)
+      } else {
+        this.$router.push('/discover/recommendSong')
+      }
+    }
+  },
   mounted() {
     mui(".mui-scroll-wrapper").scroll({
       bounce: true, //是否回弹
@@ -136,6 +148,7 @@ export default {
   height: 100%;
 }
 .mui-control-item {
+  color: #000 !important;
   padding: 0 .399467rem !important;
   text-align: center;
   font-size: 0.332889rem;

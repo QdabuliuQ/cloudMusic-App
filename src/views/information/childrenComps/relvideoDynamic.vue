@@ -67,6 +67,10 @@ export default {
       eventsCount
   },
   methods: {
+    toPlay(id){
+      this.$router.push('/mvplay/' + id+'&'+false)
+    },
+
     sComment() {
       this.$store.state.commentId = this.threadId;
     },

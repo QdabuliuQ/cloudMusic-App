@@ -13,7 +13,7 @@
             >
           </div>
           <div class="singer">
-            <span v-for="(item, index) in item.singer" :key="index">{{item.name }} </span> -
+            <span v-for="(item, index) in item.singer" :key="index">{{ item.name }} </span> -
             {{ " " + item.zhuanji }}
           </div>
         </div>

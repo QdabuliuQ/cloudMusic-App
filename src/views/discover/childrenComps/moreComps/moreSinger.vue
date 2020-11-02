@@ -1,39 +1,8 @@
 <template>
   <div class="moreSinger">
     <menunav class="nav" :navTitle="'歌手分类'"></menunav>
-    <!-- <scrollnav @tabToggle='tabToggle' class="snav" :itemList="itemList" :firstIndex="0"></scrollnav>
-    <div class="content">
-      <div
-        class="item"
-        @click="toSinger(item.accountId)"
-        v-for="(item, index) in singerList"
-        :key="index"
-      >
-        <div class="img">
-          <img class="userimg" :src="item.picUrl" alt="" />
-          <div class="tag">
-            <img src="~assets/img/information/wyy.svg" alt="" />
-          </div>
-        </div>
-        <div class="name">{{ item.name }}</div>
-      </div>
-    </div> -->
     <div class="topItem">
       <div class="box">
-        <!-- <div class="box1">
-                <div class="sitem"
-                @click="itemClick(index)"
-                :class="{active: aIndex === index}"
-                v-for="(item,index) in itemList" 
-                :key="index">{{item}}</div>
-            </div>
-            <div class="box2">
-                <div class="type"
-                @click="typeClick(index)"
-                :class="{active: tIndex === index}" 
-                v-for="(item,index) in typeList" 
-                :key="index">{{item}}</div>
-            </div> -->
         <table class="toTable">
           <tr>
             <td
@@ -175,11 +144,12 @@ export default {
     },
     // 歌手页面跳转
     toSinger(id) {
-      if (id !== 0) {
-        this.$router.push("/Information/" + id);
-      } else {
-        this.$toast.show('暂时获取不到歌手信息',1900)
-      }
+      // if (id !== 0) {
+      //   this.$router.push("/Information/" + id);
+      // } else {
+      //   this.$toast.show('暂时获取不到歌手信息',1900)
+      // }
+      this.$router.push("/Information/" + id);
     },
 
     /*
@@ -195,7 +165,7 @@ export default {
       getSinger(30, this.offset * 30, type, area).then((res) => {
         for (const item of res.data.artists) {
           this.singerList.push({
-            accountId: item.accountId,
+            accountId: item.accountId || item.id,
             picUrl: item.picUrl,
             name: item.name,
           });
@@ -213,7 +183,7 @@ export default {
       getSinger(30, this.offset * 30, type, area).then((res) => {
         for (const item of res.data.artists) {
           this.singerList.push({
-            accountId: item.accountId,
+            accountId: item.accountId || item.id,
             picUrl: item.picUrl,
             name: item.name,
           });
@@ -250,7 +220,7 @@ export default {
       console.log(res);
       for (const item of res.data.artists) {
         this.singerList.push({
-          accountId: item.accountId || 0,
+          accountId: item.accountId || item.id,
           picUrl: item.picUrl,
           name: item.name,
         });

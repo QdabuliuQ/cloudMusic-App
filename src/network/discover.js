@@ -146,3 +146,13 @@ export function getSinger(limit, offset, type, area) {
         }
     })
 } 
+
+// 日推歌曲
+export function getRecommendSong(cookie){
+    return request({
+        url: '/recommend/songs',
+        params: {
+            cookie
+        }
+    })
+}

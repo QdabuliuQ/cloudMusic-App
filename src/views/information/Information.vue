@@ -14,7 +14,7 @@
         <img :src="profile.backgroundUrl" alt="" />
       </div>
       <div class="zhez"></div>
-      <div class="userDetail">
+      <div class="userDetail" v-if="special">
         <div class="userImg">
           <img :src="profile.avatarUrl" alt="" />
           <div class="logo" v-if="profile.artistId">
@@ -30,8 +30,12 @@
           />
         </div>
         <div class="detail">
-          <div class="follows" @click="follow(profile.userId)">关注 {{ profile.follows }}</div>
-          <div class="followeds" @click="fansList(profile.userId)">粉丝 {{ profile.followeds }}</div>
+          <div class="follows" @click="follow(profile.userId)">
+            关注 {{ profile.follows }}
+          </div>
+          <div class="followeds" @click="fansList(profile.userId)">
+            粉丝 {{ profile.followeds }}
+          </div>
         </div>
         <div class="createtime">
           <div v-if="profile.createTime == -1">
@@ -39,6 +43,9 @@
           </div>
           <div v-else>从 {{ profile.createTime | getTime }} 开始来到网易云</div>
         </div>
+      </div>
+      <div v-else class="singerDetail">
+        {{ profile.nickname }}
       </div>
     </div>
     <div ref="informationNav" class="navbox">
@@ -81,10 +88,11 @@ import homepage from "./childrenComps/homepage"; // 主页
 import dynamic from "./childrenComps/dynamic"; // 动态
 import songs from "./childrenComps/songs"; // 歌曲
 import album from "./childrenComps/album"; // 专辑
-import mv from "components/context/mv/Mv";  // MV
+import mv from "components/context/mv/Mv"; // MV
 
 import { toStringNum } from "common/common";
 import { getUserDetail } from "network/user";
+import { getSingerAlbum } from "network/singer";
 
 export default {
   name: "Information",
@@ -97,8 +105,8 @@ export default {
       showHome: true, // 显示/隐藏主页
       showDynamic: false, // 显示/隐藏动态
       showSongs: false, // 显示/隐藏歌曲
-      showAlbum: false,  // 显示/隐藏专辑
-      showMv: false,  // 显示/隐藏mv
+      showAlbum: false, // 显示/隐藏专辑
+      showMv: false, // 显示/隐藏mv
       navToTop: 0, // 导航栏距离顶部的距离
       firstIndex: 0, // 导航栏索引
       options: [
@@ -114,6 +122,7 @@ export default {
         ],
       ],
       showShare: false, // 分享面板
+      special: true
     };
   },
   // 监听路由变化
@@ -132,13 +141,13 @@ export default {
   },
   methods: {
     // 路由跳转 关注界面
-    follow(id){
-      this.$router.push('/follow/' + id)
+    follow(id) {
+      this.$router.push("/follow/" + id);
     },
-    
+
     // 路由跳转 粉丝界面
-    fansList(id){
-      this.$router.push('/fansList/' + id)
+    fansList(id) {
+      this.$router.push("/fansList/" + id);
     },
 
     openSub() {
@@ -153,14 +162,14 @@ export default {
             this.showHome = true;
             this.showDynamic = false;
             this.showSongs = false;
-            this.showAlbum = false
+            this.showAlbum = false;
             this.showMv = false;
             break;
           case 1:
             this.showSongs = true;
             this.showHome = false;
             this.showDynamic = false;
-            this.showAlbum = false
+            this.showAlbum = false;
             this.showMv = false;
             break;
           case 2:
@@ -171,17 +180,17 @@ export default {
             this.showMv = false;
             break;
           case 3:
-            this.showMv = true
+            this.showMv = true;
             this.showAlbum = false;
             this.showSongs = false;
             this.showHome = false;
-            this.showDynamic = false;  
+            this.showDynamic = false;
             break;
           case 4:
             this.showDynamic = true;
             this.showHome = false;
             this.showSongs = false;
-            this.showAlbum = false
+            this.showAlbum = false;
             this.showMv = false;
             break;
           default:
@@ -205,26 +214,21 @@ export default {
     linearScroll() {
       let nav = this.$refs.informationNav;
       let topnav = this.$refs.informationTonav.$el;
-      let navt = this.$refs.inforTabnav.$el
+      let navt = this.$refs.inforTabnav.$el;
       if (pageYOffset >= this.navToTop) {
-        nav.style =
-          "position: fixed; left: 0; right: 0; top: 64px;";
-        navt.style = 'z-index: 20'
+        nav.style = "position: fixed; left: 0; right: 0; top: 64px;";
+        navt.style = "z-index: 20";
         topnav.style = "background-color: rgba(0,0,0,1)";
         this.$refs.informationNav.style =
           "background-color: rgba(0,0,0,1); position: fixed; left: 0; right: 0; top: 64px; z-index: 1";
         if (this.showHome) {
-          document.querySelector(".homepage").style =
-            "padding-top: 1.14514rem";
-        } else if(this.showAlbum){
-          document.querySelector(".album").style =
-          "padding-top: 1.14514rem";
-        } else if(this.showSongs){
-          document.querySelector(".songs").style =
-          "padding-top: 1.14514rem";
-        } else if(this.showMv){
-          document.querySelector(".mv").style =
-          "padding-top: 1.14514rem";
+          document.querySelector(".homepage").style = "padding-top: 1.14514rem";
+        } else if (this.showAlbum) {
+          document.querySelector(".album").style = "padding-top: 1.14514rem";
+        } else if (this.showSongs) {
+          document.querySelector(".songs").style = "padding-top: 1.14514rem";
+        } else if (this.showMv) {
+          document.querySelector(".mv").style = "padding-top: 1.14514rem";
         }
         this.navTitle = this.profile.nickname;
       } else if (pageYOffset < this.navToTop) {
@@ -234,11 +238,11 @@ export default {
           "background-color: rgba(0,0,0,0); position: static";
         if (this.showHome) {
           document.querySelector(".homepage").style = "padding-top: .266312rem";
-        } else if(this.showAlbum){
+        } else if (this.showAlbum) {
           document.querySelector(".album").style = "padding-top: .266312rem;";
-        } else if(this.showSongs){
+        } else if (this.showSongs) {
           document.querySelector(".songs").style = "padding-top: .266312rem;";
-        } else if(this.showMv){
+        } else if (this.showMv) {
           document.querySelector(".mv").style = "padding-top: .266312rem;";
         }
         this.navTitle = "";
@@ -246,36 +250,56 @@ export default {
     },
 
     userDetail() {
-      getUserDetail(this.$route.params.uid).then((res) => {
-        console.log(this.$route.params.uid);
-        this.profile.userId = res.data.profile.userId
-        this.profile.level = res.data.level; // 用户等级
-        this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲
-        this.profile.avatarUrl = res.data.profile.avatarUrl; // 用户头像
-        this.profile.nickname = res.data.profile.nickname; // 用户昵称
-        this.profile.follows = res.data.profile.follows; // 用户关注
-        this.profile.followeds = toStringNum(res.data.profile.followeds); // 用户粉丝
-        this.profile.gender = res.data.profile.gender; // 性别
-        this.profile.backgroundUrl = res.data.profile.backgroundUrl; // 背景图片
-        this.profile.createTime = res.data.profile.createTime; // 创建时间
-        this.profile.artistId = res.data.profile.artistId || null; // 歌手id
-        this.profile.vipType = res.data.profile.vipType; // 是否会员
-        this.profile.description = res.data.profile.description; // 描述
-        this.profile.identify = res.data.identify || null; // 认证信息
-        this.$set(
-          this.profile,
-          this.profile.backgroundUrl,
-          res.data.profile.backgroundUrl
-        );
+      getUserDetail(this.$route.params.uid).then(
+        (res) => {
+          this.profile.userId = res.data.profile.userId;
+          this.profile.level = res.data.level; // 用户等级
+          this.profile.listenSongs = res.data.listenSongs; // 用户累计播放歌曲
+          this.profile.avatarUrl = res.data.profile.avatarUrl; // 用户头像
+          this.profile.nickname = res.data.profile.nickname; // 用户昵称
+          this.profile.follows = res.data.profile.follows; // 用户关注
+          this.profile.followeds = toStringNum(res.data.profile.followeds); // 用户粉丝
+          this.profile.gender = res.data.profile.gender; // 性别
+          this.profile.backgroundUrl = res.data.profile.backgroundUrl; // 背景图片
+          this.profile.createTime = res.data.profile.createTime; // 创建时间
+          this.profile.artistId = res.data.profile.artistId || null; // 歌手id
+          this.profile.vipType = res.data.profile.vipType; // 是否会员
+          this.profile.description = res.data.profile.description; // 描述
+          this.profile.identify = res.data.identify || null; // 认证信息
+          this.$set(
+            this.profile,
+            this.profile.backgroundUrl,
+            res.data.profile.backgroundUrl
+          );
 
-        // 判断用户是不是歌手
-        if (this.profile.artistId !== null) {
+          // 判断用户是不是歌手
+          if (this.profile.artistId !== null) {
+            this.itemList.splice(1, 0, "歌曲", "专辑", "MV");
+            this.$nextTick(() => {
+              this.$refs.inforTabnav.tabItem(0);
+            });
+          }
+        },
+        (err) => {
+          this.profile.artistId = this.$route.params.uid;
           this.itemList.splice(1, 0, "歌曲", "专辑", "MV");
           this.$nextTick(() => {
             this.$refs.inforTabnav.tabItem(0);
           });
+
+          getSingerAlbum(this.$route.params.uid).then((res) => {
+            console.log(res);
+            this.profile.backgroundUrl = res.data.artist.picUrl;
+            this.profile.nickname = res.data.artist.name;
+            this.$set(
+              this.profile,
+              this.profile.backgroundUrl,
+              res.data.artist.picUrl
+            );
+            this.special = false
+          });
         }
-      });
+      );
     },
   },
   created() {
@@ -304,6 +328,18 @@ export default {
 };
 </script>
 <style scoped>
+.singerDetail{
+  width: 80%;
+  height: 1.065246rem;
+  margin: 0 5%;
+  color: #fff;
+  font-size: .532623rem;
+  font-weight: 550;
+  position: absolute;
+  bottom: 1.331558rem;
+  z-index: 3;
+  line-height: 1.065246rem;
+}
 .Information {
   width: 100%;
   position: relative;
@@ -420,13 +456,13 @@ export default {
 .homepage {
   padding-top: 0.266312rem;
 }
-.album{
+.album {
   padding-top: 0.266312rem;
 }
-.songs{
+.songs {
   padding-top: 0.266312rem;
 }
-.mv{
+.mv {
   padding-top: 0.266312rem;
 }
 .navbox {

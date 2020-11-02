@@ -23,7 +23,7 @@ export default {
         tabClick(index) {
             this.isShow = index;
             // 子组件传参通过 $emit 调用父组件的方法并传递参数
-            // this.$emit('tabGoods',index)
+            this.$emit('tabGoods',index)
         }
     },
     // 保存父组件传递过来的参数
@@ -43,7 +43,7 @@ export default {
         flex: 1;
     }
     .tab-control-item span{
-        padding: 5px 5px 2px;
+        padding: .133156rem .133156rem .199734rem;
     }
     .activeColor{
         color: red;

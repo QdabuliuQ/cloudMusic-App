@@ -1,6 +1,6 @@
 <template>
   <div class="DetailVideo" v-if="noDetail">
-    <div class="videoItem" v-for="(item, index) in videoList" :key="index">
+    <div class="videoItem" @click="toVideo(item.id)" v-for="(item, index) in videoList" :key="index">
       <div class="vleft">
         <img :src="item.coverUrl" alt="" />
         <div class="count">▷ {{ item.playTime }}</div>
@@ -57,6 +57,10 @@ export default {
       } else {
         this.$toast.show("没有更多了:(", 1900);
       }
+    },
+
+    toVideo(id){
+      this.$router.push('/mvplay/' + id +'&'+ false)
     },
 
     // 监听滚动事件

@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     toMv(id){
-        this.$router.push('/mvplay/' + id+'&'+true)
+      this.$router.push('/mvplay/' + id+'&'+true)
     }  
   },
   created() {
