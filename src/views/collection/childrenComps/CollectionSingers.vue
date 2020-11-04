@@ -35,17 +35,17 @@ export default {
     toSinger(id, name) {
       if (this.name !== name) {
         searchSuggest(name, 100).then((res) => {
-          console.log(res);
-          if (res.data.result.artists[0].accountId !== undefined) {
-            this.singerId = res.data.result.artists[0].accountId;
-          } else {
-            this.singerId = res.data.result.artists[0].id;
+          if (res.data.result.artists !== undefined) {
+            if (res.data.result.artists[0].accountId !== undefined) {
+              this.$router.push("/Information/" + res.data.result.artists[0].accountId);
+            } else {
+              this.$router.push("/Information/" + res.data.result.artists[0].id);
+            }
+          }else {
+            this.$router.push("/Information/" + id);
           }
         });
       }
-      setTimeout(() => {
-          this.$router.push("/Information/" + this.singerId);
-      }, 500)
       this.name = name;
     },
   },

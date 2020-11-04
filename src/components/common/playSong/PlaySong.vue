@@ -7,12 +7,16 @@
     }"
   >
     <div class="PlaySong">
-      <sheet-topnav @fx="fx" :navTitle="navTitle" :rightImg="rightImg"></sheet-topnav>
+      <sheet-topnav
+        @fx="fx"
+        :navTitle="navTitle"
+        :rightImg="rightImg"
+      ></sheet-topnav>
       <transition name="logo" mode="out-in">
         <div v-show="showLogo" @click="isShowLogo" class="logo">
           <div ref="guanp" class="guanp">
             <img class="img" src="~assets/img/playSong/gp3.png" alt="" />
-            <div class="songImg">   
+            <div class="songImg">
               <img :src="bgimg" alt="" />
             </div>
           </div>
@@ -47,7 +51,7 @@
           </div>
           <div class="navitem">
             <img src="~assets/img/playSong/gengduo.svg" alt="" />
-          </div>    
+          </div>
         </div>
       </div>
       <!-- 进度条 -->
@@ -75,19 +79,14 @@
       </div>
       <!-- 按钮组 -->
       <bnav ref="bnav" @playBtn="playBtn"></bnav>
-      <!-- canplay 监听 audio 是否加载完成事件 -->
-      <audio
-        ref="audioTime"
-        @canplay="songLoad"
-        muted="muted"
-        id="music1"
-        :src="songUrl"
-        @timeupdate="timeupdate"
-      ></audio>
     </div>
     <!-- 评论组件 -->
     <transition>
-      <comment-list @toback="toback" v-show="showComment" :showComment="showComment"></comment-list>
+      <comment-list
+        @toback="toback"
+        v-show="showComment"
+        :showComment="showComment"
+      ></comment-list>
     </transition>
     <van-share-sheet
       v-model="showShare"
@@ -107,7 +106,7 @@ import commentList from "components/common/commentList/CommentList";
 import { getSongDetial } from "network/played"; // 获取歌曲基本信息
 import { playSong, getlyric } from "network/playSong"; // 获取音乐url 歌词 评论
 
-import mscroll from 'components/common/muiScroll/MuiScroll'
+import mscroll from "components/common/muiScroll/MuiScroll";
 
 export default {
   name: "PlaySong",
@@ -119,7 +118,6 @@ export default {
       bgimg: "", // 封面图
       songUrl: "", // 音乐url
       singer: "", // 歌手
-      isPlay: 1,
       songLength: 0, // 音乐长度
       audioDom: "", // audio标签
       value: 0,
@@ -138,18 +136,19 @@ export default {
       indexLyric: 0,
       isPlayM: 0, // 是否播放了音乐
       timeNew: 0,
-      showComment: false,  // 显示隐藏评论组件
-      showShare: false,  // 分享面板
-      options: [  // 分享面板
+      showComment: false, // 显示隐藏评论组件
+      showShare: false, // 分享面板
+      options: [
+        // 分享面板
         [
-          { name: '微信', icon: 'wechat' },
-          { name: '微博', icon: 'weibo' },
-          { name: 'QQ', icon: 'qq' },
+          { name: "微信", icon: "wechat" },
+          { name: "微博", icon: "weibo" },
+          { name: "QQ", icon: "qq" },
         ],
         [
-          { name: '复制链接', icon: 'link' },
-          { name: '分享海报', icon: 'poster' },
-          { name: '二维码', icon: 'qrcode' },
+          { name: "复制链接", icon: "link" },
+          { name: "分享海报", icon: "poster" },
+          { name: "二维码", icon: "qrcode" },
         ],
       ],
     };
@@ -159,20 +158,20 @@ export default {
     Bnav,
     PlaysongTime,
     LyricList,
-    commentList
+    commentList,
   },
   methods: {
     // 分享面板
-    fx(){
+    fx() {
       this.showShare = true;
     },
 
-    toback(){
-      this.showComment = false
+    toback() {
+      this.showComment = false;
     },
 
-    isShowComment(){
-      this.showComment = true
+    isShowComment() {
+      this.showComment = true;
     },
 
     // 监听播放器
@@ -193,41 +192,37 @@ export default {
     // 播放/暂停音乐
     playBtn() {
       // 操作dom 播放音乐
-      if (this.isPlay === 0) {
-        this.audioDom.pause(); // 暂停
+      if (this.$store.state.playSong.playNow) {
+        this.$store.state.playSong.isPlayEnd = true;  // 播放暂停
+        this.$store.state.playSong.playNow = false; // 修改判断条件
+        this.$store.state.navMusicDom.pause(); // 暂停
         this.$refs.bnav.endImg(); // 切换图标
-        this.isPlay = 1;
-        this.isPlayM = -1; // -1表示没有播放音乐了
-        clearInterval(this.rotateLogo); // 封面旋转
-        clearInterval(this.timeS);
+        clearInterval(this.rotateLogo); // 暂停封面旋转
+        clearInterval(this.timeS); // 暂停时间
+        // 当歌曲完全播放结束后
         if (this.value >= 100) {
-          this.$refs.guanp.style.transform = "rotate(0deg)";
-          this.audioDom.currentTime = 0; // 重置播放时间
+          this.$store.state.playSong.isPlayEnd = false; // 重新播放
+          this.$store.state.playSong.playNow = false; // 修改判断条件
+          this.$refs.guanp.style.transform = "rotate(0deg)"; // 封面旋转重置
+          this.$store.state.navMusicDom.currentTime = 0; // 重置播放时间
           this.$refs.bnav.playingImg(); // 更换图标
-          this.isPlay = 0; // 更改索引
           this.value = 0; // 清空进度条
           this.minT = 0; // 清空时间
           this.secondT = 0; // 清空时间
-          this.isPlayM = -1; // 没有播放音乐
           clearInterval(this.time); // 防止多个定时器  清除定时器
           this.timeS = setInterval(this.setInPlay, 1000); // 计算时间
-          this.audioDom.play(); // 重新播放音乐
+          this.$store.state.navMusicDom.play(); // 重新播放音乐
         }
         // 目前处于播放状态
       } else {
-        if (this.audioDom !== "") {
-          this.audioDom.play(); // 播放音乐
-          this.$refs.bnav.playingImg(); // 更换图片
-          this.isPlayM += 1; // 大于1表示音乐正在播放
-          clearInterval(this.rotateLogo);
-          this.rotateLogo = setInterval(this.rotate, 30); // 封面旋转
-          this.isPlay = 0;
-          clearInterval(this.time); // 防止多个定时器  清除定时器
-          this.timeS = setInterval(this.setInPlay, 1000);
-        } else {
-          console.log(this.audioDom);
-          this.$toast.show("歌曲资源丢失", 1900);
-        }
+        this.$store.state.playSong.isPlayEnd = false;
+        this.$store.state.playSong.playNow = true; // 修改判断条件
+        this.$store.state.navMusicDom.play(); // 播放音乐
+        this.$refs.bnav.playingImg(); // 更换图片
+        clearInterval(this.rotateLogo); // 防止多个定时器  清除定时器
+        this.rotateLogo = setInterval(this.rotate, 30); // 封面旋转
+        clearInterval(this.time); // 防止多个定时器  清除定时器
+        this.timeS = setInterval(this.setInPlay, 1000);
       }
     },
 
@@ -255,64 +250,59 @@ export default {
       this.value += 100 / this.songTime;
       // 当 value 到100表示播放结束
       if (this.value >= 100) {
+        this.$store.state.playSong.playNow = true; // 修改判断条件
+        this.$store.state.playSong.isPlayEnd = true;  // 播放结束
+        clearInterval(this.timeS); // value等于100表示播放结束
         this.value = 100;
-        try {
-          this.$refs.bnav.endImg();
-        } catch (error) {}
-        this.$store.state.isend = true;
+        this.$refs.bnav.endImg();
         clearInterval(this.rotateLogo);
         if (this.$refs.guanp !== undefined) {
           this.$refs.guanp.style.transform = "rotate(0deg)";
         }
-        clearInterval(this.timeS); // value等于100表示播放结束
       }
     },
 
     // 监听audio加载事件
     songLoad() {
-      this.audioDom = document.getElementById("music1"); // 获取dom
-      if (this.audioDom !== "") {
-        this.songTime = this.audioDom.duration.toFixed(2); // 保存歌曲时间
-        let time = this.audioDom.duration;
-        let min =
-          Math.floor(this.songTime / 60).toFixed(0) > 10
-            ? Math.floor(this.songTime / 60).toFixed(0)
-            : "0" + Math.floor(this.songTime / 60).toFixed(0); // 分钟
-        let second =
-          this.songTime % 60 > 9
-            ? this.songTime % 60
-            : "0" + (this.songTime % 60); // 秒数
-        let length = (min + ":" + second).slice(5);
-        this.songLength = (min + ":" + second).replace(length, " ");
-      }
+      this.songTime = this.$store.state.navMusicDom.duration.toFixed(2); // 保存歌曲时间
+      let time = this.$store.state.navMusicDom.duration;
+      let min =
+        Math.floor(this.songTime / 60).toFixed(0) > 10
+          ? Math.floor(this.songTime / 60).toFixed(0)
+          : "0" + Math.floor(this.songTime / 60).toFixed(0); // 分钟
+      let second =
+        this.songTime % 60 > 9
+          ? this.songTime % 60
+          : "0" + (this.songTime % 60); // 秒数
+      let length = (min + ":" + second).slice(5);
+      this.songLength = (min + ":" + second).replace(length, " ");
     },
 
     // 歌曲进度跳转
     onChange(value) {
+      this.cTime = this.$store.state.navMusicDom.currentTime
       this.setTime(value); // 调用方法
     },
 
     // 设置歌曲时间
     setTime(value) {
-      this.$refs.bnav.playingImg(); // 切换图标
-      this.isPlay = 0; // 修改索引
-      try {
-        this.audioDom.pause();
-      } catch (error) {} // 暂停
       clearInterval(this.rotateLogo); // 清除重复定时器
-      this.rotateLogo = setInterval(this.rotate, 30); // 开启定时器
-      let timeAll = 100 / this.audioDom.duration; // 计算一秒增加多少 value
-      this.audioDom.currentTime = value / timeAll; // 计算出拖动按钮后  歌曲对应播放的时间点
-      this.minT = Math.floor(this.audioDom.currentTime / 60); // 计算出分钟数
-      this.secondT = (this.audioDom.currentTime % 60).toFixed(0); // 计算秒数
-      this.cTime = this.audioDom.currentTime; // 将拖到后的秒数保存传递给 歌单滚动 组件
-      this.indexLyric += 1;
-      this.isPlayM += 1; // 歌曲正在播放
-      this.audioDom.play(); // 播放
       clearInterval(this.timeS);
+      this.$refs.bnav.playingImg(); // 切换图标
+      this.$store.state.navMusicDom.pause(); // 先暂停歌曲
+
+      let timeAll = 100 / this.$store.state.navMusicDom.duration; // 计算一秒增加多少 value
+      this.$store.state.navMusicDom.currentTime = value / timeAll; // 计算出拖动按钮后  歌曲对应播放的时间点
+      this.minT = Math.floor(this.$store.state.navMusicDom.currentTime / 60); // 计算出分钟数
+      this.secondT = (this.$store.state.navMusicDom.currentTime % 60).toFixed(
+        0
+      ); // 计算秒数
+      this.cTime = this.$store.state.navMusicDom.currentTime; // 将拖到后的秒数保存传递给 歌单滚动 组件
+      this.$store.state.navMusicDom.play(); // 播放
+      this.rotateLogo = setInterval(this.rotate, 30); // 开启定时器
+
       this.timeS = setInterval(this.setInPlay, 1000);
       if (this.value >= 100) {
-        this.$store.state.isend = true;
         this.value = 100;
         this.$refs.bnav.endImg();
         clearInterval(this.timeS); // value等于100表示播放结束
@@ -320,6 +310,7 @@ export default {
     },
   },
   created() {
+    this.$store.state.playSong.isPlayEnd = true; // 进入页面即自动播放
     // 获取歌曲基本信息
     getSongDetial(this.$route.params.sid).then((res) => {
       let result = res.data.songs[0];
@@ -327,97 +318,79 @@ export default {
       this.navTitle = result.name; // 歌曲名称
       this.id = result.id; // 歌曲id
       this.bgimg = result.al.picUrl; // 歌曲封面
+
+      this.$store.state.playSong.songName = result.name; // 歌曲名称
+      this.$store.state.playSong.singer = result.ar[0].name; // 歌手
+      this.$store.state.playSong.picUrl = result.al.picUrl; // 歌曲封面
       playSong(this.id).then((res) => {
         // 歌曲url
-        if (res.data.data[0].url !== null) {
-          this.songUrl = res.data.data[0].url; // 歌曲url
+        if (this.$store.state.playSong.songId !== this.$route.params.sid) {
+          this.$store.state.playSong.index = 1; // 判断是否页面被打开
+          this.$store.state.navMusicDom.src = res.data.data[0].url; // 歌曲url
+          this.$store.state.navMusicDom.play(); // 获取完成url播放
+          // 添加监听事件
+          this.$store.state.navMusicDom.addEventListener("canplay", () => {
+            this.songLoad(); // 获取音乐时长
+            clearInterval(this.rotateLogo); // 暂停封面旋转
+            clearInterval(this.timeS); // 暂停时间
+            this.rotateLogo = setInterval(this.rotate, 30); // 封面旋转
+            this.timeS = setInterval(this.setInPlay, 1000); // 时间更新
+          });
+        } else {
+          this.songLoad(); // 获取音乐时长
+          this.value = this.$store.state.navMusicDom.currentTime * (100 / this.$store.state.navMusicDom.duration)  // 更新时间
+          this.setTime(this.value)
+          clearInterval(this.rotateLogo); // 暂停封面旋转
+          clearInterval(this.timeS); // 暂停时间
+          this.rotateLogo = setInterval(this.rotate, 30); // 封面旋转
+          this.timeS = setInterval(this.setInPlay, 1000); // 时间更新
         }
+        this.$store.state.playSong.songId = this.$route.params.sid;
       });
     }),
-
-    // 获取歌词
+      // 获取歌词
     getlyric(this.$route.params.sid).then((res) => {
-      if (res.data.lrc !== undefined) {
-        let text = res.data.lrc.lyric;
-        let reg = /[\[|[0-9\:\.]|]]/gi; // 正则匹配去除 []
-        let lyric = text.replace(reg, "");        
-        this.lyricText = lyric.split("]"); // 将字符串转为数组
-        var reg2 = /\[(.+?)\]/g; // 正则匹配出时间
-        let time = text.match(reg2); // match 选中匹配成功的内容
-        
-        for (let i = 0; i < time.length; i++) {
-          time[i] = time[i].slice(1, 9); // slice 截取
-          time[i] =
-            parseFloat(time[i].slice(0, 2), 2) * 60 +
-            parseFloat(time[i].slice(3, 8), 2); // 截取分秒计算秒数
-        }
+        if (res.data.lrc !== undefined) {
+          let text = res.data.lrc.lyric;
+          let reg = /[\[|[0-9\:\.]|]]/gi; // 正则匹配去除 []
+          let lyric = text.replace(reg, "");
+          this.lyricText = lyric.split("]"); // 将字符串转为数组
+          var reg2 = /\[(.+?)\]/g; // 正则匹配出时间
+          let time = text.match(reg2); // match 选中匹配成功的内容
 
-        this.songLyric = time;
-        let num = 0
-        // for循环遍历歌词数组
-        for (let i = 0; i < this.songLyric.length; i++) {
-          // 检查是否有 NaN 设置为 0 
-          if (isNaN(this.songLyric[i])) {
-            this.songLyric.splice(i, 1, num+=0.15)
+          for (let i = 0; i < time.length; i++) {
+            time[i] = time[i].slice(1, 9); // slice 截取
+            time[i] =
+              parseFloat(time[i].slice(0, 2), 2) * 60 +
+              parseFloat(time[i].slice(3, 8), 2); // 截取分秒计算秒数
           }
-          if (this.songLyric[i] == this.songLyric[i + 1] || this.songLyric[i] >= this.songLyric[i + 1]) {
-            // console.log(this.songLyric[i]+ ',' + this.songLyric[i + 1]);
-            this.songLyric.splice(i + 1, 1, this.songLyric[i + 1] + 0.5)
-          }
-        }
-      }
-    });
-  },
-  mounted() {
-    this.$store.state.playSongComp = 1; // 播放页面是否被打开
-    if (this.$store.state.navMusicDom !== null) {
-      let playdom = document.getElementById("music1"); // 获取播放器dom
-      this.$store.state.navMusicDom.pause(); // 暂停外部播放器
-      // 获取歌曲基本信息
-      getSongDetial(this.$route.params.sid).then((res) => {
-        let id = res.data.songs[0].id; // 歌曲id
-        playSong(id).then((res) => {
-          // 歌曲url
-          if (res.data.data[0].url !== null) {
-            let url = res.data.data[0].url; // 歌曲url
-            playdom.src = url; // 设置url
-            if (this.$store.state.playContent.songId == this.$route.params.sid) {
-              playdom.currentTime = this.$store.state.navMusicDom.currentTime;  // 设置播放时间
-            } else {
-              playdom.currentTime = 0.01
+
+          this.songLyric = time;
+          let num = 0;
+          // for循环遍历歌词数组
+          for (let i = 0; i < this.songLyric.length; i++) {
+            // 检查是否有 NaN 设置为 0
+            if (isNaN(this.songLyric[i])) {
+              this.songLyric.splice(i, 1, (num += 0.15));
             }
-            this.rotate();  // 封面旋转
-            // 延时调用
-            setTimeout(() => {
-              this.timeNew = 100 / playdom.duration; // 计算比例
-              this.value = this.timeNew * playdom.currentTime; // 计算value进度条
-              this.setTime(this.value); // 计算时间
-            }, 1100);
-            this.timeS = setInterval(this.setInPlay, 1000); // 进度条
-            // 跳转到对应的时间
-            playdom.play();
+            if (
+              this.songLyric[i] == this.songLyric[i + 1] ||
+              this.songLyric[i] >= this.songLyric[i + 1]
+            ) {
+              // console.log(this.songLyric[i]+ ',' + this.songLyric[i + 1]);
+              this.songLyric.splice(i + 1, 1, this.songLyric[i + 1] + 0.5);
+            }
           }
-        });
+        }
       });
-    }
   },
-
-  // 组件销毁的时候保存数据
-  destroyed() {
-    this.$store.state.playContent.songImg = this.bgimg; // 图片
-    this.$store.state.playContent.songName = this.navTitle; // 歌名
-    this.$store.state.playContent.songurl = this.songUrl; // url
-    this.$store.state.playContent.singer = this.singer; // 歌手
-    this.$store.state.playContent.songId = this.id; // 歌曲id
-    if (this.audioDom.currentTime !== this.audioDom.duration) {
-      this.$store.state.playContent.endTime = this.audioDom.currentTime;
-    } else {
-      this.$store.state.playContent.endTime = 0;
-    }
-     // 最后歌曲播放时间
-    this.$store.state.playContent.isPlayM = this.isPlayM; // 是否播放了音乐
-    this.audioDom.pause();
+  mounted () {
+    this.$refs.bnav.playingImg();
   },
+  destroyed () {
+    clearInterval(this.rotateLogo); // 暂停封面旋转
+    clearInterval(this.timeS); // 暂停时间
+  }
 };
 </script>
 <style scoped>
@@ -519,12 +492,12 @@ export default {
 .lyric {
   height: 70%;
 }
-.v-enter{
+.v-enter {
   opacity: 0;
   /* 进来的时候从右 */
   transform: translateX(100%);
 }
-.v-leave-to{
+.v-leave-to {
   opacity: 0;
   /* 离开的时候向左 */
   transform: translateX(-100%);
@@ -532,35 +505,37 @@ export default {
 }
 
 /* 动画执行期间 */
-.v-enter-active,.v-leave-active{
+.v-enter-active,
+.v-leave-active {
   position: absolute;
-    /* 添加动画效果 */
+  /* 添加动画效果 */
   transition: all 0.2s linear;
 }
-.logo-enter{
+.logo-enter {
   opacity: 1;
   position: absolute;
   z-index: -10;
   transform: translateX(-350px);
 }
-.logo-leave-to{
+.logo-leave-to {
   opacity: 1;
   position: absolute;
   z-index: -10;
   transform: translateX(-350px);
 }
 
-.logo-enter-active,.logo-leave-active{
+.logo-enter-active,
+.logo-leave-active {
   transition: 0.8s all ease-in-out;
 }
 
-.lyric-enter{
+.lyric-enter {
   position: absolute;
   z-index: -10;
   opacity: 1;
   transform: translateX(350px);
 }
-.lyric-leave-to{
+.lyric-leave-to {
   position: absolute;
   top: 42.5px;
   z-index: 1;
@@ -568,7 +543,8 @@ export default {
   transform: translateX(700px);
 }
 
-.lyric-enter-active,.lyric-leave-active{
+.lyric-enter-active,
+.lyric-leave-active {
   transition: 0.8s all ease-in-out;
 }
 </style>

@@ -106,7 +106,7 @@ export default {
 }
 .MyMessage3{
   height: 100%;
-  padding: 0 15px 20px;
+  padding: .133156rem .399467rem .532623rem;
   margin-bottom: 1.198402rem;
 }
 .jnavbar {

@@ -10,7 +10,6 @@
           {{ itemDetail.name }}
         </div>
         <div class="desc">
-            - 
            <span v-for="(item,index) in itemDetail.artists" :key="index">
                {{item.name }}
            </span>

@@ -188,7 +188,7 @@ export default {
               mv: item.mv,
               songName: item.name,
               id: item.id,
-              singer: item.ar[0].name,
+              singer: item.ar,
               zhuanji: item.al.name,
               yuanc: item.alia,
             });

@@ -71,22 +71,18 @@ export default {
 <style scoped>
 .item {
   width: 100%;
-  height: 60px;
-  /* background-color: red; */
-  margin-top: 2.5px;
-  margin-bottom: 3px;
+  height: 1.59787rem;
   border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  align-items: center;
 }
 .itembox {
-  /* padding: 3px 3px; */
   display: flex;
   width: 100%;
-  height: 45px;
-  position: relative;
-  top: 7.5px;
+  height: 1.198402rem;
 }
 .img {
-  width: 45px;
+  width: 1.198402rem;
   height: 100%;
   margin-left: 7.5px;
   border-radius: 50%;
@@ -98,25 +94,25 @@ export default {
 }
 .text {
   flex: 5;
-  margin-left: 15px;
+  margin-left: .399467rem;
   line-height: 45px;
 }
 .name {
   font-size: 15px;
 }
 .qm {
-  line-height: 40px;
+  line-height: 1.065246rem;
   overflow: hidden; /*溢出隐藏*/
   text-overflow: ellipsis; /*以省略号...显示*/
   white-space: nowrap; /*强制不换行*/
 }
 .imgvip {
   /* width: 15px; */
-  width: 60px;
-  height: 26px;
-  margin-left: -14px;
+  width: 1.59787rem;
+  height: .69241rem;
+  margin-left: -.372836rem;
   position: relative;
-  top: 7px;
+  top: .186418rem;
 }
 .isFollows {
   background-color: #da231b !important;
@@ -124,12 +120,12 @@ export default {
 }
 .btn {
   text-align: center;
-  line-height: 30px;
-  font-size: 13px;
-  width: 80px;
-  height: 30px;
-  border-radius: 30px;
-  margin-top: 6px;
+  line-height: .798935rem;
+  font-size: .346205rem;
+  width: 2.130493rem;
+  height: .798935rem;
+  border-radius: .798935rem;
+  margin-top: .159787rem;
   color: #000;
   background-color: rgb(231, 231, 231);
   border: 1px solid #cdccdc;

@@ -56,7 +56,6 @@ export default {
     singerAlbum() {
       if (this.more) {
         getSingerAlbum(this.artistId, 50, this.offset).then((res) => {
-          console.log(res);
           for (const item of res.data.hotAlbums) {
             this.albumList.push({
               name: item.name, // 专辑名称

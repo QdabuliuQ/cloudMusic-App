@@ -19,36 +19,27 @@ export default new Vuex.Store({
     // 用户歌单信息
     playList: [],
 
-    // 我的页面 滚动 距离
-    mySheetToTop: 0,
-    // 收藏组件 滚动 距离
-    collectionToTop: 0,
-    // 导航栏到底部距离
-    navbarToTop: 0,
-
-    playContent: {
-      songName: '',  // 歌曲名称
-      songImg: '',  // 歌曲封面
-      endTime: '',  // 最后播放时间
-      songurl: '',  // 歌曲url
-      singer: '',  // 演唱者
-      isPlayM: ''  // 是否播放了音乐
-    },
-
-    playSongComp: 0,  // 播放页面是否被打开
     navMusicDom: null,
-    isend: false,  // 背部播放器是否结束
     showComment: false,  // 显示/隐藏评论面板
     getComMore: '',
     songid: '',
     page: '',
-    isPlayEnd: false, // 内部播放器是否播放结束
     isShowNav: true,  // 显示隐藏底部播放导航栏
     createId: '',  // 目前所在的歌单创建者id
     sheetId: '',  // 目前所在的歌单id
     hotOffset: 0,  // 获取热门电台推荐 分页参数
     commentId: 0,  // 动态评论id
     toggleInformation: 0,  // 记录是否进入用户信息界面
+    playSong: {  // 当前播放的音乐数据
+      index: 0,
+      playNow: true,  // 默认播放音乐
+      songId: 0,  // 判断是否切歌
+      linearIndex: 0,  // 判断是否拖动进度条
+      isPlayEnd: '',  // 判断是否播放结束
+      songName: '',  // 目前歌曲播放名称
+      singer: '',  // 目前歌曲演唱者
+      picUrl: '',  // 目前歌曲封面
+    },  
   },
   mutations: {
   },

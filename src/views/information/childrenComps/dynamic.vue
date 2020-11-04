@@ -218,7 +218,6 @@ export default {
     UserEvent() {
       if (this.moreEvent) {
         getUserEvent(this.$route.params.uid, 30, this.lastTime).then((res) => {
-          console.log(res);
           for (const item of res.data.events) {
             // 18 分享单曲
             // 19 分享专辑

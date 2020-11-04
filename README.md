@@ -1,5 +1,11 @@
 # 网易云音乐 #
 ## <u>基于 Vue.js 开发的高仿项目。</u> ##
+* 项目 API 来自 [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 提供，点击查看[API 中文文档](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%e9%aa%8c%e8%af%81%e9%aa%8c%e8%af%81%e7%a0%81)
+
+### 安装运行（安装运行前请确定已安装node环境）
+* 环境安装：npm install
+* 启动服务：npm run dev
+* 发布代码：npm run build
 
 ### 目前以实现的功能：
 * 用户登录
@@ -27,7 +33,7 @@
 * 1、歌曲播放界面进度条的实时更新，需要获取到歌曲的时间，计算进度条在每一秒中需要移动多少PX。
 * 2、歌曲歌词界面，歌词的实时滚动，通过API请求获取歌词数据，再通过正则表达式分别筛选出歌词和每一行歌词的时间，当歌词播放到一个时间点会进行判断，并进行歌词滚动。（目前该功能还有bug，有待解决）
 * 3、MV播放界面的推荐内容，当点击推荐内容的时候需要进行跳转，可以通过 beforeRouteUpdate 来监听路由变化
-```
+```js
 beforeRouteUpdate(to, from, next) {
   if (to.fullPath != from.fullPath) {
     this.mvDetail = {}; // 清空mv数据
@@ -43,7 +49,7 @@ beforeRouteUpdate(to, from, next) {
 },
 ```
 * 4、搜索模块在搜索的时候需要使用到防抖函数，具体防抖函数可以学习[coderwhy老师视频教程](https://www.bilibili.com/video/BV15741177Eh?p=174)
-```
+```js
 export function debounce(func, delay){
   let timer = null;
   // ...args 表示可以接受多个实参  并保存到数组中
@@ -59,19 +65,21 @@ export function debounce(func, delay){
 }
 ```
 * 5、点击搜索建议的时候，也需要重新刷新 SearchDetail 组件内容，可以通过给 SearchDetail 组件绑定 key属性，当点击搜索建议列表的某一项的时候，更新 key 属性的值刷新组件。
-```
+```html
 <div class="SearchDetail" :key="i"></div>
 ```
 * 6、在完成该项目也遇到一些从没有遇到的错误，例如：Invalid default value for prop “xxxxx“，在进行父子组件传值的时候报了这样的一个错。原因很简单，设置默认值的时候需要以函数的形式作为返回值 return 
-```
-正确写法
+```js
+// 正确写法
 List: {
 type: Array,
 default: ()=>[]
 }
-错误写法
+// 错误写法
 List: {
 type: Array,
 default:[]
 ```
+* 6、在开发歌曲播放页面功能的时候，必须要 APP.js 中exclude属性添加进去该组件，保证每次切换歌曲的时候不会一直显示第一次点击的页面，但在退出歌曲播放页面组件的时候该页面会自动销毁，不会继续播放。所以在 APP.js 根组件中引入了 Audio 标签，在根组件中进行播放，并通过 VUEX 进行保存相关数据，不会被销毁。
+
 ### 还有很多功能没有实现... 努力中......

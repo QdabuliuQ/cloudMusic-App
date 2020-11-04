@@ -288,7 +288,6 @@ export default {
           });
 
           getSingerAlbum(this.$route.params.uid).then((res) => {
-            console.log(res);
             this.profile.backgroundUrl = res.data.artist.picUrl;
             this.profile.nickname = res.data.artist.name;
             this.$set(
