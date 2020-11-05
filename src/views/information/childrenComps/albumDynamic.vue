@@ -67,9 +67,6 @@ export default {
   components: {
     eventsCount,
   },
-  created () {
-    console.log(this.events);
-  }
 };
 </script>
 <style scoped>

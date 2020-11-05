@@ -40,6 +40,13 @@ export default new Vuex.Store({
       singer: '',  // 目前歌曲演唱者
       picUrl: '',  // 目前歌曲封面
     },  
+
+    fullSecreenVideo: null,  // 全屏播放器
+    viewPlay: {
+      currentTime: 0,  // 外部播放器实时时间
+      viewOpen: false,  // 判断全屏播放是否打开
+      playing: false,  // 判断是否正在播放
+    }
   },
   mutations: {
   },

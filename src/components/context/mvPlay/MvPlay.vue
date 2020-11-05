@@ -6,14 +6,13 @@
       <video
         class="mv"
         :src="mvUrl"
-        style="object-fit: fill"
         x5-video-player-type="h5"
         x5-video-orientation="landscape"
       ></video>
-      <div v-show="showPlay" @click="playPause" class="isPlay">
+      <div v-show="showPlay" @click="playPause" class="isPlay animate">
         <img :src="Play" alt="" />
       </div>
-      <div class="topShadowBox" v-show="showJd">
+      <div class="topShadowBox animate" v-show="showJd">
         <div class="back" @click="back">
           <img src="~assets/img/common/fanhui.svg" alt="" />
         </div>
@@ -22,7 +21,7 @@
         </div>
       </div>
       <!-- 时间按钮 -->
-      <div class="bottomShadowBox" v-show="showJd">
+      <div class="bottomShadowBox animate" v-show="showJd">
         <div class="nowTime" v-if="$route.params.isMv == true">
           {{ min > 9 ? min : "0" + min }}:{{
             second > 9 ? second : "0" + second
@@ -30,9 +29,10 @@
           / {{ mvDetail.duration | mvTime }}
         </div>
         <div class="nowTime" v-else>
-           {{ min > 9 ? min : "0" + min }}:{{
+          {{ min > 9 ? min : "0" + min }}:{{
             second > 9 ? second : "0" + second
-          }} / {{mvDetail.duration}}
+          }}
+          / {{ mvDetail.duration }}
         </div>
         <div class="quanp">
           <img
@@ -75,7 +75,7 @@
           {{ mvDetail.publishTime }} 发布
         </div>
         <div class="pushTime" v-else>
-          {{ mvDetail.publishTime | getTime('YYYY-MM-DD') }} 发布
+          {{ mvDetail.publishTime | getTime("YYYY-MM-DD") }} 发布
         </div>
         <div class="tabbar">
           <div class="tabItem">
@@ -174,6 +174,20 @@
       title="立即分享给好友"
       :options="options"
     />
+    <send-comment
+      @successComment="successComment"
+      :type="type"
+      :id="$route.params.mid"
+      class="SendComment"
+    ></send-comment>
+    <transition>
+      <full-screen
+        @toBack="toBack"
+        :videoTitle="mvDetail.name"
+        :videoUrl="mvUrl"
+        v-if="isShow"
+      ></full-screen>
+    </transition>
   </div>
 </template>
 
@@ -186,10 +200,18 @@ import {
   getMvComment,
 } from "network/mvPlay"; // 网络请求
 
-import { getVideoDetail, getVideoInfo, getVideoUrl, getSimiVideo, getVideoComment } from "network/video";
+import {
+  getVideoDetail,
+  getVideoInfo,
+  getVideoUrl,
+  getSimiVideo,
+  getVideoComment,
+} from "network/video";
 import { getUserDetail } from "network/user"; // 网络请求
-import { toStringNum, durationTime } from "common/common"; // 播放量转化
-import mscroll from "components/common/muiScroll/MuiScroll";
+import { toStringNum, durationTime, formatDuring } from "common/common"; // 播放量转化
+import mscroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
+import FullScreen from "components/common/fullScreen/FullScreen"; // 全屏播放
+import SendComment from "components/context/sendComment/SendComment"; // 发送评论
 
 export default {
   name: "MvPlay",
@@ -231,7 +253,38 @@ export default {
       timer: null, // 定时器
       hackReset: true, // 强制刷新组件
       commentLength: 1, // 判断评论是否加载完成
+      isShow: false, // 全屏播放
+      type: 0, // 判断数据类型
     };
+  },
+  computed: {
+    currentTime() {
+      return this.$store.state.viewPlay.currentTime; // 保存
+    },
+
+    isPlaying() {
+      return this.$store.state.viewPlay.playing; // 监听是否正在播放
+    },
+  },
+  watch: {
+    currentTime() {
+      if (!this.$store.state.viewPlay.viewOpen) {
+        this.mvDom.currentTime = this.$store.state.viewPlay.currentTime; // 修改播放时间
+        this.mvDom.play(); // 播放外部播放器
+        this.value =
+          this.mvDom.currentTime * (this.value / this.mvDom.duration); // 计算比例
+        clearInterval(this.timer); // 清除重复定时器
+        this.timer = setInterval(this.getNowTime, 1000); // 开始计时
+      }
+    },
+
+    isPlaying() {
+      if (this.$store.state.viewPlay.playing) {
+        this.Play = require("assets/img/mvPlay/zanting.svg");
+      } else {
+        this.Play = require("assets/img/mvPlay/bofang.svg");
+      }
+    },
   },
   // 监听路由变化
   beforeRouteUpdate(to, from, next) {
@@ -240,6 +293,10 @@ export default {
       this.simiMv = []; // 清空相关视频
       this.commentList = []; // 清空评论内容
       this.CommentLength = 0; // 重置评论数量
+      this.value = 0; // 重置进度条
+      this.second = 0; // 重置秒数
+      this.min = 0; // 重置分钟
+      clearInterval(this.timer); // 清除定时器
       this.showDetail = false;
       next();
       this.MvDetail(); // 获取mv信息
@@ -249,19 +306,37 @@ export default {
   },
   components: {
     mscroll,
+    FullScreen,
+    SendComment,
   },
   methods: {
-    // 更多mv路由跳转
-    moreMv(id) {
-      this.$router.push("/mvplay/" + id+'&'+this.$route.params.isMv);
+    // 发送评论成功后
+    successComment(commentDetail) {
+      this.commentList.unshift({
+        content: commentDetail.content, // 评论内容
+        likedCount: 0, // 喜欢数量
+        time: commentDetail.time, // 发布时间戳
+        userImg: commentDetail.avatarUrl, // 用户头像
+        userName: commentDetail.nickname, // 用户昵称
+        userId: commentDetail.id, // 用户id
+      });
     },
 
+    // 更多mv路由跳转
+    moreMv(id) {
+      this.$router.push("/mvplay/" + id + "&" + this.$route.params.isMv);
+    },
+    // 全屏播放
     viewMv() {
-      this.mvDom = document.getElementsByClassName("mv")[0];
-      this.mvDom.style = "width: 100%";
-      this.mvDom.style = "height: 110%";
-      // this.mvDom.style = 'transform: translateY('+ -90 +'deg);'
-      this.mvDom.webkitRequestFullScreen();
+      this.$store.state.viewPlay.viewOpen = true; // 全屏模式
+      this.isShow = true;
+      this.mvDom.pause(); // 暂停外部的播放器
+      this.$store.state.viewPlay.currentTime = this.mvDom.currentTime; // 保存最后的时间
+    },
+    // 退出全屏
+    toBack() {
+      this.$store.state.viewPlay.viewOpen = false; // 普通模式
+      this.isShow = false;
     },
 
     // 显示/隐藏按钮
@@ -278,7 +353,6 @@ export default {
 
     // 暂停/播放
     playPause() {
-      this.mvDom = document.getElementsByClassName("mv")[0];
       if (this.playIndex === 0) {
         this.mvDom.play();
         this.timer = setInterval(this.getNowTime, 1000);
@@ -299,7 +373,10 @@ export default {
 
     // 时间跳转
     onChange(value) {
-      this.mvDom.currentTime = value / (100 / (this.mvDetail.length / 1000));
+      this.mvDom.currentTime = value / (100 / (this.mvDetail.length / 1000)); // 设置时间
+      this.mvDom.play(); // 播放音乐
+      this.Play = require("assets/img/mvPlay/zanting.svg"); // 修改图标
+      this.playIndex = 1; // 修改索引
       this.min = Math.floor(this.mvDom.currentTime / 60);
       this.second = (this.mvDom.currentTime % 60).toFixed(0);
     },
@@ -341,16 +418,17 @@ export default {
 
     MvDetail() {
       // 判断 mv / video
-      if (this.$route.params.isMv == 'true') {
+      if (this.$route.params.isMv == "true") {
         // 获取mv数据
         getMvDetail(this.$route.params.mid).then((res) => {
+          this.type = 1;
           let path = res.data.data;
           this.comCount = path.commentCount;
           this.mvDetail.artistId = path.artistId; // 歌手id
           this.mvDetail.artistName = path.artistName; // 歌手名称
           this.mvDetail.commentCount = path.commentCount; // mv评论数量
           this.mvDetail.duration = durationTime(path.duration); // mv时长(毫秒)
-          this.mvDetail.length = path.duration
+          this.mvDetail.length = path.duration;
           this.mvDetail.name = path.name; // mv标题
           this.mvDetail.playCount = toStringNum(path.playCount) + "次观看"; // mv播放量
           this.mvDetail.publishTime = path.publishTime; // mv发布时间
@@ -379,14 +457,14 @@ export default {
         });
       } else {
         getVideoDetail(this.$route.params.mid).then((res) => {
-          console.log(res);
+          this.type = 5;
           let path = res.data.data;
           this.comCount = path.commentCount;
           this.mvDetail.artistId = path.artistId; // 歌手id
           this.mvDetail.artistName = path.artistName; // 歌手名称
           this.mvDetail.commentCount = path.commentCount; // mv评论数量
-          this.mvDetail.duration = durationTime(path.durationms); // mv时长(毫秒)
-          this.mvDetail.length = path.durationms
+          this.mvDetail.duration = formatDuring(path.durationms); // mv时长(毫秒)
+          this.mvDetail.length = path.durationms;
           this.mvDetail.name = path.title; // mv标题
           this.mvDetail.playCount = toStringNum(path.playTime) + "次观看"; // mv播放量
           this.mvDetail.publishTime = path.publishTime; // mv发布时间
@@ -417,7 +495,7 @@ export default {
     },
     // 获取mv播放url
     getMvUrl() {
-      if (this.$route.params.isMv == 'true') {
+      if (this.$route.params.isMv == "true") {
         getMv(this.$route.params.mid).then((res) => {
           this.mvUrl = res.data.data.url;
         });
@@ -429,7 +507,7 @@ export default {
     },
     // 封转方法
     getCommentList() {
-      if (this.$route.params.isMv == 'true') {
+      if (this.$route.params.isMv == "true") {
         // 发送网络请求
         if (this.commentLength > 0) {
           getMvComment(this.$route.params.mid, 30, this.offset * 30).then(
@@ -517,7 +595,6 @@ export default {
     },
   },
   created() {
-    console.log(this.$route.params.isMv == 'true');
     this.$loading.loadingShow();
     this.MvDetail(); // 获取mv/视频信息
     this.getMvUrl(); // 获取mv/视频url
@@ -529,10 +606,37 @@ export default {
       this.$loading.loadingNo();
       this.showDetail = true;
     }, 1300);
+
+    this.$nextTick(() => {
+      this.mvDom = document.getElementsByClassName("mv")[0];
+    });
   },
 };
 </script>
 <style scoped>
+.SendComment {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+}
+.animate {
+  transition: all 0.5s linear;
+}
+.v-enter {
+  opacity: 0;
+}
+.v-leave-to {
+  opacity: 0;
+}
+
+/* 动画执行期间 */
+.v-enter-active,
+.v-leave-active {
+  /* 添加动画效果 */
+  transition: all 0.2s linear;
+}
 .isPlay {
   position: relative;
   z-index: 60;
@@ -541,24 +645,23 @@ export default {
 }
 .mv {
   position: absolute;
-  /* top: -100px; */
-  height: 190px;
+  height: 5.05992rem;
   width: 100%;
 }
 .quanp {
   float: right;
 }
 .quanp img {
-  width: 20px;
-  height: 20px;
-  margin-top: 3px;
-  margin-right: 10px;
+  width: 0.532623rem;
+  height: 0.532623rem;
+  margin-top: 0.079893rem;
+  margin-right: 0.266312rem;
 }
 .nowTime {
   color: #fff;
-  font-size: 14px;
-  margin-top: 5px;
-  margin-left: 10px;
+  font-size: 0.372836rem;
+  margin-top: 0.133156rem;
+  margin-left: 0.266312rem;
   float: left;
 }
 .jindu {
@@ -573,8 +676,8 @@ export default {
   border-radius: 100px;
 }
 .content2 {
-  padding: 10px 16px 0;
-  border-bottom: 6px solid #ececec;
+  padding: 0.266312rem 0.426099rem 0;
+  border-bottom: 0.159787rem solid #ececec;
 }
 .MvPlay {
   width: 100%;
@@ -587,14 +690,14 @@ export default {
 }
 .mvbox {
   width: 100%;
-  height: 190px;
+  height: 5.05992rem;
   position: relative;
 }
 .topShadowBox {
   position: absolute;
   top: 0;
   width: 100%;
-  height: 30px;
+  height: 0.798935rem;
   background: linear-gradient(rgb(61, 61, 61), transparent);
   display: flex;
 }
@@ -609,7 +712,7 @@ export default {
 }
 .title {
   flex: 7;
-  width: 250px;
+  width: 6.65779rem;
   font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -621,16 +724,16 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 30px;
+  height: 0.798935rem;
   background: linear-gradient(transparent, rgb(70, 70, 70));
 }
 .mvName {
-  font-size: .45273rem;
+  font-size: 0.45273rem;
   font-weight: 550;
 }
 .playCount {
   margin-top: 10px;
-  font-size: 13.5px;
+  font-size: 0.359521rem;
   color: #818181;
   float: left;
 }
@@ -645,7 +748,7 @@ export default {
   margin-top: 11px;
   font-size: 10px;
   padding: 0px 9px;
-  border-radius: 26px;
+  border-radius: 0.69241rem;
   background-color: #ec4e46;
   color: #fff;
   transform: scale(0.9);
@@ -653,36 +756,36 @@ export default {
 .pushTime {
   clear: both;
   position: relative;
-  top: 7px;
+  top: 0.186418rem;
   color: #818181;
-  font-size: 13px;
+  font-size: 0.346205rem;
 }
 .tabbar {
   width: 100%;
-  height: 52px;
-  padding-bottom: 5px;
+  height: 1.38482rem;
+  padding-bottom: 0.133156rem;
   display: flex;
-  margin-top: 20px;
+  margin-top: 0.532623rem;
 }
 .tabItem {
   text-align: center;
   flex: 1;
 }
 .img2 {
-  width: 25px;
-  height: 25px;
+  width: 0.665779rem;
+  height: 0.665779rem;
   position: relative;
   top: 3px;
 }
 .img3 {
-  width: 24px;
-  height: 24px;
+  width: 0.639148rem;
+  height: 0.639148rem;
   position: relative;
   top: 3px;
 }
 .img1 {
-  width: 30px;
-  height: 30px;
+  width: 0.798935rem;
+  height: 0.798935rem;
 }
 .count2 {
   font-size: 12px;
@@ -694,33 +797,33 @@ export default {
 }
 .a2 {
   position: relative;
-  top: -8px;
+  top: -0.213049rem;
 }
 .a3 {
   position: relative;
-  top: -7px;
+  top: -0.186418rem;
 }
 .a4 {
   position: relative;
   top: -2px;
 }
 .videoContent {
-  padding: 10px 16px;
+  padding: 0.266312rem 0.426099rem;
   border-bottom: 6px solid #ececec;
 }
 .videoContent h1 {
-  font-size: 15px;
+  font-size: 0.399467rem;
 }
 .mvItem {
   /* width: 100%; */
-  height: 75px;
+  height: 1.997337rem;
   display: flex;
-  margin-top: 12px;
+  margin-top: 0.319574rem;
 }
 .cover {
   /* width: 140px; */
   height: 100%;
-  border-radius: 6px;
+  border-radius: 0.159787rem;
   overflow: hidden;
   flex: 3;
   position: relative;
@@ -729,8 +832,8 @@ export default {
 .num {
   position: absolute;
   top: 0;
-  right: 5px;
-  font-size: 13px;
+  right: 0.133156rem;
+  font-size: 0.346205rem;
   color: #fff;
 }
 .text {
@@ -741,31 +844,31 @@ export default {
   height: 100%;
 }
 .name {
-  font-size: 15px;
-  margin-left: 10px;
-  margin-top: 16px;
+  font-size: 0.399467rem;
+  margin-left: 0.266312rem;
+  margin-top: 0.426099rem;
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .time {
-  font-size: 13px;
-  margin-top: 4px;
-  margin-left: 10px;
+  font-size: 0.346205rem;
+  margin-top: 0.106525rem;
+  margin-left: 0.266312rem;
   color: #818181;
 }
 .mvComment {
-  padding: 10px 16px;
+  padding: 0.266312rem 0.426099rem;
   border-bottom: 6px solid #ececec;
 }
 .mvComment h1 {
-  font-size: 15px;
-  margin-bottom: 12px;
+  font-size: 0.399467rem;
+  margin-bottom: 0.319574rem;
 }
 .topbox {
   width: 100%;
-  height: 40px;
+  height: 1.065246rem;
   display: flex;
 }
 .userImg {
@@ -773,15 +876,15 @@ export default {
 }
 .userName {
   flex: 5;
-  font-size: 13px;
+  font-size: 0.346205rem;
   margin-top: 2px;
 }
 .name2 {
   position: relative;
 }
 .name2 img {
-  height: 24px;
-  margin-left: 3px;
+  height: 0.639148rem;
+  margin-left: 0.079893rem;
   position: absolute;
   top: -3px;
 }
@@ -794,15 +897,15 @@ export default {
   margin-top: -4px;
 }
 .userImg img {
-  width: 40px;
-  height: 40px;
+  width: 1.065246rem;
+  height: 1.065246rem;
   border-radius: 50%;
   overflow: hidden;
 }
 .count {
   color: #8b8b8b;
-  margin-top: 8px;
-  font-size: 14px;
+  margin-top: 0.213049rem;
+  font-size: 0.372836rem;
   float: right;
 }
 .count img {
@@ -812,21 +915,20 @@ export default {
 .bottombox {
   width: 100%;
   display: flex;
-  padding-bottom: 7px;
+  padding-bottom: 0.186418rem;
 }
 .left {
   flex: 1.2;
 }
 .right {
   flex: 7;
-  font-size: 13.7px;
-  padding-bottom: 7px;
+  font-size: 0.364847rem;
+  padding-bottom: 0.186418rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {
-  top: 190px;
-
+  top: 5.05992rem;
   background-color: #fff;
-  height: calc(100vh - 190px);
+  height: calc(100vh - 5.05992rem - 1.065246rem);
 }
 </style>

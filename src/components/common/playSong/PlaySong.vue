@@ -377,7 +377,6 @@ export default {
               this.songLyric[i] == this.songLyric[i + 1] ||
               this.songLyric[i] >= this.songLyric[i + 1]
             ) {
-              // console.log(this.songLyric[i]+ ',' + this.songLyric[i + 1]);
               this.songLyric.splice(i + 1, 1, this.songLyric[i + 1] + 0.5);
             }
           }

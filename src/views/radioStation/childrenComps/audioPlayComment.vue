@@ -53,7 +53,14 @@
           </div>
         </div>
       </div>
+      <div v-else class="noComment">还没有评论哦~</div>
     </mscroll>
+    <send-comment
+      @successComment="successComment"
+      :type="type"
+      :id="$route.params.id"
+      class="SendComment"
+    ></send-comment>
     <van-share-sheet
       v-model="showShare"
       title="立即分享给好友"
@@ -65,6 +72,7 @@
 <script>
 import mscroll from "components/common/muiScroll/MuiScroll";
 import { getCommentAudio } from "network/radioStation";
+import sendComment from "components/context/sendComment/SendComment"; // 发送评论
 export default {
   props: ["audioId"],
   name: "audioPlayComment",
@@ -89,9 +97,22 @@ export default {
       offset: 0, // 评论分页
       likedImg: require("assets/img/commentList/zan.svg"),
       commentLength: 1, // 评论数组数量
+      type: 4,
     };
   },
   methods: {
+    successComment(commentDetail) {
+      this.commentList.unshift({
+        content: commentDetail.content, // 评论内容
+        likedCount: 0, // 喜欢数量
+        time: commentDetail.time, // 发布时间戳
+        userImg: commentDetail.avatarUrl, // 用户头像
+        userName: commentDetail.nickname, // 用户昵称
+        userId: commentDetail.id, // 用户id
+        vipType: 0,
+      });
+    },
+
     back() {
       this.$emit("toback");
     },
@@ -146,12 +167,13 @@ export default {
           }
         );
       } else {
-        this.$toast.show('没有更多了:(', 1900)
+        this.$toast.show("没有更多了:(", 1900);
       }
     },
   },
   components: {
     mscroll,
+    sendComment,
   },
   created() {
     this.getComment();
@@ -159,8 +181,24 @@ export default {
 };
 </script>
 <style scoped>
+.noComment {
+  height: 13.315579rem;
+  line-height: 13.315579rem;
+  text-align: center;
+  font-size: 0.479361rem;
+  font-weight: 550;
+  color: #9c9c9c;
+}
+.SendComment {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
 .audioPlayComment {
   width: 100%;
+  height: 100vh;
   background: #fff;
   position: absolute;
   top: 0;
@@ -175,7 +213,7 @@ export default {
 }
 .nav {
   width: 100%;
-  height: 45px;
+  height: 1.198402rem;
   display: flex;
   color: #fff;
   background-color: rgb(212, 81, 74);
@@ -185,36 +223,36 @@ export default {
   flex: 1;
 }
 .left img {
-  width: 25px;
-  height: 20px;
+  width: 0.665779rem;
+  height: 0.532623rem;
   position: relative;
-  top: 12.5px;
-  margin-left: 6px;
+  top: 0.332889rem;
+  margin-left: 0.159787rem;
 }
 .center {
   flex: 7;
-  line-height: 45px;
-  font-size: 17px;
+  line-height: 1.198402rem;
+  font-size: 0.45273rem;
 }
 .rightbox {
   flex: 1;
 }
 .rightbox img {
-  width: 22px;
-  height: 22px;
+  width: 0.585885rem;
+  height: 0.585885rem;
   position: relative;
-  top: 11px;
-  margin-left: 9px;
+  top: 0.292943rem;
+  margin-left: 0.23968rem;
 }
 .comment {
-  height: 520px;
+  height: 13.848202rem;
 }
 .content {
-  padding: 16px 12px;
+  padding: 0.426099rem 0.319574rem;
 }
 .topbox {
   width: 100%;
-  height: 40px;
+  height: 1.065246rem;
   display: flex;
 }
 .userImg {
@@ -222,36 +260,36 @@ export default {
 }
 .userName {
   flex: 5;
-  font-size: 13px;
-  margin-top: 2px;
+  font-size: 0.346205rem;
+  margin-top: 0.053262rem;
 }
 .name {
   position: relative;
 }
 .name img {
-  height: 24px;
-  margin-left: 3px;
+  height: 0.639148rem;
+  margin-left: 0.079893rem;
   position: absolute;
-  top: -3px;
+  top: -0.079893rem;
 }
 .liked {
   flex: 2.2;
 }
 .addtime {
-  font-size: 12px;
+  font-size: 0.319574rem;
   color: #8b8b8b;
-  margin-top: -4px;
+  margin-top: -0.106525rem;
 }
 .userImg img {
-  width: 40px;
-  height: 40px;
+  width: 1.065246rem;
+  height: 1.065246rem;
   border-radius: 50%;
   overflow: hidden;
 }
 .count {
   color: #8b8b8b;
-  margin-top: 8px;
-  font-size: 14px;
+  margin-top: 0.213049rem;
+  font-size: 0.372836rem;
   float: right;
 }
 .count img {
@@ -261,20 +299,20 @@ export default {
 .bottombox {
   width: 100%;
   display: flex;
-  padding-bottom: 7px;
+  padding-bottom: 0.186418rem;
 }
 .left {
   flex: 1.3;
 }
 .right {
   flex: 7;
-  font-size: 13.7px;
-  padding-bottom: 7px;
+  font-size: 0.364847rem;
+  padding-bottom: 0.186418rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {
   top: 45px;
   background-color: #fff;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 1.065246rem - 1.065246rem);
 }
 </style>

@@ -57,6 +57,12 @@
         <div class="text">没有更多评论了:(</div>
       </div>
     </mscroll>
+    <send-comment
+      @successComment="successComment"
+      :type="type"
+      :id="$route.params.id"
+      class="SendComment"
+    ></send-comment>
     <van-share-sheet
       v-model="showShare"
       title="立即分享给好友"
@@ -68,6 +74,7 @@
 <script>
 import { getSheetComment } from "network/sheetInfo"; // 评论请求
 import { getAlbumComment } from "network/album";
+import sendComment from "components/context/sendComment/SendComment"; // 发送评论
 import mscroll from "components/common/muiScroll/MuiScroll";
 import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
@@ -94,13 +101,26 @@ export default {
         ],
       ],
       commentLength: 1, // 判断是否加载评论
-      more: true,  // 是否有更多评论
+      more: true, // 是否有更多评论
+      type: 2, // 评论类型
     };
   },
   components: {
     mscroll,
+    sendComment,
   },
   methods: {
+    successComment(commentDetail) {
+      this.commentList.unshift({
+        content: commentDetail.content, // 评论内容
+        likedCount: 0, // 喜欢数量
+        time: commentDetail.time, // 发布时间戳
+        userImg: commentDetail.avatarUrl, // 用户头像
+        userName: commentDetail.nickname, // 用户昵称
+        userId: commentDetail.id, // 用户id
+      });
+    },
+
     // 跳转路由
     profile(id) {
       this.$router.push("/Information/" + id);
@@ -136,10 +156,11 @@ export default {
     // 封转方法
     getCommentList(sid, list, offset) {
       if (this.$route.params.isAlbum == "false") {
+        this.type = 2;  // 评论类型--歌单
         // 发送网络请求
         if (this.more) {
           getSheetComment(sid, list, offset).then((res) => {
-            this.more = res.data.more
+            this.more = res.data.more;
             this.commentTitle = "评论(" + res.data.total + ")";
             // 判断评论数量
             this.commentLength = res.data.comments.length;
@@ -177,11 +198,11 @@ export default {
         } else {
           this.$toast.show("没有更多评论了:(", 1900);
         }
-      } else if(this.$route.params.isAlbum == "true"){
+      } else if (this.$route.params.isAlbum == "true") {
+        this.type = 3;  // 评论类型--歌单
         if (this.more) {
-          
           getAlbumComment(sid, list, offset).then((res) => {
-          this.more = res.data.more
+            this.more = res.data.more;
             this.commentTitle = "评论(" + res.data.total + ")";
             // 判断评论数量
             this.commentLength = res.data.comments.length;
@@ -227,6 +248,13 @@ export default {
 };
 </script>
 <style scoped>
+.SendComment {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
 .infoComment {
   width: 100%;
   /* height: 100vh; */
@@ -245,7 +273,7 @@ export default {
 }
 .nav {
   width: 100%;
-  height: 45px;
+  height: 1.198402rem;
   display: flex;
   color: #fff;
   background-color: rgb(212, 81, 74);
@@ -255,15 +283,15 @@ export default {
   flex: 1;
 }
 .left img {
-  width: 25px;
-  height: 20px;
+  width: 0.665779rem;
+  height: 0.532623rem;
   position: relative;
   top: 12.5px;
   margin-left: 6px;
 }
 .center {
   flex: 7;
-  line-height: 45px;
+  line-height: 1.198402rem;
   font-size: 0.479361rem;
   /* font-size: .399467rem; */
 }
@@ -271,21 +299,21 @@ export default {
   flex: 1;
 }
 .rightbox img {
-  width: 22px;
-  height: 22px;
+  width: 0.585885rem;
+  height: 0.585885rem;
   position: relative;
   top: 11px;
   margin-left: 9px;
 }
 .comment {
-  height: 520px;
+  height: 13.848202rem;
 }
 .content {
-  padding: 16px 12px;
+  padding: 0.426099rem 0.319574rem;
 }
 .topbox {
   width: 100%;
-  height: 40px;
+  height: 1.065246rem;
   display: flex;
 }
 .userImg {
@@ -293,14 +321,14 @@ export default {
 }
 .userName {
   flex: 5;
-  font-size: 13px;
-  margin-top: 2px;
+  font-size: 0.346205rem;
+  margin-top: 0.053262rem;
 }
 .name {
   position: relative;
 }
 .name img {
-  height: 24px;
+  height: 0.639148rem;
   margin-left: 3px;
   position: absolute;
   top: -3px;
@@ -309,7 +337,7 @@ export default {
   flex: 2.2;
 }
 .addtime {
-  font-size: 12px;
+  font-size: 0.319574rem;
   color: #8b8b8b;
   margin-top: -4px;
 }
@@ -321,8 +349,8 @@ export default {
 }
 .count {
   color: #8b8b8b;
-  margin-top: 8px;
-  font-size: 14px;
+  margin-top: 0.213049rem;
+  font-size: 0.372836rem;
   float: right;
 }
 .count img {
@@ -332,21 +360,21 @@ export default {
 .bottombox {
   width: 100%;
   display: flex;
-  padding-bottom: 7px;
+  padding-bottom: 0.186418rem;
 }
 .left {
   flex: 1.2;
 }
 .right {
   flex: 7;
-  font-size: 13.7px;
-  padding-bottom: 7px;
+  font-size: 0.364847rem;
+  padding-bottom: 0.186418rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {
-  top: 45px;
+  top: 1.198402rem;
   background-color: #fff;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 1.065246rem - 1.065246rem);
 }
 .noComment {
   width: 100%;
@@ -356,7 +384,7 @@ export default {
 }
 .text {
   position: relative;
-  font-size: 21px;
+  font-size: 0.559254rem;
   font-weight: 550;
   top: 45%;
   left: 50%;

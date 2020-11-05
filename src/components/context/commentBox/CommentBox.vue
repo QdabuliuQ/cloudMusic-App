@@ -1,69 +1,76 @@
 <template>
-    <van-action-sheet 
-    v-model="show" 
+  <van-action-sheet
+    v-model="show"
     :title="comLength"
-    :lock-scroll='false'
-    class="commentDetail">
-      <div class="content" v-if="comHot.length !== 0 || comList.length !== 0">
-        <div class="topComment" v-if="comHot.length !== 0">
-          <div class="perCom">精彩评论</div>
-          <div class="commentItem" v-for="(item, index) in comHot" :key="index">
-            <div class="left">
-              <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
-            </div>
-            <div class="right">
-              <div class="top">
-                <div class="uDetail">
-                  <div @click="profile(item.userId)" class="name">{{ item.nickname }}</div>
-                  <div class="time">{{ item.time | getTime }}</div>
-                </div>
-                <div class="like">
-                  {{ item.likedCount }}
-                  <img src="~assets/img/commentList/zan.svg" alt="" srcset="" />
-                </div>
-              </div>
-              <div class="bottom">
-                {{ item.content }}
-              </div>
-            </div>
+    :lock-scroll="false"
+    class="commentDetail"
+  >
+    <div class="content" v-if="comHot.length !== 0 || comList.length !== 0">
+      <div class="topComment" v-if="comHot.length !== 0">
+        <div class="perCom">精彩评论</div>
+        <div class="commentItem" v-for="(item, index) in comHot" :key="index">
+          <div class="left">
+            <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
           </div>
-        </div>
-        <div class="commentList">
-          <div class="perCom">最新评论</div>
-          <div
-            class="commentItem"
-            v-for="(item, index) in comList"
-            :key="index"
-          >
-            <div class="left">
-              <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
+          <div class="right">
+            <div class="top">
+              <div class="uDetail">
+                <div @click="profile(item.userId)" class="name">
+                  {{ item.nickname }}
+                </div>
+                <div class="time">{{ item.time | getTime }}</div>
+              </div>
+              <div class="like">
+                {{ item.likedCount }}
+                <img src="~assets/img/commentList/zan.svg" alt="" srcset="" />
+              </div>
             </div>
-            <div class="right">
-              <div class="top">
-                <div class="uDetail">
-                  <div @click="profile(item.userId)" class="name">{{ item.nickname }}</div>
-                  <div class="time">{{ item.time | getTime }}</div>
-                </div>
-                <div class="like">
-                  {{ item.likedCount }}
-                  <img src="~assets/img/commentList/zan.svg" alt="" srcset="" />
-                </div>
-              </div>
-              <div class="bottom">
-                {{ item.content }}
-              </div>
+            <div class="bottom">
+              {{ item.content }}
             </div>
           </div>
         </div>
       </div>
-      <div v-else class="noComment">
-          动态还没有评论哦~
+      <div class="commentList">
+        <div class="perCom">最新评论</div>
+        <div class="commentItem" v-for="(item, index) in comList" :key="index">
+          <div class="left">
+            <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
+          </div>
+          <div class="right">
+            <div class="top">
+              <div class="uDetail">
+                <div @click="profile(item.userId)" class="name">
+                  {{ item.nickname }}
+                </div>
+                <div class="time">{{ item.time | getTime }}</div>
+              </div>
+              <div class="like">
+                {{ item.likedCount }}
+                <img src="~assets/img/commentList/zan.svg" alt="" srcset="" />
+              </div>
+            </div>
+            <div class="bottom">
+              {{ item.content }}
+            </div>
+          </div>
+        </div>
       </div>
-    </van-action-sheet>
+    </div>
+    <div v-else class="noComment">动态还没有评论哦~</div>
+    <send-comment
+      @successComment="successComment"
+      :type="type"
+      :isDynamic='true'
+      :id="$store.state.commentId"
+      class="SendComment"
+    ></send-comment>
+  </van-action-sheet>
 </template>
 
 <script>
 import { getDynamicCom } from "network/dynamic";
+import sendComment from "components/context/sendComment/SendComment"; // 发送评论
 
 export default {
   name: "CommentBox",
@@ -75,14 +82,29 @@ export default {
       comLength: "",
       comHot: [], // 热评数组
       comList: [], // 普通评论数组
+      type: 6, // 评论类型
     };
   },
   methods: {
     // 跳转路由
-    profile(id){
-        this.$router.push('/Information/' + id)
-        this.$store.state.toggleInformation = 1
-    }  
+    profile(id) {
+      this.$router.push("/Information/" + id);
+      this.$store.state.toggleInformation = 1;
+    },
+
+    successComment(commentDetail) {
+      this.comList.unshift({
+        content: commentDetail.content, // 评论内容
+        likedCount: 0, // 喜欢数量
+        time: commentDetail.time, // 发布时间戳
+        avatarUrl: commentDetail.avatarUrl, // 用户头像
+        nickname: commentDetail.nickname, // 用户昵称
+        userId: commentDetail.id, // 用户id
+      });
+    },
+  },
+  components: {
+    sendComment,
   },
   watch: {
     show() {
@@ -125,33 +147,40 @@ export default {
 };
 </script>
 <style scoped>
-.CommentBox{
+.SendComment {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
+.CommentBox {
   position: relative;
   /* width: 100%;
   height: 100vh; */
 }
-.commentList{
-    margin-top: .266312rem;
+.commentList {
+  margin-top: 0.266312rem;
 }
-.noComment{
-    height: 13.315579rem;
-    line-height: 13.315579rem;
-    text-align: center;
-    font-size: .479361rem;
-    font-weight: 550;
-    color: #9c9c9c;
+.noComment {
+  height: 13.315579rem;
+  line-height: 13.315579rem;
+  text-align: center;
+  font-size: 0.479361rem;
+  font-weight: 550;
+  color: #9c9c9c;
 }
-.van-action-sheet__header{
-    height: 1.198402rem;
-    line-height: 1.198402rem;
-    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.116);
-    position: fixed;
-    border-top-left-radius: .532623rem;
-    border-top-right-radius: .532623rem;
-    z-index: 15;
-    left: 0;
-    right: 0;
-    background-color: #fff;
+.van-action-sheet__header {
+  height: 1.198402rem;
+  line-height: 1.198402rem;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.116);
+  position: fixed;
+  border-top-left-radius: 0.532623rem;
+  border-top-right-radius: 0.532623rem;
+  z-index: 15;
+  left: 0;
+  right: 0;
+  background-color: #fff;
 }
 .perCom {
   font-size: 0.399467rem;

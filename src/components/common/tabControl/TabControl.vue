@@ -43,7 +43,7 @@ export default {
         flex: 1;
     }
     .tab-control-item span{
-        padding: .133156rem .133156rem .199734rem;
+        padding: .133156rem .133156rem .079893rem;
     }
     .activeColor{
         color: red;

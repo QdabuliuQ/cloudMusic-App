@@ -60,7 +60,6 @@ export default {
   opacity: 0;
   /* 离开的时候向左 */
   transform: translateX(-100%);
-  position: absolute;
 }
 
 /* 动画执行期间 */

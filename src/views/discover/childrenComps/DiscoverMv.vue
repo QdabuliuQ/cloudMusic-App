@@ -70,6 +70,7 @@ export default {
 <style scoped>
 .mui-control-item {
   padding: 0.213049rem 0.186418rem 0.399467rem !important;
+  color: #000 !important;
 }
 #slider {
   height: 4.101198rem;
