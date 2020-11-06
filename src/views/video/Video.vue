@@ -1,6 +1,7 @@
 <template>
   <div class="Video">
     <scrollnav
+      ref="videoNav"
       class="snav"
       :itemList="itemList"
       :firstIndex="0"
@@ -51,7 +52,7 @@ export default {
     tabToggle(index) {
       // 判断是否切换导航栏
       if (this.activeIndex !== index) {
-        this.more = true
+        this.more = true;
         this.vedioList = []; // 清空数组
         this.offset = 0; // 清空页数
         this.getVideoDetail(this.itemId[index]); // 调用方法
@@ -86,7 +87,7 @@ export default {
           });
         });
       } else {
-        this.$toast.show('没有更多了:(', 1900)
+        this.$toast.show("没有更多了:(", 1900);
       }
     },
 

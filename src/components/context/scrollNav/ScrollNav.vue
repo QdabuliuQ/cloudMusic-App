@@ -67,22 +67,21 @@ export default {
     });
 
     this.$nextTick(() => {
-      this.tabIndex = this.firstIndex;
-      let span = document.getElementsByClassName("spItem")[this.firstIndex];
-      let bottomBor = document.getElementsByClassName("bottomBor")[0];  
-      Move(bottomBor, "left", span.offsetLeft, 170);   
+      setTimeout(() => {
+        this.tabItem(0)
+      },300)
     });
   },
 };
 </script>
 <style scoped>
-.mui-active{
+.mui-active {
   color: #000 !important;
 }
-.mui-content{
+.mui-content {
   background-color: transparent !important;
 }
-.mui-scroll{
+.mui-scroll {
   height: 1.091877rem !important;
 }
 .mui-control-item {
@@ -114,7 +113,7 @@ export default {
   font-size: 0.372836rem;
 }
 .item span {
-  padding: .133156rem .266312rem .266312rem;
+  padding: 0.133156rem 0.266312rem 0.266312rem;
 }
 .active {
   color: #e93d34 !important;

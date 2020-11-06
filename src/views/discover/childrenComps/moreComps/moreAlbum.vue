@@ -134,7 +134,6 @@ export default {
             });
             this.$loading.loadingNo();
           }
-          console.log(this.albumList);
         });
       }
       this.Area = area;

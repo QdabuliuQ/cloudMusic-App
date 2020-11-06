@@ -31,7 +31,7 @@
 
 <script>
 import sheetItem from "components/context/sheetItem/SheetItem";
-import { toStringNum } from "common/common"
+import { toStringNum } from "common/common";
 import { getHotSheet } from "network/discover";
 
 export default {
@@ -50,9 +50,9 @@ export default {
       this.$router.push("/playDetail/" + id + "&" + false);
     },
 
-    Sheet(){
+    Sheet() {
       this.$router.push("/discover/moreSheet");
-    }
+    },
   },
   created() {
     getHotSheet("hot", "全部", 6, this.offset * 6).then((res) => {
@@ -70,8 +70,8 @@ export default {
 };
 </script>
 <style scoped>
-.DiscoverSheet{
-    margin-top: .532623rem;
+.DiscoverSheet {
+  margin-top: 0.532623rem;
 }
 .mui-control-item {
   padding: 0.213049rem 0.186418rem 0.399467rem !important;
@@ -99,12 +99,12 @@ export default {
 .btn {
   float: right;
   width: 1.864181rem;
-  height:  .585885rem;
+  height: 0.585885rem;
   font-size: 0.319574rem;
   /* padding: .053262rem .159787rem; */
-  border-radius: .585885rem;
+  border-radius: 0.585885rem;
   text-align: center;
-  line-height:  .585885rem;
+  line-height: 0.585885rem;
   border: 1px solid #919090;
 }
 </style>

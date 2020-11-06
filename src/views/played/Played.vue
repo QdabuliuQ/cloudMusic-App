@@ -41,10 +41,6 @@ export default {
     },
     created () {
         this.$loading.loadingShow();
-        console.log(this.$route.params.id);
-        // getPlayList(this.$route.params.id,1).then(res => {
-        //     console.log(res);
-        // })
         // 获取数据
         getPlayList(this.$route.params.id,0).then(res => {
             for (const item of res.data.allData) {
@@ -53,7 +49,7 @@ export default {
                 mv: item.song.mv,
                 songName: item.song.name,
                 id: item.song.id,
-                singer: item.song.ar[0].name,
+                singer: item.song.ar,
                 zhuanji: item.song.al.name,
                 yuanc: item.song.alia})
             }

@@ -144,11 +144,6 @@ export default {
     },
     // 歌手页面跳转
     toSinger(id) {
-      // if (id !== 0) {
-      //   this.$router.push("/Information/" + id);
-      // } else {
-      //   this.$toast.show('暂时获取不到歌手信息',1900)
-      // }
       this.$router.push("/Information/" + id);
     },
 
@@ -217,7 +212,6 @@ export default {
   created() {
     // 默认显示华语男歌手
     getSinger(30, this.offset * 30, 1, 7).then((res) => {
-      console.log(res);
       for (const item of res.data.artists) {
         this.singerList.push({
           accountId: item.accountId || item.id,

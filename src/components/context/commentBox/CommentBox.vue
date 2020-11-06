@@ -8,14 +8,14 @@
     <div class="content" v-if="comHot.length !== 0 || comList.length !== 0">
       <div class="topComment" v-if="comHot.length !== 0">
         <div class="perCom">精彩评论</div>
-        <div class="commentItem" v-for="(item, index) in comHot" :key="index">
+        <div class="commentItem" @click="setComment" v-for="(item, index) in comHot" :key="index">
           <div class="left">
-            <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
+            <img @click.stop="profile(item.userId)" :src="item.avatarUrl" alt="" />
           </div>
           <div class="right">
             <div class="top">
               <div class="uDetail">
-                <div @click="profile(item.userId)" class="name">
+                <div @click.stop="profile(item.userId)" class="name">
                   {{ item.nickname }}
                 </div>
                 <div class="time">{{ item.time | getTime }}</div>
@@ -33,14 +33,14 @@
       </div>
       <div class="commentList">
         <div class="perCom">最新评论</div>
-        <div class="commentItem" v-for="(item, index) in comList" :key="index">
+        <div class="commentItem" @click="setComment" v-for="(item, index) in comList" :key="index">
           <div class="left">
-            <img @click="profile(item.userId)" :src="item.avatarUrl" alt="" />
+            <img @click.stop="profile(item.userId)" :src="item.avatarUrl" alt="" />
           </div>
           <div class="right">
             <div class="top">
               <div class="uDetail">
-                <div @click="profile(item.userId)" class="name">
+                <div @click.stop="profile(item.userId)" class="name">
                   {{ item.nickname }}
                 </div>
                 <div class="time">{{ item.time | getTime }}</div>
@@ -102,6 +102,10 @@ export default {
         userId: commentDetail.id, // 用户id
       });
     },
+
+    setComment(){
+      this.$refs.dynamicPopup.show = true
+    }
   },
   components: {
     sendComment,

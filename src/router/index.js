@@ -103,7 +103,14 @@ const routes = [
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
   { path: '/mvplay/:mid&:isMv', component: () => import('components/context/mvPlay/MvPlay') },  // mv/视频播放
 
-  { path: '/cloudVillage', component: cloudVillage },
+  { 
+    path: '/cloudVillage', 
+    component: cloudVillage,
+    children: [
+      { path: '/cloudVillage', redirect: '/hotcomment' },
+      { path: '/hotcomment', component: () => import('views/cloudVillage/childrenComps/Hotcomment') },  // 热评
+      { path: '/musicCalendar', component: () => import('views/cloudVillage/childrenComps/MusicCalendar') }  // 音乐日历
+    ]},
   { path: '/video', component: video }
 ]
 

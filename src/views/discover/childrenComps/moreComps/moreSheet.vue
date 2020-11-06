@@ -1,28 +1,6 @@
 <template>
   <div class="moreSheet">
     <menu-nav class="nav" :navTitle="'歌单广场'"></menu-nav>
-    <!-- <div class="mui-content" style="">
-      <div id="slider" class="mui-slider">
-        <div
-          id="sliderSegmentedControl"
-          class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
-        >
-          <div class="mui-scroll">
-            <a
-              class="mui-control-item"
-              :class="{ 'mui-active': aindex === index }"
-              @click="toggleSheet(index, item)"
-              v-for="(item, index) in tagsList"
-              :key="index"
-            >
-              <div class="box" :class="{ activeBorder: aindex === index }">
-                {{ item }}
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <scrollnav
       class="snav"
       @tabToggle="tabToggle"
@@ -141,7 +119,6 @@ export default {
 
     // 获取全部歌单数据
     getHotSheet("hot", "全部", 30, this.offset * 30).then((res) => {
-      console.log(res);
       for (const item of res.data.playlists) {
         this.sheetDetail.push({
           id: item.id, // 歌单id
