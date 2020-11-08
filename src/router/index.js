@@ -98,6 +98,7 @@ const routes = [
   { path: '/myMessage/login', component: () => import('components/context/login/Login') },  // 登录
   { path: '/myMessage/login/phoneLogin', component: () => import('components/context/phoneLogin/PhoneLogin') },  // 手机登录
   { path: '/myMessage/login/emailLogin', component: () => import('components/context/emailLogin/EmailLogin') },  // 邮箱登录
+  { path: '/myMessage/cloudDisk', component: () => import('views/cloudDisk/CloudDisk') },  // 云盘
 
   { path: '/playDetail/:id&:isAlbum', component: () => import('components/context/sheetInfo/SheetInfo') },  // 歌单/专辑内容
   { path: '/playSong/:sid', component: () => import('components/common/playSong/PlaySong') },  // 播放界面
@@ -109,7 +110,7 @@ const routes = [
     children: [
       { path: '/cloudVillage', redirect: '/hotcomment' },
       { path: '/hotcomment', component: () => import('views/cloudVillage/childrenComps/Hotcomment') },  // 热评
-      { path: '/musicCalendar', component: () => import('views/cloudVillage/childrenComps/MusicCalendar') }  // 音乐日历
+      { path: '/musicTopic', component: () => import('views/cloudVillage/childrenComps/MusicTopic') }  // 音乐日历
     ]},
   { path: '/video', component: video }
 ]

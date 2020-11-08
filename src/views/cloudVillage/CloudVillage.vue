@@ -20,7 +20,7 @@ export default {
   name: "CloudVillage",
   data () {
     return {
-      itemList: ['热评墙','音乐日历']
+      itemList: ['热评墙','热门话题']
     }
   },
   methods: {
@@ -30,7 +30,7 @@ export default {
           this.$router.replace('/hotcomment')
           break;
         case 1:
-          this.$router.replace('/musicCalendar')
+          this.$router.replace('/musicTopic')
           break;
         default:
           break;
@@ -49,6 +49,7 @@ export default {
 .CloudVillage {
   width: 100%;
   margin-top: 1.171771rem;
+  background-color: #fff;
 }
 .topbox {
   /* width: 60%; */

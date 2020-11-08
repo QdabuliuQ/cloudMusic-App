@@ -12,7 +12,7 @@
           </div>
           <span>本地音乐</span>
         </div>
-        <div class="box1">
+        <div class="box1" @click="myDisk">
           <div class="icon iconbox2">
             <img src="~assets/img/myMessage/menu/yunpan.png" alt="" />
           </div>
@@ -100,6 +100,15 @@ export default {
     myPlayed() {
       console.log(this.$store.state.profile.userId);
       this.$router.push("/played/" + this.$store.state.profile.userId);
+    },
+
+    myDisk(){
+      if (!this.$store.state.cookie) {
+        this.$toast.show("您需要先登录哦", 1900);
+        this.$router.push("/myMessage/login");
+      } else {
+        this.$router.push('/myMessage/cloudDisk');
+      }
     },
 
     myCollection() {

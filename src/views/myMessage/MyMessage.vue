@@ -66,7 +66,7 @@ export default {
     },
 
     toLove() {
-      this.$router.push("/playDetail/" + this.$store.state.playList[0].id);
+      this.$router.push("/playDetail/" + this.$store.state.playList[0].id+'&'+false);
     },
   },
   created() {},

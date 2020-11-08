@@ -29,3 +29,15 @@ export function getCalendar(cookie, startTime, endTime) {
         }
     })
 }
+
+// 热门话题
+export function getHotTopic(limit, offset, cookie){
+    return request({
+        url: '/hot/topic',
+        params: {
+            limit, 
+            offset,
+            cookie
+        }
+    })
+}

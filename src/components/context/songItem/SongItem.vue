@@ -112,9 +112,9 @@ export default {
   flex: 0.7;
 }
 .mv img {
-  width: .639148rem;
-  height: .532623rem;
-  margin-top: .266312rem;
+  width: .69241rem;
+  height: .585885rem;
+  margin-top: .186418rem;
   float: right;
 }
 .more {

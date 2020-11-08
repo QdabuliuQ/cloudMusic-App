@@ -120,7 +120,7 @@ export default {
 
     // 用户喜欢的音乐
     userLike() {
-      this.$router.push("/playDetail/" + this.likeSheet.id);
+      this.$router.push("/playDetail/" + this.likeSheet.id+'&'+false);
     },
 
     // 用户创建的歌单

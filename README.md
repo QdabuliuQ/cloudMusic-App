@@ -19,8 +19,8 @@
 * 首页轮播图
 * 歌曲MV播放界面UI完成/进度条实时更新/时间实时更新
 * MV评论加载/更多MV推荐
-* 我的电台UI布局/我的电台首页布局/电台分类UI布局
-* 电台分类列表/电台详情布局/电台播放/电台评论/电台封面简介动画切换
+* 我的电台/我的电台首页/电台分类
+* 电台分类列表/电台详情/电台播放/电台评论/电台封面简介动画切换
 * 电台播放时间实时更新/跳转/电台排行
 * 个人信息界面/个人基本信息/歌单/动态/关注粉丝列表
 * 歌手信息界面/歌曲/简介/专辑/MV/动态/关注粉丝列表
@@ -30,10 +30,93 @@
 * 视频/视频分类/分类切换/视频播放/视频全屏播放(全屏模式下暂时无法拖动进度条跳转)
 * 发表评论（歌曲、mv、歌单、专辑、电台、视频、动态）以上都支持
 * 热评墙
+* 热门话题
 
 ### 项目难点：
 * 1、歌曲播放界面进度条的实时更新，需要获取到歌曲的时间，计算进度条在每一秒中需要移动多少PX。
-* 2、歌曲歌词界面，歌词的实时滚动，通过API请求获取歌词数据，再通过正则表达式分别筛选出歌词和每一行歌词的时间，当歌词播放到一个时间点会进行判断，并进行歌词滚动。（目前该功能还有bug，有待解决）
+* 2、歌曲歌词界面，歌词的实时滚动，通过API请求获取歌词数据，再通过正则表达式分别筛选出歌词和每一行歌词的时间，当歌词播放到一个时间点会进行判断，并进行歌词滚动。
+```js
+this.$store.state.navMusicDom.addEventListener("timeupdate", () => {
+  // 判断有没有歌词
+  if (this.lyricText.length !== 0) {
+    // 判断歌曲时间在歌词区间
+    if (
+      this.$store.state.navMusicDom.currentTime >=
+        this.songLyric[this.index] &&
+      this.$store.state.navMusicDom.currentTime <=
+        this.songLyric[this.index + 1]
+    ) {
+      var huiche = /^\n/; // 正则匹配回车符
+      if (huiche.test(this.lyricText[this.index])) {
+      } else {
+        if (document.getElementsByClassName("active")[0] !== undefined) {
+          if (
+            document.getElementsByClassName("itemSpan")[this.zindex]
+              .offsetTop >
+            document.getElementsByClassName("LyricListContent")[0]
+              .clientHeight /
+              2
+          ) {
+            this.yscroll =
+              document.getElementsByClassName("itemSpan")[this.zindex]
+                .offsetTop -
+              document.getElementsByClassName("LyricListContent")[0]
+                .clientHeight /
+                2 +
+              document.getElementsByClassName("itemSpan")[this.zindex]
+                .clientHeight /
+                2;
+            this.$refs.list.style.transform =
+              "translateY(" + -this.yscroll + "px)";
+            this.$refs.list.style.transition = "0.3s linear";
+          }
+        }
+        this.zindex++;
+      }
+      this.index++; // 索引++
+      this.activeIndex++; // 歌词索引++
+    }
+  }
+});
+```
+在拖动进度条的时候，歌曲也需同步滚动，通过给 video 标签绑定 onseeked 事件，来进行滚动。
+```js
+// seeked 事件 在进度发生改变的时候触发
+this.$store.state.navMusicDom.addEventListener("seeked", () => {
+  if (this.$store.state.navMusicDom.currentTime < 1) {
+    this.index = 0; // 清空索引
+    this.zindex = 0;
+    this.activeIndex = 0;
+    this.yscroll = 0; // 清空滚动距离
+    this.$refs.list.style.transform = "translateY(0px)"; // 滚动回顶部
+  } else {
+    // for 循环遍历歌词数组  songLyric歌词时间数组
+    for (let i = 0; i < this.songLyric.length; i++) {
+      // 判断滚动到哪个歌词区间
+      if (
+        // 获取当前video播放到的currentTime
+        // 遍历歌词时间列表  找出所对应的时间段
+        this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
+        this.$store.state.navMusicDom.currentTime < this.songLyric[i + 1] &&
+        // 判断歌词是否滚动到了中间  滚动到了中间才会进行歌词跳转
+        document.getElementsByClassName("itemSpan")[i].offsetTop > document.getElementsByClassName("LyricListContent")[0].clientHeight / 2
+      ) {
+        // 获取目标歌词距离顶部的距离  -  LyricListContent 元素的中间线
+        let scroll = document.getElementsByClassName("itemSpan")[i - 2].offsetTop - document.getElementsByClassName("LyricListContent")[0].clientHeight / 2
+        // 移动到中间线的位置后加上  目标歌词元素的高度 / 2 使其居中
+        this.yscroll = scroll + document.getElementsByClassName("itemSpan")[i - 2].clientHeight / 2
+        // 赋值给滚动元素
+        this.$refs.list.style.transform =
+          "translateY(" + -this.yscroll + "px)";
+        this.activeIndex = i;  // 高亮索引
+        this.index = i;
+        this.zindex = i;  // 自动滚动索引
+        break;
+      }
+    }
+  }
+});
+```
 * 3、MV播放界面的推荐内容，当点击推荐内容的时候需要进行跳转，可以通过 beforeRouteUpdate 来监听路由变化
 ```js
 beforeRouteUpdate(to, from, next) {
