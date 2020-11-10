@@ -25,6 +25,7 @@ import { Slider } from 'vant';
 import { ActionSheet } from 'vant';
 import { ShareSheet } from 'vant';
 import { ImagePreview } from 'vant';
+import { Popup } from 'vant';
 
 // 引入css样式
 import 'vant/lib/index.css';
@@ -38,6 +39,7 @@ Vue.use(Slider);  // 滑块
 Vue.use(ActionSheet);  // 动作面板
 Vue.use(ShareSheet);  // 分享面板
 Vue.use(ImagePreview);
+Vue.use(Popup);
 
 // 图片懒加载
 import VueLazyLoad from 'vue-lazyload'

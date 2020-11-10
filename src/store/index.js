@@ -46,7 +46,10 @@ export default new Vuex.Store({
       currentTime: 0,  // 外部播放器实时时间
       viewOpen: false,  // 判断全屏播放是否打开
       playing: false,  // 判断是否正在播放
-    }
+    },
+
+    threadId: 0,  // 热评id
+    typeId: 0,  // 评论类型id
   },
   mutations: {
   },

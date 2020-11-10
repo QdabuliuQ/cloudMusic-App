@@ -3,7 +3,7 @@
     <div class="bbox">
       <div class="box" v-if="$store.state.playList.length !== 0">
         <div class="left">
-            <div class="imgBox">
+            <div class="imgBox1">
                 <img :src="$store.state.playList[0].coverImgUrl" alt="" />
             </div>
         </div>
@@ -55,17 +55,17 @@ export default {
 <style scoped>
 .MyMessageLove {
   width: 100%;
-  height: 1.59787rem;
+  height: 1.864181rem;
   background-color: #fff;
-  margin-top: 15px;
-  border-radius: 8px;
+  margin-top: .399467rem;
+  border-radius: .213049rem;
   display: flex;
   align-items: center;
 }
 .bbox {
   margin: 0 auto;
   width: 95%;
-  height: 82%;
+  height: 1.331558rem;
 }
 .box {
   display: flex;
@@ -73,7 +73,7 @@ export default {
 .left {
   flex: 1.5;
   height: 1.331558rem;
-  border-radius: 8px;
+  border-radius: .213049rem;
   overflow: hidden;
   text-align: center;
   display: flex;
@@ -82,7 +82,7 @@ export default {
 .left1 {
   flex: 1.45;
   height: 1.331558rem;
-  border-radius: 8px;
+  border-radius: .213049rem;
   overflow: hidden;
   background-color: #ebcece;
   text-align: center;
@@ -97,14 +97,14 @@ export default {
   /* margin-top: 8px;*/
   margin-left: 0.266312rem;
   font-size: .372836rem;
-  height: 17px;
-  line-height: 17px;
+  height: .45273rem;
+  line-height: .45273rem;
 }
 .count {
   margin-left: 0.266312rem;
   font-size: .319574rem;
-  height: 17px;
-  line-height: 17px;
+  height: .45273rem;
+  line-height: .45273rem;
   color: #aaaaaa;
 }
 .center {
@@ -119,8 +119,8 @@ export default {
 }
 .loveMode {
   width: 2.52996rem;
-  height: 25px;
-  border-radius: 25px;
+  height: .665779rem;
+  border-radius: .665779rem;
   margin: 0 auto;
   border: 1px solid #cdcdcd;
 }
@@ -134,13 +134,18 @@ export default {
   font-size: 12px;
   position: relative;
   /* left: 2px; */
-  top: 1.5px;
+  top: .039947rem;
 }
 .aixin {
   width: 0.745672rem;
   height: 0.69241rem;
 }
 .imgBox {
+  width: .745672rem;
+  height: .69241rem;
+  margin: 0 auto;
+}
+.imgBox1{
   margin: 0 auto;
 }
 .rightBox {

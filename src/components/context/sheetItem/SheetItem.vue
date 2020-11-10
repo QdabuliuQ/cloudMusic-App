@@ -45,6 +45,9 @@ export default {
 };
 </script>
 <style scoped>
+.programbox{
+  min-height: .798935rem;
+}
 .proName{
   width: 100%;
   font-size: .372836rem;

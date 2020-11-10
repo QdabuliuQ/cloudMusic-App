@@ -2,6 +2,7 @@
   <div id="app">
     <!-- 顶部导航栏 -->
     <music-navbar class="appnav"></music-navbar>
+    <left-popup></left-popup>
     <transition mode="">
       <!-- exclude 不会保存对应的组件 -->
       <keep-alive
@@ -18,6 +19,7 @@
 
 <script>
 import musicNavbar from "components/context/musicNavbar/MusicNavbar";
+import LeftPopup from "views/leftPopup/LeftPopup"
 import playNav from "./components/context/playNav/PlayNav";
 
 export default {
@@ -25,6 +27,7 @@ export default {
   components: {
     musicNavbar,
     playNav,
+    LeftPopup,
   },
 };
 </script>

@@ -7,7 +7,7 @@ import {request} from './request'
 // 4: 电台
 // 5: 视频
 // 6: 动态
-export function getComment(t, type, id, content, cookie){
+export function getComment(t, type, id, content, cookie, commentId){
     return request({
         url: '/comment',
         params: {
@@ -15,7 +15,8 @@ export function getComment(t, type, id, content, cookie){
             type, 
             id, 
             content,
-            cookie
+            cookie,
+            commentId
         }
     })
 }

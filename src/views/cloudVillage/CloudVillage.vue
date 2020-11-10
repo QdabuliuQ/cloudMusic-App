@@ -37,8 +37,14 @@ export default {
       }
     }
   },
+  created () {
+    this.$loading.loadingShow();
+  },
   mounted () {
     this.$refs.villageNav.tabItem(0)
+    this.$nextTick(() => {
+      this.$loading.loadingNo();
+    })
   },
   components: {
     scrollnav,

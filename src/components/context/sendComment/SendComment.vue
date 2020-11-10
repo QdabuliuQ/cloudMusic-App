@@ -40,6 +40,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isComment: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -60,6 +64,28 @@ export default {
               this.id,
               this.content,
               this.$store.state.cookie
+            ).then((res) => {
+              // 保存数据
+              this.commentDetail.id = res.data.comment.user.userId;
+              this.commentDetail.content = res.data.comment.content;
+              this.commentDetail.time = res.data.comment.time;
+              this.commentDetail.avatarUrl = res.data.comment.user.avatarUrl;
+              this.commentDetail.nickname = res.data.comment.user.nickname;
+              this.$toast.show("发布成功", 1900);
+              this.content = ""; // 清空内容
+              this.$emit("successComment", this.commentDetail);
+            });
+          }
+        } else if (this.isComment) {
+          console.log(this.$store.state.typeId);
+          if (this.content !== "") {
+            getComment(
+              this.t,
+              this.type,
+              this.$store.state.typeId,
+              this.content,
+              this.$store.state.cookie,
+              this.$store.state.threadId
             ).then((res) => {
               // 保存数据
               this.commentDetail.id = res.data.comment.user.userId;

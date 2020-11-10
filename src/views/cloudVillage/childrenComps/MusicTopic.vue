@@ -27,14 +27,7 @@ export default {
       }
     },
     created () {
-      let s = new Date('2020-11-1').getTime();
-      let e = new Date('2020-11-7').getTime();
-      getCalendar(this.$store.state.cookie, s, e).then(res => {
-        console.log(res);
-      })
-
       getHotTopic(30, this.offset * 30, this.$store.state.cookie).then(res => {
-        console.log(res);
         for (const item of res.data.hot) {
           this.topicList.push({
             id: item.actId,

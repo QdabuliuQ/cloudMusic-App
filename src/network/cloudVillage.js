@@ -41,3 +41,17 @@ export function getHotTopic(limit, offset, cookie){
         }
     })
 }
+
+// 楼层评论
+export function getCommentFloor(parentCommentId, id, type, limit, time){
+    return request({
+        url: '/comment/floor',
+        params:{
+            parentCommentId, 
+            id, 
+            type,
+            limit, 
+            time
+        }
+    })
+}

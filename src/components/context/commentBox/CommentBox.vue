@@ -102,10 +102,6 @@ export default {
         userId: commentDetail.id, // 用户id
       });
     },
-
-    setComment(){
-      this.$refs.dynamicPopup.show = true
-    }
   },
   components: {
     sendComment,

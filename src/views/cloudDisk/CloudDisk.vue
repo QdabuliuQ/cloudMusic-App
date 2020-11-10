@@ -1,6 +1,6 @@
 <template>
   <div class="CloudDisk">
-    <menunav :songList="songList" :navTitle="'音乐云盘'"></menunav>
+    <menunav class="nav" :songList="songList" :navTitle="'音乐云盘'"></menunav>
     <div class="SheetNav">
       <img src="~assets/img/played/bofang.svg" alt="" />
       <span
@@ -12,7 +12,7 @@
       <div class="box">歌曲永久保存，随时随地多端畅听</div>
     </div>
     <div class="btn">
-        <img src="~assets/img/myMessage/sc.svg" alt="">
+      <img src="~assets/img/myMessage/sc.svg" alt="" />
     </div>
   </div>
 </template>
@@ -97,21 +97,28 @@ export default {
   width: 100%;
   position: relative;
 }
-.btn{
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.btn {
   width: 1.198402rem;
   height: 1.198402rem;
   border-radius: 50%;
   background-color: red;
   position: fixed;
-  left: .266312rem;
+  left: 0.266312rem;
   bottom: 1.464714rem;
   text-align: center;
 }
-.btn img{
-    width: .745672rem;
-    margin-top: .266312rem
+.btn img {
+  width: 0.745672rem;
+  margin-top: 0.266312rem;
 }
 .content {
+  margin-top: 1.171771rem;
   padding: 0 0.319574rem 0.319574rem;
   background-color: #fff;
   min-height: 15.978695rem;
@@ -166,12 +173,12 @@ export default {
   top: 0px;
   left: 0.45273rem;
 }
-.box{
-    width: 100%;
-    height: 1.331558rem;
-    line-height: 1.331558rem;
-    text-align: center;
-    color: #808080;
-    font-size: .346205rem;
+.box {
+  width: 100%;
+  height: 1.331558rem;
+  line-height: 1.331558rem;
+  text-align: center;
+  color: #808080;
+  font-size: 0.346205rem;
 }
 </style>
