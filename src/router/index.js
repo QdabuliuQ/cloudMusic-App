@@ -112,7 +112,8 @@ const routes = [
       { path: '/hotcomment', component: () => import('views/cloudVillage/childrenComps/Hotcomment') },  // 热评
       { path: '/musicTopic', component: () => import('views/cloudVillage/childrenComps/MusicTopic') }  // 音乐日历
     ]},
-  { path: '/video', component: video }
+  { path: '/video', component: video },
+
 ]
 
 const router = new VueRouter({

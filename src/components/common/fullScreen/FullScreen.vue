@@ -48,7 +48,6 @@ export default {
   data() {
     return {
       value: 0,
-      // require("assets/img/mvPlay/bofang.svg"),
       Play: require("assets/img/mvPlay/zanting.svg"),
       showSetBox: false,
       playing: true,
@@ -93,7 +92,7 @@ export default {
         this.$store.state.viewPlay.playing = false;
         clearInterval(this.timer);
       } else {
-        if (this.value == 100) {
+        if (this.value >= 100) {
           this.value = 0;
           this.$store.state.fullSecreenVideo.currentTime = 0;
         }
@@ -127,9 +126,21 @@ export default {
       this.$store.state.fullSecreenVideo = document.getElementById(
         "fullSecreenVideo"
       );
-      this.$store.state.viewPlay.playing = true;  // 正在播放
-      this.$store.state.fullSecreenVideo.play();
-      this.$store.state.fullSecreenVideo.currentTime = this.$store.state.viewPlay.currentTime; // 将外部保存的时间放入内部播放器
+      // 判断外部播放器是否正在播放
+      if (this.$store.state.viewPlay.outPlaying) {
+        this.$store.state.fullSecreenVideo.currentTime = this.$store.state.viewPlay.currentTime; // 将外部保存的时间放入内部播放器
+        this.$store.state.fullSecreenVideo.play();
+        this.Play = require("assets/img/mvPlay/zanting.svg");
+        this.$store.state.viewPlay.playing = true; // 正在播放
+        this.playing = false;
+        this.timer = setInterval(this.linearPlay, 1000);
+      } else {
+        this.$store.state.fullSecreenVideo.pause();
+        this.playing = true;
+        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.$store.state.viewPlay.playing = false; // 暂停播放
+        clearInterval(this.timer);
+      }
     });
   },
   mounted() {
@@ -146,8 +157,6 @@ export default {
       //  console.log(conH+'--'+conW);
       this.$refs.playBox.style.width = conH + "px";
       this.$refs.playBox.style.height = conW + "px";
-
-      this.timer = setInterval(this.linearPlay, 1000);
     });
   },
   destroyed() {
@@ -157,7 +166,7 @@ export default {
 };
 </script>
 <style scoped>
-.FullScreen-enter{
+.FullScreen-enter {
   opacity: 0;
 }
 .FullScreen-leave-to {

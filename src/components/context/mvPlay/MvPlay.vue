@@ -9,50 +9,58 @@
         x5-video-player-type="h5"
         x5-video-orientation="landscape"
       ></video>
-      <div v-show="showPlay" @click="playPause" class="isPlay animate">
-        <img :src="Play" alt="" />
-      </div>
-      <div class="topShadowBox animate" v-show="showJd">
-        <div class="back" @click="back">
-          <img src="~assets/img/common/fanhui.svg" alt="" />
+      <transition name="mv">
+        <div v-show="showPlay" @click="playPause" class="isPlay animate">
+          <img :src="Play" alt="" />
         </div>
-        <div class="title">
-          {{ mvDetail.name }}
+      </transition>
+      <transition name="mv">
+        <div class="topShadowBox animate" v-show="showJd">
+          <div class="back" @click="back">
+            <img src="~assets/img/common/fanhui.svg" alt="" />
+          </div>
+          <div class="title">
+            {{ mvDetail.name }}
+          </div>
         </div>
-      </div>
+      </transition>
       <!-- 时间按钮 -->
-      <div class="bottomShadowBox animate" v-show="showJd">
-        <div class="nowTime" v-if="$route.params.isMv == true">
-          {{ min > 9 ? min : "0" + min }}:{{
-            second > 9 ? second : "0" + second
-          }}
-          / {{ mvDetail.duration | mvTime }}
+      <transition name="mv">
+        <div class="bottomShadowBox animate" v-show="showJd">
+          <div class="nowTime" v-if="$route.params.isMv == true">
+            {{ min > 9 ? min : "0" + min }}:{{
+              second > 9 ? second : "0" + second
+            }}
+            / {{ mvDetail.duration | mvTime }}
+          </div>
+          <div class="nowTime" v-else>
+            {{ min > 9 ? min : "0" + min }}:{{
+              second > 9 ? second : "0" + second
+            }}
+            / {{ mvDetail.duration }}
+          </div>
+          <div class="quanp">
+            <img
+              @click.stop="viewMv"
+              src="~assets/img/mvPlay/quanping.svg"
+              alt=""
+            />
+          </div>
         </div>
-        <div class="nowTime" v-else>
-          {{ min > 9 ? min : "0" + min }}:{{
-            second > 9 ? second : "0" + second
-          }}
-          / {{ mvDetail.duration }}
-        </div>
-        <div class="quanp">
-          <img
-            @click.stop="viewMv"
-            src="~assets/img/mvPlay/quanping.svg"
-            alt=""
-          />
-        </div>
-      </div>
+      </transition>
       <!-- 进度条 -->
-      <van-slider
-        @change="onChange"
-        class="jindu"
-        v-model="value"
-        active-color="#ee0a24"
-      >
-        <template #button>
-          <div v-show="showBtn" class="custom-button"></div>
-        </template>
-      </van-slider>
+      <transition name="mv">
+        <van-slider
+          @change="onChange"
+          class="jindu"
+          v-model="value"
+          active-color="#ee0a24"
+        >
+          <template #button>
+            <div v-show="showBtn" class="custom-button"></div>
+          </template>
+        </van-slider>
+      </transition>
     </div>
     <mscroll class="conscroll" :scrollY="true">
       <div class="content2" v-show="showDetail">
@@ -266,26 +274,6 @@ export default {
       return this.$store.state.viewPlay.playing; // 监听是否正在播放
     },
   },
-  watch: {
-    currentTime() {
-      if (!this.$store.state.viewPlay.viewOpen) {
-        this.mvDom.currentTime = this.$store.state.viewPlay.currentTime; // 修改播放时间
-        this.mvDom.play(); // 播放外部播放器
-        this.value =
-          this.mvDom.currentTime * (this.value / this.mvDom.duration); // 计算比例
-        clearInterval(this.timer); // 清除重复定时器
-        this.timer = setInterval(this.getNowTime, 1000); // 开始计时
-      }
-    },
-
-    isPlaying() {
-      if (this.$store.state.viewPlay.playing) {
-        this.Play = require("assets/img/mvPlay/zanting.svg");
-      } else {
-        this.Play = require("assets/img/mvPlay/bofang.svg");
-      }
-    },
-  },
   // 监听路由变化
   beforeRouteUpdate(to, from, next) {
     if (to.fullPath != from.fullPath) {
@@ -332,11 +320,23 @@ export default {
       this.isShow = true;
       this.mvDom.pause(); // 暂停外部的播放器
       this.$store.state.viewPlay.currentTime = this.mvDom.currentTime; // 保存最后的时间
+      if (this.value < 100 && this.playIndex == 1) {
+        this.$store.state.viewPlay.outPlaying = true; // 正在播放
+      }
     },
     // 退出全屏
     toBack() {
       this.$store.state.viewPlay.viewOpen = false; // 普通模式
       this.isShow = false;
+      if (this.$store.state.viewPlay.playing) {
+        this.Play = require("assets/img/mvPlay/zanting.svg");
+        this.mvDom.play(); // 播放外部播放器
+        this.timer = setInterval(this.getNowTime, 1000); // 开始计时
+      } else {
+        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.mvDom.pause(); // 播放外部播放器
+        clearInterval(this.timer); // 清除定时器
+      }
     },
 
     // 显示/隐藏按钮
@@ -355,6 +355,7 @@ export default {
     playPause() {
       if (this.playIndex === 0) {
         this.mvDom.play();
+        clearInterval(this.timer); // 清除定时器
         this.timer = setInterval(this.getNowTime, 1000);
         this.Play = require("assets/img/mvPlay/zanting.svg");
         this.playIndex = 1;
@@ -614,15 +615,23 @@ export default {
 };
 </script>
 <style scoped>
+.mv-enter {
+  opacity: 0;
+}
+.mv-leave-to {
+  opacity: 0;
+}
+.mv-enter-active,
+.mv-leave-active {
+  /* 添加动画效果 */
+  transition: all 0.15s linear;
+}
 .SendComment {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 99;
-}
-.animate {
-  transition: all 0.5s linear;
 }
 .v-enter {
   opacity: 0;

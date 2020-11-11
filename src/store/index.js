@@ -45,7 +45,8 @@ export default new Vuex.Store({
     viewPlay: {
       currentTime: 0,  // 外部播放器实时时间
       viewOpen: false,  // 判断全屏播放是否打开
-      playing: false,  // 判断是否正在播放
+      playing: false,  // 判断内部是否正在播放
+      outPlaying: false,  // 外部播放器
     },
 
     threadId: 0,  // 热评id
