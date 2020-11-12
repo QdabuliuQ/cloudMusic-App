@@ -330,9 +330,12 @@ export default {
       this.isShow = false;
       if (this.$store.state.viewPlay.playing) {
         this.Play = require("assets/img/mvPlay/zanting.svg");
+        this.mvDom.currentTime = this.$store.state.fullSecreenVideo.currentTime
         this.mvDom.play(); // 播放外部播放器
+        clearInterval(this.timer); // 清除定时器
         this.timer = setInterval(this.getNowTime, 1000); // 开始计时
       } else {
+        this.mvDom.currentTime = this.$store.state.fullSecreenVideo.currentTime
         this.Play = require("assets/img/mvPlay/bofang.svg");
         this.mvDom.pause(); // 播放外部播放器
         clearInterval(this.timer); // 清除定时器
@@ -610,6 +613,7 @@ export default {
 
     this.$nextTick(() => {
       this.mvDom = document.getElementsByClassName("mv")[0];
+      this.$store.state.navMusicDom.seeked();
     });
   },
 };

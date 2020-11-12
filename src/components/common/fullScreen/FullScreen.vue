@@ -68,6 +68,7 @@ export default {
   methods: {
     onChange() {},
     back() {
+      this.$store.state.fullSecreenVideo.currentTime = this.$store.state.fullSecreenVideo.currentTime
       this.$emit("toBack");
     },
 
@@ -132,11 +133,11 @@ export default {
         this.$store.state.fullSecreenVideo.play();
         this.Play = require("assets/img/mvPlay/zanting.svg");
         this.$store.state.viewPlay.playing = true; // 正在播放
-        this.playing = false;
+        this.playing = true;
         this.timer = setInterval(this.linearPlay, 1000);
       } else {
         this.$store.state.fullSecreenVideo.pause();
-        this.playing = true;
+        this.playing = false;
         this.Play = require("assets/img/mvPlay/bofang.svg");
         this.$store.state.viewPlay.playing = false; // 暂停播放
         clearInterval(this.timer);

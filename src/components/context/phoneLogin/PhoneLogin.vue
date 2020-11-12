@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       tel: "13726508433", // 手机号
-      password: "ZJH741.742", // 验证码
+      password: "ZJH741.742", // 密码
     };
   },
   methods: {

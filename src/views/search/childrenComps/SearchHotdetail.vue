@@ -20,10 +20,7 @@
           <div class="ranking" :class="{ color: index <= 2 }">
             {{ index + 1 }}
           </div>
-          <div class="text">{{ item.searchWord }}</div>
-          <!-- <div class="img">
-            <img v-if="item.iconUrl !== null" :src="item.iconUrl" alt="" />
-          </div> -->
+          <div class="text" @click="toSearch(item.searchWord)">{{ item.searchWord }}</div>
         </div>
       </div>
     </div>
@@ -43,7 +40,7 @@
             <div class="ranking" :class="{ color: index <= 2 }">
               {{ index + 1 }}
             </div>
-            <div class="text">{{ item.first }}</div>
+            <div class="text" @click="toSearch(item.searchWord)">{{ item.first }}</div>
           </div>
         </div>
       </div>
@@ -60,6 +57,11 @@ export default {
       itemList: [],  // 歌曲
       hotList: [],  // 热搜
     };
+  },
+  methods: {
+    toSearch(word){
+      this.$router.push("/discover/search/searchDetail/" + word);
+    }
   },
   created() {
     getHotDetail().then((res) => {
@@ -93,7 +95,11 @@ export default {
   color: #afafaf;
 }
 .text {
+  width: 3.994674rem;
   height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   float: left;
 }
 .topSearch {

@@ -8,7 +8,7 @@
     <div class="content" v-if="comHot.length !== 0 || comList.length !== 0">
       <div class="topComment" v-if="comHot.length !== 0">
         <div class="perCom">精彩评论</div>
-        <div class="commentItem" @click="setComment" v-for="(item, index) in comHot" :key="index">
+        <div class="commentItem" v-for="(item, index) in comHot" :key="index">
           <div class="left">
             <img @click.stop="profile(item.userId)" :src="item.avatarUrl" alt="" />
           </div>
@@ -33,7 +33,7 @@
       </div>
       <div class="commentList">
         <div class="perCom">最新评论</div>
-        <div class="commentItem" @click="setComment" v-for="(item, index) in comList" :key="index">
+        <div class="commentItem" v-for="(item, index) in comList" :key="index">
           <div class="left">
             <img @click.stop="profile(item.userId)" :src="item.avatarUrl" alt="" />
           </div>
@@ -148,7 +148,7 @@ export default {
 </script>
 <style scoped>
 .SendComment {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
@@ -189,9 +189,9 @@ export default {
 }
 .content {
   padding: 0 0.399467rem 0.399467rem;
-  height: 13.315579rem;
+  min-height: 13.315579rem;
   position: relative;
-  margin-top: 1.438083rem;
+  margin: 1.438083rem 0 1.065246rem;
 }
 .commentItem {
   width: 100%;

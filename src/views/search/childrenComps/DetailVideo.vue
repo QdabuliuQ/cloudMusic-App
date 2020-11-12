@@ -1,6 +1,11 @@
 <template>
   <div class="DetailVideo" v-if="noDetail">
-    <div class="videoItem" @click="toVideo(item.id)" v-for="(item, index) in videoList" :key="index">
+    <div
+      class="videoItem"
+      @click="toVideo(item.id)"
+      v-for="(item, index) in videoList"
+      :key="index"
+    >
       <div class="vleft">
         <img :src="item.coverUrl" alt="" />
         <div class="count">▷ {{ item.playTime }}</div>
@@ -41,10 +46,9 @@ export default {
           this.offset * 40,
           1014
         ).then((res) => {
-          console.log(res);
           for (const item of res.data.result.videos) {
             this.videoList.push({
-              id: item.id,
+              id: item.vid,
               title: item.title,
               durationms: durationTime(item.durationms),
               playTime: toStringNum(item.playTime),
@@ -59,8 +63,8 @@ export default {
       }
     },
 
-    toVideo(id){
-      this.$router.push('/mvplay/' + id +'&'+ false)
+    toVideo(id) {
+      this.$router.push("/mvplay/" + id + "&" + false);
     },
 
     // 监听滚动事件
@@ -90,7 +94,7 @@ export default {
         try {
           for (const item of res.data.result.videos) {
             this.videoList.push({
-              id: item.id,
+              id: item.vid,
               title: item.title,
               durationms: durationTime(item.durationms),
               playTime: toStringNum(item.playTime),
@@ -110,7 +114,6 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      console.log(1);
       document.addEventListener("scroll", this.linearScroll);
       this.$loading.loadingNo();
     });
@@ -125,7 +128,7 @@ export default {
   margin-top: 2.396804rem;
   line-height: 13.315579rem;
   text-align: center;
-  font-size: .532623rem;
+  font-size: 0.532623rem;
   color: #a7a7a8;
 }
 .DetailVideo {

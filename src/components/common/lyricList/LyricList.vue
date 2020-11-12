@@ -34,78 +34,140 @@ export default {
       num: 0,
     };
   },
-  mounted() {
-    this.$store.state.navMusicDom.addEventListener("timeupdate", () => {
-      // 判断有没有歌词
-      if (this.lyricText.length !== 0) {
-        // 判断歌曲时间在歌词区间
-        if (
-          this.$store.state.navMusicDom.currentTime >=
-            this.songLyric[this.index] &&
-          this.$store.state.navMusicDom.currentTime <=
-            this.songLyric[this.index + 1]
-        ) {
-          var huiche = /^\n/; // 正则匹配回车符
-          if (huiche.test(this.lyricText[this.index])) {
-          } else {
-            if (document.getElementsByClassName("active")[0] !== undefined) {
-              if (
-                document.getElementsByClassName("itemSpan")[this.zindex]
-                  .offsetTop >
-                document.getElementsByClassName("LyricListContent")[0]
-                  .clientHeight /
-                  2
-              ) {
-                this.yscroll =
-                  document.getElementsByClassName("itemSpan")[this.zindex]
-                    .offsetTop -
-                  document.getElementsByClassName("LyricListContent")[0]
-                    .clientHeight /
-                    2 +
-                  document.getElementsByClassName("itemSpan")[this.zindex]
-                    .clientHeight /
-                    2;
-                this.$refs.list.style.transform =
-                  "translateY(" + -this.yscroll + "px)";
-                this.$refs.list.style.transition = "0.3s linear";
-              }
-            }
-            this.zindex++;
-          }
-          this.index++; // 索引++
-          this.activeIndex++; // 歌词索引++
-        }
-      }
-    });
-
-    // 添加 seeked 事件，当进度发生变化的时候触发
-    this.$store.state.navMusicDom.addEventListener("seeked", () => {
-      if (this.$store.state.navMusicDom.currentTime < 1) {
-        this.index = 0; // 清空索引
-        this.zindex = 0;
-        this.activeIndex = 0;
-        this.yscroll = 0; // 清空滚动距离
-        this.$refs.list.style.transform = "translateY(0px)"; // 滚动回顶部
-      } else {
-        // for 循环遍历歌词数组  songLyric歌词时间数组
+  methods: {
+    setTime() {
+      console.log(this.$store.state.navMusicDom.currentTime);
+      setTimeout(() => {
         for (let i = 0; i < this.songLyric.length; i++) {
-          // 判断滚动到哪个歌词区间
           if (
             this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
-            this.$store.state.navMusicDom.currentTime < this.songLyric[i + 1] &&
-            document.getElementsByClassName("itemSpan")[i].offsetTop > document.getElementsByClassName("LyricListContent")[0].clientHeight / 2
+            this.$store.state.navMusicDom.currentTime <=
+              this.songLyric[i + 1] &&
+            document.getElementsByClassName("itemSpan")[i].offsetTop >
+              document.getElementsByClassName("LyricListContent")[0]
+                .clientHeight /
+                2
           ) {
-            let scroll = document.getElementsByClassName("itemSpan")[i - 2].offsetTop - document.getElementsByClassName("LyricListContent")[0].clientHeight / 2
-            this.yscroll = scroll + document.getElementsByClassName("itemSpan")[i - 2].clientHeight / 2
+            console.log(i);
+            let scroll =
+              document.getElementsByClassName("itemSpan")[i].offsetTop -
+              document.getElementsByClassName("LyricListContent")[0]
+                .clientHeight /
+                2;
+            this.yscroll =
+              scroll +
+              document.getElementsByClassName("itemSpan")[i].clientHeight /
+                2;
             this.$refs.list.style.transform =
               "translateY(" + -this.yscroll + "px)";
             this.activeIndex = i;
             this.index = i;
             this.zindex = i;
-            break;
+          } else if (
+            this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
+            this.$store.state.navMusicDom.currentTime <=
+              this.songLyric[i + 1] &&
+            document.getElementsByClassName("itemSpan")[i].offsetTop <
+              document.getElementsByClassName("LyricListContent")[0]
+                .clientHeight /
+                2
+          ) {
+            console.log(i);
+            this.activeIndex = i;
+            this.index = i;
+            this.zindex = i;
           }
         }
-      }
+      }, 1000);
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.setTime();
+      this.$store.state.navMusicDom.addEventListener("timeupdate", () => {
+        // 判断有没有歌词
+        if (this.lyricText.length !== 0) {
+          // 判断歌曲时间在歌词区间
+          if (
+            this.$store.state.navMusicDom.currentTime >=
+              this.songLyric[this.index] &&
+            this.$store.state.navMusicDom.currentTime <=
+              this.songLyric[this.index + 1]
+          ) {
+            var huiche = /^\n/; // 正则匹配回车符
+            if (huiche.test(this.lyricText[this.index])) {
+            } else {
+              if (document.getElementsByClassName("active")[0] !== undefined) {
+                if (
+                  document.getElementsByClassName("itemSpan")[this.zindex]
+                    .offsetTop >
+                  document.getElementsByClassName("LyricListContent")[0]
+                    .clientHeight /
+                    2
+                ) {
+                  console.log();
+                  this.yscroll =
+                    document.getElementsByClassName("itemSpan")[this.zindex]
+                      .offsetTop -
+                    document.getElementsByClassName("LyricListContent")[0]
+                      .clientHeight /
+                      2 +
+                    document.getElementsByClassName("itemSpan")[this.zindex]
+                      .clientHeight /
+                      2;
+                  this.$refs.list.style.transform =
+                    "translateY(" + -this.yscroll + "px)";
+                  this.$refs.list.style.transition = "0.3s linear";
+                }
+              }
+              this.zindex++;
+            }
+            this.index++; // 索引++
+            this.activeIndex++; // 歌词索引++
+          }
+        }
+      });
+
+      // 添加 seeked 事件，当进度发生变化的时候触发
+      this.$store.state.navMusicDom.addEventListener("seeked", () => {
+        if (this.$store.state.navMusicDom.currentTime < 1) {
+          this.index = 0; // 清空索引
+          this.zindex = 0;
+          this.activeIndex = 0;
+          this.yscroll = 0; // 清空滚动距离
+          this.$refs.list.style.transform = "translateY(0px)"; // 滚动回顶部
+        } else {
+          // for 循环遍历歌词数组  songLyric歌词时间数组
+          for (let i = 0; i < this.songLyric.length; i++) {
+            // 判断滚动到哪个歌词区间
+            if (
+              this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
+              this.$store.state.navMusicDom.currentTime < this.songLyric[i + 1] &&
+              document.getElementsByClassName("itemSpan")[i].offsetTop >
+                document.getElementsByClassName("LyricListContent")[0]
+                  .clientHeight /
+                  2
+            ) {
+              let scroll =
+                document.getElementsByClassName("itemSpan")[i].offsetTop -
+                document.getElementsByClassName("LyricListContent")[0]
+                  .clientHeight /
+                  2;
+              this.yscroll =
+                scroll +
+                document.getElementsByClassName("itemSpan")[i]
+                  .clientHeight /
+                  2;
+              this.$refs.list.style.transform =
+                "translateY(" + -this.yscroll + "px)";
+              this.activeIndex = i;
+              this.index = i;
+              this.zindex = i;
+              break;
+            }
+          }
+        }
+      });
     });
   },
   computed: {

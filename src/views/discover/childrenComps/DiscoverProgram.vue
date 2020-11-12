@@ -70,9 +70,6 @@ export default {
 };
 </script>
 <style scoped>
-.mui-scroll{
-  position: relative;
-}
 .mui-control-item {
   margin-top: 0 !important;
   /* height: 4.207723rem; */
