@@ -53,8 +53,8 @@ export default {
   name: "PhoneLogin",
   data() {
     return {
-      tel: "13726508433", // 手机号
-      password: "ZJH741.742", // 密码
+      tel: "", // 手机号
+      password: "", // 密码
     };
   },
   methods: {

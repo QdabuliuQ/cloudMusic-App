@@ -46,13 +46,10 @@ export default {
   background-color: #fff;
   box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.7);
   z-index: 19;
-  
-  /* margin-bottom: 2px; */
 }
 #app {
   overflow-x: hidden;
   background-color: #f0efef;
-  /* height: 100%; */
 }
 .v-enter {
   opacity: 0;
