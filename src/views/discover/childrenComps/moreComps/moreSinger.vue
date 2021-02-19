@@ -40,7 +40,7 @@
         </div>
         <div class="center">
           {{ item.name }}
-          <img v-if="item.accountId !== 0" src="~assets/img/discover/moreSingers/tx.svg" alt="" />
+
         </div>
         <div class="right">
           <div class="btn">关注</div>

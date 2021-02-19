@@ -1,10 +1,10 @@
 <template>
   <div class="Login">
     <div class="close" @click="close">
-      <img src="~assets/img/myMessage/guanbi.png" alt="" />
+      <i class="iconfont icon-close"></i>
     </div>
     <div class="logo">
-      <img src="~assets/img/myMessage/wangyiyun.png" alt="" />
+      <img src="https://img.coolcr.cn/2021/02/18/ba588162b1fb7.png" alt="" />
     </div>
     <div @click="phoneLogin" class="phoneLogin">
       <span>手机号登录</span>
@@ -13,26 +13,26 @@
       <span>立即体验</span>
     </div>
     <div class="list">
-        <div class="item">
-            <div class="box">
-                <img src="~assets/img/login/weixin.svg" alt="">
-            </div>
+      <div class="item">
+        <div class="box">
+          <i class="iconfont icon-weixin"></i>
         </div>
-        <div class="item">
-            <div class="box">
-                <img src="~assets/img/login/qq.svg" alt="">
-            </div>
+      </div>
+      <div class="item">
+        <div class="box">
+          <i class="iconfont icon-QQ"></i>
         </div>
-        <div class="item">
-            <div class="box">
-                <img src="~assets/img/login/weibo.svg" alt="">
-            </div>
+      </div>
+      <div class="item">
+        <div class="box">
+          <i class="iconfont icon-weibo"></i>
         </div>
-        <div class="item">
-            <div class="box">
-                <img src="~assets/img/login/yx.svg" alt="">
-            </div>
+      </div>
+      <div class="item">
+        <div class="box">
+          <i class="iconfont icon-youxiang"></i>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,10 +67,12 @@ export default {
   bottom: 0;
   z-index: 51;
 }
-.close img {
-  width: 0.532623rem;
-  height: 0.532623rem;
+.close{
   margin-top: 0.399467rem;
+}
+.close .icon-close {
+  font-size: .533333rem;
+  color: #fff;
   margin-left: 0.399467rem;
 }
 .logo {
@@ -89,59 +91,60 @@ export default {
   width: 6.994407rem;
   height: 1.065246rem;
   background-color: #fff;
-  margin:0 auto 0.532623rem;
+  margin: 0 auto 0.532623rem;
   border-radius: 1.065246rem;
   text-align: center;
   line-height: 1.065246rem;
-  font-size: 16px;
+  font-size: 0.4rem;
   color: #da231b;
 }
 .emailLogin {
   width: 70%;
-  height: 40px;
+  height: 1.066667rem;
   background-color: #fff;
   margin: 0.532623rem auto;
-  border-radius: 40px;
+  border-radius: 1.066667rem;
   text-align: center;
-  line-height: 40px;
-  font-size: 16px;
+  line-height: 1.066667rem;
+  font-size: 0.4rem;
   color: #da231b;
 }
 .tiyan {
   width: 70%;
-  height: 40px;
+  height: 1.066667rem;
   margin: 0.532623rem auto;
-  border-radius: 40px;
+  border-radius: 1.066667rem;
   text-align: center;
-  line-height: 40px;
-  font-size: 16px;
+  line-height: 1.066667rem;
+  font-size: 0.373333rem;
   color: #fff;
   box-sizing: border-box;
   border: 1px solid rgb(221, 221, 221, 0.8);
 }
-.list{
-    width: 75%;
-    height: 1.331558rem;
-    margin: 0 auto;
-    display: flex;
+.list {
+  width: 75%;
+  height: 1.331558rem;
+  margin: 0 auto;
+  display: flex;
 }
-.item{
-    flex: 1;
-    text-align: center;
-    display: flex;
-    align-items: center;
+.item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
 }
-.item .box{
-    width: 1.065246rem;
-    height: 1.065246rem;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.644);
-    text-align: center;
-    margin: auto;
+.item .box {
+  width: 1.065246rem;
+  height: 1.065246rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.644);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.box img{
-    width: .69241rem;
-    margin-top: .146471rem;
+.box .iconfont{
+  color: rgba(255, 255, 255, 0.856);
 }
 .v-enter {
   opacity: 0;

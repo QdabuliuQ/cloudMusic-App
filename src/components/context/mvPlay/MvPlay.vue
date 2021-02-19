@@ -613,7 +613,6 @@ export default {
 
     this.$nextTick(() => {
       this.mvDom = document.getElementsByClassName("mv")[0];
-      this.$store.state.navMusicDom.seeked();
     });
   },
 };

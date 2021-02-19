@@ -77,10 +77,13 @@ export default {
   padding: 0.213049rem 0.186418rem 0.399467rem !important;
 }
 #slider {
-  height: 4.101198rem;
+  height: 3.866667rem;
 }
 #sliderSegmentedControl {
   height: 100%;
+}
+.mui-content{
+  background-color: var(--bgc);
 }
 .topTitle {
   width: 100%;

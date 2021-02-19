@@ -16,7 +16,7 @@
         <div class="right">
           <div class="loveMode">
             <div class="rightBox">
-              <img src="~assets/img/myMessage/xindong.png" alt="" />
+              <i class="iconfont icon-xindong"></i>
               <div class="title">心动模式</div>
             </div>
           </div>
@@ -24,9 +24,7 @@
       </div>
       <div v-else class="box">
         <div class="left1">
-          <div class="imgBox">
-            <img class="aixin" src="~assets/img/information/aixin.svg" alt="" />
-          </div>
+          <i class="iconfont icon-xihuan"></i>
         </div>
         <div class="center">
           <div>
@@ -37,7 +35,7 @@
         <div class="right">
           <div class="loveMode">
             <div class="rightBox">
-              <img src="~assets/img/myMessage/xindong.png" alt="" />
+              <i class="iconfont icon-xindong"></i>
               <div class="title">心动模式</div>
             </div>
           </div>
@@ -61,6 +59,7 @@ export default {
   border-radius: .213049rem;
   display: flex;
   align-items: center;
+  box-shadow: var(--boxshaow);
 }
 .bbox {
   margin: 0 auto;
@@ -88,6 +87,7 @@ export default {
   text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .left img {
   width: 100%;
@@ -97,14 +97,14 @@ export default {
   /* margin-top: 8px;*/
   margin-left: 0.266312rem;
   font-size: .372836rem;
-  height: .45273rem;
-  line-height: .45273rem;
+  height: .666667rem;
+  line-height: .666667rem;
 }
 .count {
   margin-left: 0.266312rem;
   font-size: .319574rem;
-  height: .45273rem;
-  line-height: .45273rem;
+  height: .4rem;
+  line-height: .4rem;
   color: #aaaaaa;
 }
 .center {
@@ -123,33 +123,29 @@ export default {
   border-radius: .665779rem;
   margin: 0 auto;
   border: 1px solid #cdcdcd;
+  display: flex;
+  align-items: center;
 }
-.loveMode img {
-  margin-top: 0.106525rem;
-  position: relative;
-  left: 0.106525rem;
+.loveMode .icon-xindong {
+  font-size: .4rem;
+  color: var(--red);
   float: left;
 }
 .title {
-  font-size: 12px;
+  font-size: .32rem;
+  color: #8f8f8f;
   position: relative;
-  /* left: 2px; */
-  top: .039947rem;
+  left: .053333rem;
 }
-.aixin {
-  width: 0.745672rem;
-  height: 0.69241rem;
-}
-.imgBox {
-  width: .745672rem;
-  height: .69241rem;
-  margin: 0 auto;
+.icon-xihuan{
+  font-size: .64rem;
+  color: var(--red);
 }
 .imgBox1{
   margin: 0 auto;
 }
 .rightBox {
-  width: 2.07723rem;
+  width: 70%;
   margin: 0 auto;
   text-align: center;
 }

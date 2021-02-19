@@ -49,7 +49,7 @@ export default {
 }
 #app {
   overflow-x: hidden;
-  background-color: #f0efef;
+  background-color: #fafafa;
 }
 .v-enter {
   opacity: 0;

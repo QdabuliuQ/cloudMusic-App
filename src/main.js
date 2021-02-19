@@ -68,6 +68,10 @@ import loading from 'components/common/Loading'
 import { Math } from 'core-js';
 Vue.use(loading)
 
+import "assets/css/base.css"  // 全局css样式
+import "./assets/icon/Common.css"  // 公共字体图标
+import "./assets/icon/Login.css"  // 登录页面字体图标
+
 
 Vue.config.productionTip = false
 

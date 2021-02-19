@@ -2,7 +2,7 @@
   <div class="PhoneLogin">
     <navbar class="navbar">
       <div @click="back" class="left" slot="left">
-        <img src="~assets/img/myMessage/fanhui.png" alt="" />
+        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="title" slot="center">手机号登陆</div>
     </navbar>
@@ -53,8 +53,8 @@ export default {
   name: "PhoneLogin",
   data() {
     return {
-      tel: "", // 手机号
-      password: "", // 密码
+      tel: "13726508433", // 手机号
+      password: "ZJH741.742", // 密码
     };
   },
   methods: {
@@ -184,10 +184,13 @@ export default {
 .navbar {
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
 }
-.left img {
-  width: 20px;
-  height: 20px;
-  margin-top: 12px;
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.left .icon-fanhui{
+  font-size: .426667rem;
 }
 .btn {
   margin-top: 10px;

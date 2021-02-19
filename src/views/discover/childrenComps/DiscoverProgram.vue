@@ -84,6 +84,9 @@ export default {
 .DiscoverProgram {
   margin-top: 0.532623rem;
 }
+.mui-content{
+  background-color: var(--bgc);
+}
 .topTitle {
   width: 100%;
   display: flex;

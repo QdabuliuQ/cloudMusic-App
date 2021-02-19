@@ -8,32 +8,22 @@
           }})个
         </div>
         <div class="center">
-          <img src="~assets/img/myMessage/addApp.png" alt="" />
+          <i class="iconfont icon-add"></i>
         </div>
         <div class="right">
-          <img src="~assets/img/myMessage/sandian.png" alt="" />
+          <i class="iconfont icon-sandian"></i>
         </div>
       </div>
       <song-sheet :sheetList="sheetList"></song-sheet>
-      <div class="bottom">
-        <div class="bottomBox">
-          <div class="img">
-            <img src="~assets/img/myMessage/daoru.png" alt="" />
-          </div>
-          <div class="text">
-            <span>导入外部歌单</span>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="box2" ref="collection">
       <div class="top">
         <div class="left">收藏歌单({{ sheetCollectionLength }})个</div>
         <div class="center">
-          <img src="~assets/img/myMessage/addApp.png" alt="" />
+          <i class="iconfont icon-add"></i>
         </div>
         <div class="right">
-          <img src="~assets/img/myMessage/sandian.png" alt="" />
+          <i class="iconfont icon-sandian"></i>
         </div>
       </div>
       <song-sheet v-if="sheetCollectionLength !== 0"></song-sheet>
@@ -94,15 +84,17 @@ export default {
   margin-top: 5px;
 }
 .box {
-  padding: 8px 13px;
-  border-radius: 8px;
+  padding: .32rem .346667rem;
+  border-radius: .213333rem;
   background-color: #fff;
+  box-shadow: var(--boxshaow);
 }
 .box2 {
-  padding: 8px 13px 16px;
-  border-radius: 8px;
+  padding: .32rem .346667rem;
+  border-radius: .213333rem;
   background-color: #fff;
-  margin-top: 15px;
+  margin-top: .4rem;
+  box-shadow: var(--boxshaow);
 }
 .top {
   width: 100%;
@@ -114,32 +106,25 @@ export default {
 }
 .left {
   flex: 4;
+  font-size: .32rem;
 }
 .center {
   flex: 5;
 }
-.center img {
+.center .icon-add {
   float: right;
-  margin-top: 4px;
+  font-size: .426667rem;
 }
 .right {
   flex: 1;
-}
-.right img {
-  height: 15px;
-  float: right;
-  margin-top: 4px;
-}
-.bottom {
-  width: 100%;
-  height: 1.464714rem;
-  margin-top: 9px;
-}
-.bottomBox {
-  height: 1.198402rem;
   display: flex;
+  align-items: center;
   position: relative;
-  top: 5px;
+}
+.right .icon-sandian{
+  position: absolute;
+  right: 0;
+  font-size: .426667rem;
 }
 .img {
   flex: 1.5;

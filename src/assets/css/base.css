@@ -1,15 +1,14 @@
 :root{
     /* 背景色 红 */
-    --red: '#da231b';
-
+    --red: #ff4b41;
     /* 背景色 灰 */
-    --bgc: '#9e9e9e';
-
+    --bgc: #fafafa;
     /* 分割线 */
-    --fgx: '#ececec';
-
+    --fgx: #ececec;
     /* 阴影 */
-    --boxshaow: '0 -2px 5px rgba(0,0,0,0.5)';
+    --boxshaow: 0 0 6px rgba(0,0,0,0.1);
+    /* 字体颜色 */
+    --fontColor: #616161;
 }
 *{
     margin: 0;

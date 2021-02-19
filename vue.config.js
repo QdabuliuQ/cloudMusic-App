@@ -8,7 +8,7 @@ module.exports = {
                 'components':'@/components',
                 'network':'@/network',
                 'views':'@/views',
-                // 'node':''
+                'icon':'@/assets/icon',
             }
         }
     }

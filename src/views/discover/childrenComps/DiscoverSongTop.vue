@@ -16,7 +16,13 @@
     <!-- 第一个for循环遍历出 三大部分 -->
       <el-carousel-item class="items" v-for="(item,index) in 3" :key="index">
         <!-- 第二个for循环遍历 每一个部分中的歌曲 -->
-        <saItem v-for="(songItems, i) in songList[index]" :key="i" :itemDetail='songItems'></saItem>
+        <div class="songsBox">
+          <saItem 
+          v-for="(songItems, i) in songList[index]" 
+          :key="i" 
+          :itemDetail='songItems'
+          :index='i'></saItem>
+        </div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -87,14 +93,19 @@ export default {
 .carousel{
   margin-top: .266312rem;
 }
+.songsBox{
+  width: 100%;
+}
 .items {
   margin-left: -1.491345rem;
   width: 80%;
   height: 4.660453rem;
   background-color: #fff;
-  padding: .266312rem .213049rem 0;
+  padding: .266312rem .213049rem;
   border-radius: .213049rem;
   box-shadow: 2px 2px 10px rgba(131, 131, 131, 0.5);
+  display: flex;
+  align-items: center;
 }
 .DiscoverSongTop {
   width: 100%;

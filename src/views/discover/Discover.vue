@@ -11,50 +11,50 @@
           <div class="mui-scroll">
             <a class="mui-control-item" @click="recommandSong">
               <div class="img">
-                <img src="~assets/img/discover/rili.svg" alt="" />
+                <i class="iconfont icon-rili"></i>
               </div>
               <span>每日推荐</span>
             </a>
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/FM.svg" alt="" />
+                <i class="iconfont icon-fm"></i>
               </div>
               <span>私人FM</span>
             </a>
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/gedan.svg" alt="" />
+                <i class="iconfont icon-gedan"></i>
               </div>
               <span>歌单</span>
             </a>
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/paihang.svg" alt="" />
+                <i class="iconfont icon-paihang"></i>
               </div>
               <span>排行榜</span>
             </a>
 
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/zhibo.svg" alt="" />
+                <i class="iconfont icon-zhibo"></i>
               </div>
               <span>直播</span>
             </a>
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/zhuanji.svg" alt="" />
+                <i class="iconfont icon-zhuanji"></i>
               </div>
               <span>数字专辑</span>
             </a>
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/liaotian.svg" alt="" />
+                <i class="iconfont icon-liaotian"></i>
               </div>
               <span>唱聊</span>
             </a>
             <a class="mui-control-item">
               <div class="img">
-                <img src="~assets/img/discover/youxi.svg" alt="" />
+                <i class="iconfont icon-youxi1"></i>
               </div>
               <span>游戏专区</span>
             </a>
@@ -73,16 +73,22 @@
 
 <script>
 import DiscoverSwiper from "./childrenComps/DiscoverSwiper"; // 轮播图组件
-import DiscoverSheet from "./childrenComps/DiscoverSheet";  // 热门歌单
-import DiscoverSongtop from "./childrenComps/DiscoverSongTop";  // 新歌速递
-import DiscoverProgram from "./childrenComps/DiscoverProgram";  // 电台节目
-import DiscoverMv from "./childrenComps/DiscoverMv";  // 最新MV
-import DiscoverAlbum from "./childrenComps/DiscoverAlbum";  // 新碟上架
-import DiscoverHotsinger from "./childrenComps/DiscoverHotSinger";  // 热门歌手
+import DiscoverSheet from "./childrenComps/DiscoverSheet"; // 热门歌单
+import DiscoverSongtop from "./childrenComps/DiscoverSongTop"; // 新歌速递
+import DiscoverProgram from "./childrenComps/DiscoverProgram"; // 电台节目
+import DiscoverMv from "./childrenComps/DiscoverMv"; // 最新MV
+import DiscoverAlbum from "./childrenComps/DiscoverAlbum"; // 新碟上架
+import DiscoverHotsinger from "./childrenComps/DiscoverHotSinger"; // 热门歌手
+import "assets/icon/Discover.css"; // 字体图标
 
 import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
-import { getHomepage, getNewSong, getSongsTop, getHotComment } from "network/discover";
+import {
+  getHomepage,
+  getNewSong,
+  getSongsTop,
+  getHotComment,
+} from "network/discover";
 // 引入滑动模块
 // .mui-scroll-wrapper 表示需要进行滑动的区域
 mui(".mui-scroll-wrapper").scroll({
@@ -107,16 +113,16 @@ export default {
   },
   methods: {
     // 日推
-    recommandSong(){
+    recommandSong() {
       if (!this.$store.state.cookie) {
-        this.$toast.show('您需要先登录哦~', 1900)
+        this.$toast.show("您需要先登录哦~", 1900);
         setTimeout(() => {
-          this.$router.push('/myMessage/login')
-        }, 1000)
+          this.$router.push("/myMessage/login");
+        }, 1000);
       } else {
-        this.$router.push('/discover/recommendSong')
+        this.$router.push("/discover/recommendSong");
       }
-    }
+    },
   },
   mounted() {
     mui(".mui-scroll-wrapper").scroll({
@@ -128,18 +134,18 @@ export default {
       indicators: true, //是否显示滚动条
     });
   },
-  created () {
-  }
+  created() {},
 };
 </script>
 <style scoped>
-.Discover{
-    touch-action: none;
-    margin-bottom: 55px;
+.Discover {
+  touch-action: none;
+  margin-bottom: 55px;
 }
-.mui-content{
-    margin-top: .399467rem;
-    margin-bottom: .399467rem;
+.mui-content {
+  margin-top: 0.399467rem;
+  margin-bottom: 0.399467rem;
+  background-color: var(--bgc);
 }
 #slider {
   height: 1.864181rem;
@@ -149,14 +155,14 @@ export default {
 }
 .mui-control-item {
   color: #000 !important;
-  padding: 0 .399467rem !important;
+  padding: 0 0.399467rem !important;
   text-align: center;
   font-size: 0.332889rem;
   height: 1.864181rem;
 }
-.mui-control-item span{
-    position: relative;
-    top: -8px;
+.mui-control-item span {
+  position: relative;
+  top: -8px;
 }
 .img {
   width: 1.198402rem;
@@ -166,9 +172,12 @@ export default {
   margin: 0 auto;
   text-align: center;
   margin-bottom: 0.133156rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.img img {
-  width: 0.639148rem;
-  margin-top: 0.226365rem;
+.img .iconfont {
+  color: #fff;
+  font-size: 0.48rem;
 }
 </style>

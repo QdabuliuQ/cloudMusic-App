@@ -1,8 +1,10 @@
 <template>
-  <div class="SAItem" @click="toPlay">
+  <div class="SAItem" :class="[index != 2 ? 'mbottom' : '']" @click="toPlay">
     <div class="left">
       <img :src="itemDetail.picUrl" alt="" />
-      <div v-if="isAlbum" class="bgcImg"><img src="~assets/img/information/yuan.svg" alt=""></div>
+      <div v-if="isAlbum" class="bgcImg">
+        <img src="https://img.coolcr.cn/2021/02/19/3d8358d7798e7.png" alt="" />
+      </div>
     </div>
     <div class="center">
       <div class="box">
@@ -10,15 +12,15 @@
           {{ itemDetail.name }}
         </div>
         <div class="desc">
-           <span v-for="(item,index) in itemDetail.artists" :key="index">
-               {{item.name }}
-           </span>
+          <span v-for="(item, index) in itemDetail.artists" :key="index">
+            {{ item.name }}
+          </span>
         </div>
       </div>
     </div>
     <div class="right">
       <div class="btn">
-        <div class="img"><img src="~assets/img/discover/SAItem/play.svg" alt="" /></div>
+        <i class="iconfont icon-bofang"></i>
       </div>
     </div>
   </div>
@@ -34,18 +36,22 @@ export default {
     isAlbum: {
       type: Boolean,
       default: false,
+    },
+    index: {
+      type: Number,
+      default: 0
     }
   },
   name: "SAItem",
   methods: {
-    toPlay(){
+    toPlay() {
       if (!this.isAlbum) {
-        this.$router.push('/playSong/' + this.itemDetail.id)
+        this.$router.push("/playSong/" + this.itemDetail.id);
       } else {
-        this.$router.push('/playDetail/' + this.itemDetail.id + '&' + true)
+        this.$router.push("/playDetail/" + this.itemDetail.id + "&" + true);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -53,17 +59,23 @@ export default {
   width: 100%;
   height: 1.198402rem;
   display: flex;
-  margin-bottom: 10px;
+}
+.mbottom {
+  margin-bottom: .266667rem;
 }
 .left {
   flex: 2;
   position: relative;
 }
-.bgcImg{
+.bgcImg {
   position: absolute;
   z-index: -1;
   top: 0;
-  left: .213049rem
+  left: 0.213049rem;
+}
+.bgcImg img{
+  position: relative;
+  left: .08rem;
 }
 .left img {
   width: 1.198402rem;
@@ -75,24 +87,24 @@ export default {
   display: flex;
   align-items: center;
 }
-.name{
-    width: 5.326232rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    height: .45273rem;
-    line-height: .45273rem;
-    font-size: .372836rem;
+.name {
+  width: 5.326232rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 0.45273rem;
+  line-height: 0.45273rem;
+  font-size: 0.372836rem;
 }
-.desc{
-    height: .399467rem;
-    line-height: .399467rem;
-    width: 5.326232rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: .346205rem;
-    color: #8b8b8b;
+.desc {
+  height: 0.399467rem;
+  line-height: 0.399467rem;
+  width: 5.326232rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.346205rem;
+  color: #8b8b8b;
 }
 .right {
   flex: 1;
@@ -108,8 +120,10 @@ export default {
   text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
-.img{
-  margin: auto;
+.btn .iconfont {
+  font-size: 0.293333rem;
+  color: var(--red);
 }
 </style>

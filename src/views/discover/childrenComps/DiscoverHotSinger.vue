@@ -16,7 +16,7 @@
         <div class="img">
           <img class="userimg" :src="item.picUrl" alt="" />
           <div class="tag">
-            <img src="~assets/img/information/wyy.svg" alt="" />
+            <i class="iconfont icon-logo"></i>
           </div>
         </div>
         <div class="name">{{ item.name }}</div>
@@ -120,12 +120,14 @@ export default {
   border-radius: 50%;
   right: 0.079893rem;
   bottom: 0.079893rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.tag img {
-  width: 0.346205rem;
-  position: relative;
-  top: -0.079893rem;
-  left: 0.045273rem;
+.tag .iconfont {
+  color: #fff;
+  font-size: .32rem;
+  transform: scale(0.9);
 }
 .img .userimg {
   width: 100%;

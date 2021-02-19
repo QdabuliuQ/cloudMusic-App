@@ -12,7 +12,7 @@
       <div class="box">歌曲永久保存，随时随地多端畅听</div>
     </div>
     <div class="btn">
-      <img src="~assets/img/myMessage/sc.svg" alt="" />
+      
     </div>
   </div>
 </template>

@@ -33,7 +33,7 @@ import MyMessageLove from "./chlidrenComps/MyMessageLove"; // 喜欢的音乐
 import MyMessageList from "./chlidrenComps/MyMessageList"; // 歌单列表
 import tabControl from "components/common/tabControl/TabControl";
 
-import mui from "assets/mui/js/mui";
+import "assets/icon/MyMessage.css"  // 我的页面字体图标
 
 import muiScroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 
@@ -99,6 +99,17 @@ export default {
 };
 </script>
 <style scoped>
+.user{
+  background-color: #fff;
+  box-shadow: var(--boxshaow);
+}
+.login{
+  background-color: #fff;
+  box-shadow: var(--boxshaow);
+}
+#tabCon{
+  margin-top: .133333rem;
+}
 .MyMessage2 {
   margin-top: 1.171771rem;
   height: 100%;

@@ -12,7 +12,7 @@
           <div class="boxContent">
             <div class="left">
               <div class="icon">
-                <img src="~assets/img/popup/yun.svg" alt="" />
+                <i class="iconfont topIcon icon-yunbei"></i>
               </div>
               <div class="text">
                 <div class="title">云贝中心</div>
@@ -21,11 +21,7 @@
             </div>
             <div class="right">
               <div class="icon">
-                <img
-                  class="message"
-                  src="~assets/img/popup/message.svg"
-                  alt=""
-                />
+                <i class="iconfont topIcon icon-xiaoxi"></i>
               </div>
               <div class="text">
                 <div class="title">消息中心</div>
@@ -37,7 +33,7 @@
         <div class="box2">
           <div class="box2Content">
             <div class="icon">
-              <img src="~assets/img/popup/dengpao.svg" alt="" />
+              <i class="iconfont icon-chuanzuo"></i>
             </div>
             <div class="title">创作者中心</div>
           </div>
@@ -52,7 +48,7 @@
 
 <script>
 import popupItem from "./childrenComps/popupItem";
-
+import "assets/icon/LeftPopup.css"  // 左侧抽屉字体图标
 export default {
   name: "LeftPopup",
   data() {
@@ -60,30 +56,27 @@ export default {
       show: false,
       message: "点击查看新消息",
       itemList1: [
-        { icon: require("assets/img/popup/List1/gequ.svg"), text: "听歌识曲" },
-        { icon: require("assets/img/popup/List1/piao.svg"), text: "云村有票" },
-        { icon: require("assets/img/popup/List1/gwc.svg"), text: "商城" },
-        { icon: require("assets/img/popup/List1/youxi.svg"), text: "游戏专区" },
-        { icon: require("assets/img/popup/List1/ls.svg"), text: "口袋彩铃" },
+        { icon: 'icon-tingge', text: "听歌识曲" },
+        { icon: 'icon-piao', text: "云村有票" },
+        { icon: 'icon-shangcheng', text: "商城" },
+        { icon: 'icon-youxi', text: "游戏专区" },
+        { icon: 'icon-lingsheng', text: "口袋彩铃" },
       ],
       itemList2: [
-        { icon: require("assets/img/popup/List2/zb.svg"), text: "个性装扮" },
-        { icon: require("assets/img/popup/List2/ds.svg"), text: "定时关闭" },
-        { icon: require("assets/img/popup/List2/sys.svg"), text: "扫一扫" },
-        { icon: require("assets/img/popup/List2/xz.svg"), text: "边听边存" },
-        {
-          icon: require("assets/img/popup/List2/mll.svg"),
-          text: "在线听歌免流量",
-        },
-        { icon: require("assets/img/popup/List2/hmd.svg"), text: "音乐黑名单" },
-        { icon: require("assets/img/popup/List2/dp.svg"), text: "青少年模式" },
-        { icon: require("assets/img/popup/List2/nz.svg"), text: "音乐闹钟" },
+        { icon: 'icon-zhuanban', text: "个性装扮" },
+        { icon: 'icon-dingshi', text: "定时关闭" },
+        { icon: 'icon-saoyisao', text: "扫一扫" },
+        { icon: 'icon-xiazai', text: "边听边存" },
+        { icon: 'icon-liuliang',text: "在线听歌免流量", },
+        { icon: 'icon-heimingdan', text: "音乐黑名单" },
+        { icon: 'icon-dunpai1', text: "青少年模式" },
+        { icon: 'icon-naozhong', text: "音乐闹钟" },
       ],
       itemList3: [
-        { icon: require("assets/img/popup/List3/dd.svg"), text: "我的订单" },
-        { icon: require("assets/img/popup/List3/yhq.svg"), text: "优惠券" },
-        { icon: require("assets/img/popup/List3/bz.svg"), text: "帮助与反馈" },
-        { icon: require("assets/img/popup/List3/gy.svg"), text: "关于" },
+        { icon: 'icon-dingdan', text: "我的订单" },
+        { icon: 'icon-youhuiquan', text: "优惠券" },
+        { icon: 'icon-bangzhu', text: "帮助与反馈" },
+        { icon: 'icon-guanyu', text: "关于" },
       ],
     };
   },
@@ -136,11 +129,16 @@ export default {
   display: flex;
   align-items: center;
 }
-.box2Content img {
-  width: 0.599201rem;
+.iconfont{
+  color: #fff;
+}
+.topIcon{
+  font-size: .346667rem;
 }
 .box2Content .title {
   margin-left: 0.213049rem;
+  font-weight: 400;
+  font-size: .373333rem;
 }
 .left {
   box-sizing: border-box;
@@ -153,6 +151,9 @@ export default {
   width: 0.798935rem;
   height: 0.798935rem;
   background-color: #c5c5c5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .right {
   flex: 1;
@@ -167,10 +168,6 @@ export default {
   text-align: center;
   border-radius: 50%;
 }
-.icon img {
-  position: relative;
-  top: 0.106525rem;
-}
 .message {
   width: 0.505992rem;
   position: relative;
@@ -180,8 +177,8 @@ export default {
   margin-left: 0.213049rem;
 }
 .title {
-  font-size: 0.399467rem;
-  font-weight: 550;
+  font-weight: 400;
+  font-size: .373333rem;
 }
 .tag {
   height: 0.479361rem;
@@ -192,7 +189,8 @@ export default {
   color: red;
   border: 1px solid red;
   border-radius: 0.532623rem;
-  font-size: 0.319574rem;
+  font-size: .266667rem;
+  transform: scale(0.9);
 }
 .desc {
   font-size: 0.319574rem;

@@ -78,6 +78,9 @@ export default {
 #sliderSegmentedControl {
   height: 100%;
 }
+.mui-content{
+  background-color: var(--bgc);
+}
 .DiscoverMv {
   margin-top: .319574rem;
 }

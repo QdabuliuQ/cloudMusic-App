@@ -4,37 +4,25 @@
       <div class="top">
         <div class="box1">
           <div class="icon iconbox">
-            <img
-              class="img1"
-              src="~assets/img/myMessage/menu/xiazai.svg"
-              alt=""
-            />
+            <i class="iconfont menuIcon icon-xiazai"></i>
           </div>
           <div class="text">本地音乐</div>
         </div>
         <div class="box1" @click="myDisk">
           <div class="icon iconbox">
-            <img src="~assets/img/myMessage/menu/yunpan.svg" alt="" />
+            <i class="iconfont menuIcon icon-yunpan"></i>
           </div>
           <div class="text">云盘</div>
         </div>
         <div class="box1">
           <div class="icon iconbox">
-            <img
-              class="img1"
-              src="~assets/img/myMessage/menu/chenggong.svg"
-              alt=""
-            />
+            <i class="iconfont menuIcon icon-yigou"></i>
           </div>
           <div class="text">已购</div>
         </div>
         <div class="box1" @click="myPlayed">
           <div class="icon iconbox">
-            <img
-              class="img1"
-              src="~assets/img/myMessage/menu/bofang.svg"
-              alt=""
-            />
+            <i class="iconfont menuIcon icon-bofang"></i>
           </div>
           <div class="text">最近播放</div>
         </div>
@@ -42,41 +30,25 @@
       <div class="bottom">
         <div class="box2" @click="myFollow">
           <div class="icon iconbox">
-            <img
-              class="img2"
-              src="~assets/img/myMessage/menu/guanzhu.svg"
-              alt=""
-            />
+            <i class="iconfont menuIcon icon-guanzhu"></i>
           </div>
           <div class="text">我的关注</div>
         </div>
         <div class="box2" @click="myCollection">
           <div class="icon iconbox">
-            <img
-              class="img3"
-              src="~assets/img/myMessage/menu/shoucang.svg"
-              alt=""
-            />
+            <i class="iconfont menuIcon icon-shoucang"></i>
           </div>
           <div class="text">收藏和赞</div>
         </div>
         <div class="box2" @click="myRadioStation">
           <div class="icon iconbox">
-            <img
-              class="img1"
-              src="~assets/img/myMessage/menu/diantai.svg"
-              alt=""
-            />
+            <i class="iconfont menuIcon icon-diantai"></i>
           </div>
           <div class="text">我的电台</div>
         </div>
         <div class="box2">
           <div class="icon iconbox">
-            <img
-              class="img3"
-              src="~assets/img/myMessage/menu/tianjia.svg"
-              alt=""
-            />
+            <i class="iconfont moreIcon menuIcon icon-add"></i>
           </div>
           <div class="text">音乐应用</div>
         </div>
@@ -147,6 +119,13 @@ export default {
   text-align: center;
   background-color: #fff;
   padding: 0.133156rem;
+  box-shadow: var(--boxshaow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu{
+  width: 97%;
 }
 .top {
   width: 100%;
@@ -176,14 +155,22 @@ export default {
 .icon {
   width: 100%;
   height: 0.798935rem;
-  line-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .text {
   width: 100%;
-  height: 0.45273rem;
-  line-height: 0.45273rem;
   text-align: center;
-  position: absolute;
-  bottom: 0;
+  font-size: .32rem;
+  margin-top: .08rem;
+  color: var(--fontColor);
+}
+.menuIcon{
+  font-size: .72rem;
+  color: var(--red);
+}
+.moreIcon{
+  color: #b6b6b6 !important;
 }
 </style>

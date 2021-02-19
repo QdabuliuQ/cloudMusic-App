@@ -4,11 +4,13 @@
       <img class="fmian" v-lazy="sheetItem.picUrl" alt="" />
       <div class="count" v-if="showCount">▷ {{ sheetItem.playCount }}</div>
       <div class="toPlay" v-if="showImg">
-        <div class="pImg"><img src="~assets/img/discover/SAItem/play.svg" alt=""></div>
+        <div class="pImg">
+          <i class="iconfont icon-bofang" ></i>
+        </div>
       </div>
     </div>
-    <div class="sheetItemtitle" v-if="isSheet">
-      <span>{{ sheetItem.rcmdtext }}</span>
+    <div class="sheetName" v-if="isSheet">
+      {{ sheetItem.rcmdtext }}
     </div>
     <div class="programbox" v-else>
       <div class="proName">{{sheetItem.name}}</div>
@@ -59,16 +61,6 @@ export default {
   margin-top: .133156rem;
   color: #000 !important;
 }
-.desc span {
-  display: inline-block;
-  width: 2.663116rem;
-  height: .932091rem;
-  word-wrap: break-word;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;  
-  color: #919191 !important;
-}
 .desc{
   width: 100%;
 }
@@ -89,22 +81,20 @@ export default {
 .SheetItem {
   width: 2.663116rem;
 }
-.sheetItemtitle {
-  width: 2.663116rem;
-  height: .932091rem;
+.mui-control-item {
+  line-height: 0 !important;
+}
+.sheetName{
+  width: 100%;
   margin-top: 2px;
   font-size: .332889rem;
-  line-height: .479361rem;
-}
-.sheetItemtitle span {
-  display: inline-block;
-  width: 2.663116rem;
-  height: .932091rem;
-  word-wrap: break-word;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;  
-  color: #000 !important;
+  line-height: .533333rem !important;
+  text-overflow: -o-ellipsis-lastline !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
 }
 .topImg {
   width: 100%;
@@ -129,14 +119,15 @@ export default {
   width: .45273rem;
   height: .45273rem;
   margin: auto;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.pImg img{
-  width: .45273rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* top: -.079893rem; */
+.pImg .iconfont{
+  font-size: .32rem;
+  color: var(--red);
+  position: relative;
+  left: .026667rem;
 }
 .topImg .fmian {
   width: 100%;

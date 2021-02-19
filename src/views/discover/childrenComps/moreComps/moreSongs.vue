@@ -9,12 +9,7 @@
     ></scroll-nav>
     <div class="topBox">
       <div class="video">
-        <video
-          style="width: 100%; height: 4.793609rem; object-fit: fill"
-          src="~assets/video/music.mp4"
-          loop="loop"
-          autoplay
-        ></video>
+        <img src="https://img.coolcr.cn/2021/02/18/8c51c7ef73d54.png" alt="">
       </div>
       <div class="zhez"></div>
       <div class="title">
@@ -160,10 +155,14 @@ export default {
   height: 100%;
   position: absolute;
 }
+.video img{
+  width: 100%;
+  height: 100%;
+}
 .zhez {
   position: absolute;
   width: 100%;
-  height: 4.793609rem;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 9;
 }
@@ -178,12 +177,10 @@ export default {
 .topBox {
   margin-top: 2.237017rem;
   width: 100%;
-  height: 4.793609rem;
+  height: 5.066667rem;
   position: relative;
   z-index: 10;
-  top: -0.079893rem;
   background-color: #fff;
-  border-bottom: 8px solid #ebebeb;
 }
 .title {
   width: 100%;
