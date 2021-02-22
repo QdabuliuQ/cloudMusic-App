@@ -12,14 +12,6 @@
               <div class="signature">{{detail.signature ? detail.signature : '音乐创作者'}}</div>
             </div>
           </div>
-          <div class="right">
-            <div class="box2">
-              <div class="btn">
-                赞赏
-              </div>
-              <span v-if="detail.rewardCount !== 0">{{detail.rewardCount}}次赞赏</span>
-            </div>
-          </div>
         </div>
       </div>
       <div class="audioText">
@@ -58,44 +50,38 @@ export default {
   }
   .audioText{
     width: 100%;
-    margin-top: 20px;
+    margin-top: .533333rem;
   }
   .creater span{
-    font-size: 15px;
+    font-size: .4rem;
     font-weight: 550;
   }
   .audioText .text{
-    font-size: 15px;
+    font-size: .4rem;
     font-weight: 550;
   }
   .creatorName{
     width: 100%;
-    height: 40px;
-    margin-top: 10px;
+    height: 1.066667rem;
+    margin-top: .266667rem;
     display: flex;
   }
   .left{
     flex: 1;
   }
   .left img{
-    width: 40px;
-    height: 40px;
+    width: 1.066667rem;
+    height: 1.066667rem;
     border-radius: 50%;
-  }
-  .right{
-    flex: 2;
-    /* width: 1.896138rem; */
-    display: flex;
-    align-items: center;
   }
   .box{
     width: 6.125166rem;
-    margin-left: 10px;
+    margin-left: .266667rem;
   }
   .name{
     width: 5.805593rem;
     margin-right: 0;
-    font-size: 14px;
+    font-size: .373333rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -110,7 +96,9 @@ export default {
     white-space: nowrap;
   }
   .center{
-    flex: 5;
+    flex: 8;
+    display: flex;
+    align-items: center;
   }
   .box2{
     width: 100%;
@@ -118,92 +106,95 @@ export default {
     text-align: center;
   }
   .box2 span{
-    font-size: 12px;
+    font-size: .32rem;
     color: #cdcdcd;
-    margin-top: -4px;
+    margin-top: -0.106667rem;
     /* position: relative;
     top: -4px; */
   }
   .btn{
     width: 100%;
-    height: 25px;
+    height: .666667rem;
     text-align: center;
-    line-height: 25px;
-    font-size: 12px;
+    line-height: .666667rem;
+    font-size: .32rem;
     color: #da231b;
-    border-radius: 28px;
+    border-radius: .746667rem;
     border:1px solid #da231b;
-    margin-top: -2px;
+    margin-top: -0.053333rem;
   }
   .category{
-    font-size: 12px;
-    margin-top: 7px;
-    height: 20px;
+    font-size: .32rem;
+    margin-top: .186667rem;
+    height: .533333rem;
   }
   .title{
     float: left;
-    font-size: 12px;
+    font-size: .32rem;
+    position: relative;
+    top: .053333rem;
   }
   .category .tag{
-    padding: 0 5px;
-    height: 18px;
+    padding: 0 .133333rem;
+    height: .48rem;
     text-align: center;
-    line-height: 18px;
+    line-height: .48rem;
     float: left;
-    border: 1px solid #da231b;
-    color: #da231b;
-    font-size: 12px;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: .32rem;
     transform: scale(0.85);
   }
   .desc{
     clear: both;
-    margin-top: 7px;
-    font-size: 13px;
+    margin-top: .186667rem;
+    font-size: .346667rem;
   }
   .comment{
-    margin-top: 30px;
+    margin-top: .8rem;
   }
   .comment span{
-    font-size: 15px;
+    font-size: .4rem;
     font-weight: 550;
   }
   .item{
     display: flex;
-    margin-top: 10px;
+    margin-top: .266667rem;
   }
   .img{
     flex: 1;
-    margin-right: 5px;
+    margin-right: .133333rem;
   }
   .img img{
-    width: 30px;
-    height: 30px;
+    width: .8rem;
+    height: .8rem;
     border-radius: 50%;
     overflow: hidden;
-    margin-left: 5px;
+    margin-left: .133333rem;
   }
   .commentText{
     flex: 6;
-    padding-bottom: 10px;
+    padding-bottom: .266667rem;
     border-bottom: 1px solid #e0e0e0;
   }
   .userName{
     width: 100%;
-    font-size: 13px;
-    margin-top: 6px;
+    font-size: .346667rem;
+    margin-top: .16rem;
     color: #9e9e9e;
   }
   .contentText{
     width: 8.255659rem;
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: .266667rem;
+    font-size: .346667rem;
+    line-height: .453333rem;
   }
   .programName{
     /* width: 100%; */
     width: 8.255659rem;
-    font-size: 12px;
+    font-size: .32rem;
     color:#9e9e9e;
-    margin-top: 10px;
+    margin-top: .266667rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

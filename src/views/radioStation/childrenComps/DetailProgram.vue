@@ -3,7 +3,7 @@
     <div class="top">
       <span class="left">共{{ programCount }}期</span>
       <span class="right" @click="sortList">
-        <img :src="topImg" alt="" />
+        <i class="iconfont icon-shengjiangxu"></i>
         排序
       </span>
     </div>
@@ -16,13 +16,13 @@
             <span class="time">{{ item.createTime | getTime }}</span>
             <span class="playCount">▷ {{ item.listenerCount }}</span>
             <span class="duration">
-              <img src="~assets/img/radioStation/Detail/sz.svg" alt="" />
+              <i class="iconfont icon-shichang"></i>
               {{ item.duration }}
             </span>
           </div>
         </div>
         <div class="box3">
-          <img src="~assets/img/common/sandian.svg" alt="" />
+          <i class="iconfont icon-sandian"></i>
         </div>
       </div>
     </div>
@@ -33,13 +33,12 @@
 import mscroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 import { toStringNum, durationTime } from "common/common";
 import { getDjProgram,getProgramDetail } from "network/radioStation";
-
+import "assets/icon/RadioStation.css"  // 字体图标
 export default {
   props: ["loadIndex"],
   name: "DetailProgram",
   data() {
     return {
-      topImg: require("assets/img/radioStation/Detail/shang.svg"),
       offset: 0, // 页数
       programList: [], // 节目数据
       programCount: 0,
@@ -58,14 +57,12 @@ export default {
     // 排序
     sortList() {
       if (this.bool) {
-        this.topImg = require("assets/img/radioStation/Detail/xia.svg");
         this.bool = false;
         this.acs = true;  // true设置排序
         this.offset = 0;  // 重置偏移量
         this.programList = [];  // 清空数据数组
         this.getProgram();
       } else {
-        this.topImg = require("assets/img/radioStation/Detail/shang.svg");
         this.acs = false;  // true设置排序
         this.offset = 0;  // 重置偏移量
         this.programList = [];  // 清空数据数组
@@ -118,9 +115,6 @@ export default {
   },
   created() {
     this.getProgram();
-    // getProgramDetail(this.$route.params.rid).then(res => {
-    //   console.log(res);
-    // })
   },
   components: {
     mscroll,
@@ -133,45 +127,47 @@ export default {
 }
 .top {
   width: 100%;
-  height: 25px;
-  line-height: 25px;
-  font-size: 13px;
+  height: .666667rem;
+  line-height: .666667rem;
+  font-size: .346667rem;
+  margin: .133333rem 0;
 }
 .right {
   float: right;
 }
-.right img {
-  position: relative;
-  top: 3px;
+.right .icon-shengjiangxu {
+  font-size: .32rem;
 }
 .item {
   display: flex;
   width: 100%;
-  height: 40px;
-  margin-bottom: 10px;
+  height: 1.066667rem;
+  margin-bottom: .266667rem;
 }
 .box1 {
   flex: 1;
-  line-height: 40px;
   color: #a8a8a8;
-  font-size: 14px;
+  font-size: .346667rem;
+  display: flex;
+  align-items: center;
+  text-indent: .106667rem;
 }
 .box2 {
   flex: 8;
 }
 .box3 {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.box3 img {
-  width: 25px;
-  height: 20px;
-  margin-top: 10px;
+.box3 .icon-sandian {
+  font-size: .4rem;
 }
 .title {
   width: 7.456724rem;
-  height: 20px;
-  font-size: 14px;
+  height: .533333rem;
+  font-size: .373333rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -179,19 +175,17 @@ export default {
 }
 .detail {
   width: 100%;
-  height: 20px;
-  font-size: 12px;
+  height: .533333rem;
+  font-size: .32rem;
   color: #a8a8a8;
 }
 .playCount {
-  margin-left: 12px;
+  margin-left: .32rem;
 }
 .duration {
-  margin-left: 12px;
+  margin-left: .32rem;
 }
-.duration img {
-  width: 13.6px;
-  position: relative;
-  top: 2px;
+.duration .icon-shichang {
+  font-size: .32rem;
 }
 </style>

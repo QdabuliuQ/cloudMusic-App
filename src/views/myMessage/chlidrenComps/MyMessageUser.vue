@@ -28,8 +28,8 @@ export default {
 </script>
 <style scoped>
 .box {
-  padding: 8px;
-  border-radius: 12px;
+  padding: .213333rem;
+  border-radius: .32rem;
 }
 .MyMessageLogin {
   width: 100%;
@@ -39,11 +39,11 @@ export default {
   align-items: center;
 }
 .userImg {
-  width: 45px;
-  height: 45px;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 50%;
   float: left;
-  margin-left: 10px;
+  margin-left: .266667rem;
 }
 .MyMessageLogin .login {
   width: 100%;
@@ -56,6 +56,7 @@ export default {
 }
 .text {
   font-size: .373333rem;
+  margin-bottom: .106667rem;
 }
 .level {
   background-color: #fff;

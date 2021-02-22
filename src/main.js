@@ -45,7 +45,14 @@ Vue.use(Popup);
 import VueLazyLoad from 'vue-lazyload'
 // 安装 VueLazyLoad
 Vue.use(VueLazyLoad)
-
+Vue.use(VueLazyLoad, {
+  // preLoad: 1.3,   //预加载的宽高比
+  // error: 'dist/error.png',//图片加载失败时使用的图片源
+  loading: './assets/default.png',//图片加载的路径
+  // loading:require('./assets/mo.png'),
+  // attempt: 1,
+  listenEvents:['scroll','wheel','mousewheel','resize','animationend','transitionend','touchmove'], //你想让vue监听的事件
+})
 
 import moment from 'moment' 
 // 过滤器  pattern 时间格式

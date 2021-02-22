@@ -15,7 +15,7 @@
                 <i class="iconfont topIcon icon-yunbei"></i>
               </div>
               <div class="text">
-                <div class="title">云贝中心</div>
+                <div class="textTitle">云贝中心</div>
                 <div class="tag">签到</div>
               </div>
             </div>
@@ -24,7 +24,7 @@
                 <i class="iconfont topIcon icon-xiaoxi"></i>
               </div>
               <div class="text">
-                <div class="title">消息中心</div>
+                <div class="textTitle">消息中心</div>
                 <div class="desc">{{ message }}</div>
               </div>
             </div>
@@ -35,7 +35,7 @@
             <div class="icon">
               <i class="iconfont icon-chuanzuo"></i>
             </div>
-            <div class="title">创作者中心</div>
+            <div style="margin-left: 0.213049rem" class="textTitle">创作者中心</div>
           </div>
         </div>
         <popup-item :title="'音乐服务'" :itemList="itemList1"></popup-item>
@@ -66,7 +66,7 @@ export default {
         { icon: 'icon-zhuanban', text: "个性装扮" },
         { icon: 'icon-dingshi', text: "定时关闭" },
         { icon: 'icon-saoyisao', text: "扫一扫" },
-        { icon: 'icon-xiazai', text: "边听边存" },
+        { icon: 'icon-leftxiazai', text: "边听边存" },
         { icon: 'icon-liuliang',text: "在线听歌免流量", },
         { icon: 'icon-heimingdan', text: "音乐黑名单" },
         { icon: 'icon-dunpai1', text: "青少年模式" },
@@ -131,6 +131,7 @@ export default {
 }
 .iconfont{
   color: #fff;
+  font-size: .426667rem;
 }
 .topIcon{
   font-size: .346667rem;
@@ -176,9 +177,12 @@ export default {
 .text {
   margin-left: 0.213049rem;
 }
-.title {
+.textTitle {
   font-weight: 400;
   font-size: .373333rem;
+  height: .533333rem;
+  display: flex;
+  align-items: center;
 }
 .tag {
   height: 0.479361rem;
@@ -195,5 +199,8 @@ export default {
 .desc {
   font-size: 0.319574rem;
   color: #c5c5c5;
+  height: .4rem;
+  display: flex;
+  align-items: center;
 }
 </style>

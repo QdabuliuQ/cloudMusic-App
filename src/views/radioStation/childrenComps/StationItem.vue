@@ -6,14 +6,16 @@
       v-for="(item, index) in recommendAudio"
       :key="index"
     >
-      <div class="cover">
-        <div class="tag" v-if="showTag">付费精品</div>
-        <div class="count" v-if="count">▷ {{ item.playCount }}</div>
-        <img v-lazy="item.picUrl" alt="" />
-        <div class="creator" v-if="showCreator">{{ item.name }}</div>
-      </div>
-      <div class="title">
-        {{ item.rcmdtext == "" ? item.desc : item.rcmdtext }}
+      <div class="container" :class="[index == 1 ? 'centerClass': '']">
+        <div class="cover">
+          <div class="tag" v-if="showTag">付费精品</div>
+          <div class="count" v-if="count">▷ {{ item.playCount }}</div>
+          <img v-lazy="item.picUrl" alt="" />
+          <div class="creator" v-if="showCreator">{{ item.name }}</div>
+        </div>
+        <div class="title">
+          {{ item.rcmdtext == "" ? item.desc : item.rcmdtext }}
+        </div>
       </div>
     </div>
   </div>
@@ -56,19 +58,26 @@ export default {
 .StationItem {
   width: 31.5%;
   height: 3.91478rem;
-  margin-bottom: 8px;
+  margin-bottom: 0.213333rem;
   position: relative;
+}
+.centerClass{
+  /* margin: 0 .370933rem; */
+}
+.container{
+  width: 100%;
+  height: 100%;
 }
 .cover {
   width: 100%;
   height: 2.929427rem;
-  border-radius: 7px;
+  border-radius: 0.186667rem;
   overflow: hidden;
   position: relative;
 }
 .count {
   position: absolute;
-  right: .133156rem;
+  right: 0.133156rem;
   top: 0;
   color: #fff;
   font-size: 0.319574rem;
@@ -78,9 +87,9 @@ export default {
   bottom: 0;
   width: 95%;
   margin-left: 4%;
-  height: 18px;
-  line-height: 18px;
-  font-size: 12px;
+  height: 0.48rem;
+  line-height: 0.48rem;
+  font-size: 0.32rem;
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -88,15 +97,15 @@ export default {
 }
 .tag {
   position: absolute;
-  height: 20px;
+  height: 0.533333rem;
   text-align: center;
-  line-height: 20px;
+  line-height: 0.533333rem;
   color: #fff;
-  background-color: #da231b;
-  font-size: 10px;
-  padding: 0 4px;
-  border-top-left-radius: 7px;
-  border-bottom-right-radius: 7px;
+  background-color: var(--red);
+  font-size: 0.266667rem;
+  padding: 0 0.106667rem;
+  border-top-left-radius: 0.186667rem;
+  border-bottom-right-radius: 0.186667rem;
 }
 .cover img {
   width: 100%;
@@ -104,10 +113,10 @@ export default {
 }
 .title {
   width: 100%;
-  height: 35px;
-  margin-top: 2px;
-  font-size: 13px;
-  line-height: 18px;
+  height: 0.933333rem;
+  margin-top: 0.053333rem;
+  font-size: 0.346667rem;
+  line-height: 0.48rem;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -120,6 +129,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-around; */
-  justify-content: space-between;
+  justify-content: space-between; 
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="SearchHP" :key="i">
     <div class="nav">
       <div class="left" @click="back">
-        <img src="~assets/img/radioStation/fanhui.png" alt="" />
+        <!-- <img src="~assets/img/radioStation/fanhui.png" alt="" /> -->
       </div>
       <div class="right">
         <div class="sous">

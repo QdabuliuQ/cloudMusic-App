@@ -40,7 +40,6 @@
         </div>
         <div class="center">
           {{ item.name }}
-
         </div>
         <div class="right">
           <div class="btn">关注</div>

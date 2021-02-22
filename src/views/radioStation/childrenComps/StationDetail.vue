@@ -24,7 +24,6 @@
               </div>
               <div class="right">
                 <div class="btn">
-                  <img src="~assets/img/radioStation/Detail/wjx.svg" alt="" />
                   <span>订阅</span>
                 </div>
               </div>
@@ -189,7 +188,8 @@ export default {
 }
 .top .backImg {
   position: absolute;
-  /* top: -20px; */
+  filter: blur(5px);
+  z-index: -1;
   top: 0;
   left: 0;
   width: 100%;
@@ -203,15 +203,15 @@ export default {
 }
 .tabnav {
   position: absolute;
-  bottom: 0;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  bottom: -0.16rem;
+  border-top-left-radius: .533333rem;
+  border-top-right-radius: .533333rem;
 }
 .peopleText {
   width: 92%;
-  height: 36px;
+  height: .96rem;
   position: absolute;
-  bottom: 45px;
+  bottom: 1.2rem;
   margin-left: 4%;
   display: flex;
 }
@@ -222,11 +222,11 @@ export default {
   flex: 3;
 }
 .peopleName {
-  width: 250px;
-  height: 18px;
-  line-height: 18px;
+  width: 6.666667rem;
+  height: .48rem;
+  line-height: .48rem;
   color: #fff;
-  font-size: 15px;
+  font-size: .4rem;
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -234,29 +234,29 @@ export default {
 }
 .peopleCount {
   width: 100%;
-  height: 18px;
-  line-height: 18px;
-  color: rgb(228, 228, 228);
-  font-size: 12px;
+  height: .48rem;
+  line-height: .48rem;
+  color: rgba(212, 212, 212, 0.842);
+  font-size: .32rem;
   margin: 0;
 }
 .btn {
   width: 80%;
-  height: 28px;
-  border-radius: 28px;
-  margin-top: 4px;
+  height: .746667rem;
+  border-radius: .746667rem;
+  margin-top: .106667rem;
   text-align: center;
-  line-height: 28px;
+  line-height: .746667rem;
   float: right;
   background-color: #da231b;
   color: #fff;
-  font-size: 13px;
+  font-size: .346667rem;
 }
 .btn img {
-  width: 18px;
+  width: .48rem;
   position: relative;
-  top: 4px;
-  right: 2px;
+  top: .106667rem;
+  right: .053333rem;
 }
 .nav {
   position: absolute;
@@ -267,6 +267,6 @@ export default {
   border: 0 !important;
 }
 .bottom {
-  padding: 10px 12px;
+  padding: .266667rem .32rem;
 }
 </style>

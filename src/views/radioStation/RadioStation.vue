@@ -7,7 +7,7 @@
           我创建的电台<span>({{ radios.length }})</span>
         </div>
         <div class="content">
-          <img src="~assets/img/radioStation/maikefeng.svg" alt="" />
+          <i class="iconfont icon-maikefeng"></i>
           <h2>申请做主播</h2>
         </div>
       </div>
@@ -19,9 +19,9 @@
       </div>
       <div class="recommendAudio">
         <div class="title recommendTitle" @click="StationHomeP">
-          <img class="like" src="~assets/img/radioStation/xin.svg" alt="" />
+          <i class="iconfont icon-tuijian"></i>
           <span>为你推荐</span>
-          <img class="toright" src="~assets/img/radioStation/you.svg" alt="">
+          <i class="iconfont icon-gengduo"></i>
         </div>
         <station-item :recommendAudio="recommendAudio"></station-item>
       </div>
@@ -33,7 +33,7 @@
 import MenuNav from "components/context/menuNav/MenuNav"; // 导航栏组件
 import StationItem from "./childrenComps/StationItem"; // 推荐电台组件
 import mscroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
-
+import "assets/icon/RadioStation.css"  // 字体图标
 import {
   getUserDJ,
   userAudio,
@@ -94,72 +94,78 @@ export default {
   height: 100vh;
 }
 .top {
-  padding: 10px 12px;
+  padding: .266667rem .32rem;
   width: 100%;
-  height: 90px;
-  border-bottom: 6px solid #ececec;
+  height: 2.4rem;
+  border-bottom: .16rem solid #ececec;
 }
 .title {
-  height: 30px;
-  line-height: 30px;
-  font-size: 15px;
+  height: .8rem;
+  line-height: .8rem;
+  font-size: .4rem;
 }
 .title span {
-  font-size: 12px;
+  font-size: .32rem;
   color: #a5a5a5;
 }
 .title .like {
-  width: 22px;
-  margin-left: 5px;
-  margin-top: 3px;
-  margin-right: 5px;
+  width: .586667rem;
+  margin-left: .133333rem;
+  margin-top: .08rem;
+  margin-right: .133333rem;
   float: left;
 }
 .content {
-  height: 40px;
-  line-height: 40px;
+  height: 1.066667rem;
   font-weight: 550;
+  display: flex;
+  align-items: center;
 }
-.content img {
-  width: 35px;
-  margin-left: 10px;
-  float: left;
-  margin-top: 2.5px;
-  margin-right: 5px;
+.content .iconfont {
+  font-size: .426667rem;
+  color: var(--red);
 }
 .content h2 {
-  font-size: 16px;
+  font-size: .373333rem;
   margin: 0;
-  line-height: 40px;
+  line-height: 1.066667rem;
+  font-weight: 400;
+  margin-left: .266667rem;
 }
 .myRadios {
-  padding: 10px 12px;
-  height: 90px;
-  border-bottom: 6px solid #ececec;
+  padding: .266667rem .32rem;
+  height: 2.4rem;
+  border-bottom: .16rem solid #ececec;
 }
 .content2 {
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 1.066667rem;
+  line-height: 1.066667rem;
   text-align: center;
   color: #a5a5a5;
-  font-size: 15px;
+  font-size: .4rem;
 }
 .recommendAudio {
-  padding: 10px 12px;
+  padding: .266667rem .32rem;
 }
 .recommendTitle {
-  margin-bottom: 5px;
+  margin-bottom: .133333rem;
+  display: flex;
+  align-items: center;
+}
+.recommendTitle .icon-tuijian{
+  color: var(--red);
+  font-size: .426667rem;
+}
+.recommendTitle .icon-gengduo{
+  color: var(--red);
+  font-size: .333333rem;
+  margin-left: .186667rem;
 }
 .recommendTitle span{
-  font-size: 15px;
-  font-weight: 550;
+  font-size: .36rem;
   color: #000;
   float: left;
-}
-.toright{
-  width: 14px;
-  margin-top: 8px;
-  margin-left: 4px;
+  margin-left: .266667rem;
 }
 </style>

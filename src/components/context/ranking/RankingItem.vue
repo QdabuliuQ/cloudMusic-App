@@ -22,11 +22,12 @@
                 alt=""
               />
               <div class="upbox" v-else-if="item.lastRank - item.rank > 0">
-                <img
+                <!-- <img
                   class="up"
                   src="~assets/img/radioStation/Ranking/shang.svg"
                   alt=""
-                />{{ item.lastRank - item.rank }}
+                /> -->
+                {{ item.lastRank - item.rank }}
               </div>
               <div class="no" v-else-if="item.lastRank - item.rank === 0">
                 - {{ " " + item.lastRank - item.rank }}

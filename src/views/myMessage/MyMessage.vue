@@ -76,7 +76,7 @@ export default {
       document.addEventListener("scroll", () => {
         if (pageYOffset >= totop) {
           this.$refs.tab.$el.style =
-            "position: fixed; left: 0; right: 0; top: 44px; background-color: #fff; z-index: 10;";
+            "position: fixed; left: 0; right: 0; top: 37px; background-color: #fff; z-index: 10;";
           this.$refs.songSheet.$el.style = 'margin-top: '+ this.$refs.tab.$el.clientHeight +'px'
         } else if (pageYOffset < totop) {
           this.$refs.tab.$el.style =

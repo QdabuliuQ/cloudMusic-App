@@ -45,6 +45,9 @@ export default {
   margin-top: 0.399467rem;
   border-radius: 0.266312rem;
 }
+.iconfont{
+  font-size: .426667rem;
+}
 .topbox {
   width: 100%;
   box-sizing: border-box;
@@ -71,6 +74,8 @@ export default {
 .img {
   width: 0.798935rem;
   height: 0.532623rem;
+  display: flex;
+  align-items: center;
 }
 .img img {
   width: 0.532623rem;

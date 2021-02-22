@@ -6,31 +6,33 @@
     <div class="logo">
       <img src="https://img.coolcr.cn/2021/02/18/ba588162b1fb7.png" alt="" />
     </div>
-    <div @click="phoneLogin" class="phoneLogin">
-      <span>手机号登录</span>
-    </div>
-    <div class="tiyan" @click="close">
-      <span>立即体验</span>
-    </div>
-    <div class="list">
-      <div class="item">
-        <div class="box">
-          <i class="iconfont icon-weixin"></i>
-        </div>
+    <div class="loginType">
+      <div @click="phoneLogin" class="phoneLogin">
+        <span>手机号登录</span>
       </div>
-      <div class="item">
-        <div class="box">
-          <i class="iconfont icon-QQ"></i>
-        </div>
+      <div class="tiyan" @click="close">
+        <span>立即体验</span>
       </div>
-      <div class="item">
-        <div class="box">
-          <i class="iconfont icon-weibo"></i>
+      <div class="list">
+        <div class="item">
+          <div class="box">
+            <i class="iconfont icon-weixin"></i>
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="box">
-          <i class="iconfont icon-youxiang"></i>
+        <div class="item">
+          <div class="box">
+            <i class="iconfont icon-QQ"></i>
+          </div>
+        </div>
+        <div class="item">
+          <div class="box">
+            <i class="iconfont icon-weibo"></i>
+          </div>
+        </div>
+        <div class="item">
+          <div class="box">
+            <i class="iconfont icon-youxiang"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -67,11 +69,11 @@ export default {
   bottom: 0;
   z-index: 51;
 }
-.close{
+.close {
   margin-top: 0.399467rem;
 }
 .close .icon-close {
-  font-size: .533333rem;
+  font-size: 0.533333rem;
   color: #fff;
   margin-left: 0.399467rem;
 }
@@ -79,13 +81,22 @@ export default {
   width: 1.704394rem;
   height: 1.704394rem;
   background-color: #fff;
-  margin: 3.595206rem auto 4.793609rem;
-  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.144);
 }
 .logo img {
   width: 100%;
   height: 100%;
+}
+.loginType{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .phoneLogin {
   width: 6.994407rem;
@@ -110,7 +121,7 @@ export default {
   color: #da231b;
 }
 .tiyan {
-  width: 70%;
+  width: 100%;
   height: 1.066667rem;
   margin: 0.532623rem auto;
   border-radius: 1.066667rem;
@@ -122,7 +133,7 @@ export default {
   border: 1px solid rgb(221, 221, 221, 0.8);
 }
 .list {
-  width: 75%;
+  width: 100%;
   height: 1.331558rem;
   margin: 0 auto;
   display: flex;
@@ -143,8 +154,9 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.box .iconfont{
+.box .iconfont {
   color: rgba(255, 255, 255, 0.856);
+  font-size: .426667rem;
 }
 .v-enter {
   opacity: 0;

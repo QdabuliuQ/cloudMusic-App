@@ -2,7 +2,10 @@
   <div
     class="DetailPlay"
     v-if="detail !== {}"
-    :style="{ background: 'url(' + detail.blurCoverUrl + ')', backgroundSize: size}"
+    :style="{
+      background: 'url(' + detail.blurCoverUrl + ')',
+      backgroundSize: size,
+    }"
   >
     <div class="content">
       <menu-nav
@@ -14,98 +17,96 @@
         @openSub="openSub"
       ></menu-nav>
       <div class="bbox">
-        <transition name="logo" mode="out-in">
-          <div class="logo" @click="toggleLogo" v-show="showLogo">
-            <img :src="detail.coverUrl" alt="" />
-          </div>
-        </transition>
-        <transition name="detail" mode="out-in">
-            <div class="detail" @click="toggleDetail" v-show="showDetail">
-              <div class="topbox" v-if="detail.radio">
-                <div class="contentAudio">
-                  <div class="top">来自电台</div>
-                  <div class="bottom">
-                    <div class="box1">
-                      <img :src="detail.coverUrl" alt="" />
-                    </div>
-                    <div class="box2">
-                      <div class="textBox">
-                        <div class="name">{{ detail.radio.name }}</div>
-                        <div class="sub">{{ detail.radio.subCount }}</div>
-                      </div>
-                    </div>
-                    <div class="box3">
-                      <div class="btn">
-                        <img
-                          src="~assets/img/radioStation/Detail/xing2.svg"
-                          alt=""
-                        />
-                        订阅
-                      </div>
-                    </div>
+        <div class="logo" @click="toggleDetail" v-show="!showDetail">
+          <img :src="detail.coverUrl" alt="" />
+        </div>
+        <div class="detail" @click="toggleDetail" v-show="showDetail">
+          <div class="topbox" v-if="detail.radio">
+            <div class="contentAudio">
+              <div class="top">来自电台</div>
+              <div class="bottom">
+                <div class="box1">
+                  <img :src="detail.coverUrl" alt="" />
+                </div>
+                <div class="box2">
+                  <div class="textBox">
+                    <div class="name">{{ detail.radio.name }}</div>
+                    <div class="sub">{{ detail.radio.subCount }}</div>
+                  </div>
+                </div>
+                <div class="box3">
+                  <div class="btn">
+                    订阅
                   </div>
                 </div>
               </div>
-              <div class="title" v-if="detail.radio">
-                <div class="tag">{{ detail.radio.category }}</div>
-                <div class="serialNum">
-                  {{ navTitle }} Vol.{{ detail.serialNum }}
-                </div>
-              </div>
-              <div class="addTime" v-if="detail.radio">
-                {{ detail.createTime | getTime }}创建 播放{{
-                  detail.listenerCount
-                }}次
-              </div>
-              <div class="desc" v-if="detail.radio">
-                {{ detail.radio.desc }}
+            </div>
+          </div>
+          <div class="title" v-if="detail.radio">
+            <div class="tag">
+              <div class="tagBox">
+                {{ detail.radio.category }}
               </div>
             </div>
-        </transition>
-      </div>
-      <div class="nav">
-        <div class="PlaySongNav">
-          <div class="navitem">
-            <img src="~assets/img/playSong/xinaixin.svg" alt="" />
+            <div class="serialNum">
+              {{ navTitle }} Vol.{{ detail.serialNum }}
+            </div>
           </div>
-          <div class="navitem">
-            <img src="~assets/img/playSong/xiazai.svg" alt="" />
+          <div class="addTime" v-if="detail.radio">
+            {{ detail.createTime | getTime }}创建 播放{{
+              detail.listenerCount
+            }}次
           </div>
-          <div class="navitem">
-            <img src="~assets/img/playSong/changge.svg" alt="" />
-          </div>
-          <div class="navitem" @click="isShowComment">
-            <img src="~assets/img/playSong/pinglun.svg" alt="" />
-          </div>
-          <div class="navitem">
-            <img src="~assets/img/playSong/gengduo.svg" alt="" />
+          <div class="desc" v-if="detail.radio">
+            {{ detail.radio.desc }}
           </div>
         </div>
       </div>
-      <!-- 进度条 -->
-      <div class="playbox">
-        <div class="start">
-          {{ minT > 9 ? minT : "0" + minT }}:{{
-            secondT > 9 ? secondT : "0" + secondT
-          }}
+      <div class="bottomContainer">
+        <div class="nav">
+          <div class="PlaySongNav">
+            <div class="navitem">
+              <i class="iconfont icon-aixin"></i>
+            </div>
+            <div class="navitem">
+              <i class="iconfont icon-xiazai"></i>
+            </div>
+            <div class="navitem">
+              <i class="iconfont icon-changge"></i>
+            </div>
+            <div class="navitem" @click="isShowComment">
+              <i class="iconfont icon-pinglun"></i>
+            </div>
+            <div class="navitem">
+              <i class="iconfont icon-liebiao"></i>
+            </div>
+          </div>
         </div>
-        <div class="PlaySongTime">
-          <van-slider
-            class="box"
-            v-model="value"
-            active-color="#ee0a24"
-            bar-height="3px"
-            inactive-color="#cdcdcd"
-            @change="onChange"
-          >
-            <template #button>
-              <div class="custom-button"></div>
-            </template>
-          </van-slider>
+        <!-- 进度条 -->
+        <div class="playbox">
+          <div class="start">
+            {{ minT > 9 ? minT : "0" + minT }}:{{
+              secondT > 9 ? secondT : "0" + secondT
+            }}
+          </div>
+          <div class="PlaySongTime">
+            <van-slider
+              class="box"
+              v-model="value"
+              active-color="#ee0a24"
+              bar-height="3px"
+              inactive-color="#cdcdcd"
+              @change="onChange"
+            >
+              <template #button>
+                <div class="custom-button"></div>
+              </template>
+            </van-slider>
+          </div>
+          <div class="end">{{ songLength }}</div>
         </div>
-        <div class="end">{{ songLength }}</div>
+        <bnav ref="bnav" class="bnav" @playBtn="playBtn"></bnav>
       </div>
-      <bnav ref="bnav" class="bnav" @playBtn="playBtn"></bnav>
       <audio ref="playAudio" id="audio" :src="audioSrc"></audio>
       <van-share-sheet
         v-model="showShare"
@@ -162,9 +163,8 @@ export default {
         ],
       ],
       ShowComment: false, // 评论面板
-      showLogo: true, // 显示/隐藏封面
       showDetail: false, // 显示/隐藏节目信息
-      size: '9.986684rem 17.762983rem'
+      size: "9.986684rem 17.762983rem",
     };
   },
   components: {
@@ -173,14 +173,8 @@ export default {
     comment,
   },
   methods: {
-    toggleLogo() {
-      this.showLogo = false;
-      this.showDetail = true;
-    },
-
     toggleDetail() {
-      this.showLogo = true;
-      this.showDetail = false;
+      this.showDetail = !this.showDetail;
     },
 
     toback() {
@@ -213,7 +207,7 @@ export default {
       if (this.isPlay === 0) {
         this.audioDom.play(); // 播放
         this.isPlay = 1;
-        this.$refs.bnav.playingImg()
+        this.$refs.bnav.playingImg();
         this.timer = setInterval(this.playAudio, 1000); // 更新时间
         // 重新播放
         if (this.value >= 100) {
@@ -227,7 +221,7 @@ export default {
         }
       } else {
         clearInterval(this.timer); // 清除定时器
-        this.$refs.bnav.endImg()
+        this.$refs.bnav.endImg();
         this.audioDom.pause(); // 暂停
         this.isPlay = 0;
       }
@@ -282,94 +276,79 @@ export default {
 };
 </script>
 <style scoped>
-/* .logo-enter {
-  opacity: 0;
+.logo-enter {
+  opacity: 1;
+  position: absolute;
+  z-index: -10;
+  transform: translateX(-9.320905rem);
 }
 .logo-leave-to {
-  opacity: 0;
+  opacity: 1;
+  position: absolute;
+  z-index: -10;
+  transform: translateX(-9.320905rem);
 }
 
 .logo-enter-active,
 .logo-leave-active {
-  transition: 1.2s all ease-in-out;
+  transition: 0.8s all ease-in-out;
 }
 
 .detail-enter {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-}
-.detail-leave-to {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-}
-
-.detail-enter-active,
-.lyric-leave-active {
-  transition: 0.8s all ease-in-out;
-} */
-.logo-enter{
-  opacity: 1;
-  position: absolute;
-  z-index: -10;
-  transform: translateX(-9.320905rem);
-}
-.logo-leave-to{
-  opacity: 1;
-  position: absolute;
-  z-index: -10;
-  transform: translateX(-9.320905rem);
-}
-
-.logo-enter-active,.logo-leave-active{
-  transition: 0.8s all ease-in-out;
-}
-
-.detail-enter{
   position: absolute;
   z-index: -10;
   opacity: 1;
   transform: translateX(9.320905rem);
 }
-.detail-leave-to{
+.detail-leave-to {
   position: absolute;
   z-index: 1;
   opacity: 1;
-  transform: translateX(18.641811rem);
+  transform: translate(18.641811rem);
 }
 
-.detail-enter-active,.detail-leave-active{
+.detail-enter-active,
+.detail-leave-active {
   transition: 0.8s all ease-in-out;
 }
 
-
 .desc {
-  font-size: 13px;
+  font-size: 0.346667rem;
   color: #afafaf;
+  line-height: .453333rem;
 }
 .addTime {
   margin: 0.479361rem 0 0.479361rem;
   color: #8b8b8b;
-  font-size: 12px;
+  font-size: 0.32rem;
 }
 .title {
   width: 100%;
   margin-top: 0.479361rem;
   margin-bottom: 0.479361rem;
+  display: flex;
+  align-items: center;
 }
 .title .tag {
-  float: left;
-  padding: 0 5px;
-  font-size: 12px;
+  
+}
+.tagBox{
+  width: 1.6rem;
+  font-size: 0.32rem;
+  height: .8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #da231b;
   border: 1px solid #da231b;
   transform: scale(0.8);
+  border-radius: .213333rem;
 }
 .title .serialNum {
-  font-size: 13px;
-  margin-left: 5px;
+  font-size: 0.346667rem;
+  margin-left: 0.133333rem;
   color: #fff;
+  line-height: .453333rem;
 }
 .DetailPlay {
   width: 100%;
@@ -383,36 +362,49 @@ export default {
   color: #fff;
   /* background-color: #fff; */
   background-color: transparent;
-  font-size: 14px !important;
+  font-size: 0.373333rem !important;
 }
 .content {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+  position: relative;
 }
 .bbox {
   width: 100%;
-  height: 11.984021rem;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bottomContainer {
+  width: 100%;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .detail {
   width: 100%;
-  padding: 15px;
+  padding: 0.4rem;
   position: absolute;
-  top: 1.171771rem;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .topbox {
   width: 100%;
   height: 2.663116rem;
-  border-radius: 10px;
+  border-radius: 0.266667rem;
   background-color: rgba(255, 255, 255, 0.137);
 }
 .contentAudio {
   width: 100%;
   height: 100%;
-  padding: 12px;
+  padding: 0.32rem;
 }
 .top {
-  font-size: 16px;
+  font-size: 0.426667rem;
   color: #fff;
   height: 25%;
 }
@@ -429,7 +421,7 @@ export default {
   width: 1.278296rem;
   height: 1.278296rem;
   margin-top: 0.106525rem;
-  border-radius: 10px;
+  border-radius: 0.266667rem;
 }
 .box2 {
   flex: 6;
@@ -443,16 +435,16 @@ export default {
 }
 .btn {
   width: 100%;
-  height: 25px;
-  line-height: 25px;
+  height: 0.666667rem;
+  line-height: 0.666667rem;
   text-align: center;
   color: #fff;
-  font-size: 12px;
-  border-radius: 25px;
-  background-color: #da231b;
+  font-size: 0.32rem;
+  border-radius: 0.666667rem;
+  background-color: var(--red);
 }
 .btn img {
-  margin-top: 4px;
+  margin-top: 0.106667rem;
   position: relative;
   left: 0.213049rem;
   float: left;
@@ -465,26 +457,22 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 0.373333rem;
   color: #fff;
 }
 .sub {
   width: 100%;
   height: 0.45273rem;
   line-height: 0.45273rem;
-  font-size: 12px;
+  font-size: 0.32rem;
   color: #8b8b8b;
 }
 .logo {
   width: 7.190413rem;
   height: 7.190413rem;
-  border-radius: 8px;
+  border-radius: 0.213333rem;
   overflow: hidden;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  position: relative;
-  top: 2.583222rem;
 }
 .logo img {
   width: 100%;
@@ -495,7 +483,12 @@ export default {
 }
 .navitem {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navitem .iconfont{
+  font-size: .426667rem !important;
 }
 .navitem img {
   width: 0.612517rem;
@@ -504,18 +497,18 @@ export default {
 .playbox {
   height: 0.798935rem;
   display: flex;
-  margin-top: 6px;
+  margin-top: 0.16rem;
   color: #fff;
 }
 .start {
   font-size: 10px;
-  line-height: 40px;
+  line-height: 1.066667rem;
   text-align: center;
   flex: 1;
 }
 .end {
-  font-size: 10px;
-  line-height: 40px;
+  font-size: 0.266667rem;
+  line-height: 1.066667rem;
   text-align: center;
   flex: 1;
 }
@@ -523,20 +516,20 @@ export default {
   float: right;
 }
 .PlaySongTime {
-  height: 40px;
+  height: 1.066667rem;
   flex: 6;
 }
 .box {
   position: relative;
-  top: 18px;
+  top: 0.48rem;
   float: left;
 }
 .custom-button {
-  width: 12px;
-  height: 12px;
+  width: 0.32rem;
+  height: 0.32rem;
   border-radius: 50%;
   color: #fff;
-  background-color: #ee0a24;
+  background-color: var(--red);
 }
 .bnav {
   height: 2.663116rem;

@@ -1,16 +1,8 @@
 <template>
   <div class="RadioStationNav">
     <div class="left" @click="back">
-      <img
-        v-if="showBlackImg"
-        src="~assets/img/radioStation/fanhui.png"
-        alt=""
-      />
-      <img
-        v-if="showWriteImg"
-        src="~assets/img/radioStation/fanhui2.png"
-        alt=""
-      />
+      <i v-if="showBlackImg" style="color: #000; font-size: .373333rem" class="iconfont icon-fanhui"></i>
+      <i v-if="showWriteImg" style="color: #fff; font-size: .373333rem" class="iconfont icon-fanhui"></i>
     </div>
     <div class="center">{{ navTitle }}</div>
     <div class="right" @click="toSub">
@@ -65,6 +57,7 @@ export default {
 .RadioStationNav {
   width: 100%;
   height: 44px;
+  /* font-size: .426667rem; */
   display: flex;
   border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
   position: relative;
@@ -74,11 +67,12 @@ export default {
 .left {
   flex: 1;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: 25px;
-  height: 22px;
-  margin-top: 10.5px;
+.left .iconfont{
+  font-size: .373333rem;
 }
 .center {
   width: 7.456724rem;
