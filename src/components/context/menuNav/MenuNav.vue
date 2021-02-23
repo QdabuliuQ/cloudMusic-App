@@ -59,7 +59,7 @@ export default {
   height: 44px;
   /* font-size: .426667rem; */
   display: flex;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
+  /* border-bottom: 1.5px solid rgba(0, 0, 0, 0.1); */
   position: relative;
   z-index: 21;
   background-color: #fff;

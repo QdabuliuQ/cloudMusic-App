@@ -10,7 +10,6 @@
     <div class="hotProgram">
       <div class="topText">
         {{ topText }}
-        <img src="~assets/img/radioStation/Ranking/tishi.svg" alt="" />
       </div>
       <div class="hotList" v-if="proList.length !== 0">
         <div
@@ -21,32 +20,6 @@
         >
           <div class="left">
             <span :class="{ topActive: index < 3 }">{{ index + 1 }}</span>
-            <div class="tag">
-              <img
-                v-if="item.lastRank === -1"
-                class="new"
-                src="~assets/img/radioStation/Ranking/new.svg"
-                alt=""
-              />
-              <div class="upbox" v-else-if="item.lastRank - item.rank > 0">
-                <!-- <img
-                  class="up"
-                  src="~assets/img/radioStation/Ranking/shang.svg"
-                  alt=""
-                /> -->
-                {{ item.lastRank - item.rank }}
-              </div>
-              <div class="no" v-else-if="item.lastRank - item.rank === 0">
-                - {{ " " + item.lastRank - item.rank }}
-              </div>
-              <div class="upbox" v-else-if="item.lastRank - item.rank < 0">
-                <img
-                  class="down"
-                  src="~assets/img/radioStation/Ranking/xia.svg"
-                  alt=""
-                />{{ item.rank - item.lastRank }}
-              </div>
-            </div>
           </div>
           <div class="userImg">
             <img v-lazy="item.picUrl" alt="" />
@@ -58,7 +31,7 @@
                 {{ item.creatorName }}
               </div>
               <div class="redu">
-                <img src="~assets/img/radioStation/Ranking/redu.svg" alt="" />
+                <i class="iconfont icon-redu"></i>
                 {{ item.score }}
               </div>
             </div>
@@ -72,7 +45,7 @@
 <script>
 import ranking from "components/context/ranking/Ranking";
 import { getTopPorList } from "network/radioStation";
-
+import "assets/icon/RadioStation.css"; // 字体图标
 export default {
   name: "stationList",
   data() {
@@ -136,34 +109,32 @@ export default {
   top: 2px;
 }
 .hotProgram {
-  padding: 17px 12px;
+  padding: .453333rem .32rem;
 }
 .hotList {
-  margin-top: 12px;
+  margin-top: .32rem;
 }
 .hotListItem {
   width: 100%;
   height: 2.130493rem;
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: .266667rem;
 }
 .left {
-  flex: 0.9;
-  margin-right: 5px;
-  font-size: 18px;
+  flex: 0.7;
+  margin-right: .133333rem;
+  font-size: .426667rem;
   font-weight: 550;
-  /* line-height: ; */
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #6d6d6d;
   position: relative;
-}
-.left span {
-  line-height: 1.810919rem;
 }
 .userImg {
   flex: 1.8;
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: .133333rem;
 }
 .userImg img {
   width: 100%;
@@ -175,7 +146,7 @@ export default {
   align-items: center;
 }
 .centerbox {
-  margin-left: 10px;
+  margin-left: .266667rem;
 }
 .right {
   flex: 1.7;
@@ -183,39 +154,42 @@ export default {
   display: flex;
   align-items: center;
 }
-.right img {
-  width: 30px;
-}
-.rightImg {
-  margin: auto;
-}
 .topActive {
   color: #da231b;
 }
 .title {
   width: 5.193076rem;
-  font-size: 15px;
+  height: .533333rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: .106667rem;
+  font-size: .4rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .creater {
   width: 5.193076rem;
-  font-size: 12px;
+  height: .4rem;
+  display: flex;
+  align-items: center;
+  font-size: .32rem;
+  margin-bottom: .106667rem;
   color: #696969;
-  line-height: 17px;
+  line-height: .453333rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.redu img {
-  width: 12px;
-  position: relative;
-  top: 1.5px;
+.redu .iconfont {
+  font-size: .32rem;
+  margin-right: .133333rem;
 }
 .redu {
-  font-size: 12px;
+  font-size: .32rem;
   color: #6d6d6d;
+  display: flex;
+  align-items: center;
 }
 .tag {
   width: 1.118509rem;
@@ -223,11 +197,11 @@ export default {
   position: absolute;
   top: 1.065246rem;
   left: -1px;
-  font-size: 12px;
+  font-size: .32rem;
   color: #696969;
 }
 .tag .new {
-  height: 20px;
+  height: .533333rem;
 }
 .no {
   margin: 0 auto;
@@ -238,26 +212,26 @@ export default {
   text-align: center;
 }
 .tag .up {
-  height: 13px;
+  height: .346667rem;
   float: left;
   position: relative;
   top: 0.093209rem;
 }
 .down {
-  height: 13px;
+  height: .346667rem;
   float: left;
   position: relative;
   top: 0.114514rem;
 }
 .showHot img {
-  width: 13px;
+  width: .346667rem;
   position: relative;
-  top: 2px;
+  top: .053333rem
 }
 .showHot {
   width: 100%;
   text-align: center;
-  font-size: 12px;
+  font-size: .32rem;
   color: #696969;
 }
 </style>

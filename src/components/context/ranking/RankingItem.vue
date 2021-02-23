@@ -3,7 +3,6 @@
     <div class="hotProgram">
       <div class="topText">
         {{topText}}
-        <img src="~assets/img/radioStation/Ranking/tishi.svg" alt="" />
       </div>
       <div class="hotList" v-if="proList.length !== 0">
         <div
@@ -14,36 +13,10 @@
         >
           <div class="left">
             <span :class="{ topActive: index < 3 }">{{ index + 1 }}</span>
-            <div class="tag">
-              <img
-                v-if="item.lastRank === -1"
-                class="new"
-                src="~assets/img/radioStation/Ranking/new.svg"
-                alt=""
-              />
-              <div class="upbox" v-else-if="item.lastRank - item.rank > 0">
-                <!-- <img
-                  class="up"
-                  src="~assets/img/radioStation/Ranking/shang.svg"
-                  alt=""
-                /> -->
-                {{ item.lastRank - item.rank }}
-              </div>
-              <div class="no" v-else-if="item.lastRank - item.rank === 0">
-                - {{ " " + item.lastRank - item.rank }}
-              </div>
-              <div class="upbox" v-else-if="item.lastRank - item.rank < 0">
-                <img
-                  class="down"
-                  src="~assets/img/radioStation/Ranking/xia.svg"
-                  alt=""
-                />{{ item.rank - item.lastRank }}
-              </div>
-            </div>
           </div>
           <div class="userImg" :class="{isRadius: isRadius}">
             <div v-if="item.userType !== 0" class="mlogo">
-              <img src="~assets/img/radioStation/Ranking/yinle.svg" alt="">
+              <i class="iconfont icon-logo"></i>
             </div>
             <img class="coverUrl" v-lazy="item.coverUrl" alt="" />
           </div>
@@ -56,7 +29,7 @@
                   {{ item.nickName }}
                 </div>
                 <div class="redu">
-                  <img src="~assets/img/radioStation/Ranking/redu.svg" alt="" />
+                  <i class="iconfont icon-redu"></i>
                   {{ item.score }}
                 </div>
               </div>
@@ -64,9 +37,12 @@
           </div>
           <div class="right">
             <div class="rightImg" v-if="showImg">
-              <img src="~assets/img/radioStation/Ranking/bofang.svg" alt="" />
+              <i class="iconfont icon-gequbofang"></i>
             </div>
-            <div class="showHot" v-else-if="showHot"><img src="~assets/img/radioStation/Ranking/redu.svg" alt="" />{{item.score}}</div>
+            <div class="showHot" v-else-if="showHot">
+              <i class="iconfont icon-redu"></i>
+              {{item.score}}
+            </div>
           </div>
         </div>
       </div>
@@ -75,25 +51,22 @@
 </template>
 
 <script>
+import "assets/icon/RadioStation.css"; // 字体图标
 import { toStringNum } from "common/common";
 export default {
-  props: ["topText", "proList", "showDetail", "showImg", "showHot", 'isRadius'],
+  props: ["topText", "proList", "showDetail", "showImg", "showHot", "isRadius"],
   name: "RankingItem",
 };
 </script>
 <style scoped>
-.topText{
-    font-size: 17px;
-}
-.topText img{
-    position: relative;
-    top: 2px;
+.topText {
+  font-size: 0.453333rem;
 }
 .RankingItem {
   width: 100%;
 }
 .hotProgram {
-  padding: 17px 12px;
+  padding: 0.453333rem 0.32rem;
 }
 .hotList {
   margin-top: 12px;
@@ -106,12 +79,15 @@ export default {
 }
 .left {
   flex: 0.9;
-  margin-right: 5px;
-  font-size: 18px;
+  margin-right: .133333rem;
+  font-size: .426667rem;
   font-weight: 550;
   /* line-height: ; */
   text-align: center;
   color: #6d6d6d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .left span {
   line-height: 1.011984rem;
@@ -119,27 +95,30 @@ export default {
 .userImg {
   flex: 1.4;
   /* overflow: hidden; */
-  border-radius: 5px;
+  border-radius: 0.133333rem;
   position: relative;
 }
-.mlogo{
-  width: .479361rem;
-  height: .479361rem;
+.mlogo {
+  width: 0.479361rem;
+  height: 0.479361rem;
   position: absolute;
   z-index: 5;
   bottom: 0;
   right: 0;
   border-radius: 50%;
   background-color: #da231b;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.mlogo img{
-  width: .346205rem;
+.mlogo .icon-logo {
+  color: #fff;
+  font-size: 0.32rem;
   position: relative;
-  top: -2.5px;
+  top: 0.026667rem;
 }
-.isRadius{
-    border-radius: 50%;
+.isRadius {
+  border-radius: 50%;
 }
 .userImg .coverUrl {
   width: 100%;
@@ -152,7 +131,7 @@ export default {
   align-items: center;
 }
 .centerbox {
-  margin-left: 10px;
+  margin-left: 0.266667rem;
 }
 .right {
   flex: 1.7;
@@ -160,18 +139,12 @@ export default {
   display: flex;
   align-items: center;
 }
-.right img {
-  width: 30px;
-}
-.rightImg {
-  margin: auto;
-}
 .topActive {
   color: #da231b;
 }
 .title {
   width: 5.193076rem;
-  font-size: 14px;
+  font-size: .373333rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -209,41 +182,20 @@ export default {
   color: #6d6d6d;
   margin-left: 8px;
 }
-.tag {
-  height: 17px;
-  position: relative;
-  top: -0.399467rem;
-  font-size: 12px;
+.rightImg .iconfont{
+  font-size: .453333rem;
   color: #696969;
 }
-.tag .new {
-  height: 20px;
+.showHot .icon-redu {
+  font-size: .32rem;
+  margin-right: .133333rem;
 }
-.upbox {
-  width: 0.719041rem;
-  text-align: center;
-}
-.tag .up {
-  height: 13px;
-  float: left;
-  position: relative;
-  top: 0.093209rem;
-}
-.down {
-  height: 13px;
-  float: left;
-  position: relative;
-  top: 0.114514rem;
-}
-.showHot img{
-    width: 13px;
-    position: relative;
-    top: 2px;
-}
-.showHot{
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
-    color: #696969;
+.showHot {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .32rem;
+  color: #696969;
 }
 </style>

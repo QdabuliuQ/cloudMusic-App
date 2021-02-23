@@ -2,7 +2,8 @@
   <div class="Ranking">
     <div class="hourList">
       <div class="title">
-        {{ title }}<img src="~assets/img/radioStation/Ranking/you.svg" alt="" />
+        {{ title }}
+        <i class="iconfont icon-gengduo"></i>
       </div>
       <div class="itembox">
         <div class="hourItem" @click="routePush(item.id)" v-for="(item, index) in list" :key="index">
@@ -22,7 +23,7 @@
             </div>
             <div class="name" v-if="showHot">{{ item.nickName }}</div>
             <div class="hot" v-if="showHot">
-              <img src="~assets/img/radioStation/Ranking/redu.svg" alt="" />
+              <i class="iconfont icon-redu"></i>
               {{ item.score }}
             </div>
             <div class="text" v-else-if="!showHot">
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import "assets/icon/RadioStation.css"; // 字体图标
 export default {
   props: ["title", "list", "isRadius", "type", "showHot"],
   data() {
@@ -74,22 +76,21 @@ export default {
 }
 .hourList {
   padding: 0.45273rem 0.319574rem;
-  border-bottom: 8px solid #f0efef;
+  border-bottom: .213333rem solid #f0efef;
 }
 .title {
-  font-size: 17px;
-  height: 20px;
-  line-height: 20px;
+  font-size: .453333rem;
+  height: .533333rem;
+  display: flex;
+  align-items: center;
 }
-.title img {
-  width: 14px;
-  position: relative;
-  top: 1.5px;
-  margin-left: 5px;
+.title .icon-gengduo {
+  font-size: .346667rem;
+  margin-left: .133333rem;
 }
 .itembox {
   display: flex;
-  margin-top: 12px;
+  margin-top: .32rem;
 }
 .hourItem {
   margin: 0 auto;
@@ -108,7 +109,7 @@ export default {
   margin: 0 auto;
   position: relative;
   text-align: center;
-  border-radius: 5px;
+  border-radius: .133333rem;
 }
 .ranking {
   position: absolute;
@@ -122,7 +123,7 @@ export default {
 .name {
   width: 2.636485rem;
   height: 0.665779rem;
-  font-size: 14px;
+  font-size: .373333rem;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -133,17 +134,17 @@ export default {
 .hot {
   width: 100%;
   height: 0.399467rem;
-  font-size: 13.5px;
+  font-size: .36rem;
   color: #969696;
   text-align: center;
   line-height: 0.399467rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.hot img {
-  width: 13px;
-  float: left;
-  position: relative;
-  top: -1px;
-  left: 0.585885rem;
+.hot .iconfont {
+  font-size: .32rem;
+  margin-right: .133333rem;
 }
 .text{
   width: 100%;
@@ -155,7 +156,7 @@ export default {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: 13px;
+  font-size: .346667rem;
   line-height: 0.45273rem;
 }
 </style>
