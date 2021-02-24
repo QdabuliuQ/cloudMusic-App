@@ -6,7 +6,7 @@
     </div>
     <div class="center">{{ navTitle }}</div>
     <div class="right" @click="toSub">
-      <img v-if="rightImg" src="~assets/img/playSong/fenxiang.svg" alt="" />
+      <i v-if="rightImg" class="iconfont icon-fenxiang"></i>
     </div>
   </div>
 </template>
@@ -48,7 +48,9 @@ export default {
     },
 
     toSub() {
-      this.$emit("openSub");
+      if (this.rightImg) {
+        this.$emit("openSub");
+      }
     },
   },
 };
@@ -86,11 +88,11 @@ export default {
 }
 .right {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.right img {
-  width: 24px;
-  height: 24px;
-  margin-top: 10px;
+.right .icon-fenxiang {
+  font-size: .373333rem;
 }
 </style>

@@ -6,27 +6,27 @@
           {{ index + 1 }}
         </div>
         <div class="left">
-          <div class="name">
-            {{ item.songName }}
-            <span v-if="item.yuanc.length !== 0" class="yuanc"
-              >({{ item.yuanc[0] }})</span
-            >
-          </div>
-          <div class="singer">
-            <span v-for="(item, index) in item.singer" :key="index">{{ item.name }} </span> -
-            {{ " " + item.zhuanji }}
+          <div class="leftContainer">
+            <div class="name">
+              {{ item.songName }}
+              <span v-if="item.yuanc.length !== 0" class="yuanc"
+                >({{ item.yuanc[0] }})</span
+              >
+            </div>
+            <div class="singer">
+              <span v-for="(item, index) in item.singer" :key="index"
+                >{{ item.name }}
+              </span>
+              -
+              {{ " " + item.zhuanji }}
+            </div>
           </div>
         </div>
         <div class="mv">
-          <img
-            v-if="item.mv !== 0"
-            @click.stop="playMv(item.mv)"
-            src="~assets/img/common/mv.svg"
-            alt=""
-          />
+          <i @click.stop="playMv(item.mv)" v-if="item.mv !== 0" class="iconfont icon-mv"></i>
         </div>
         <div class="more" @click.stop="moreMenu">
-          <img src="~assets/img/common/sandian.svg" alt="" />
+          <i class="iconfont icon-sandian"></i>
         </div>
       </div>
     </div>
@@ -39,13 +39,13 @@ export default {
   props: {
     songList: {
       type: Array,
-      default: []
+      default: [],
     },
 
     shouLeft: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   methods: {
     // 跳转到播放界面
@@ -73,7 +73,7 @@ export default {
 }
 .yuanc {
   color: #868686;
-  font-size: .399467rem !important;
+  font-size: 0.399467rem !important;
 }
 .itemBox {
   width: 100%;
@@ -83,47 +83,55 @@ export default {
 }
 .name {
   width: 5.858855rem;
-  /* margin-top: 2px; */
-  font-size: .399467rem;
+  height: .533333rem;
+  line-height: .533333rem;
+  font-size: 0.399467rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: .08rem;
 }
 .singer {
-  width: 220px;
+  width: 5.866667rem;
+  height: .4rem;
+  line-height: .4rem;
   color: #868686;
-  margin-top: -.079893rem;
-  font-size: 12px;
+  margin-top: -0.079893rem;
+  font-size: .32rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .index {
   flex: 0.52;
-  font-size: .399467rem;
+  font-size: 0.399467rem;
   text-align: center;
-  margin-right: .266312rem;
+  margin-right: 0.266312rem;
   line-height: 1.065246rem;
 }
 .left {
   flex: 5;
+  display: flex;
+  align-items: center;
 }
 .mv {
   flex: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.mv img {
-  width: .69241rem;
-  height: .585885rem;
-  margin-top: .186418rem;
-  float: right;
+.mv .icon-mv {
+  font-size: .533333rem;
+  color: var(--red);
 }
 .more {
   flex: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.more img {
-  width: .559254rem;
-  height: .559254rem;
-  float: right;
-  margin-top: .23968rem;
+.more .icon-sandian {
+  font-size: .48rem;
+  color: var(--fontColor);
 }
 </style>

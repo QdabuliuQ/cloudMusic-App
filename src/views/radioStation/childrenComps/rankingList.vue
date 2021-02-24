@@ -287,8 +287,11 @@ export default {
   justify-content: center;
 }
 .playBtn .iconfont {
-  transform: scale(0.6);
+  font-size: .32rem;
   color: var(--red);
+  position: relative;
+  top: .026667rem;
+  left: .026667rem;
 }
 .bottomText {
   width: 100%;

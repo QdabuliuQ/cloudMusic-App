@@ -1,19 +1,21 @@
 <template>
   <div class="SheetInfo">
-    <menu-nav class="nav" :isWhite="isWhite" :navTitle="navTitle"></menu-nav>
+    <menu-nav ref="sheetMenuNav" class="nav" :isWhite="isWhite" :navTitle="navTitle"></menu-nav>
     <div v-show="isTopNav" class="content2">
       <sheet-nav :trackCount="trackCount" :createId="createId"></sheet-nav>
     </div>
     <div class="box">
-      <div class="zhezhao"></div>
+      <div  ref="sheetDetailBox" class="zhezhao"></div>
       <div
         class="bimg"
-        :style="{ background: 'url(' + sheetInfoContent.coverImgUrl + ')' }"
+        :style="{ background: 'url(' + sheetInfoContent.coverImgUrl + ') no-repeat' }"
       ></div>
       <div class="zbox">
         <div class="top" v-if="isShow">
           <div class="img">
-            <div class="bfl" v-if="$route.params.isAlbum == 'false'">▷ {{ sheetInfoContent.playCount }}</div>
+            <div class="bfl" v-if="$route.params.isAlbum == 'false'">
+              ▷ {{ sheetInfoContent.playCount }}
+            </div>
             <img class :src="sheetInfoContent.coverImgUrl" alt />
           </div>
           <div class="rightBox">
@@ -24,11 +26,16 @@
             </div>
             <div class="user" v-else>
               歌手：
-              <span v-for="(item,index) in sheetInfoContent.nickname" :key="index">
-                {{item.name }}
+              <span
+                v-for="(item, index) in sheetInfoContent.nickname"
+                :key="index"
+              >
+                {{ item.name }}
               </span>
             </div>
           </div>
+        </div>
+        <div class="bottom">
           <tabbar>
             <tabbaritem @click.native="showInfoComment" activeColor="red">
               <img
@@ -38,7 +45,11 @@
                 alt
               />
               <div class="item-text" slot="item-text">
-                {{ sheetInfoContent.commentCount > 0 ? sheetInfoContent.commentCount : '评论' }}
+                {{
+                  sheetInfoContent.commentCount > 0
+                    ? sheetInfoContent.commentCount
+                    : "评论"
+                }}
               </div>
             </tabbaritem>
             <tabbaritem activeColor="red">
@@ -49,7 +60,11 @@
                 alt
               />
               <div class="item-text" slot="item-text">
-                {{ sheetInfoContent.shareCount > 0 ? sheetInfoContent.shareCount : '分享' }}
+                {{
+                  sheetInfoContent.shareCount > 0
+                    ? sheetInfoContent.shareCount
+                    : "分享"
+                }}
               </div>
             </tabbaritem>
             <tabbaritem activeColor="red">
@@ -119,8 +134,8 @@ export default {
       isShowinfoc: false, // 显示/隐藏评论组件
       showCollection: false,
       createId: "",
-      top: 0, // 导航栏距离顶部的距离
-      index: 0,  // 判断是专辑还是歌单
+      top: 999, // 导航栏距离顶部的距离
+      index: 0, // 判断是专辑还是歌单
     };
   },
   methods: {
@@ -140,8 +155,8 @@ export default {
     linearScroll() {
       if (pageYOffset >= this.top) {
         this.$refs.content.style =
-          "position: fixed; top: 64px; left: 0; right: 0;";
-      } else if (pageYOffset < this.top) {
+          "position: fixed; top: 43px; left: 0; right: 0;";
+      } else if (pageYOffset <= this.top) {
         this.$refs.content.style = "position: state;";
       }
     },
@@ -157,7 +172,6 @@ export default {
   },
   created() {
     this.$store.state.sheetId = this.$route.params.id; // 保存目前歌单id
-    this.$loading.loadingShow();
     // 获取歌单基本信息
     if (this.$route.params.isAlbum == "false") {
       getPlayDetial(this.sheetId).then((res) => {
@@ -193,11 +207,12 @@ export default {
               yuanc: item.alia,
             });
           }
+          this.top = this.$refs.sheetDetailBox.clientHeight
         });
       });
     } else if (this.$route.params.isAlbum == "true") {
       getAlbum(this.sheetId).then((res) => {
-        this.index = 1
+        this.index = 1;
         this.sheetInfoContent.commentCount = res.data.album.info.commentCount; // 歌单评论数
         this.sheetInfoContent.coverImgUrl = res.data.album.picUrl; // 歌单封面
         this.sheetInfoContent.name = res.data.album.name; // 歌单名称
@@ -220,18 +235,14 @@ export default {
         this.isShow = true;
       });
 
-      getAlbumDetail(this.sheetId).then(res => {
-        this.sheetInfoContent.shareCount = res.data.shareCount
-      })
+      getAlbumDetail(this.sheetId).then((res) => {
+        this.sheetInfoContent.shareCount = res.data.shareCount;
+        this.top = this.$refs.sheetDetailBox.clientHeight
+      });
     }
   },
 
   mounted() {
-    // 保存滚动高度
-    this.$nextTick(() => {
-      this.top = this.$refs.content.offsetTop;
-      this.$loading.loadingNo();
-    });
     document.addEventListener("scroll", this.linearScroll);
   },
 
@@ -253,25 +264,23 @@ export default {
   z-index: 17;
 }
 .SheetInfo {
-  /* position: relative;
-  z-index: 5; */
+  position: relative;
   background-color: rgba(0, 0, 0, 0.8);
   margin-bottom: 40px;
-  /* height: 100vh; */
 }
 .zhezhao {
   width: 100%;
-  height: 235px;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
   position: absolute;
-  top: 0;
+  top: -0.026667rem;
   left: 0;
   z-index: 10;
 }
 .zbox {
   width: 100%;
-  height: 235px;
+  height: 90%;
   padding: 0;
   position: relative;
   z-index: 15;
@@ -280,11 +289,11 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  height: 235px;
+  height: 100%;
   padding: 0;
   position: absolute;
-  opacity: 0.3;
-  background-size: 100% 130%;
+  filter: blur(5px);
+  background-size:cover !important;
 }
 .songItem {
   min-height: 8.521971rem;
@@ -308,10 +317,9 @@ export default {
   color: #fff;
 }
 .box {
-  margin-top: 40px;
-
-  padding: 20px 15px 8px;
-  height: 235px;
+  margin-top: 45px;
+  padding: 0.533333rem 0.4rem 0.213333rem;
+  /* height: 6.4rem; */
   position: relative;
   z-index: 15;
 }
@@ -322,9 +330,7 @@ export default {
 .img {
   width: 35%;
   height: 100%;
-  /* width: 3.195739rem;
-  height: 3.195739rem; */
-  border-radius: 5px;
+  border-radius: 0.133333rem;
   overflow: hidden;
   /* margin-right: .532623rem; */
   float: left;
@@ -332,10 +338,10 @@ export default {
 }
 .bfl {
   position: absolute;
-  font-size: 12px;
+  font-size: 0.32rem;
   color: #fff;
-  right: 5px;
-  top: 0;
+  right: 0.133333rem;
+  top: 0.133333rem;
 }
 .img img {
   width: 100%;
@@ -344,22 +350,25 @@ export default {
 .name {
   width: 4.793609rem;
   float: right;
+  height: 0.533333rem;
+  line-height: 0.533333rem;
   /* margin-right: .665779rem; */
   position: relative;
   color: #fff;
-  top: 7px;
+  top: 0.186667rem;
   font-size: 0.532623rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .user {
-  line-height: 0.798935rem;
+  line-height: 0.8rem;
+  height: 0.8rem;
   width: 4.793609rem;
   float: right;
   /* margin-right: .665779rem; */
   margin-top: 0.399467rem;
-  font-size: 13px;
+  font-size: 0.346667rem;
   color: rgb(243, 243, 243);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -371,19 +380,26 @@ export default {
   float: left;
 }
 .user img {
-  width: 30px;
-  height: 30px;
+  width: 0.8rem;
+  height: 0.8rem;
   border-radius: 50%;
   float: left;
-  margin-right: 7px;
+  margin-right: .186667rem;
 }
 .content {
   background-color: #000;
   width: 100%;
   padding: 0;
-  margin-top: -20px;
   position: relative;
   z-index: 18;
+}
+.bottom{
+  width: 100%;
+  height: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: .133333rem;
 }
 .v-enter {
   opacity: 0;

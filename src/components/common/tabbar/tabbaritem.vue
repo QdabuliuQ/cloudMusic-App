@@ -8,8 +8,6 @@
         <!-- 这个插槽用于放入获取状态的图标 -->
         <slot v-else name='item-icon-active'></slot>
         <div :style="styleColor"><slot name='item-text'></slot></div>
-        <!-- <img src="../../assets/img/index.png" alt="">
-        <div>首页</div> -->
     </div>
 </template>
 
@@ -63,8 +61,8 @@ export default {
         flex: 1;
         text-align: center;
         /* 移动端tabbar默认高度是49 */
-        height: 49px;
-        font-size: 13px;
+        height: 1.306667rem;
+        font-size: .32rem;
     }
     .tab-bar-item img{
         width: .665779rem;

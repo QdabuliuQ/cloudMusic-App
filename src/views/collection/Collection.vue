@@ -1,8 +1,8 @@
 <template>
   <div class="Collection" :key="i">
-    <menu-nav :backPath='backPath' class="nav" :navTitle="navTitle"></menu-nav>
-    <tab-control @tabGoods='tabGoods' class="tab" :title="title"></tab-control>
-    <div class="box">
+    <menu-nav ref="menuNav" :backPath='backPath' class="nav" :navTitle="navTitle"></menu-nav>
+    <tab-control ref="tabControl" @tabGoods='tabGoods' class="tab" :title="title"></tab-control>
+    <div :style="{'margin-top': boxToTop}" class="box">
       <router-view></router-view>
     </div>
   </div>
@@ -22,13 +22,10 @@ export default {
       title: ["专辑", "歌手", "视频"],
       i: 0,
       backPath: "/myMessage",
+      boxToTop: 0
     };
   },
   methods: {
-    // refresh(){
-    //   this.i ++
-    // },
-
     tabGoods(index){
       switch (index) {
         case 0:
@@ -50,6 +47,12 @@ export default {
     tabControl,
   },
 
+  mounted () {
+    console.log(this.$refs.tabControl);
+    this.boxToTop = (this.$refs.tabControl.$el.clientHeight + this.$refs.menuNav.$el.clientHeight) + 'px'
+    console.log(this.boxToTop);
+  },
+
   created() {
     this.$router.push('/album')
   },
@@ -66,7 +69,7 @@ export default {
 }
 .tab {
   background-color: #fff;
-  box-shadow:0 -2px 5px rgba(0, 0, 0, .3);
+  box-shadow:0 -0.053333rem .133333rem rgba(0, 0, 0, .3);
   position: fixed;
   top: 44px;
   left: 0;
@@ -74,7 +77,7 @@ export default {
   z-index: 10;
 }
 .box {
-  margin: 2.130493rem 0 1.198402rem;
+  margin-bottom: 45px;
   padding: .319574rem .399467rem;
   background-color: #fff;
   /* height: 400px; */

@@ -11,7 +11,7 @@
       </div>
       <div class="center">
         <div class="box">
-          <div class="name">{{ item.name }}</div>
+          <div class="name" :class="[item.info !== '' ? 'mbottom' : '']">{{ item.name }}</div>
           <div class="info" v-if="item.info !== ''">{{ item.info }}</div>
         </div>
       </div>
@@ -103,5 +103,8 @@ export default {
   height: 0.399467rem;
   line-height: 0.399467rem;
   color: rgb(172, 171, 171);
+}
+.mbottom{
+  margin-bottom: .106667rem;
 }
 </style>

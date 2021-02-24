@@ -80,7 +80,7 @@ export default {
 .count {
   position: absolute;
   right: 0.319574rem;
-  top: 0;
+  top: .106667rem;
   color: #fff;
   font-size: 0.319574rem;
 }
@@ -102,6 +102,7 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-size: 0.346205rem;
+  margin-bottom: .106667rem;
 }
 .videoDetail {
   font-size: 0.319574rem;

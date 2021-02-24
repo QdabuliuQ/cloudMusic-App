@@ -56,8 +56,8 @@ export default {
 </script>
 <style scoped>
 .SheetNav {
-  position: sticky;
-  top: 42.5px;
+  /* position: sticky;
+  top: 42.5px; */
   width: 100%;
   height: 1.198402rem;
   background-color: #fff;

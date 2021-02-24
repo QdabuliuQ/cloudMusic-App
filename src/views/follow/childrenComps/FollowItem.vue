@@ -21,10 +21,10 @@
           <div
             class="btn"
             v-if="uid == $store.state.profile.userId"
-            @click="isFollow(item.userId, index)"
+            @click.stop="isFollow(item.userId, index)"
             :class="{ isFollows: item.followBtn }"
           >
-            <img :src="item.followBtn ? noFollowImg : isFollowImg" alt="" />
+            <i class="iconfont" :class="[item.followBtn ? 'icon-yiguanzhu' : 'icon-weiguanzhu']"></i>
             {{ item.btntext }}
           </div>
         </div>
@@ -35,15 +35,13 @@
 
 <script>
 import { getIsFollow } from "network/follow";
-
+import "assets/icon/Follow.css"
 export default {
   name: "FollowItem",
   data() {
     return {
       isIndex: 1,
       followIndex: 0,
-      isFollowImg: require("assets/img/follow/gou.svg"),
-      noFollowImg: require("assets/img/follow/hao.svg"),
     };
   },
   props: ["followList", "uid"],
@@ -84,7 +82,7 @@ export default {
 .img {
   width: 1.198402rem;
   height: 100%;
-  margin-left: 7.5px;
+  margin-left: .2rem;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -95,10 +93,12 @@ export default {
 .text {
   flex: 5;
   margin-left: .399467rem;
-  line-height: 45px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .name {
-  font-size: 15px;
+  font-size: .4rem;
 }
 .qm {
   line-height: 1.065246rem;
@@ -111,8 +111,6 @@ export default {
   width: 1.59787rem;
   height: .69241rem;
   margin-left: -.372836rem;
-  position: relative;
-  top: .186418rem;
 }
 .isFollows {
   background-color: #da231b !important;
@@ -125,14 +123,14 @@ export default {
   width: 2.130493rem;
   height: .798935rem;
   border-radius: .798935rem;
-  margin-top: .159787rem;
   color: #000;
   background-color: rgb(231, 231, 231);
   border: 1px solid #cdccdc;
-  float: right;
+  position: absolute;
+  right: 0;
 }
 .btn img {
   position: relative;
-  top: 3px;
+  top: .08rem;
 }
 </style>
