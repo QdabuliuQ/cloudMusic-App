@@ -95,9 +95,9 @@
     <div class="songItem">
       <song-item name="sheetInfo" :songList="songList"></song-item>
     </div>
-    <transition>
+    <!-- <transition>
       <info-comment @toback="toback" v-show="isShowinfoc"></info-comment>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
@@ -141,14 +141,15 @@ export default {
   methods: {
     // 显示评论
     showInfoComment() {
-      this.isShowinfoc = true;
-      this.$store.state.isShowNav = false;
+      this.$router.push('/playComment/' + this.$route.params.id + '&' + false)
+      // this.isShowinfoc = true;
+      // this.$store.state.isShowNav = false;
     },
 
     // 隐藏评论
     toback() {
-      this.isShowinfoc = false;
-      this.$store.state.isShowNav = true;
+      // this.isShowinfoc = false;
+      // this.$store.state.isShowNav = true;
     },
 
     // 监听滚动
@@ -264,6 +265,7 @@ export default {
   z-index: 17;
 }
 .SheetInfo {
+  top: 0;
   position: relative;
   background-color: rgba(0, 0, 0, 0.8);
   margin-bottom: 40px;

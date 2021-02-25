@@ -10,9 +10,7 @@
         />
       </div>
       <div class="right">
-        <div class="btn" @click="send">
-          <img src="~assets/img/common/send.svg" alt="" />
-        </div>
+        <i @click="send" class="iconfont icon-fasong"></i>
       </div>
     </div>
   </div>
@@ -28,11 +26,11 @@ export default {
       type: Number,
       default: 1,
     },
-    type: {
+    type: {  // 资源类型
       type: Number,
       default: 1,
     },
-    id: {
+    id: {  // 资源id
       type: String,
       default: "",
     },
@@ -77,7 +75,6 @@ export default {
             });
           }
         } else if (this.isComment) {
-          console.log(this.$store.state.typeId);
           if (this.content !== "") {
             getComment(
               this.t,
@@ -151,26 +148,18 @@ export default {
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
 }
 .textContent {
   width: 100%;
   height: 100%;
-  position: relative;
-  top: -0.053262rem;
   padding: 0;
   border: 0;
-  font-size: 0.426099rem;
-  line-height: 0.932091rem;
+  font-size: .32rem;
 }
-.btn {
-  width: 0.798935rem;
-  height: 0.798935rem;
-  position: absolute;
-  right: 0;
-}
-.btn img {
-  width: 100%;
-  height: 100%;
+.icon-fasong{
+  color: var(--red);
+  font-size: .64rem
 }
 </style>

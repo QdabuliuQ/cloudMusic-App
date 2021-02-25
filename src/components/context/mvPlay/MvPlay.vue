@@ -11,7 +11,7 @@
       ></video>
       <transition name="mv">
         <div v-show="showPlay" @click="playPause" class="isPlay animate">
-          <img :src="Play" alt="" />
+          <i class="iconfont" :class="[playImg ? 'icon-gequbofang' : 'icon-gequtingzhi']"></i>
         </div>
       </transition>
       <transition name="mv">
@@ -40,11 +40,7 @@
             / {{ mvDetail.duration }}
           </div>
           <div class="quanp">
-            <img
-              @click.stop="viewMv"
-              src="~assets/img/mvPlay/quanping.svg"
-              alt=""
-            />
+            <i @click.stop="viewMv" class="iconfont icon-quanping"></i>
           </div>
         </div>
       </transition>
@@ -68,39 +64,49 @@
         <div class="mvName">
           {{ mvDetail.name }}
         </div>
-        <!-- 播放量 -->
-        <div class="playCount">{{ mvDetail.playCount }}</div>
-        <!-- 标签 -->
-        <div
-          class="item"
-          v-for="(item, index) in mvDetail.videoGroup"
-          :key="index"
-        >
-          {{ item.name }}
-        </div>
-        <!-- 发布时间 -->
-        <div class="pushTime" v-if="$route.params.isMv == true">
-          {{ mvDetail.publishTime }} 发布
-        </div>
-        <div class="pushTime" v-else>
-          {{ mvDetail.publishTime | getTime("YYYY-MM-DD") }} 发布
+        <div class="detailContainer">
+          <!-- 播放量 -->
+          <div class="playCount">{{ mvDetail.playCount }}</div>
+          <!-- 标签 -->
+          <div
+            class="item"
+            v-for="(item, index) in mvDetail.videoGroup"
+            :key="index"
+          >
+            {{ item.name }}
+          </div>
+          <!-- 发布时间 -->
+          <div class="pushTime" v-if="$route.params.isMv == true">
+            {{ mvDetail.publishTime }} 发布
+          </div>
+          <div class="pushTime" v-else>
+            {{ mvDetail.publishTime | getTime("YYYY-MM-DD") }} 发布
+          </div>
         </div>
         <div class="tabbar">
           <div class="tabItem">
-            <img class="img3" src="~assets/img/mvPlay/zan.svg" alt="" />
-            <div class="count2 a4">{{ mvDetail.liked }}</div>
+            <div class="itemContainer">
+              <i class="iconfont icon-zan"></i>
+              <div class="count2">{{ mvDetail.liked }}</div>
+            </div>
           </div>
           <div class="tabItem">
-            <img class="img2" src="~assets/img/mvPlay/shouc.svg" alt="" />
-            <div class="count2 a1">{{ mvDetail.subCount }}</div>
+            <div class="itemContainer">
+              <i class="iconfont icon-shoucang"></i>
+            <div class="count2">{{ mvDetail.subCount }}</div>
+            </div>
           </div>
           <div class="tabItem">
-            <img class="img1" src="~assets/img/mvPlay/pinglun.svg" alt="" />
-            <div class="count2 a2">{{ mvDetail.commentCount }}</div>
+            <div class="itemContainer">
+               <i class="iconfont icon-pinglun"></i>
+            <div class="count2">{{ mvDetail.commentCount }}</div>
+            </div>
           </div>
           <div class="tabItem" @click="fxiang">
-            <img class="img1" src="~assets/img/mvPlay/fenxiang.svg" alt="" />
-            <div class="count2 a3">{{ mvDetail.shareCount }}</div>
+            <div class="itemContainer">
+              <i class="iconfont icon-fenxiang"></i>
+            <div class="count2">{{ mvDetail.shareCount }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -147,7 +153,8 @@
                 <img v-lazy="item.userImg" alt="" />
               </div>
               <div class="userName">
-                <div class="name2">
+                <div class="userContainer">
+                  <div class="name2">
                   {{ item.userName }}
                   <img
                     v-if="item.vipType !== 0"
@@ -158,11 +165,12 @@
                 <div class="addtime">
                   {{ item.time | getTime }}
                 </div>
+                </div>
               </div>
               <div class="liked">
                 <div class="count">
                   {{ item.likedCount }}
-                  <img :src="likedImg" alt="" />
+                  <i class="icon-zan iconfont"></i>
                 </div>
               </div>
             </div>
@@ -200,6 +208,7 @@
 </template>
 
 <script>
+import "assets/icon/Video.css"
 import {
   getMvDetail,
   getMv,
@@ -207,7 +216,6 @@ import {
   getSimiMv,
   getMvComment,
 } from "network/mvPlay"; // 网络请求
-
 import {
   getVideoDetail,
   getVideoInfo,
@@ -215,7 +223,6 @@ import {
   getSimiVideo,
   getVideoComment,
 } from "network/video";
-import { getUserDetail } from "network/user"; // 网络请求
 import { toStringNum, durationTime, formatDuring } from "common/common"; // 播放量转化
 import mscroll from "components/common/muiScroll/MuiScroll"; // 滚动组件
 import FullScreen from "components/common/fullScreen/FullScreen"; // 全屏播放
@@ -233,7 +240,7 @@ export default {
       offset: 0, // 评论页数
       CommentLength: 0, // 目前评论数量
       hotLength: 0, // 热评数量
-      likedImg: require("assets/img/commentList/zan.svg"),
+      playImg: true,
       options: [
         // 分享面板
         [
@@ -253,7 +260,6 @@ export default {
       mvUrl: "", // url地址
       showJd: false, // 显示时间
       showPlay: false, // 显示/隐藏暂停播放按钮
-      Play: require("assets/img/mvPlay/bofang.svg"),
       playIndex: 0, // 判断是否播放
       now: "00:00", // 实时播放时间
       second: 0,
@@ -329,14 +335,14 @@ export default {
       this.$store.state.viewPlay.viewOpen = false; // 普通模式
       this.isShow = false;
       if (this.$store.state.viewPlay.playing) {
-        this.Play = require("assets/img/mvPlay/zanting.svg");
-        this.mvDom.currentTime = this.$store.state.fullSecreenVideo.currentTime
+        this.playImg = false
+        this.mvDom.currentTime = this.$store.state.fullSecreenVideo.currentTime;
         this.mvDom.play(); // 播放外部播放器
         clearInterval(this.timer); // 清除定时器
         this.timer = setInterval(this.getNowTime, 1000); // 开始计时
       } else {
-        this.mvDom.currentTime = this.$store.state.fullSecreenVideo.currentTime
-        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.mvDom.currentTime = this.$store.state.fullSecreenVideo.currentTime;
+        this.playImg = true
         this.mvDom.pause(); // 播放外部播放器
         clearInterval(this.timer); // 清除定时器
       }
@@ -360,7 +366,7 @@ export default {
         this.mvDom.play();
         clearInterval(this.timer); // 清除定时器
         this.timer = setInterval(this.getNowTime, 1000);
-        this.Play = require("assets/img/mvPlay/zanting.svg");
+        this.playImg = false
         this.playIndex = 1;
         if (this.value >= 100) {
           this.value = 0;
@@ -370,7 +376,7 @@ export default {
       } else {
         this.mvDom.pause();
         clearInterval(this.timer);
-        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.playImg = true
         this.playIndex = 0;
       }
     },
@@ -379,7 +385,7 @@ export default {
     onChange(value) {
       this.mvDom.currentTime = value / (100 / (this.mvDetail.length / 1000)); // 设置时间
       this.mvDom.play(); // 播放音乐
-      this.Play = require("assets/img/mvPlay/zanting.svg"); // 修改图标
+      this.playImg = false // 修改图标
       this.playIndex = 1; // 修改索引
       this.min = Math.floor(this.mvDom.currentTime / 60);
       this.second = (this.mvDom.currentTime % 60).toFixed(0);
@@ -395,7 +401,7 @@ export default {
       }
       if (this.value >= 100) {
         this.playIndex = 0;
-        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.playImg = true
         clearInterval(this.timer);
       }
     },
@@ -652,8 +658,16 @@ export default {
 .isPlay {
   position: relative;
   z-index: 60;
-  top: 40%;
-  left: 43%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.isPlay .iconfont {
+  color: #Fff;
+  font-size:.933333rem;
 }
 .mv {
   position: absolute;
@@ -662,12 +676,12 @@ export default {
 }
 .quanp {
   float: right;
-}
-.quanp img {
-  width: 0.532623rem;
-  height: 0.532623rem;
-  margin-top: 0.079893rem;
+  margin-top: 0.133156rem;
   margin-right: 0.266312rem;
+}
+.quanp .iconfont {
+  font-size: .373333rem;
+  color: #Fff;
 }
 .nowTime {
   color: #fff;
@@ -740,12 +754,15 @@ export default {
   background: linear-gradient(transparent, rgb(70, 70, 70));
 }
 .mvName {
-  font-size: 0.45273rem;
+  height: 0.533333rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.373333rem;
   font-weight: 550;
 }
 .playCount {
-  margin-top: 10px;
-  font-size: 0.359521rem;
+  margin-top: .266667rem;
+  font-size: .32rem;
   color: #818181;
   float: left;
 }
@@ -759,7 +776,7 @@ export default {
   text-align: center;
   margin-top: 11px;
   font-size: 10px;
-  padding: 0px 9px;
+  padding: 0px .24rem;
   border-radius: 0.69241rem;
   background-color: #ec4e46;
   color: #fff;
@@ -775,49 +792,27 @@ export default {
 .tabbar {
   width: 100%;
   height: 1.38482rem;
-  padding-bottom: 0.133156rem;
   display: flex;
-  margin-top: 0.532623rem;
+  margin-top: .533333rem;
+  margin-bottom: .533333rem;
 }
 .tabItem {
   text-align: center;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.img2 {
-  width: 0.665779rem;
-  height: 0.665779rem;
+.tabItem .iconfont{
   position: relative;
-  top: 3px;
-}
-.img3 {
-  width: 0.639148rem;
-  height: 0.639148rem;
-  position: relative;
-  top: 3px;
-}
-.img1 {
-  width: 0.798935rem;
-  height: 0.798935rem;
+  top: .16rem;
+  font-size:.586667rem;
 }
 .count2 {
-  font-size: 12px;
+  font-size: .32rem;
+  position: relative;
+  top: .266667rem;
   color: #818181;
-}
-.a1 {
-  position: relative;
-  top: -3px;
-}
-.a2 {
-  position: relative;
-  top: -0.213049rem;
-}
-.a3 {
-  position: relative;
-  top: -0.186418rem;
-}
-.a4 {
-  position: relative;
-  top: -2px;
 }
 .videoContent {
   padding: 0.266312rem 0.426099rem;
@@ -889,24 +884,29 @@ export default {
 .userName {
   flex: 5;
   font-size: 0.346205rem;
-  margin-top: 2px;
+  display: flex;
+  align-items: center;
 }
 .name2 {
   position: relative;
+  margin-bottom: .106667rem;
+  font-size: .346667rem;
 }
 .name2 img {
   height: 0.639148rem;
   margin-left: 0.079893rem;
   position: absolute;
-  top: -3px;
+  top: -0.08rem;
 }
 .liked {
   flex: 2.2;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .addtime {
-  font-size: 12px;
+  font-size: .32rem;
   color: #8b8b8b;
-  margin-top: -4px;
 }
 .userImg img {
   width: 1.065246rem;
@@ -916,18 +916,20 @@ export default {
 }
 .count {
   color: #8b8b8b;
-  margin-top: 0.213049rem;
   font-size: 0.372836rem;
-  float: right;
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
 }
-.count img {
-  position: relative;
-  top: 1px;
+.count .iconfont {
+  font-size: .32rem;
+  margin-left: .106667rem;
 }
 .bottombox {
   width: 100%;
   display: flex;
-  padding-bottom: 0.186418rem;
+  margin: 0.186418rem 0;
 }
 .left {
   flex: 1.2;
@@ -935,7 +937,7 @@ export default {
 .right {
   flex: 7;
   font-size: 0.364847rem;
-  padding-bottom: 0.186418rem;
+  padding-bottom: .266667rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {

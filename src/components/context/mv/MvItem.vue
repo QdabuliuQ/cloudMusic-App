@@ -10,7 +10,7 @@
         <div class="zhez"></div>
         <div class="img"><img v-lazy="item.imgurl16v9" alt="" /></div>
         <div class="play">
-          <img src="~assets/img/information/events/bofang.svg" alt="" />
+          <i class="iconfont icon-bofang"></i>
         </div>
         <div class="mvDetail">
           <div class="left">
@@ -41,13 +41,13 @@
           </div>
           <div class="bcenter">
             <div class="detailbox">
-              <img src="~assets/img/video/dianzan.svg" alt="" />
+              <i class="iconfont icon-zan"></i>
               <span>{{ item.praisedCount }}</span>
             </div>
           </div>
           <div class="bright">
             <div class="detailbox">
-              <img src="~assets/img/video/pinglun.svg" alt="" />
+              <i class="iconfont icon-pinglun"></i>
               <span>{{ item.commentCount }}</span>
             </div>
           </div>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     vedioList: {
@@ -90,6 +91,14 @@ export default {
 };
 </script>
 <style scoped>
+.detailbox{
+  display: flex;
+  align-items: center;
+  font-size: .32rem;
+}
+.detailbox .iconfont{
+  margin-right: .106667rem;
+}
 .tag {
   float: left;
   font-size: 0.319574rem;
@@ -104,7 +113,7 @@ export default {
 .MvItem {
   width: 100%;
   padding: 15px 15px 0;
-  border-bottom: 0.213049rem solid #e7e7e7;
+  border-bottom: 0.213049rem solid var(--fgx);
 }
 .vedioImg {
   width: 100%;
@@ -133,9 +142,13 @@ export default {
   left: 50%;
   z-index: 11;
   transform: translate(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.play img {
-  width: 0.798935rem;
+.play .icon-bofang {
+  font-size: 1.066667rem;
+  color: rgba(255, 255, 255, 0.829);
 }
 .img img {
   width: 100%;
@@ -193,6 +206,7 @@ export default {
 .bottom2 {
   width: 100%;
   padding: 0.266312rem 0;
+  line-height: .453333rem;
   font-size: 0.399467rem;
   word-break: break-all;
   text-overflow: ellipsis;

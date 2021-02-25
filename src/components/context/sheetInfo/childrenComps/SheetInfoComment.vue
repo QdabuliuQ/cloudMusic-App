@@ -2,13 +2,13 @@
   <div class="infoComment">
     <div class="nav">
       <div class="left" @click="back">
-        <img src="~assets/img/commentList/fanhui.svg" alt="" />
+        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="center">
         {{ commentTitle }}
       </div>
       <div class="rightbox" @click="fxiang">
-        <img src="~assets/img/commentList/fenxiang.svg" alt="" />
+        <i class="iconfont icon-fenxiang"></i>
       </div>
     </div>
     <mscroll class="conscroll" :scrollY="true">
@@ -26,22 +26,24 @@
               <img @click="profile(item.userId)" v-lazy="item.userImg" alt="" />
             </div>
             <div class="userName">
-              <div @click="profile(item.userId)" class="name">
-                {{ item.userName }}
-                <img
-                  v-if="item.vipType !== 0"
-                  src="~assets/img/common/vip1.svg"
-                  alt=""
-                />
-              </div>
-              <div class="addtime">
-                {{ item.time | getTime }}
+              <div>
+                <div @click="profile(item.userId)" class="name">
+                  {{ item.userName }}
+                  <img
+                    v-if="item.vipType !== 0"
+                    src="~assets/img/common/vip1.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="addtime">
+                  {{ item.time | getTime }}
+                </div>
               </div>
             </div>
             <div class="liked">
-              <div class="count">
+              <div :class="[item.t == 0 ? '' : 'likeComment']" class="count" @click="likeComment(item)">
                 {{ item.likedCount }}
-                <img :src="likedImg" alt="" />
+                <i :class="[item.t == 0 ? '' : 'likeComment']" class="iconfont icon-zan"></i>
               </div>
             </div>
           </div>
@@ -74,9 +76,9 @@
 <script>
 import { getSheetComment } from "network/sheetInfo"; // 评论请求
 import { getAlbumComment } from "network/album";
+import { likeComment } from "network/comment"  
 import sendComment from "components/context/sendComment/SendComment"; // 发送评论
 import mscroll from "components/common/muiScroll/MuiScroll";
-import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 export default {
   name: "SheetInfoComment",
@@ -85,7 +87,6 @@ export default {
       commentTitle: "", // 评论数量
       offset: 0, // 评论页数
       commentList: [], // 评论内容
-      likedImg: require("assets/img/commentList/zan.svg"),
       getComMore: null,
       showShare: false, // 分享面板
       options: [
@@ -140,26 +141,49 @@ export default {
     loadComment() {
       // 发送请求
       // 判断评论组件是否打开
-      if (this.$store.state.isShowNav === false) {
-        this.$loading.loadingShow();
-        setTimeout(() => {
-          this.getCommentList(this.$route.params.id, 100, this.offset * 100);
-          this.$loading.loadingNo();
-        }, 1000);
-      }
+      this.$loading.loadingShow();
+      setTimeout(() => {
+        this.getCommentList(this.$route.params.id, 100, this.offset * 100);
+        this.$loading.loadingNo();
+      }, 1000);
     },
 
     back() {
-      this.$emit("toback");
+      this.$router.go(-1);
+    },
+
+    // 点赞评论
+    likeComment(item) {
+      if (item.t == 0) {
+        item.t = 1
+        likeComment(
+          this.$route.params.id,
+          item.commentId,
+          item.t,
+          2,
+          this.$store.state.cookie).then(res => {
+        })
+      } else {
+        item.t = 0
+        likeComment(
+          this.$route.params.id,
+          item.commentId,
+          item.t,
+          2,
+          this.$store.state.cookie).then(res => {
+        })
+      }
     },
 
     // 封转方法
     getCommentList(sid, list, offset) {
       if (this.$route.params.isAlbum == "false") {
-        this.type = 2;  // 评论类型--歌单
+        this.type = 2; // 评论类型--歌单
         // 发送网络请求
+        console.log(this.more);
         if (this.more) {
           getSheetComment(sid, list, offset).then((res) => {
+            console.log(res);
             this.more = res.data.more;
             this.commentTitle = "评论(" + res.data.total + ")";
             // 判断评论数量
@@ -176,6 +200,7 @@ export default {
                   userName: item.user.nickname, // 用户昵称
                   userId: item.user.userId, // 用户id
                   vipType: item.user.vipType, // 是否开通会员
+                  t: 0,  // 0不点赞  1点赞
                 });
               }
             }
@@ -199,7 +224,7 @@ export default {
           this.$toast.show("没有更多评论了:(", 1900);
         }
       } else if (this.$route.params.isAlbum == "true") {
-        this.type = 3;  // 评论类型--歌单
+        this.type = 3; // 评论类型--歌单
         if (this.more) {
           getAlbumComment(sid, list, offset).then((res) => {
             this.more = res.data.more;
@@ -245,24 +270,31 @@ export default {
     // 获取评论
     this.getCommentList(this.$route.params.id, 100, this.offset * 100);
   },
+  activated() {
+    this.$store.state.isShowNav = false;
+  },
+  deactivated() {
+    this.$store.state.isShowNav = true;
+  },
 };
 </script>
 <style scoped>
+.likeComment{
+  color: var(--red) !important;
+}
 .SendComment {
+  width: 100%;
+  height: 50px;
   position: absolute;
-  left: 0;
-  right: 0;
   bottom: 0;
   z-index: 20;
 }
 .infoComment {
+  position: relative;
+  z-index: 33;
   width: 100%;
-  /* height: 100vh; */
+  height: 100vh;
   background: #fff;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 60;
 }
 .CommentList {
   width: 100%;
@@ -273,37 +305,38 @@ export default {
 }
 .nav {
   width: 100%;
-  height: 1.198402rem;
+  height: 45px;
   display: flex;
   color: #fff;
   background-color: rgb(212, 81, 74);
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 --0.053333rem 0.133333rem rgba(0, 0, 0, 0.5);
 }
 .left {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: 0.665779rem;
-  height: 0.532623rem;
-  position: relative;
-  top: 12.5px;
-  margin-left: 6px;
+.left .icon-fanhui {
+  font-size: 0.346667rem;
+  color: #fff;
 }
 .center {
   flex: 7;
-  line-height: 1.198402rem;
-  font-size: 0.479361rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.346667rem;
   /* font-size: .399467rem; */
 }
 .rightbox {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.rightbox img {
-  width: 0.585885rem;
-  height: 0.585885rem;
-  position: relative;
-  top: 11px;
-  margin-left: 9px;
+.rightbox .icon-fenxiang {
+  font-size: 0.346667rem;
+  color: #fff;
 }
 .comment {
   height: 13.848202rem;
@@ -322,16 +355,20 @@ export default {
 .userName {
   flex: 5;
   font-size: 0.346205rem;
-  margin-top: 0.053262rem;
+  display: flex;
+  align-items: center;
 }
 .name {
   position: relative;
+  height: .533333rem;
+  display: flex;
+  align-items: center;
 }
 .name img {
   height: 0.639148rem;
   margin-left: 3px;
   position: absolute;
-  top: -3px;
+  right: -.8rem;
 }
 .liked {
   flex: 2.2;
@@ -352,10 +389,12 @@ export default {
   margin-top: 0.213049rem;
   font-size: 0.372836rem;
   float: right;
+  display: flex;
+  align-items: center;
 }
-.count img {
-  position: relative;
-  top: 1px;
+.count .iconfont {
+  font-size: .32rem;
+  margin-left: .106667rem;
 }
 .bottombox {
   width: 100%;
@@ -368,13 +407,16 @@ export default {
 .right {
   flex: 7;
   font-size: 0.364847rem;
+  margin-top: .133333rem;
   padding-bottom: 0.186418rem;
+  line-height: .453333rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {
-  top: 1.198402rem;
+  position: relative;
+  top: 0;
   background-color: #fff;
-  height: calc(100vh - 1.065246rem - 1.065246rem);
+  height: calc(100vh - 45px - 50px);
 }
 .noComment {
   width: 100%;
@@ -384,8 +426,7 @@ export default {
 }
 .text {
   position: relative;
-  font-size: 0.559254rem;
-  font-weight: 550;
+  font-size: 0.4rem;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);

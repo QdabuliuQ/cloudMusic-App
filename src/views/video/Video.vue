@@ -7,7 +7,7 @@
       :firstIndex="0"
       @tabToggle="tabToggle"
     ></scrollnav>
-    <div class="content" v-if="hasmore">
+    <div class="content" :style="{'margin-top' : totop}" v-if="hasmore">
       <mv-item
         :vedioList="vedioList"
         :isShowDetail="true"
@@ -41,6 +41,7 @@ export default {
       hasmore: true, // 是否有数据
       msg: "", // 提示
       more: true,
+      totop: 0
     };
   },
   components: {
@@ -110,6 +111,7 @@ export default {
     },
   },
   created() {
+
     videoCategory().then((res) => {
       this.itemList = []; // 清空数组内容
       this.activeId = res.data.data[0].id; // 保存第一项id
@@ -123,6 +125,7 @@ export default {
     });
   },
   activated() {
+    this.totop = (this.$refs.videoNav.$el.clientHeight + 45) + 'px'
     this.$nextTick(() => {
       document.addEventListener("scroll", this.linearScroll);
     });
@@ -146,7 +149,6 @@ export default {
   z-index: 12;
 }
 .content {
-  margin-top: 2.237017rem;
   margin-bottom: 1.198402rem;
 }
 .nocontent {

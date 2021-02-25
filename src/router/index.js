@@ -198,8 +198,11 @@ const routes = [{
 
   {
     path: '/playDetail/:id&:isAlbum',
-    component: () => import('components/context/sheetInfo/SheetInfo')
+    component: () => import('components/context/sheetInfo/SheetInfo'),
   }, // 歌单/专辑内容
+  { 
+    path: '/playComment/:id&:isAlbum', component: () => import('components/context/sheetInfo/childrenComps/SheetInfoComment') 
+  },// 歌单/专辑 评论
   {
     path: '/playSong/:sid',
     component: () => import('components/common/playSong/PlaySong')
