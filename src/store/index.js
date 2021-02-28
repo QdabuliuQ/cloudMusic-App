@@ -51,6 +51,7 @@ export default new Vuex.Store({
 
     threadId: 0,  // 热评id
     typeId: 0,  // 评论类型id
+    musicUrl: ''  // 音乐url
   },
   mutations: {
   },

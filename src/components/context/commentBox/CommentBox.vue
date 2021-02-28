@@ -100,6 +100,7 @@ export default {
         avatarUrl: commentDetail.avatarUrl, // 用户头像
         nickname: commentDetail.nickname, // 用户昵称
         userId: commentDetail.id, // 用户id
+        t: commentDetail.t
       });
     },
   },

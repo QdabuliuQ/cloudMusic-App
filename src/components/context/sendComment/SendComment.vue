@@ -110,9 +110,10 @@ export default {
               this.commentDetail.time = res.data.comment.time;
               this.commentDetail.avatarUrl = res.data.comment.user.avatarUrl;
               this.commentDetail.nickname = res.data.comment.user.nickname;
-              this.$toast.show("发布成功", 1900);
+              this.commentDetail.t = 0,
               this.content = ""; // 清空内容
               this.$emit("successComment", this.commentDetail);
+              this.$toast.show("发布成功", 1900);
             });
           }
         }

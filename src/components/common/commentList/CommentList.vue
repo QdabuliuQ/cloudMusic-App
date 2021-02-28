@@ -2,13 +2,13 @@
   <div class="CommentList">
     <div class="nav">
       <div class="left" @click="back">
-        <img src="~assets/img/commentList/fanhui.svg" alt="" />
+        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="center">
         {{ commentTitle }}
       </div>
       <div class="rightbox" @click="fxiang">
-        <img src="~assets/img/commentList/fenxiang.svg" alt="" />
+        <i class="iconfont icon-fenxiang"></i>
       </div>
     </div>
     <mscroll class="conscroll" :scrollY="true">
@@ -26,22 +26,24 @@
               <img @click="profile(item.userId)" v-lazy="item.userImg" alt="" />
             </div>
             <div class="userName">
-              <div @click="profile(item.userId)" class="name">
-                {{ item.userName }}
-                <img
-                  v-if="item.vipType !== 0"
-                  src="~assets/img/common/vip1.svg"
-                  alt=""
-                />
-              </div>
-              <div class="addtime">
-                {{ item.time | getTime }}
+              <div>
+                <div @click="profile(item.userId)" class="name">
+                  {{ item.userName }}
+                  <img
+                    v-if="item.vipType !== 0"
+                    src="~assets/img/common/vip1.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="addtime">
+                  {{ item.time | getTime }}
+                </div>
               </div>
             </div>
             <div class="liked">
               <div class="count">
                 {{ item.likedCount }}
-                <img :src="likedImg" alt="" />
+                <i class="iconfont icon-zan"></i>
               </div>
             </div>
           </div>
@@ -98,7 +100,7 @@ export default {
         ],
       ],
       commentLength: 1, // 判断评论是否加载完成
-      type: 0,  // 评论类型
+      type: 0, // 评论类型
     };
   },
   components: {
@@ -107,7 +109,7 @@ export default {
   },
   methods: {
     // 发送评论成功后
-    successComment(commentDetail){
+    successComment(commentDetail) {
       this.commentList.unshift({
         content: commentDetail.content, // 评论内容
         likedCount: 0, // 喜欢数量
@@ -217,7 +219,7 @@ export default {
 }
 .nav {
   width: 100%;
-  height: 1.198402rem;
+  height: 45px;
   display: flex;
   color: #fff;
   background-color: rgb(212, 81, 74);
@@ -225,34 +227,35 @@ export default {
 }
 .left {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: .665779rem;
-  height: .532623rem;
-  position: relative;
-  top: .332889rem;
-  margin-left: .159787rem;
+.left .iconfont {
+  font-size: 0.373333rem;
+  color: #fff;
 }
 .center {
   flex: 7;
-  line-height: 1.198402rem;
-  font-size: 0.479361rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.346667rem;
 }
 .rightbox {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.rightbox img {
-  width: .585885rem;
-  height: .585885rem;
-  position: relative;
-  top: .292943rem;
-  margin-left: .23968rem;
+.rightbox .iconfont {
+  font-size: 0.373333rem;
+  color: #fff;
 }
 .comment {
   height: 13.848202rem;
 }
 .content {
-  padding: .426099rem .319574rem;
+  padding: 0.426099rem 0.319574rem;
 }
 .topbox {
   width: 100%;
@@ -264,25 +267,28 @@ export default {
 }
 .userName {
   flex: 5;
-  font-size: .346205rem;
-  margin-top: .053262rem;
+  font-size: 0.346205rem;
+  display: flex;
+  align-items: center;
 }
 .name {
   position: relative;
+  font-size: .373333rem;
+  display: flex;
+  align-items: center;
+  height: .533333rem;
+  margin-bottom: .053333rem;
 }
 .name img {
-  height: .639148rem;
-  margin-left: .079893rem;
-  position: absolute;
-  top: -3px;
+  height: 0.639148rem;
+  margin-left: 0.079893rem;
 }
 .liked {
   flex: 2.2;
 }
 .addtime {
-  font-size: 12px;
+  font-size: .32rem;
   color: #8b8b8b;
-  margin-top: -4px;
 }
 .userImg img {
   width: 1.065246rem;
@@ -292,26 +298,30 @@ export default {
 }
 .count {
   color: #8b8b8b;
-  margin-top: .213049rem;
+  margin-top: 0.213049rem;
   font-size: 0.372836rem;
   float: right;
+  display: flex;
+  align-items: center;
 }
-.count img {
-  position: relative;
-  top: 1px;
+.count .iconfont {
+  font-size: .32rem;
+  margin-left: .106667rem;
 }
 .bottombox {
   width: 100%;
   display: flex;
-  padding-bottom: .186418rem;
+  padding-bottom: .213333rem;
+  margin-top: .213333rem;
 }
 .left {
   flex: 1.2;
 }
 .right {
   flex: 7;
-  font-size: .364847rem;
-  padding-bottom: .186418rem;
+  font-size: 0.364847rem;
+  padding-bottom: .213333rem;
+  line-height: .453333rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {

@@ -2,12 +2,13 @@
   <div class="moreAlbum">
     <menunav class="nav" :navTitle="'更多专辑'"></menunav>
     <scrollnav
+      ref="albumSNav"
       @tabToggle="tabToggle"
       class="snav"
       :itemList="tagList"
       :firstIndex="0"
     ></scrollnav>
-    <div class="topBox">
+    <div :style="{'margin-top': totop}" class="topBox">
       <div class="video">
         <img src="https://img.coolcr.cn/2021/02/18/ce6dc78719065.png" alt="">
       </div>
@@ -25,8 +26,7 @@
         :key="index"
       >
         <div class="topimg">
-          <img class="img" @load="imgload(index)" v-lazy="item.picUrl" alt="" />
-          <img src="https://img.coolcr.cn/2021/02/19/3d8358d7798e7.png" alt="">
+          <img class="img" v-lazy="item.picUrl" alt="" />
         </div>
         <div class="albumname">{{ item.name }}</div>
         <div class="artist">{{ item.artist }}</div>
@@ -51,7 +51,8 @@ export default {
       name: "推荐",
       test: "Recommend",
       Area: "全部",
-      loading: false,     
+      loading: false,   
+      totop: 0  
     };
   },
   components: {
@@ -59,10 +60,6 @@ export default {
     scrollnav,
   },
   methods: {
-    // 图片加载事件
-    imgload(index){
-      this.albumList[index].showBlack = true
-    },
 
     // 路由跳转
     albumShow(id) {
@@ -109,7 +106,6 @@ export default {
 
     // 封装方法
     album(area, type) {
-      this.$loading.loadingShow();
       if (this.Area !== area) {
         this.offset = 0;
         this.albumList = [];
@@ -122,7 +118,6 @@ export default {
               artist: item.artist.name,
               showBlack: false,
             });
-            this.$loading.loadingNo();
           }
         });
       }
@@ -131,7 +126,6 @@ export default {
 
     // 下拉加载
     loadingAlbum() {
-      this.$loading.loadingShow();
       this.offset = 1;
       getAlbum(30, this.offset * 30, this.Area, "hot").then((res) => {
         for (const item of res.data.monthData) {
@@ -142,7 +136,6 @@ export default {
             artist: item.artist.name,
             showBlack: false,
           });
-          this.$loading.loadingNo();
         }
         this.offset++;
       });
@@ -160,10 +153,8 @@ export default {
       let scrollHeight =
         document.documentElement.scrollHeight || document.body.scrollHeight;
       if (scrollTop + clientHeight >= scrollHeight - 1) {
-        this.$loading.loadingShow();
         setTimeout(() => {
           this.loadingAlbum();
-          this.$loading.loadingNo();
         }, 1000);
       }
     },
@@ -175,6 +166,7 @@ export default {
   },
 
   mounted() {
+    this.totop = (this.$refs.albumSNav.$el.clientHeight + 45) + 'px'
     // 绑定滚动事件
     document.addEventListener("scroll", this.linearScroll);
   },

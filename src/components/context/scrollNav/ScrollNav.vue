@@ -80,6 +80,7 @@ export default {
 }
 .mui-content {
   background-color: transparent !important;
+  height: 1.091877rem !important;
 }
 .mui-scroll {
   height: 1.091877rem !important;
@@ -97,7 +98,7 @@ export default {
 }
 .TabNav {
   width: 100%;
-  height: 1.171771rem;
+  height: 1.091877rem;
   background-color: #fff;
   box-sizing: border-box;
   border-bottom: 1px solid #e6e6e6;
@@ -119,12 +120,11 @@ export default {
   color: #e93d34 !important;
 }
 .bottomBor {
-  width: 48px;
-  height: 2px !important;
+  width: 1.28rem;
+  height: .053333rem !important;
   background-color: #da231b;
   position: absolute;
   bottom: 0;
-  left: 163px;
   padding: 0 !important;
 }
 </style>

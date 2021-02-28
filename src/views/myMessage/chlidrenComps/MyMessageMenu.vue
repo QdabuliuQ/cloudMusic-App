@@ -4,7 +4,7 @@
       <div class="top">
         <div class="box1">
           <div class="icon iconbox">
-            <i class="iconfont menuIcon icon-xiazai"></i>
+            <i class="iconfont menuIcon icon-xiazai2"></i>
           </div>
           <div class="text">本地音乐</div>
         </div>

@@ -17,7 +17,7 @@
       <transition name="mv">
         <div class="topShadowBox animate" v-show="showJd">
           <div class="back" @click="back">
-            <img src="~assets/img/common/fanhui.svg" alt="" />
+            <i class="iconfont icon-fanhui"></i>
           </div>
           <div class="title">
             {{ mvDetail.name }}
@@ -729,21 +729,22 @@ export default {
 }
 .back {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.back img {
-  width: 20px;
-  height: 20px;
-  margin-top: 5px;
+.back .icon-fanhui {
+  font-size: .373333rem;
+  color: #fff;
 }
 .title {
   flex: 7;
   width: 6.65779rem;
-  font-size: 15px;
+  font-size: .346667rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 30px;
+  line-height: 0.798935rem;
   color: #fff;
 }
 .bottomShadowBox {

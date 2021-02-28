@@ -42,12 +42,12 @@ export default {
 
     // 播放状态下
     playingImg() {
-      this.playImg = require("assets/img/playSong/zanting.svg");
+      this.playIcon = 'icon-gequtingzhi'
     },
 
     // 暂停状态下
     endImg() {
-      this.playImg = require("assets/img/playSong/bofang.svg");
+      this.playIcon = 'icon-gequbofang'
     },
   },
 };

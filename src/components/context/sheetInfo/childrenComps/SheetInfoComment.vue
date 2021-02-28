@@ -119,6 +119,7 @@ export default {
         userImg: commentDetail.avatarUrl, // 用户头像
         userName: commentDetail.nickname, // 用户昵称
         userId: commentDetail.id, // 用户id
+        t: commentDetail.t
       });
     },
 
@@ -157,11 +158,12 @@ export default {
       if (item.t == 0) {
         item.t = 1
         likeComment(
-          this.$route.params.id,
-          item.commentId,
-          item.t,
-          2,
-          this.$store.state.cookie).then(res => {
+        this.$route.params.id,
+        item.commentId,
+        item.t,
+        2,
+        this.$store.state.cookie).then(res => {
+          item.likedCount ++
         })
       } else {
         item.t = 0
@@ -171,6 +173,7 @@ export default {
           item.t,
           2,
           this.$store.state.cookie).then(res => {
+          item.likedCount --
         })
       }
     },

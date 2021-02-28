@@ -3,10 +3,10 @@
     <div class="LyricListContent">
       <ul ref="list" v-if="lyricText.length !== 0">
         <li class="item" v-for="(item, index) in lyricText" :key="index">
+          <!-- v-if="item !== '' && item !== '\n'" -->
           <div
             :class="{ active: index === activeIndex }"
             class="itemSpan"
-            v-if="item !== '' && item !== '\n'"
           >
             {{ item }}
           </div>
@@ -24,157 +24,77 @@ export default {
   data() {
     return {
       activeIndex: 0,
-      valueTime: 0,
       index: 0,
       yscroll: 0,
-      zindex: 0,
-      itemSumH: 0,
-      songText: [],
       songTime: 0, // 歌曲实时时间
       num: 0,
     };
   },
   methods: {
-    setTime() {
-      console.log(this.$store.state.navMusicDom.currentTime);
-      setTimeout(() => {
-        for (let i = 0; i < this.songLyric.length; i++) {
-          if (
-            this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
-            this.$store.state.navMusicDom.currentTime <=
-              this.songLyric[i + 1] &&
-            document.getElementsByClassName("itemSpan")[i].offsetTop >
-              document.getElementsByClassName("LyricListContent")[0]
-                .clientHeight /
-                2
-          ) {
-            console.log(i);
-            let scroll =
-              document.getElementsByClassName("itemSpan")[i].offsetTop -
-              document.getElementsByClassName("LyricListContent")[0]
-                .clientHeight /
-                2;
-            this.yscroll =
-              scroll +
-              document.getElementsByClassName("itemSpan")[i].clientHeight /
-                2;
-            this.$refs.list.style.transform =
-              "translateY(" + -this.yscroll + "px)";
-            this.activeIndex = i;
-            this.index = i;
-            this.zindex = i;
-          } else if (
-            this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
-            this.$store.state.navMusicDom.currentTime <=
-              this.songLyric[i + 1] &&
-            document.getElementsByClassName("itemSpan")[i].offsetTop <
-              document.getElementsByClassName("LyricListContent")[0]
-                .clientHeight /
-                2
-          ) {
-            console.log(i);
-            this.activeIndex = i;
-            this.index = i;
-            this.zindex = i;
+    
+    timeUpDate() {
+      let scrollHeight = 0
+      let scrollViewHeight = document.getElementsByClassName("LyricListContent")[0].clientHeight / 2
+        
+      // 判断有没有歌词
+      if (this.lyricText.length !== 0) {
+        // 判断歌曲时间在歌词区间
+        if (
+          this.$store.state.navMusicDom.currentTime >= this.songLyric[this.index] && this.$store.state.navMusicDom.currentTime <= this.songLyric[this.index + 1]
+        ) {
+          let itemToTop = document.getElementsByClassName("itemSpan")[this.index].offsetTop
+          let itemClientHeight = document.getElementsByClassName("itemSpan")[this.index].clientHeight  // 歌词item高度的一半
+          if (itemToTop > scrollViewHeight) {
+            scrollHeight = itemToTop - scrollViewHeight + itemClientHeight  // 计算滚动位置
+            this.$refs.list.style.transform = "translateY(" + (-scrollHeight) + "px)";
           }
+          this.index++; // 索引++
+          this.activeIndex++; // 歌词索引++
         }
-      }, 1000);
-    },
+      }
+    }
   },
   mounted() {
     this.$nextTick(() => {
-      this.setTime();
-      this.$store.state.navMusicDom.addEventListener("timeupdate", () => {
-        // 判断有没有歌词
-        if (this.lyricText.length !== 0) {
-          // 判断歌曲时间在歌词区间
-          if (
-            this.$store.state.navMusicDom.currentTime >=
-              this.songLyric[this.index] &&
-            this.$store.state.navMusicDom.currentTime <=
-              this.songLyric[this.index + 1]
-          ) {
-            var huiche = /^\n/; // 正则匹配回车符
-            if (huiche.test(this.lyricText[this.index])) {
-            } else {
-              if (document.getElementsByClassName("active")[0] !== undefined) {
-                if (
-                  document.getElementsByClassName("itemSpan")[this.zindex]
-                    .offsetTop >
-                  document.getElementsByClassName("LyricListContent")[0]
-                    .clientHeight /
-                    2
-                ) {
-                  console.log();
-                  this.yscroll =
-                    document.getElementsByClassName("itemSpan")[this.zindex]
-                      .offsetTop -
-                    document.getElementsByClassName("LyricListContent")[0]
-                      .clientHeight /
-                      2 +
-                    document.getElementsByClassName("itemSpan")[this.zindex]
-                      .clientHeight /
-                      2;
-                  this.$refs.list.style.transform =
-                    "translateY(" + -this.yscroll + "px)";
-                  this.$refs.list.style.transition = "0.3s linear";
-                }
-              }
-              this.zindex++;
-            }
-            this.index++; // 索引++
-            this.activeIndex++; // 歌词索引++
-          }
-        }
-      });
 
-      // 添加 seeked 事件，当进度发生变化的时候触发
-      this.$store.state.navMusicDom.addEventListener("seeked", () => {
-        if (this.$store.state.navMusicDom.currentTime < 1) {
-          this.index = 0; // 清空索引
-          this.zindex = 0;
-          this.activeIndex = 0;
-          this.yscroll = 0; // 清空滚动距离
-          this.$refs.list.style.transform = "translateY(0px)"; // 滚动回顶部
-        } else {
-          // for 循环遍历歌词数组  songLyric歌词时间数组
-          for (let i = 0; i < this.songLyric.length; i++) {
-            // 判断滚动到哪个歌词区间
-            if (
-              this.$store.state.navMusicDom.currentTime >= this.songLyric[i] &&
-              this.$store.state.navMusicDom.currentTime < this.songLyric[i + 1] &&
-              document.getElementsByClassName("itemSpan")[i].offsetTop >
-                document.getElementsByClassName("LyricListContent")[0]
-                  .clientHeight /
-                  2
-            ) {
-              let scroll =
-                document.getElementsByClassName("itemSpan")[i].offsetTop -
-                document.getElementsByClassName("LyricListContent")[0]
-                  .clientHeight /
-                  2;
-              this.yscroll =
-                scroll +
-                document.getElementsByClassName("itemSpan")[i]
-                  .clientHeight /
-                  2;
-              this.$refs.list.style.transform =
-                "translateY(" + -this.yscroll + "px)";
-              this.activeIndex = i;
-              this.index = i;
-              this.zindex = i;
-              break;
-            }
-          }
+      let scrollHeight = 0
+      this.$EventBus.$on('playEnd', ({playEnd}) => {
+        if (playEnd) {
+          scrollHeight = 0  // 滚动回顶部
+          this.$refs.list.style.transform = "translateY(" + scrollHeight + "px)";  // 设置滚动位置
         }
+      })
+      // 监听歌曲播放
+      this.$store.state.navMusicDom.addEventListener("timeupdate", this.timeUpDate);
+
+      // 添加 seeked 事件，当拖拽进度的时候触发
+      this.$store.state.navMusicDom.addEventListener("seeked", () => {
+        let scrollViewHeight = document.getElementsByClassName("LyricListContent")[0].clientHeight / 2
+        let seekedIndex = this.songLyric.filter( (item,index) => {  // 拖拽进度条后所在的歌词索引
+          return this.$store.state.navMusicDom.currentTime >= item
+        }).length  
+        let itemToTop = document.getElementsByClassName("itemSpan")[seekedIndex].offsetTop  // 歌词item距离顶部的距离
+        let itemClientHeight = document.getElementsByClassName("itemSpan")[seekedIndex].clientHeight  // 歌词item高度的一半
+        if (itemToTop > scrollViewHeight) {  // 判断是否需要进行滚动
+          scrollHeight = itemToTop - scrollViewHeight + itemClientHeight  // 计算滚动位置
+          this.$refs.list.style.transform = "translateY(" + (-scrollHeight) + "px)";
+        }
+        this.index = seekedIndex;  // 修改索引
+        this.activeIndex = seekedIndex;  // 修改索引
       });
     });
+  },
+  created () {
+    console.log('歌词滚动create');
   },
   computed: {
     linearSet() {
       return this.$store.state.playSong.linearIndex;
     },
   },
+  destroyed () {
+    this.$store.state.navMusicDom.removeEventListener('timeupdate', this.timeUpDate)
+  }
 };
 </script>
 <style scoped>
@@ -197,11 +117,12 @@ export default {
   height: 90%;
   text-align: center;
   overflow: hidden;
-  font-size: 15px;
-  letter-spacing: 2px;
+  font-size: .346667rem;
+  letter-spacing: .053333rem;
   color: #757575;
-  /* transform: translateY(); */
-  /* transition: ; */
+}
+.LyricListContent ul{
+  transition: 0.3s linear;
 }
 .active {
   color: #fff;

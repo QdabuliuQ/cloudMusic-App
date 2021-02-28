@@ -1,6 +1,6 @@
 <template>
   <div class="bottomPlay" v-show="isShowNav">
-    <audio ref="navAudio" id="navMusic" :src="musicUrl"></audio>
+    <audio ref="navAudio" id="navMusic" :src="$store.state.musicUrl"></audio>
     <div class="cd">
       <img :src="$store.state.playSong.picUrl || img" alt="" />
     </div>
@@ -21,10 +21,10 @@
       </div>
     </div>
     <div class="play" @click="isPlaySong">
-      <img :src="isPlay" alt="" />
+      <i class="iconfont" :class="isPlay"></i>
     </div>
     <div class="list">
-      <img src="~assets/img/common/liebiao.svg" alt="" />
+      <i class="iconfont icon-liebiao"></i>
     </div>
   </div>
 </template>
@@ -34,9 +34,8 @@ export default {
   name: "BottomPlay",
   data() {
     return {
-      img: require("assets/img/common/cd2.png"),
-      isPlay: require("assets/img/common/shipin.svg"),
-      musicUrl: require("assets/audio/ceshi.mp3"),
+      img: 'https://img.coolcr.cn/2021/02/28/79161388ab39a.png',
+      isPlay: 'icon-gequbofang',
       navMusic: null, // audio DOM元素
       isAudio: false,
       navPlay: false, // 控制外部播放器 播放/暂停
@@ -61,11 +60,11 @@ export default {
     // 切换图标
     isPlaySong() {
       if (this.$store.state.playSong.playNow) {
-        this.isPlay = require("assets/img/common/shipin.svg");
+        this.isPlay = 'icon-gequbofang';
         this.$store.state.navMusicDom.pause();
         this.$store.state.playSong.playNow = false;
       } else {
-        this.isPlay = require("assets/img/common/zanting.svg");
+        this.isPlay = 'icon-gequtingzhi';
         this.$store.state.navMusicDom.play();
         this.$store.state.playSong.playNow = true;
       }
@@ -74,21 +73,30 @@ export default {
   watch: {
     playImg() {
       if (this.playImg) {
-        this.isPlay = require("assets/img/common/zanting.svg");
+        this.isPlay = 'icon-gequtingzhi';
       } else {
-        this.isPlay = require("assets/img/common/shipin.svg");
+        this.isPlay = 'icon-gequbofang';
       }
     },
   },
   mounted() {
     this.$nextTick(() => {
       this.$store.state.navMusicDom = document.getElementById("navMusic"); // 保存到VUEX中
-
+      // 监听是否播放结束事件
       this.$store.state.navMusicDom.addEventListener("ended", () => {
-        this.isPlay = require("assets/img/common/shipin.svg");
+        this.isPlay = 'icon-gequbofang'
         this.$store.state.playSong.playNow = false
         this.playImg = false
       }, false);
+      // 监听暂停事件
+      this.$store.state.navMusicDom.addEventListener("pause", function () {
+        this.isPlay = 'icon-gequbofang'
+      });
+
+      // 监听播放结束事件
+      this.$store.state.navMusicDom.addEventListener("play", function () {
+        this.isPlay = 'icon-gequtingzhi'
+      });
     });
   },
 };
@@ -113,11 +121,11 @@ export default {
 }
 .cd {
   width: 1.038615rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cd img {
-  position: relative;
-  top: 7px;
-  margin-left: 7px;
   width: 32px;
   height: 32px;
   overflow: hidden;
@@ -150,20 +158,24 @@ export default {
 }
 .play {
   width: 1.283622rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.play img {
-  width: 31px;
-  height: 31px;
-  margin-top: 8px;
-  margin-left: 8px;
+.play .iconfont {
+  position: relative;
+  top: .013333rem;
+  font-size: .533333rem;
 }
 .list {
   width: 1.283622rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.list img {
-  width: 28px;
-  margin-left: 9px;
-  height: 28px;
-  margin-top: 9px;
+.list .iconfont {
+  position: relative;
+  top: .013333rem;
+  font-size: .533333rem;
 }
 </style>

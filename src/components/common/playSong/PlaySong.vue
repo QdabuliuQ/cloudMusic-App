@@ -3,7 +3,6 @@
     class="songbox"
     :style="{
       background: 'url(' + bgimg + ') no-repeat ',
-      backgroundSize: size,
     }"
   >
     <div class="PlaySong">
@@ -15,7 +14,11 @@
       <transition name="logo" mode="out-in">
         <div v-show="showLogo" @click="isShowLogo" class="logo">
           <div ref="guanp" class="guanp">
-            <img class="img" src="~assets/img/playSong/gp3.png" alt="" />
+            <img
+              class="img"
+              src="https://img.coolcr.cn/2021/02/26/1f61b49a4a15b.png"
+              alt=""
+            />
             <div class="songImg">
               <img :src="bgimg" alt="" />
             </div>
@@ -38,19 +41,19 @@
       <div class="nav">
         <div class="PlaySongNav">
           <div class="navitem">
-            <img src="~assets/img/playSong/xinaixin.svg" alt="" />
+            <i class="iconfont icon-aixin"></i>
           </div>
           <div class="navitem">
-            <img src="~assets/img/playSong/xiazai.svg" alt="" />
+            <i class="iconfont icon-xiazai"></i>
           </div>
           <div class="navitem">
-            <img src="~assets/img/playSong/changge.svg" alt="" />
+            <i class="iconfont icon-changge"></i>
           </div>
           <div class="navitem" @click="isShowComment">
-            <img src="~assets/img/playSong/pinglun.svg" alt="" />
+            <i class="iconfont icon-pinglun"></i>
           </div>
           <div class="navitem">
-            <img src="~assets/img/playSong/gengduo.svg" alt="" />
+            <i class="iconfont icon-liebiao"></i>
           </div>
         </div>
       </div>
@@ -78,7 +81,7 @@
         <div class="end">{{ songLength }}</div>
       </div>
       <!-- 按钮组 -->
-      <bnav ref="bnav" @playBtn="playBtn"></bnav>
+      <bnav @hook:mounted="doSomething" ref="bnav" @playBtn="playBtn"></bnav>
     </div>
     <!-- 评论组件 -->
     <transition>
@@ -106,8 +109,6 @@ import commentList from "components/common/commentList/CommentList";
 import { getSongDetial } from "network/played"; // 获取歌曲基本信息
 import { playSong, getlyric } from "network/playSong"; // 获取音乐url 歌词 评论
 
-import mscroll from "components/common/muiScroll/MuiScroll";
-
 export default {
   name: "PlaySong",
   data() {
@@ -125,7 +126,6 @@ export default {
       songTime: 0, // 音乐总秒数
       secondT: 0, // 左侧进度条秒数
       minT: 0, // 左侧进度条分钟数
-      size: "200% 300%", // 背景图大小
       rotateLogo: null, // 控制封面旋转
       rotateDeg: 0, // 封面旋转定时器
       showLogo: true, // 显示/隐藏logo
@@ -189,11 +189,24 @@ export default {
       this.showLyric = false;
     },
 
+    cleanTime() {
+      this.minT = 0; // 清空时间
+      this.secondT = 0; // 清空时
+    },
+
+    doSomething(playing) {
+      if (playing) {
+        this.$refs.bnav.playingImg(); // 更换图片
+      } else {
+        this.$refs.bnav.endImg();
+      }
+    },
+
     // 播放/暂停音乐
     playBtn() {
       // 操作dom 播放音乐
       if (this.$store.state.playSong.playNow) {
-        this.$store.state.playSong.isPlayEnd = true;  // 播放暂停
+        this.$store.state.playSong.isPlayEnd = true; // 播放暂停
         this.$store.state.playSong.playNow = false; // 修改判断条件
         this.$store.state.navMusicDom.pause(); // 暂停
         this.$refs.bnav.endImg(); // 切换图标
@@ -215,6 +228,10 @@ export default {
         }
         // 目前处于播放状态
       } else {
+        if (this.value >= 99.5) {
+          this.value = 0;
+          this.cleanTime();
+        }
         this.$store.state.playSong.isPlayEnd = false;
         this.$store.state.playSong.playNow = true; // 修改判断条件
         this.$store.state.navMusicDom.play(); // 播放音乐
@@ -251,9 +268,9 @@ export default {
       // 当 value 到100表示播放结束
       if (this.value >= 100) {
         this.$store.state.playSong.playNow = true; // 修改判断条件
-        this.$store.state.playSong.isPlayEnd = true;  // 播放结束
+        this.$store.state.playSong.isPlayEnd = true; // 播放结束
         clearInterval(this.timeS); // value等于100表示播放结束
-        this.value = 100;
+        this.value = 0;
         this.$refs.bnav.endImg();
         clearInterval(this.rotateLogo);
         if (this.$refs.guanp !== undefined) {
@@ -280,7 +297,7 @@ export default {
 
     // 歌曲进度跳转
     onChange(value) {
-      this.cTime = this.$store.state.navMusicDom.currentTime
+      this.cTime = this.$store.state.navMusicDom.currentTime;
       this.setTime(value); // 调用方法
     },
 
@@ -288,9 +305,7 @@ export default {
     setTime(value) {
       clearInterval(this.rotateLogo); // 清除重复定时器
       clearInterval(this.timeS);
-      this.$refs.bnav.playingImg(); // 切换图标
       this.$store.state.navMusicDom.pause(); // 先暂停歌曲
-
       let timeAll = 100 / this.$store.state.navMusicDom.duration; // 计算一秒增加多少 value
       this.$store.state.navMusicDom.currentTime = value / timeAll; // 计算出拖动按钮后  歌曲对应播放的时间点
       this.minT = Math.floor(this.$store.state.navMusicDom.currentTime / 60); // 计算出分钟数
@@ -303,11 +318,41 @@ export default {
 
       this.timeS = setInterval(this.setInPlay, 1000);
       if (this.value >= 100) {
-        this.value = 100;
+        this.value = 0;
         this.$refs.bnav.endImg();
         clearInterval(this.timeS); // value等于100表示播放结束
       }
     },
+
+    // 播放音乐回调函数
+    playSong() {
+      let that = this;
+      clearInterval(that.timeS); // 暂停时间
+      clearInterval(that.rotateLogo); // 暂停封面旋转
+      that.$refs.bnav.playingImg(); // 切换图标
+      that.timeS = setInterval(that.setInPlay, 1000);
+      that.rotateLogo = setInterval(that.rotate, 30); // 封面旋转
+    },
+
+    // 暂停音乐回调函数
+    pauseSong() {
+      let that = this;
+      that.$refs.bnav.endImg(); // 切换图标
+      clearInterval(that.timeS); // 暂停时间
+      clearInterval(that.rotateLogo); // 暂停封面旋转
+    },
+
+    // 监听音乐播放结束回调函数
+    ended() {
+      let that = this;
+      clearInterval(that.timeS); // 暂停时间
+      clearInterval(that.rotateLogo); // 暂停封面旋转
+      that.cleanTime(); // 清空时间
+      this.value = 0;
+      that.$EventBus.$emit("playEnd", {
+        playEnd: true,
+      });
+    }
   },
   created() {
     this.$store.state.playSong.isPlayEnd = true; // 进入页面即自动播放
@@ -338,8 +383,10 @@ export default {
           });
         } else {
           this.songLoad(); // 获取音乐时长
-          this.value = this.$store.state.navMusicDom.currentTime * (100 / this.$store.state.navMusicDom.duration)  // 更新时间
-          this.setTime(this.value)
+          this.value =
+            this.$store.state.navMusicDom.currentTime *
+            (100 / this.$store.state.navMusicDom.duration); // 更新时间
+          this.setTime(this.value);
           clearInterval(this.rotateLogo); // 暂停封面旋转
           clearInterval(this.timeS); // 暂停时间
           this.rotateLogo = setInterval(this.rotate, 30); // 封面旋转
@@ -349,7 +396,7 @@ export default {
       });
     }),
       // 获取歌词
-    getlyric(this.$route.params.sid).then((res) => {
+      getlyric(this.$route.params.sid).then((res) => {
         if (res.data.lrc !== undefined) {
           let text = res.data.lrc.lyric;
           let reg = /[\[|[0-9\:\.]|]]/gi; // 正则匹配去除 []
@@ -383,13 +430,28 @@ export default {
         }
       });
   },
-  mounted () {
-    this.$refs.bnav.playingImg();
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.bnav.playingImg(); // 切换图标
+      let that = this;
+      // 监听播放事件
+      this.$store.state.navMusicDom.addEventListener("play", this.playSong);
+
+      // 监听暂停事件
+      this.$store.state.navMusicDom.addEventListener("pause", this.pauseSong);
+
+      // 监听播放结束事件
+      this.$store.state.navMusicDom.addEventListener("ended", this.ended);
+    });
   },
-  destroyed () {
+  destroyed() {
+    console.log('playsong销毁');
     clearInterval(this.rotateLogo); // 暂停封面旋转
     clearInterval(this.timeS); // 暂停时间
-  }
+    this.$store.state.navMusicDom.removeEventListener('play', this.playSong)
+    this.$store.state.navMusicDom.removeEventListener('pause', this.pauseSong)
+    this.$store.state.navMusicDom.removeEventListener('ended', this.ended)
+  },
 };
 </script>
 <style scoped>
@@ -402,10 +464,9 @@ export default {
   flex: 1;
   text-align: center;
 }
-.navitem img {
-  margin-top: 6px;
-  width: 20px;
-  height: 20px;
+.navitem .iconfont {
+  font-size: 0.346667rem;
+  color: #fff;
 }
 .songbox {
   height: 95%;

@@ -27,7 +27,7 @@
                 <div class="topImg">
                   <img class="logo" :src="item.coverUrl" alt="" />
                   <div class="playBtn">
-                    <i class="iconfont icon-bofang"></i>
+                    <i class="iconfont icon-bofang2"></i>
                   </div>
                 </div>
                 <div class="bottomText">
@@ -193,10 +193,12 @@ export default {
     },
   },
   created() {
-    this.$loading.loadingShow();
-    this.$store.state.isShowNav = false; // 隐藏底部播放栏
     this.programList();
     this.programTopList();
+  },
+
+  activated() {
+    this.$store.state.isShowNav = false; // 隐藏底部播放栏
   },
   // 离开界面后
   deactivated() {
@@ -205,7 +207,6 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.totop = this.$refs.rankTab.$el.clientHeight + 44 + "px";
-      this.$loading.loadingNo();
     });
   },
 };
