@@ -133,6 +133,7 @@ export default {
   white-space: nowrap;
   font-size: 0.372836rem;
   margin-left: 0.133156rem;
+  margin-bottom: .08rem;
 }
 .detail {
   width: 7.190413rem;

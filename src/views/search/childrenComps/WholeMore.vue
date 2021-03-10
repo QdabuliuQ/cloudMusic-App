@@ -1,7 +1,7 @@
 <template>
   <div class="WholeMore">
-    {{ moreText }}
-    <img v-show="shouImg" src="~assets/img/search/yjt.svg" alt="" />
+    <div>{{ moreText }}</div>
+    <i class="iconfont icon-gengduo"></i>
   </div>
 </template>
 
@@ -31,11 +31,14 @@ export default {
   width: 100%;
   height: 1.065246rem;
   font-size: 0.372836rem;
-  line-height: 1.065246rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-img {
+.iconfont {
+  font-size: .346667rem;
   position: relative;
-  top: 0.079893rem;
+  top: .026667rem;
+  margin-left: .133333rem;
 }
 </style>

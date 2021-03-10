@@ -1,9 +1,9 @@
 <template>
   <navbar id="navbar">
     <div id="leftbox" @click="leftPopup" slot="left">
-      <img src="~assets/img/common/hanbaotu.png" alt="" />
+      <i class="iconfont icon-hanbao"></i>
     </div>
-    <div slot="center">
+    <div class="centerBox" slot="center">
       <span
         class="navbarTitle"
         v-for="(item, index) in titleList"
@@ -15,7 +15,7 @@
       </span>
     </div>
     <div id="rightbox" slot="right" @click="toSearch">
-      <img src="~assets/img/common/sousuo.png" alt="" />
+      <i class="iconfont icon-sousuo"></i>
     </div>
   </navbar>
 </template>
@@ -69,32 +69,69 @@ export default {
       }
     },
   },
+  watch: {
+    $route: {
+      // 监听路由变化
+      handler: function(val, oldVal){
+        if (val.fullPath == '/myMessage') {
+          this.itemClick(0)
+        } else if (val.fullPath == '/discover') {
+          this.itemClick(1)
+        } else if (val.fullPath == '/hotcomment') {
+          this.itemClick(2)
+        } else if (val.fullPath == '/video') {
+          this.itemClick(4)
+        }
+      },
+      // 深度观察监听
+      deep: true
+    }
+  },
   components: {
     navbar,
   },
 };
 </script>
 <style scoped>
-#leftbox img {
-  width: 20px;
-  height: 20px;
-  margin-top: 11px;
+#leftbox{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-#rightbox img {
-  width: 20px;
-  height: 20px;
-  margin-top: 11px;
+#leftbox .iconfont {
+  font-size: .426667rem;
+}
+#rightbox{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#rightbox .iconfont {
+  font-size: .426667rem;
 }
 #navbar {
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4) !important;
 }
 .navbarTitle {
   font-size: 15px;
+  height: 28px;
+  line-height: 30px;
+  display: flex;
   padding: 0 7px;
   color: rgb(116, 116, 116);
 }
 .activeTitle {
   font-size: 18px;
   color: #000;
+  line-height: 28px;
+}
+.centerBox{
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

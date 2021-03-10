@@ -90,10 +90,10 @@
               <div class="count2">{{ mvDetail.liked }}</div>
             </div>
           </div>
-          <div class="tabItem">
+          <div class="tabItem" @click="collectionMv">
             <div class="itemContainer">
-              <i class="iconfont icon-shoucang"></i>
-            <div class="count2">{{ mvDetail.subCount }}</div>
+              <i class="iconfont icon-shipingshoucang" :class="[isCollect ? 'collect' : '']"></i>
+            <div class="count2" :class="[isCollect ? 'collect' : '']">{{ mvDetail.subCount }}</div>
             </div>
           </div>
           <div class="tabItem">
@@ -214,7 +214,7 @@ import {
   getMv,
   getMvInfo,
   getSimiMv,
-  getMvComment,
+  getMvComment
 } from "network/mvPlay"; // 网络请求
 import {
   getVideoDetail,
@@ -269,6 +269,7 @@ export default {
       commentLength: 1, // 判断评论是否加载完成
       isShow: false, // 全屏播放
       type: 0, // 判断数据类型
+      isCollect: false,  // 是否收藏视频
     };
   },
   computed: {
@@ -328,6 +329,8 @@ export default {
       this.$store.state.viewPlay.currentTime = this.mvDom.currentTime; // 保存最后的时间
       if (this.value < 100 && this.playIndex == 1) {
         this.$store.state.viewPlay.outPlaying = true; // 正在播放
+      } else {
+        this.$store.state.viewPlay.outPlaying = false; // 暂停
       }
     },
     // 退出全屏
@@ -362,22 +365,22 @@ export default {
 
     // 暂停/播放
     playPause() {
-      if (this.playIndex === 0) {
+      if (this.playIndex === 0) {  // 0 表示暂停
         this.mvDom.play();
         clearInterval(this.timer); // 清除定时器
         this.timer = setInterval(this.getNowTime, 1000);
         this.playImg = false
-        this.playIndex = 1;
+        this.playIndex = 1; // 1表示正在播放
         if (this.value >= 100) {
           this.value = 0;
           this.min = 0;
           this.second = 0;
         }
-      } else {
+      } else {  // 1 表示播放
         this.mvDom.pause();
         clearInterval(this.timer);
         this.playImg = true
-        this.playIndex = 0;
+        this.playIndex = 0; // 0表示暂停
       }
     },
 
@@ -603,17 +606,27 @@ export default {
         }
       }
     },
+
+    // 收藏mv
+    collectionMv() {
+      if (this.isCollect) {
+        this.isCollect = !this.isCollect
+      } else {
+        this.isCollect = !this.isCollect
+      }
+    }
   },
   created() {
     this.$loading.loadingShow();
     this.MvDetail(); // 获取mv/视频信息
     this.getMvUrl(); // 获取mv/视频url
     this.getCommentList(); // 获取mv/视频评论
+    if (this.$store.state.navMusicDom) {
+      this.$store.state.navMusicDom.pause();
+    }
   },
   mounted() {
-    this.$loading.loadingShow();
     setTimeout(() => {
-      this.$loading.loadingNo();
       this.showDetail = true;
     }, 1300);
 
@@ -621,9 +634,17 @@ export default {
       this.mvDom = document.getElementsByClassName("mv")[0];
     });
   },
+  destroyed () {
+    if (this.$store.state.navMusicDom) {
+      this.$store.state.navMusicDom.play();
+    }
+  }
 };
 </script>
 <style scoped>
+.collect{
+  color: var(--red) !important;
+}
 .mv-enter {
   opacity: 0;
 }
@@ -678,6 +699,9 @@ export default {
   float: right;
   margin-top: 0.133156rem;
   margin-right: 0.266312rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .quanp .iconfont {
   font-size: .373333rem;
@@ -724,6 +748,8 @@ export default {
   top: 0;
   width: 100%;
   height: 0.798935rem;
+  display: flex;
+  align-items: center;
   background: linear-gradient(rgb(61, 61, 61), transparent);
   display: flex;
 }
@@ -744,7 +770,6 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 0.798935rem;
   color: #fff;
 }
 .bottomShadowBox {
@@ -755,7 +780,6 @@ export default {
   background: linear-gradient(transparent, rgb(70, 70, 70));
 }
 .mvName {
-  height: 0.533333rem;
   display: flex;
   align-items: center;
   font-size: 0.373333rem;
@@ -766,6 +790,7 @@ export default {
   font-size: .32rem;
   color: #818181;
   float: left;
+  margin-right: .186667rem;
 }
 .videoGroup {
   margin-left: 10px;

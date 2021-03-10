@@ -87,7 +87,7 @@ export default {
     toPlay(id) {
       this.$router.push("/mvplay/" + id+'&' + this.isMv);
     },
-  },
+  }
 };
 </script>
 <style scoped>

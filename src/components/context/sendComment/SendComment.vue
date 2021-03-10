@@ -158,6 +158,8 @@ export default {
   padding: 0;
   border: 0;
   font-size: .32rem;
+  position: relative;
+  top: -0.106667rem;
 }
 .icon-fasong{
   color: var(--red);

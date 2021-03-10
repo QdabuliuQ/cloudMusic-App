@@ -20,7 +20,9 @@
       </div>
     </div>
   </div>
-  <div class="noDetail" v-else>没有更多了哦~</div>
+  <div class="noDetail" v-else>
+    <img src="https://img.coolcr.cn/2021/03/08/6abbffab46ef6.png" alt="">
+  </div>
 </template>
 
 <script>
@@ -123,11 +125,12 @@ export default {
 <style scoped>
 .noDetail {
   width: 100%;
-  min-height: 13.315579rem;
+  height: calc(100vh - 1.171771rem - 1.091877rem - 45px);
   margin-bottom: 0.133156rem;
-  margin-top: 2.396804rem;
-  line-height: 13.315579rem;
-  text-align: center;
+  margin-top: calc(1.171771rem + 1.091877rem - 0.266312rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.532623rem;
   color: #a7a7a8;
 }

@@ -77,9 +77,6 @@ export default {
     }
   },
   watch: {
-    // index(){
-    //   this.$EventBus.$off('threadId')
-    // }
   }
 };
 </script>
@@ -123,25 +120,28 @@ export default {
   flex: 8.5;
 }
 .title {
-  font-size: 0.399467rem;
+  margin-top: .133333rem;
+  height: .4rem;
+  font-size: .32rem;
   color: #000;
 }
 .blueActive {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: #226ec5;
 }
 .time {
-  font-size: 0.346205rem;
+  font-size: .32rem;
   color: rgb(158, 158, 158);
 }
 .content {
-  font-size: 15px;
+  font-size: .36rem;
+  line-height: .48rem;
   margin-top: 0.213049rem;
 }
 .musicbox {
   width: 100%;
   height: 1.331558rem;
-  background-color: #e6e6e6;
+  background-color: var(--boxColor);
   border-radius: 0.133156rem;
   margin-top: 0.213049rem;
   display: flex;

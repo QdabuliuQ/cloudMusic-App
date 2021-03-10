@@ -8,7 +8,7 @@
       v-for="(item, index) in list"
       :key="index"
     >
-      <img src="~assets/img/search/sousuo2.svg" alt="" />
+      <i class="iconfont icon-sousuo"></i>
       {{ item.title }}
     </div>
   </div>
@@ -83,10 +83,10 @@ export default {
   font-size: 0.412783rem;
   color: #8a8a8a;
 }
-.item img {
+.item .iconfont {
   margin-left: 0.399467rem;
-  position: relative;
-  top: 2px;
+  margin-right: .133333rem;
+  font-size: .373333rem;
 }
 .borderClass {
   box-sizing: border-box;

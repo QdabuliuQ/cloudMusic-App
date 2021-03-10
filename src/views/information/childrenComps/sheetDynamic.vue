@@ -97,15 +97,17 @@ export default {
   flex: 8.5;
 }
 .title {
-  font-size: 0.399467rem;
+  margin-top: .133333rem;
+  height: .4rem;
+  font-size: .32rem;
   color: #000;
 }
 .title span {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: rgb(34, 110, 197);
 }
 .time {
-  font-size: 0.346205rem;
+  font-size: .32rem;
   color: rgb(158, 158, 158);
 }
 .content {
@@ -115,7 +117,7 @@ export default {
 .box {
   width: 100%;
   height: 1.331558rem;
-  background-color: rgb(230, 230, 230);
+  background-color: var(--boxColor);
   border-radius: 0.133156rem;
   margin-top: 0.213049rem;
   display: flex;
@@ -145,7 +147,7 @@ export default {
   top: 0.053262rem;
 }
 .songName {
-  font-size: 0.399467rem;
+  font-size: .346667rem;
   color: #000;
   width: 5.858855rem;
   overflow: hidden;

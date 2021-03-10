@@ -2,7 +2,7 @@
   <div class="CloudDisk">
     <menunav class="nav" :songList="songList" :navTitle="'音乐云盘'"></menunav>
     <div class="SheetNav">
-      <img src="~assets/img/played/bofang.svg" alt="" />
+      <i class="iconfont icon-gequbofang"></i>
       <span
         >播放全部<span class="a">(共{{ trackCount }}首)</span></span
       >
@@ -12,7 +12,7 @@
       <div class="box">歌曲永久保存，随时随地多端畅听</div>
     </div>
     <div class="btn">
-      
+      <i class="iconfont icon-shangchuan"></i>
     </div>
   </div>
 </template>
@@ -104,21 +104,23 @@ export default {
   right: 0;
 }
 .btn {
-  width: 1.198402rem;
-  height: 1.198402rem;
+  width: 1.12rem;
+  height: 1.12rem;
   border-radius: 50%;
-  background-color: red;
+  background-color: var(--red);
   position: fixed;
   left: 0.266312rem;
   bottom: 1.464714rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.btn img {
-  width: 0.745672rem;
-  margin-top: 0.266312rem;
+.btn .iconfont {
+  color: #fff;
+  font-size: .48rem;
 }
 .content {
-  margin-top: 1.171771rem;
+  margin-top: 1.198402rem;
   padding: 0 0.319574rem 0.319574rem;
   background-color: #fff;
   min-height: 15.978695rem;
@@ -129,21 +131,19 @@ export default {
   width: 100%;
   height: 1.198402rem;
   background-color: #fff;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
   line-height: 1.198402rem;
-  font-size: 15px;
+  font-size: .4rem;
+  display: flex;
+  align-items: center;
 }
-.SheetNav img {
-  width: 0.852197rem;
-  height: 0.852197rem;
-  margin-top: 0.173103rem;
-  margin-left: 0.319574rem;
-  margin-right: 0.186418rem;
-  float: left;
+.SheetNav .iconfont {
+  font-size: .48rem;
+  margin-left: .266667rem;
+  margin-right: .133333rem;
+  color: var(--red);
 }
 .SheetNav span {
-  font-size: 0.45273rem;
+  font-size: .386667rem;
 }
 .SheetNav .a {
   color: rgb(143, 143, 143);

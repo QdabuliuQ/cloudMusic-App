@@ -15,7 +15,6 @@
       </div>
       <div class="right">
         <div v-if="item.accountId" class="box">
-          <!-- <img src="~assets/img/discover/moreSingers/tx.svg" alt="" />已入驻 -->
         </div>
       </div>
     </div>

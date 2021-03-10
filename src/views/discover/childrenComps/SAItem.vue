@@ -20,7 +20,7 @@
     </div>
     <div class="right">
       <div class="btn">
-        <i class="iconfont icon-bofang"></i>
+        <i class="iconfont icon-shouyebofang"></i>
       </div>
     </div>
   </div>

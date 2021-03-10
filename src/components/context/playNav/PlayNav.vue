@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="play" @click="isPlaySong">
-      <i class="iconfont" :class="isPlay"></i>
+      <i class="iconfont" :class="[$store.state.playSong.playNow ? 'icon-gequtingzhi' : 'icon-gequbofang']"></i>
     </div>
     <div class="list">
       <i class="iconfont icon-liebiao"></i>
@@ -46,15 +46,6 @@ export default {
     isShowNav() {
       return this.$store.state.isShowNav;
     },
-
-    playImg: {
-      get(){
-        return this.$store.state.playSong.isPlayEnd;
-      },
-      set(v){
-        this.$store.state.playSong.isPlayEnd = v
-      }
-    },
   },
   methods: {
     // 切换图标
@@ -71,13 +62,6 @@ export default {
     },
   },
   watch: {
-    playImg() {
-      if (this.playImg) {
-        this.isPlay = 'icon-gequtingzhi';
-      } else {
-        this.isPlay = 'icon-gequbofang';
-      }
-    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -86,19 +70,18 @@ export default {
       this.$store.state.navMusicDom.addEventListener("ended", () => {
         this.isPlay = 'icon-gequbofang'
         this.$store.state.playSong.playNow = false
-        this.playImg = false
       }, false);
       // 监听暂停事件
-      this.$store.state.navMusicDom.addEventListener("pause", function () {
-        this.isPlay = 'icon-gequbofang'
+      this.$store.state.navMusicDom.addEventListener("pause", () => {
+        this.$store.state.playSong.playNow = false;  // 修改判断条件
       });
 
       // 监听播放结束事件
-      this.$store.state.navMusicDom.addEventListener("play", function () {
-        this.isPlay = 'icon-gequtingzhi'
+      this.$store.state.navMusicDom.addEventListener("play", () => {
+        this.$store.state.playSong.playNow = true;  // 修改判断条件
       });
     });
-  },
+  }
 };
 </script>
 <style scoped>

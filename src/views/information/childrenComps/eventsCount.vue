@@ -2,15 +2,15 @@
   <div class="eventsCount">
     <div class="content">
       <div class="left">
-        <img src="~assets/img/information/events/fx.svg" alt="" />
+        <i class="iconfont icon-fenxiang"></i>
         {{ shareCount == 0 ? "转发" : shareCount }}
       </div>
       <div class="center" @click="showComment">
-        <img src="~assets/img/information/events/pl.svg" alt="" />
+        <i class="iconfont icon-pinglun"></i>
         {{ commentLength == 0 ? "评论" : commentLength }}
       </div>
       <div class="right">
-        <img src="~assets/img/information/events/dz.svg" alt="" />
+        <i class="iconfont icon-zan"></i>
         {{ likedCount == 0 ? "赞" : likedCount }}
       </div>
     </div>
@@ -61,12 +61,11 @@ export default {
   width: 100%;
   height: 85%;
   font-size: 0.346205rem;
+  color: var(--fontColor);
 }
-.content img {
-  float: left;
-  position: relative;
-  top: 2px;
-  margin-right: 0.266312rem;
+.content .iconfont {
+  font-size: .32rem;
+  color: var(--fontColor);
 }
 .left {
   flex: 1;

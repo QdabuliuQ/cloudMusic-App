@@ -221,18 +221,22 @@ const routes = [{
       },
       {
         path: '/hotcomment',
-        component: () => import('views/cloudVillage/childrenComps/Hotcomment')
+        component: () => import('views/cloudVillage/childrenComps/PrivateContent')
       }, // 热评
       {
         path: '/musicTopic',
-        component: () => import('views/cloudVillage/childrenComps/MusicTopic')
-      } // 音乐日历
+        component: () => import('views/cloudVillage/childrenComps/MusicTopic'),
+      }, // 音乐日历
     ]
   },
   {
     path: '/video',
     component: video
   },
+  { 
+    path: '/topicDetail/:id', 
+    component: () => import('views/cloudVillage/childrenComps/TopicDetail') 
+  }
 ]
 
 

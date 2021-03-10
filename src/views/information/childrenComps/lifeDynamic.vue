@@ -11,7 +11,7 @@
       </div>
       <div class="time">{{ time | getTime }}</div>
       <div class="content" v-if="events.msg !== ''">{{ events.msg }}</div>
-      <div class="picbox">
+      <div class="picbox" v-if="pics.length != 0">
         <div
           class="item"
           @click="showPic"
@@ -106,19 +106,22 @@ export default {
   flex: 8.5;
 }
 .title {
-  font-size: 0.399467rem;
+  margin-top: .133333rem;
+  font-size: .32rem;
   color: #000;
+  height: .4rem;
 }
 .blueActive {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: #226ec5;
 }
 .time {
-  font-size: 0.346205rem;
+  font-size: .32rem;
   color: rgb(158, 158, 158);
 }
 .content {
-  font-size: 15px;
+  font-size: .36rem;
+  line-height: .48rem;
   margin-top: 0.213049rem;
 }
 .picbox {

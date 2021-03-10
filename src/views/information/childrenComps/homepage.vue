@@ -8,6 +8,7 @@
       :showDivColor="'#ee5757'"
       :songCount="'累计听歌' + count + '首'"
       @click.native="playedList"
+      :iconColor="'#fff'"
     ></sheet-item>
 
     <sheet-item
@@ -18,6 +19,7 @@
       :showDivColor="'#ebcece'"
       :songCount="likeSheet.trackCount + '首，'"
       :playCount="'播放' + likeSheet.playCount + '次'"
+      :iconColor="'#ff4b41'"
       @click.native="userLike"
     ></sheet-item>
 
@@ -98,8 +100,8 @@ export default {
   data() {
     return {
       uid: "", // 用户id
-      phImg: require("assets/img/information/paihang.svg"),
-      likeImg: require("assets/img/information/aixin.svg"),
+      phImg: 'icon-paihang',
+      likeImg: 'icon-aixin',
       likeSheet: {}, // 喜欢的音乐
       createSheet: [], // 创建的歌单
       subSheet: [], // 收藏的歌单
@@ -194,10 +196,10 @@ export default {
 </script>
 <style scoped>
 .indentifyBox {
-  font-size: 0.372836rem;
+  font-size: .346667rem;
   display: flex;
   align-items: center;
-  margin-top: 0.133156rem;
+  margin-top: 0.266312rem;
 }
 .indentifyBox img {
   width: 0.665779rem;
@@ -212,19 +214,20 @@ export default {
   margin-top: 0.532623rem;
 }
 .prizeTitle {
-  font-size: 0.426099rem;
-  font-weight: 550;
-  margin-bottom: 0.133156rem;
+  font-size: .4rem;
+  margin-bottom: 0.266312rem;
 }
 .prizeContent {
-  font-size: 0.372836rem;
+  font-size: .32rem;
+  line-height: .453333rem;
   color: #000;
 }
 .singerDetail {
   margin-top: 0.532623rem;
 }
 .singerDesc {
-  font-size: 0.346205rem;
+  font-size: .32rem;
+  line-height: .453333rem;
   margin-top: 0.266312rem;
 }
 .homepage {
@@ -247,8 +250,7 @@ export default {
   margin-bottom: 10px;
 }
 .sp1 {
-  font-size: 0.466045rem;
-  font-weight: 550;
+  font-size: .4rem;
 }
 .sp2 {
   font-size: 0.346205rem;

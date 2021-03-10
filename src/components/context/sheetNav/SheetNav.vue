@@ -1,6 +1,6 @@
 <template>
   <div class="SheetNav">
-    <img src="~assets/img/played/bofang.svg" alt="" />
+    <i class="iconfont icon-gequbofang"></i>
     <span
       >播放全部<span class="a">(共{{ trackCount }}首)</span></span
     >
@@ -15,7 +15,6 @@ export default {
   data() {
     return {
       textBtn: "已收藏",
-      isFollowImg: require("assets/img/follow/gou.svg"),
       // require('assets/img/follow/hao.svg') ,
       showBtn: false, // 显示/隐藏收藏按钮
       collClass: false,
@@ -25,12 +24,10 @@ export default {
   methods: {
     isCollection() {
       if (this.collIndex === 1) {
-        this.isFollowImg = require("assets/img/follow/hao.svg");
         this.textBtn = "收藏";
         this.collClass = true;
         this.collIndex = 2;
       } else {
-        this.isFollowImg = require("assets/img/follow/gou.svg");
         this.textBtn = "已收藏";
         this.collClass = false;
         this.collIndex = 1;
@@ -61,18 +58,18 @@ export default {
   width: 100%;
   height: 1.198402rem;
   background-color: #fff;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: .4rem;
+  border-top-right-radius: .4rem;
   line-height: 1.198402rem;
-  font-size: 15px;
+  font-size: .373333rem;
+  display: flex;
+  align-items: center;
 }
-.SheetNav img {
-  width: 0.852197rem;
-  height: 0.852197rem;
-  margin-top: 0.173103rem;
-  margin-left: 0.319574rem;
-  margin-right: 0.186418rem;
-  float: left;
+.SheetNav .iconfont {
+  font-size: .533333rem;
+  color: var(--red);
+  margin-left: .266667rem;
+  margin-right: .133333rem;
 }
 .SheetNav span {
   font-size: 0.45273rem;

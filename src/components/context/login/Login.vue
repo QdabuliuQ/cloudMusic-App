@@ -47,7 +47,8 @@ export default {
   },
   methods: {
     close() {
-      this.$router.go(-1);
+      // this.$router.go(-1);
+      this.$router.push('/discover')
     },
 
     // 手机登录组件

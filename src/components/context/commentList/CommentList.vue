@@ -34,7 +34,7 @@
                 </div>
                 <div class="like">
                   {{ item.likedCount }}
-                  <img src="~assets/img/commentList/zan.svg" alt="" srcset="" />
+                  <i class="iconfont icon-zan"></i>
                 </div>
               </div>
               <div class="bottom">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="like">
                   {{ item.likedCount }}
-                  <img src="~assets/img/commentList/zan.svg" alt="" srcset="" />
+                  <i class="iconfont icon-zan"></i>
                 </div>
               </div>
               <div class="bottom">
@@ -262,10 +262,12 @@ export default {
   position: absolute;
   right: 0;
   color: rgb(161, 161, 161);
+  display: flex;
+  align-items: center;
 }
-.like img {
-  width: 0.372836rem;
-  margin-left: 0.133156rem;
+.like .iconfont {
+  font-size: .32rem;
+  margin-left: .133333rem;
 }
 .bottom {
   font-size: 0.372836rem;

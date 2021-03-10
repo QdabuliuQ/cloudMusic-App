@@ -18,7 +18,7 @@
                 <span class="spItem">{{ item }}</span>
               </div>
             </a>
-            <span class="bottomBor"></span>
+            <span id="border" class="bottomBor"></span>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@ export default {
       this.$emit("tabToggle", index);
       this.tabIndex = index;
       let span = document.getElementsByClassName("spItem")[index];
-      let bottomBor = document.getElementsByClassName("bottomBor")[0];
+      let bottomBor = document.getElementById("border")
       bottomBor.style.width = span.offsetWidth + "px";
       Move(bottomBor, "left", span.offsetLeft, 35);
     },
@@ -68,8 +68,8 @@ export default {
 
     this.$nextTick(() => {
       setTimeout(() => {
-        this.tabItem(0)
-      },300)
+        this.tabItem(this.firstIndex)
+      },1000)
     });
   },
 };
@@ -80,7 +80,10 @@ export default {
 }
 .mui-content {
   background-color: transparent !important;
-  height: 1.091877rem !important;
+  height: 100% !important;
+}
+.mui-slider{
+  height: 100% !important;
 }
 .mui-scroll {
   height: 1.091877rem !important;
@@ -124,7 +127,7 @@ export default {
   height: .053333rem !important;
   background-color: #da231b;
   position: absolute;
-  bottom: 0;
+  bottom: .053333rem;
   padding: 0 !important;
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="Search">
     <div class="nav">
       <div class="left" @click="back">
-        <!-- <img src="~assets/img/radioStation/fanhui.png" alt="" /> -->
+        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="right">
         <div class="sous">
@@ -108,6 +108,7 @@ export default {
 }
 .bContent {
   padding: 0.133156rem 0.372836rem 0.319574rem;
+  margin-bottom: 45px;
 }
 .Search {
   width: 100%;
@@ -123,12 +124,13 @@ export default {
 }
 .left {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: 25px;
-  height: 22px;
-  margin-top: 10.5px;
+.left .iconfont {
+  font-size: .4rem;
+  color: #000;
 }
 .right {
   flex: 9;

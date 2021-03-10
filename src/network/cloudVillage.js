@@ -7,15 +7,17 @@ export function getPrivatecontent() {
     })
 }
 
-// 云村热评
-export function getHotwall(cookie) {
+// 独家放送列表
+export function getPrivateContentList(limit, offset) {
     return request({
-        url: '/comment/hotwall/list',
+        url: '/personalized/privatecontent/list',
         params: {
-            cookie
+            limit, 
+            offset
         }
     })
 }
+
 
 // 音乐日历
 export function getCalendar(cookie, startTime, endTime) {
@@ -52,6 +54,26 @@ export function getCommentFloor(parentCommentId, id, type, limit, time){
             type,
             limit, 
             time
+        }
+    })
+}
+
+// 获取话题详情
+export function getTopicDetail(actid) {
+    return request({
+        url: '/topic/detail',
+        params: {
+            actid
+        }
+    })
+}
+
+// 获取热门话题
+export function getActiveDetail(actid) {
+    return request({
+        url: '/topic/detail/event/hot',
+        params: {
+            actid
         }
     })
 }

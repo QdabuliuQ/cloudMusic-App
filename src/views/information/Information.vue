@@ -18,7 +18,7 @@
         <div class="userImg">
           <img :src="profile.avatarUrl" alt="" />
           <div class="logo" v-if="profile.artistId">
-            <img src="~assets/img/information/wyy.svg" alt="" />
+            <i class="iconfont icon-logo"></i>
           </div>
         </div>
         <div class="userName">
@@ -57,6 +57,7 @@
         ref="inforTabnav"
       ></tabnav>
     </div>
+    <!-- 主页 -->
     <homepage
       :artistId="profile.artistId"
       :identify="profile.identify"
@@ -64,14 +65,18 @@
       class="homepage"
       :count="profile.listenSongs"
     ></homepage>
+    <!-- 动态 -->
     <dynamic
       class="dynamic"
       v-if="showDynamic"
       :userImg="profile.avatarUrl"
       :nickName="profile.nickname"
     ></dynamic>
+    <!-- 歌曲列表 -->
     <songs class="songs" :artistId="profile.artistId" v-if="showSongs"></songs>
+    <!-- 专辑 -->
     <album class="album" :artistId="profile.artistId" v-if="showAlbum"></album>
+    <!-- mv列表 -->
     <mv class="mv" :artistId="profile.artistId" v-if="showMv"></mv>
     <van-share-sheet
       v-model="showShare"
@@ -93,6 +98,8 @@ import mv from "components/context/mv/Mv"; // MV
 import { toStringNum } from "common/common";
 import { getUserDetail } from "network/user";
 import { getSingerAlbum } from "network/singer";
+
+import "assets/icon/Information.css"
 
 export default {
   name: "Information",
@@ -356,7 +363,8 @@ export default {
 }
 .topbox {
   width: 100%;
-  height: 7.989348rem;
+  height: 7.466667rem;
+  /* height: 7.989348rem; */
   position: relative;
   z-index: 1;
 }
@@ -365,6 +373,7 @@ export default {
   height: 100%;
   position: absolute;
   top: 0;
+  filter: blur(5px);
 }
 .userBURL img {
   width: 100%;
@@ -379,9 +388,9 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .userDetail {
-  padding: 15px 15px 0;
-  position: relative;
-  top: 28%;
+  padding: .4rem .4rem 0;
+  position: absolute;
+  top: 23%;
   z-index: 3;
 }
 .userImg {
@@ -400,12 +409,15 @@ export default {
   right: 0.133156rem;
   width: 0.479361rem;
   height: 0.479361rem;
-  text-align: center;
   border-radius: 50%;
   background-color: #da231b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.logo img {
-  width: 0.319574rem;
+.logo .iconfont {
+  font-size: .32rem;
+  color: #fff;
 }
 .userName {
   font-size: 0.426099rem;
@@ -421,7 +433,7 @@ export default {
 .detail {
   font-size: 0.346205rem;
   color: #adadad;
-  height: 10px;
+  height: .266667rem;
   margin-top: 0.266312rem;
 }
 .follows {
@@ -439,7 +451,7 @@ export default {
 }
 .createtime {
   height: 0.532623rem;
-  font-size: 13px;
+  font-size: .346667rem;
   line-height: 0.532623rem;
   color: #adadad;
   margin-top: 0.266312rem;

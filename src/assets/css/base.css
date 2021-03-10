@@ -9,6 +9,9 @@
     --boxshaow: 0 0 6px rgba(0,0,0,0.1);
     /* 字体颜色 */
     --fontColor: #616161;
+
+    /* 盒子颜色 */
+    --boxColor: #f3f3f3;
 }
 *{
     margin: 0;

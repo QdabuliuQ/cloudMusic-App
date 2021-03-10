@@ -20,7 +20,7 @@
       >
         <div class="left">
           <img class="img" :src="item.picUrl" alt="" />
-          <img class="black" src="~assets/img/information/yuan.svg" alt="" />
+          <img class="black" src="https://img.coolcr.cn/2021/03/08/2b7d972a3ad72.png" alt="" />
         </div>
         <div class="right">
           <div class="box">
@@ -91,6 +91,7 @@
       <div class="simItem" v-for="(item, index) in sim_query" :key="index">
         {{ item }}
       </div>
+      <div style="clear:both"></div>
     </div>
     <!-- 主题 -->
     <div class="talk bbox" v-if="talks.length !== 0">
@@ -343,8 +344,7 @@ export default {
   width: 100%;
   height: 0.665779rem;
   line-height: 0.665779rem;
-  font-size: 0.426099rem;
-  font-weight: 550;
+  font-size: .4rem;
   margin-bottom: 0.133156rem;
   clear: both;
 }
@@ -374,9 +374,9 @@ export default {
 }
 .black {
   position: absolute;
-  width: 100%;
+  width: 80%;
   height: 100%;
-  right: -3px;
+  right: .266667rem;
   z-index: -1;
 }
 .right {
@@ -386,6 +386,8 @@ export default {
 }
 .name {
   font-size: 0.399467rem;
+  line-height: .48rem;
+  margin-bottom: .133333rem;
 }
 .detail {
   font-size: 0.319574rem;
@@ -417,6 +419,7 @@ export default {
   white-space: nowrap;
   font-size: 0.372836rem;
   margin-left: 0.133156rem;
+  margin-bottom: .133333rem;
 }
 .sheetdetail {
   width: 7.190413rem;
@@ -463,6 +466,7 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-size: 0.346205rem;
+  margin-bottom: .133333rem;
 }
 .videoDetail {
   font-size: 0.319574rem;
@@ -488,7 +492,7 @@ export default {
 }
 .ttitle {
   font-size: 0.399467rem;
-  font-weight: 550;
+  margin-bottom: .133333rem;
 }
 .talkDetail {
   font-size: 0.319574rem;
@@ -497,7 +501,7 @@ export default {
 .artistItem {
   display: flex;
   height: 2.130493rem;
-  margin-bottom: 0.213049rem;
+  margin-bottom: .213333rem;
 }
 .aleft {
   flex: 2.5;
@@ -511,6 +515,11 @@ export default {
   flex: 7;
   line-height: 2.130493rem;
   font-size: 0.45273rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+
 }
 .a1 {
   color: #a7a7a8;
@@ -520,12 +529,13 @@ export default {
 }
 .simItem {
   float: left;
-  padding: 0.133156rem 0.23968rem;
-  font-size: 0.372836rem;
+  padding: 0.133156rem .266667rem;
+  font-size: .32rem;
   border-radius: 0.798935rem;
   margin-right: 0.186418rem;
-  margin-bottom: 0.133156rem;
-  background-color: rgb(241, 241, 241);
+  margin-bottom: 0.186418rem;
+  background-color: rgb(253, 253, 253);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.158);
 }
 .djItem {
   width: 100%;
@@ -555,6 +565,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.399467rem;
+  margin-bottom: .133333rem;
 }
 .dnickname {
   font-size: 0.319574rem;

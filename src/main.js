@@ -66,6 +66,12 @@ Vue.filter('mvTime',function(time){
   return (time / 1000 / 60 <= 9 ? '0' + Math.floor(time / 1000 / 60) :  Math.floor(time / 1000 / 60)) + ':' + (time / 1000 % 60 <= 9 ? '0' + time / 1000 % 60 : time / 1000 % 60)
 })
 
+Vue.filter('videoTime', function(time){
+  let min = (Math.floor(time / 60) + '').padStart(2, '0');  // 分钟
+  let second = (time - (60 * min) + '').padStart(2, '0');  // 秒数
+  return min+':'+second
+})
+
 
 // 引入 toast 组件
 import toast from 'components/common/toast'

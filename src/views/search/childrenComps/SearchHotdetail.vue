@@ -4,7 +4,7 @@
       <div class="left">热搜榜</div>
       <div class="right">
         <div class="btn">
-          <img src="~assets/img/search/bofang.svg" alt="" />
+          <i class="iconfont icon-bofang"></i>
           播放全部
         </div>
       </div>
@@ -134,14 +134,16 @@ export default {
   border: 1px solid #afafaf;
   border-radius: 0.665779rem;
   text-align: center;
-  font-size: 0.346205rem;
+  font-size: .32rem;
   position: absolute;
   right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.btn img {
-  width: 0.319574rem;
-  position: relative;
-  top: 0.039947rem;
+.btn .iconfont {
+  font-size: .32rem;
+  margin-right: .106667rem;
 }
 .bottomBox {
   width: 100%;

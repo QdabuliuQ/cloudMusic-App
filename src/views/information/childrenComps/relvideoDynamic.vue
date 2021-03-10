@@ -17,7 +17,7 @@
         </div>
         <div class="box" @click="toPlay(events.video.videoId)">
           <div class="play">
-            <img src="~assets/img/information/events/bofang.svg" alt="" />
+            <i class="iconfont icon-bofang"></i>
           </div>
           <div class="playDetail">
             <div class="detailLeft">
@@ -25,7 +25,6 @@
             </div>
             <div class="detailRight">
               <div class="rightdetail">
-                <img src="~assets/img/information/events/durtaion.svg" alt="" />
                 <span>{{ timeMV }}</span>
               </div>
             </div>
@@ -162,8 +161,9 @@ export default {
 .play {
   margin: auto;
 }
-.play img {
-  width: 0.798935rem;
+.play .iconfont {
+  font-size: 1.066667rem;
+  color: #Fff;
 }
 .detailLeft {
   flex: 1;

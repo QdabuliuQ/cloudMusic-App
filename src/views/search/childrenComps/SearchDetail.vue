@@ -2,7 +2,7 @@
   <div class="SearchHP" :key="i">
     <div class="nav">
       <div class="left" @click="back">
-        <!-- <img src="~assets/img/radioStation/fanhui.png" alt="" /> -->
+        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="right">
         <div class="sous">
@@ -222,7 +222,7 @@ export default {
 }
 .contentbox {
   padding: 0.266312rem 0.372836rem;
-  margin-bottom: 1.198402rem;
+  margin-bottom: 45px;
 }
 .SearchHP {
   width: 100%;
@@ -243,19 +243,19 @@ export default {
 }
 .snav {
   position: fixed;
-  top: 44px;
+  top: 1.146667rem;
   left: 0;
   right: 0;
   z-index: 20;
 }
 .left {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: 25px;
-  height: 22px;
-  margin-top: 10.5px;
+.left .iconfont {
+  font-size: .4rem;
 }
 .right {
   flex: 9;

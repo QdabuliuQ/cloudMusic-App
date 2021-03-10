@@ -9,7 +9,7 @@
       <div class="left">
         <img :src="item.picUrl" alt="" />
         <div class="bgcImg">
-          <img src="~assets/img/information/yuan.svg" alt="" />
+          <img src="https://img.coolcr.cn/2021/03/08/2b7d972a3ad72.png" alt="" />
         </div>
       </div>
       <div class="right">

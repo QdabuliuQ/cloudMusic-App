@@ -5,7 +5,7 @@
       <div class="count" v-if="showCount">▷ {{ sheetItem.playCount }}</div>
       <div class="toPlay" v-if="showImg">
         <div class="pImg">
-          <i class="iconfont icon-bofang" ></i>
+          <i class="iconfont icon-shouyebofang" ></i>
         </div>
       </div>
     </div>

@@ -329,9 +329,6 @@ export default {
   display: flex;
   align-items: center;
 }
-.title .tag {
-  
-}
 .tagBox{
   width: 1.6rem;
   font-size: 0.32rem;

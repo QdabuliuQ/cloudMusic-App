@@ -20,7 +20,7 @@ export default {
   name: "CloudVillage",
   data () {
     return {
-      itemList: ['热评墙','热门话题']
+      itemList: ['独家放送','热门话题']
     }
   },
   methods: {
@@ -38,16 +38,16 @@ export default {
     }
   },
   created () {
-    this.$loading.loadingShow();
   },
   mounted () {
-    this.$refs.villageNav.tabItem(0)
-    this.$nextTick(() => {
-      this.$loading.loadingNo();
-    })
   },
   components: {
     scrollnav,
+  },
+  activated () {
+    this.$nextTick(() => {
+      this.$refs.villageNav.tabItem(0)
+    })
   }
 };
 </script>
@@ -55,19 +55,19 @@ export default {
 .CloudVillage {
   width: 100%;
   margin-top: 1.171771rem;
-  background-color: #fff;
+  background-color: #fafafa;
 }
 .topbox {
-  /* width: 60%; */
   padding: 0 20%;
   height: 1.065246rem;
   margin: 0 auto;
   background-color: #fff;
   position: fixed;
-  top: 1.14514rem;
+  top: 44px;
   left: 0;
   right: 0;
   z-index: 20;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 .nav{
   width: 90%;
@@ -75,7 +75,7 @@ export default {
   margin: 0 auto;
 }
 .content{
-  margin: 2.237017rem 0 1.198402rem;
+  margin: calc(1.065246rem + 45px) 0 45px;
   padding: .266312rem .399467rem;
 }
 </style>

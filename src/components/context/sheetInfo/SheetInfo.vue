@@ -37,13 +37,8 @@
         </div>
         <div class="bottom">
           <tabbar>
-            <tabbaritem @click.native="showInfoComment" activeColor="red">
-              <img
-                class="imgNav"
-                slot="item-icon"
-                src="~assets/img/sheetList/pinglun.svg"
-                alt
-              />
+            <tabbaritem @click.native="showInfoComment" activeColor="red">  
+              <i slot="item-icon" class="iconfont icon-pinglun"></i>
               <div class="item-text" slot="item-text">
                 {{
                   sheetInfoContent.commentCount > 0
@@ -53,12 +48,7 @@
               </div>
             </tabbaritem>
             <tabbaritem activeColor="red">
-              <img
-                class="imgNav"
-                slot="item-icon"
-                src="~assets/img/sheetList/fenxiang.svg"
-                alt
-              />
+              <i slot="item-icon" class="iconfont icon-fenxiang"></i>
               <div class="item-text" slot="item-text">
                 {{
                   sheetInfoContent.shareCount > 0
@@ -68,21 +58,11 @@
               </div>
             </tabbaritem>
             <tabbaritem activeColor="red">
-              <img
-                class="imgNav"
-                slot="item-icon"
-                src="~assets/img/sheetList/xiazai.svg"
-                alt
-              />
+              <i slot="item-icon" class="iconfont icon-xiazai"></i>
               <div class="item-text" slot="item-text">下载</div>
             </tabbaritem>
             <tabbaritem activeColor="red">
-              <img
-                class="imgNav"
-                slot="item-icon"
-                src="~assets/img/sheetList/duoxuan.svg"
-                alt
-              />
+              <i slot="item-icon" class="iconfont icon-liebiao"></i>
               <div class="item-text" slot="item-text">多选</div>
             </tabbaritem>
           </tabbar>
@@ -95,9 +75,6 @@
     <div class="songItem">
       <song-item name="sheetInfo" :songList="songList"></song-item>
     </div>
-    <!-- <transition>
-      <info-comment @toback="toback" v-show="isShowinfoc"></info-comment>
-    </transition> -->
   </div>
 </template>
 
@@ -107,7 +84,6 @@ import tabbar from "components/common/tabbar/tabbar"; // 导航栏
 import tabbaritem from "components/common/tabbar/tabbaritem";
 import sheetNav from "components/context/sheetNav/SheetNav"; // 导航条
 import songItem from "components/context/songItem/SongItem"; // 歌曲列表
-import bscroll from "components/common/bscroll/Bscroll"; // 滚动组件
 import infoComment from "./childrenComps/SheetInfoComment"; // 歌单评论组件
 
 import { toStringNum } from "common/common"; // 播放量转换
@@ -168,7 +144,6 @@ export default {
     tabbaritem,
     sheetNav,
     songItem,
-    bscroll,
     infoComment,
   },
   created() {
@@ -254,11 +229,10 @@ export default {
 };
 </script>
 <style scoped>
-.bscroll {
-  height: 100vh;
-  top: 0;
-  bottom: 0;
-  position: relative;
+.iconfont{
+  color: #Fff;
+  font-size: .666667rem;
+  margin-top: .133333rem;
 }
 .content2 {
   position: relative;
@@ -317,6 +291,8 @@ export default {
 }
 .item-text {
   color: #fff;
+  text-align: center;
+  margin-top: .08rem;
 }
 .box {
   margin-top: 45px;

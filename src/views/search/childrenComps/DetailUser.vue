@@ -9,7 +9,7 @@
       <div class="left">
         <img class="uimg" :src="item.avatarUrl" alt="" />
         <div v-if="item.anchor" class="tag">
-          <img src="~assets/img/information/wyy.svg" alt="" />
+          <i class="iconfont icon-logo"></i>
         </div>
       </div>
       <div class="center">
@@ -119,12 +119,13 @@ export default {
   border-radius: 50%;
   right: -2px;
   bottom: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.tag img {
-  width: 0.346205rem;
-  position: relative;
-  top: -0.093209rem;
-  left: 0.045273rem;
+.tag .iconfont {
+  font-size: .32rem;
+  color: #Fff;
 }
 .name img {
   position: relative;

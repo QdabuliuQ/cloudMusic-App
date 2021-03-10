@@ -110,10 +110,9 @@ export default {
 .musicDynamic {
   width: 100%;
   display: flex;
-  padding-bottom: 0.399467rem;
+  padding-bottom: .266667rem;
   border-bottom: 1px solid #e6e6e6;
   margin-top: 0.399467rem;
-  /* margin-bottom: .532623rem; */
 }
 .flexBox {
   position: relative;
@@ -137,27 +136,31 @@ export default {
   flex: 8.5;
 }
 .title {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: #000;
+  margin-top: .16rem;
+  height: .4rem;
 }
 .blueActive {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: #226ec5;
 }
 .time {
-  font-size: 0.346205rem;
+  font-size: .32rem;
   color: rgb(158, 158, 158);
+  height: .4rem;
 }
 .content {
   width: 7.723036rem;
-  font-size: 15px;
+  font-size: .36rem;
+  line-height: .506667rem;
   margin-top: 0.213049rem;
   word-wrap:break-word;
 }
 .musicbox {
   width: 100%;
   height: 1.331558rem;
-  background-color: #e6e6e6;
+  background-color: var(--boxColor);
   border-radius: 0.133156rem;
   margin-top: 0.213049rem;
   display: flex;
@@ -183,7 +186,7 @@ export default {
   align-items: center;
 }
 .songName {
-  font-size: 0.399467rem;
+  font-size: .346667rem;
   color: #000;
   width: 5.858855rem;
   overflow: hidden;
@@ -193,7 +196,7 @@ export default {
   line-height: 0.479361rem;
 }
 .singer {
-  font-size: 0.319574rem;
+  font-size: .32rem;
   color: rgb(131, 131, 131);
   width: 5.858855rem;
   overflow: hidden;

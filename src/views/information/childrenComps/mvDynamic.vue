@@ -17,7 +17,7 @@
         </div>
         <div class="box" @click="toPlay(events.mv.id)">
           <div class="play">
-            <img src="~assets/img/information/events/bofang.svg" alt="" />
+            <i class="iconfont icon-bofang"></i>
           </div>
           <div class="playDetail">
             <div class="detailLeft">
@@ -25,8 +25,7 @@
             </div>
             <div class="detailRight">
               <div class="rightdetail">
-                <img src="~assets/img/information/events/durtaion.svg" alt="" />
-                <span>{{ timeMV }}</span>
+                <span>{{ events.mv.duration | mvTime }}</span>
               </div>
             </div>
           </div>
@@ -77,12 +76,7 @@ export default {
   },
   created() {
     if (this.events.mv.status !== -1) {
-      this.timeMV =
-        this.events.mv.duration / 1000 < 60
-          ? "00:" + this.events.mv.duration / 1000
-          : this.events.mv.duration / 1000 / 60 < 9
-          ? "0" + this.events.mv.duration / 1000 / 60 < 9
-          : this.events.mv.duration / 1000 / 60 < 9;
+      console.log(this.events.mv.duration);
       this.playCount = toStringNum(this.events.mv.playCount);
     }
   },
@@ -113,19 +107,23 @@ export default {
   flex: 8.5;
 }
 .title {
-  font-size: 0.399467rem;
+  margin-top: .133333rem;
+  font-size: .32rem;
   color: #000;
+  height: .4rem;
 }
 .title span {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: rgb(34, 110, 197);
 }
 .time {
-  font-size: 0.346205rem;
+  font-size: .32rem;
   color: rgb(158, 158, 158);
+  height: .4rem;
 }
 .content {
-  font-size: 15px;
+  font-size: .36rem;
+  line-height: .48rem;
   margin-top: 0.213049rem;
 }
 .video {
@@ -177,13 +175,15 @@ export default {
 .play {
   margin: auto;
 }
-.play img {
-  width: 0.798935rem;
+.play .iconfont {
+  font-size: .8rem;
+  color: rgba(255, 255, 255, 0.692);
 }
 .detailLeft {
   flex: 1;
   line-height: 0.532623rem;
   text-indent: 0.213049rem;
+  font-size: .32rem;
   float: left;
 }
 .detailRight {
@@ -193,6 +193,7 @@ export default {
 }
 .rightdetail {
   float: right;
+  font-size: .32rem;
 }
 .rightdetail img {
   width: 0.372836rem;

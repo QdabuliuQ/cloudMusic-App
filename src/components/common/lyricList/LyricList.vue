@@ -84,9 +84,6 @@ export default {
       });
     });
   },
-  created () {
-    console.log('歌词滚动create');
-  },
   computed: {
     linearSet() {
       return this.$store.state.playSong.linearIndex;

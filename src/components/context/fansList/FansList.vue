@@ -21,7 +21,7 @@
           />
         </div>
         <div class="right">
-          <img src="~assets/img/common/sandian.svg" alt="" />
+          <i class="iconfont icon-sandian"></i>
         </div>
       </div>
       <div class="tip" v-if="FansArr.length >= 100">下载APP查看更多</div>
@@ -96,8 +96,8 @@ export default {
 .item {
   display: flex;
   width: 100%;
-  padding: 0.186418rem 0 0.133156rem;
-  border-bottom: 1px solid #e2e2e2;
+  padding: .266667rem 0 .266667rem;
+  border-bottom: 1px solid #f0f0f0;
 }
 .left {
   flex: 1.5;
@@ -119,13 +119,15 @@ export default {
 }
 .right {
   flex: 1.5;
-  text-align: center;
-}
-.right img {
-  width: 0.665779rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  top: 0.346205rem;
-  float: right;
+}
+.right .iconfont {
+  font-size: .48rem;
+  position: absolute;
+  right: 0;
 }
 .tip {
   width: 100%;

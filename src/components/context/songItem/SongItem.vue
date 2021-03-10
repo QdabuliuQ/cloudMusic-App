@@ -61,6 +61,9 @@ export default {
       this.$router.push("/mvplay/" + mid);
     },
   },
+  mounted () {
+    console.log(this.songList);
+  }
 };
 </script>
 <style scoped>

@@ -2,18 +2,19 @@
   <div class="FullScreen">
     <div class="playBox" @click="showSet" ref="playBox">
       <transition name="FullScreen">
-        <div class="setBox" v-show="showSetBox">
+        <!--  v-show="showSetBox" -->
+        <div class="setBox">
           <div class="topBox">
             <div class="left" @click="back">
-              <img src="~assets/img/common/fanhui.svg" alt="" />
+              <i class="iconfont icon-fanhui"></i>
             </div>
             <div class="center">{{ videoTitle }}</div>
             <div class="right">
-              <img src="~assets/img/sheetList/fenxiang.svg" alt="" />
+              <i class="iconfont icon-fenxiang"></i>
             </div>
           </div>
           <div class="playBtn" @click.stop="playBtn">
-            <img :src="Play" alt="" />
+            <i class="iconfont" :class="[Play]"></i>
           </div>
           <div class="bottomBox">
             <van-slider
@@ -48,7 +49,7 @@ export default {
   data() {
     return {
       value: 0,
-      Play: require("assets/img/mvPlay/zanting.svg"),
+      Play: 'icon-gequtingzhi',
       showSetBox: false,
       playing: true,
       percentTime: 0,
@@ -86,19 +87,19 @@ export default {
 
     // 暂停/播放
     playBtn() {
-      if (this.playing) {
+      if (this.playing) {  // 正在播放下
         this.$store.state.fullSecreenVideo.pause();
-        this.Play = require("assets/img/mvPlay/bofang.svg");
+        this.Play = 'icon-gequbofang';
         this.playing = false;
         this.$store.state.viewPlay.playing = false;
         clearInterval(this.timer);
-      } else {
+      } else { 
         if (this.value >= 100) {
           this.value = 0;
           this.$store.state.fullSecreenVideo.currentTime = 0;
         }
         this.$store.state.fullSecreenVideo.play();
-        this.Play = require("assets/img/mvPlay/zanting.svg");
+        this.Play = 'icon-gequtingzhi';
         this.playing = true;
         this.$store.state.viewPlay.playing = true;
         clearInterval(this.timer);
@@ -110,7 +111,7 @@ export default {
       this.value += this.percentTime;
       if (this.value >= 100) {
         this.value = 100;
-        this.Play = require("assets/img/mvPlay/bofang.svg"); // 修改图标
+        this.Play = 'icon-gequbofang'; // 修改图标
         this.playing = false;
         this.$store.state.viewPlay.playing = false;
       }
@@ -118,30 +119,16 @@ export default {
 
     // 监听video加载完成
     canplay() {
+      this.$store.state.fullSecreenVideo = document.getElementById(
+        "fullSecreenVideo"
+      );
       this.percentTime = 100 / this.$store.state.fullSecreenVideo.duration;
       this.value = this.$store.state.viewPlay.currentTime * this.percentTime;
     },
   },
   created() {
     this.$nextTick(() => {
-      this.$store.state.fullSecreenVideo = document.getElementById(
-        "fullSecreenVideo"
-      );
-      // 判断外部播放器是否正在播放
-      if (this.$store.state.viewPlay.outPlaying) {
-        this.$store.state.fullSecreenVideo.currentTime = this.$store.state.viewPlay.currentTime; // 将外部保存的时间放入内部播放器
-        this.$store.state.fullSecreenVideo.play();
-        this.Play = require("assets/img/mvPlay/zanting.svg");
-        this.$store.state.viewPlay.playing = true; // 正在播放
-        this.playing = true;
-        this.timer = setInterval(this.linearPlay, 1000);
-      } else {
-        this.$store.state.fullSecreenVideo.pause();
-        this.playing = false;
-        this.Play = require("assets/img/mvPlay/bofang.svg");
-        this.$store.state.viewPlay.playing = false; // 暂停播放
-        clearInterval(this.timer);
-      }
+      
     });
   },
   mounted() {
@@ -158,6 +145,24 @@ export default {
       //  console.log(conH+'--'+conW);
       this.$refs.playBox.style.width = conH + "px";
       this.$refs.playBox.style.height = conW + "px";
+
+      setTimeout(() => {
+        this.$store.state.fullSecreenVideo.currentTime = this.$store.state.viewPlay.currentTime; // 将外部保存的时间放入内部播放器
+      // 判断外部播放器是否正在播放
+      if (this.$store.state.viewPlay.outPlaying) {
+        this.$store.state.fullSecreenVideo.play();
+        this.Play = 'icon-gequtingzhi';
+        this.$store.state.viewPlay.playing = true; // 正在播放
+        this.playing = true;
+        this.timer = setInterval(this.linearPlay, 1000);
+      } else {
+        this.$store.state.fullSecreenVideo.pause();
+        this.playing = false;
+        this.Play = 'icon-gequbofang';
+        this.$store.state.viewPlay.playing = false; // 暂停播放
+        clearInterval(this.timer);
+      }
+      }, 500);
     });
   },
   destroyed() {
@@ -185,10 +190,13 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.playBtn img {
-  width: 100%;
-  height: 100%;
+.playBtn .iconfont {
+  font-size: 1.066667rem;
+  color: #fff;
 }
 .custom-button {
   width: 13px;
@@ -229,17 +237,19 @@ export default {
 }
 .left {
   flex: 0.6;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: 0.665779rem;
-  margin-top: 0.292943rem;
+.left .iconfont {
+  font-size: .453333rem;
+  color: #fff;
 }
 .center {
   flex: 8.8;
   line-height: 1.331558rem;
   color: #fff;
-  font-size: 0.505992rem;
+  font-size: .426667rem;
   width: 10.652463rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -247,11 +257,13 @@ export default {
 }
 .right {
   flex: 0.6;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.right img {
-  width: 0.798935rem;
-  margin-top: 0.186418rem;
+.right .iconfont {
+  font-size: .453333rem;
+  color: #fff;
 }
 .bottomBox {
   width: 100%;

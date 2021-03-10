@@ -84,7 +84,6 @@ export default {
       commentTitle: "", // 评论数量
       page: 0, // 评论页数
       commentList: [], // 评论内容
-      likedImg: require("assets/img/commentList/zan.svg"),
       getComMore: null,
       showShare: false, // 分享面板
       options: [

@@ -114,7 +114,7 @@ export default {
   data() {
     return {
       navTitle: "", // 歌曲标题
-      rightImg: require("assets/img/playSong/fenxiang.svg"),
+      rightImg: true,
       id: "", // 音乐id
       bgimg: "", // 封面图
       songUrl: "", // 音乐url

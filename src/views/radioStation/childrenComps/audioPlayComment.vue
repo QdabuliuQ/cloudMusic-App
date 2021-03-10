@@ -2,13 +2,13 @@
   <div class="audioPlayComment">
     <div class="nav">
       <div class="left" @click="back">
-        <img src="~assets/img/commentList/fanhui.svg" alt="" />
+        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="center">
         {{ commentTitle }}
       </div>
       <div class="rightbox" @click="fxiang">
-        <img src="~assets/img/commentList/fenxiang.svg" alt="" />
+        <i class="iconfont icon-fenxiang"></i>
       </div>
     </div>
     <mscroll class="conscroll" :scrollY="true">
@@ -26,22 +26,24 @@
               <img v-lazy="item.userImg" alt="" />
             </div>
             <div class="userName">
-              <div class="name">
-                {{ item.userName }}
-                <img
-                  v-if="item.vipType !== 0"
-                  src="~assets/img/common/vip1.svg"
-                  alt=""
-                />
-              </div>
-              <div class="addtime">
-                {{ item.time | getTime }}
+              <div>
+                <div class="name">
+                  {{ item.userName }}
+                  <img
+                    v-if="item.vipType !== 0"
+                    src="~assets/img/common/vip1.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="addtime">
+                  {{ item.time | getTime }}
+                </div>
               </div>
             </div>
             <div class="liked">
               <div class="count">
                 {{ item.likedCount }}
-                <img :src="likedImg" alt="" />
+                <i class="iconfont icon-zan"></i>
               </div>
             </div>
           </div>
@@ -95,7 +97,6 @@ export default {
         ],
       ],
       offset: 0, // 评论分页
-      likedImg: require("assets/img/commentList/zan.svg"),
       commentLength: 1, // 评论数组数量
       type: 4,
     };
@@ -221,13 +222,13 @@ export default {
 }
 .left {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.left img {
-  width: 0.665779rem;
-  height: 0.532623rem;
-  position: relative;
-  top: 0.332889rem;
-  margin-left: 0.159787rem;
+.left .iconfont {
+  font-size: 0.426667rem;
+  color: #fff;
 }
 .center {
   flex: 7;
@@ -236,13 +237,13 @@ export default {
 }
 .rightbox {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.rightbox img {
-  width: 0.585885rem;
-  height: 0.585885rem;
-  position: relative;
-  top: 0.292943rem;
-  margin-left: 0.23968rem;
+.rightbox .iconfont {
+  font-size: 0.426667rem;
+  color: #fff;
 }
 .comment {
   height: 13.848202rem;
@@ -261,10 +262,12 @@ export default {
 .userName {
   flex: 5;
   font-size: 0.346205rem;
-  margin-top: 0.053262rem;
+  display: flex;
+  align-items: center;
 }
 .name {
   position: relative;
+  margin-bottom: .08rem;
 }
 .name img {
   height: 0.639148rem;
@@ -274,6 +277,9 @@ export default {
 }
 .liked {
   flex: 2.2;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .addtime {
   font-size: 0.319574rem;
@@ -288,13 +294,12 @@ export default {
 }
 .count {
   color: #8b8b8b;
-  margin-top: 0.213049rem;
   font-size: 0.372836rem;
-  float: right;
+  position: absolute;
+  right: 0;
 }
-.count img {
-  position: relative;
-  top: 1px;
+.count .iconfont {
+  font-size: .32rem;
 }
 .bottombox {
   width: 100%;
@@ -308,10 +313,12 @@ export default {
   flex: 7;
   font-size: 0.364847rem;
   padding-bottom: 0.186418rem;
+  margin-top: 0.186418rem;
+  line-height: .48rem;
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 .conscroll {
-  top: 45px;
+  top: 1.198402rem;
   background-color: #fff;
   height: calc(100vh - 1.065246rem - 1.065246rem);
 }

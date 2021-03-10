@@ -95,19 +95,22 @@ export default {
   flex: 8.5;
 }
 .title {
-  font-size: 0.399467rem;
+  margin-top: .133333rem;
+  height: .4rem;
+  font-size: .32rem;
   color: #000;
 }
 .title span {
-  font-size: 0.399467rem;
+  font-size: .32rem;
   color: rgb(34, 110, 197);
 }
 .time {
-  font-size: 0.346205rem;
+  font-size: .32rem;
   color: rgb(158, 158, 158);
 }
 .content {
-  font-size: 15px;
+  font-size: .36rem;
+  line-height: .48rem;
   margin-top: 0.213049rem;
 }
 .boxContent {
@@ -115,9 +118,10 @@ export default {
   border: 2px solid;
   border-image: linear-gradient(#bebebe, transparent) 1 90;
   margin-top: 0.213049rem;
+  font-size: .346667rem !important;
 }
 .topBox {
-  font-size: 0.399467rem;
+  font-size: .346667rem;
   margin-bottom: 0.532623rem;
 }
 .topBox .name {

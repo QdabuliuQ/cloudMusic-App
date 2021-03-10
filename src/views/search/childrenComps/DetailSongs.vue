@@ -1,7 +1,7 @@
 <template>
   <div class="DetailSongs">
     <div class="topbox">
-      <img src="~assets/img/played/bofang.svg" alt="" />
+      <i class="iconfont icon-gequbofang"></i>
       播放全部
     </div>
     <songItem :songList="detail"></songItem>
@@ -105,17 +105,18 @@ export default {
 .DetailSongs {
   width: 100%;
   min-height: 13.315579rem;
+  margin-top: 2.396804rem;
 }
 .topbox {
   height: 0.665779rem;
-  line-height: 0.665779rem;
   font-size: 0.426099rem;
   margin-bottom: 0.133156rem;
-  margin-top: 2.396804rem;
+  display: flex;
+  align-items: center;
 }
-.topbox img {
-  float: left;
-  width: 0.639148rem;
-  margin-right: 0.266312rem;
+.topbox .iconfont {
+  font-size: .4rem;
+  margin-right: .133333rem;
+  color: var(--red);
 }
 </style>

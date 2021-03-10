@@ -170,7 +170,6 @@ export default {
     if (this.$store.state.navMusicDom) {
       this.$store.state.navMusicDom.play();
     }
-    
   }
 };
 </script>

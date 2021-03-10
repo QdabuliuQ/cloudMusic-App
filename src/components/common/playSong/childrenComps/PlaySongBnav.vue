@@ -31,10 +31,12 @@ export default {
     playSong() {
       if (this.isPlay === 1) {
         this.playIcon = 'icon-gequbofang'
+        this.$store.state.playSong.playNow = false; 
         this.isPlay = 0;
         this.$emit("playBtn");
       } else {
         this.playIcon = 'icon-gequtingzhi'
+        this.$store.state.playSong.playNow = true;
         this.$emit("playBtn");
         this.isPlay = 1;
       }
