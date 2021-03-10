@@ -7,13 +7,7 @@ Vue.prototype.$EventBus = new Vue()  // 创建事件总线  全局的事件总�
 
 import 'amfe-flexible/index.js'  // 自适应布局
 
-// 引入 elementui
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
-
-// 引入 mui 基本css样式
-import 'assets/mui/css/mui.css'
 
 // 全局注册
 import { Swipe, SwipeItem } from 'vant'; // 轮播图组件
@@ -27,8 +21,6 @@ import { ShareSheet } from 'vant';
 import { ImagePreview } from 'vant';
 import { Popup } from 'vant';
 
-// 引入css样式
-import 'vant/lib/index.css';
 Vue.use(Swipe)  // 安装组件
 Vue.use(SwipeItem)  
 Vue.use(Field);  // 输入框

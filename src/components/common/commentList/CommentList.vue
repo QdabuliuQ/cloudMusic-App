@@ -74,7 +74,6 @@
 import { getComment } from "network/played"; // 评论请求
 import sendComment from "components/context/sendComment/SendComment"; // 发送评论
 import mscroll from "components/common/muiScroll/MuiScroll";
-import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 export default {
   props: ["showComment"],

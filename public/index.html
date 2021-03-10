@@ -5,7 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="./bitbug_favicon.ico">
-    <title>网易云音乐</title>
+    <!-- 根据情况环境显示不同的标题 -->
+    <title><%= htmlWebpackPlugin.options.isProd ? '' : 'dev-' %>网易云音乐</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/js/mui.min.js"></script>
+    <% if(htmlWebpackPlugin.options.isProd){%>
+    <!-- mui -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/css/mui.min.css">
+    </script> 
+    <!-- vant -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <!-- elementUI -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css ">
+    <script src="https://cdn.staticfile.org/element-ui/2.8.2/index.js"></script>
+
+    <script src="https://cdn.staticfile.org/vue/2.5.22/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-router/3.0.1/vue-router.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <!-- lazyload -->
+    <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+    <!-- moment -->
+    <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.20.1/locale/zh-cn.js"></script>  
+    <% } %>
   </head>
   <body>
     <div id="app"></div>

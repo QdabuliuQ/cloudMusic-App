@@ -130,7 +130,7 @@ export default {
     // 获取电台详情
     getDetail() {
       getAudioDetail(this.$route.params.rid).then((res) => {
-        let path = res.data.djRadio;
+        let path = res.data.data;
         this.detail.name = path.name; // 用户名称
         this.detail.picUrl = path.picUrl; // 用户头像
         this.detail.subCount = path.subCount; // 用户粉丝

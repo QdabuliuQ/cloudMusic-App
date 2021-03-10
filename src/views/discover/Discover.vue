@@ -81,7 +81,6 @@ import DiscoverAlbum from "./childrenComps/DiscoverAlbum"; // 新碟上架
 import DiscoverHotsinger from "./childrenComps/DiscoverHotSinger"; // 热门歌手
 import "assets/icon/Discover.css"; // 字体图标
 import "assets/icon/RadioStation.css"; // 字体图标
-import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 import {
   getHomepage,

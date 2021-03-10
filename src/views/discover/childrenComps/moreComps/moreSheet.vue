@@ -24,7 +24,7 @@
 import menuNav from "components/context/menuNav/MenuNav";
 import sheetItem from "components/context/sheetItem/SheetItem";
 import scrollnav from "components/context/scrollNav/ScrollNav";
-import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
+
 
 import { toStringNum } from "common/common";
 import { getHotSheet, getSheetTags } from "network/discover";

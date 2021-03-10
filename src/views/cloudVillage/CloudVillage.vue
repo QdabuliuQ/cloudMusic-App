@@ -77,5 +77,6 @@ export default {
 .content{
   margin: calc(1.065246rem + 45px) 0 45px;
   padding: .266312rem .399467rem;
+  background-color: #fff;
 }
 </style>

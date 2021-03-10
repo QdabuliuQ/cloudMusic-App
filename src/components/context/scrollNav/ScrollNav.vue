@@ -28,7 +28,6 @@
 
 <script>
 import { Move } from "common/tool";
-import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 // 引入滑动模块
 // .mui-scroll-wrapper 表示需要进行滑动的区域

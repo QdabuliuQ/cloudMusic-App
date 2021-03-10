@@ -7,8 +7,6 @@
 </template>
 
 <script>
-// 使用 muiScroll 滚动组件之前必须先按照路径引入 js 文件
-import mui from "assets/mui/js/mui.min.js"; // 引入 mui js 文件
 
 export default {
   name: "MuiScroll",
