@@ -1,0 +1,33 @@
+:root{
+    /* 背景色 红 */
+    --red: #ff4b41;
+    /* 背景色 灰 */
+    --bgc: #fafafa;
+    /* 分割线 */
+    --fgx: #f5f5f5;
+    /* 阴影 */
+    --boxshaow: 0 0 6px rgba(0,0,0,0.1);
+    /* 字体颜色 */
+    --fontColor: #616161;
+
+    /* 盒子颜色 */
+    --boxColor: #f3f3f3;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+    background-color: transparent;
+}

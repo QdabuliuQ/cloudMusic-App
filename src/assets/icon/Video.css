@@ -1,0 +1,24 @@
+@font-face {font-family: "iconfont";
+  src: url('//at.alicdn.com/t/font_2387595_5rgo1yvavfh.eot?t=1614997539418'); /* IE9 */
+  src: url('//at.alicdn.com/t/font_2387595_5rgo1yvavfh.eot?t=1614997539418#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPQAAsAAAAAB8QAAAOEAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCfgqDKIJmATYCJAMMCwgABCAFhG0HRBuyBsiusCnDvUgTdp0bUCg3ubvKwh5nX2aLoFoje3b3mQNAOqyiwgrRAYAidFj+fepVhGZHJOzNa/eVBVDty5Kc4GfG+ZlFqXMnoGjZ3S8PUH1ucHlmKQUWJJNMNsoD85ycoLhdTv0tG1lQfatPT4Sk2i6U3PfnE/dO/1icZfPd5TmNOWhsG4v+RQEmGNAYw6Io0QKW2BvGrryI2wQajZHFbWVL1xDwVRiLAnGI0Xngm/IrNfWhXqgt2VnEbTXq0830Bbf878cfinqSmsxYuXpPMwJ1Pwo/FHlcqMYml2AYLwq2j4xZgEJsLI2v5hGWZvHQqJQ8TQLWNSn4UfS/4kehq1/tHx5JELWM2mYwDdrSGRlsfewogsYzNtzY/FoUXAJ4Lrq7+74xTU+PjV3Zbh4ZOk1lZlwc1kZHLra1mEMjltHRQ5fsSRkePnNrNa1DwweW1vM7hvcIO/pi9j0TJ0Ydtei9r8WFkZGZLj80d1re/UQYHgMje3S2j+4JDTMicacnbsfq5OrDIu0YVYdG4P694UlWwB7gNx1Gytj+qzG3fdyY0Oy8Pi1adsnv5FWxcOf2ws7MN+c38FSxo/L5DOZ68K38+327Pqfduv+78XzD/rZzwdy6fvt/Xoa4pEdxLdf9zXA6WAkyx5yod9k/q4qtmrS/++au33CMbr2tfO5DexcHN17x9t/Fb53wKDe3Pmw0f0uAt4YajxeBzhMRdmjdaa1csm3CY2EsTwrcogJE192L4XVgDlBdWdB8CICK/M/9T4/58jAuazak6h8W8Jk1JPra9iTdpwFQL8EMf8VWRiMyqybDn4ucrC5tM7K1PQsJjWaaCqU7Pe/v7FFrCfV6YiR1RiOrN4ks7CzUaLIIteotQaOZWvc36cJ5iNKAGTYBhHbXkLQaQdbuCVnYZ6jR6xtqtUdGo40RcWKTKbHfv5HjeYERXFiBTDJ0YoWEf1A/gKmtzvOkyZeNYO5kWZifk5ettmId8zHWOBdpgRAEEm5osAXch1XVgCY3ZCyJHIcQZkVuLil7UY5kaMDfChw2T8AQaMEKiJEYdMQdLPjnPj8Ao2yqebxGVNEcgXFObHgoX468FmSrXW8lupZnnBZRBQSBgAjOoIFaQBRTzZIBMsunyTCJkMPRo2CqkIv6kbb2nPmd2gPUsR6MlTlS5CjaDjuYyXTqNRu2NK9TX8smuowPAA==') format('woff2'),
+  url('//at.alicdn.com/t/font_2387595_5rgo1yvavfh.woff?t=1614997539418') format('woff'),
+  url('//at.alicdn.com/t/font_2387595_5rgo1yvavfh.ttf?t=1614997539418') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('//at.alicdn.com/t/font_2387595_5rgo1yvavfh.svg?t=1614997539418#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shipingshoucang:before {
+  content: "\e734";
+}
+
+.icon-quanping:before {
+  content: "\e733";
+}
